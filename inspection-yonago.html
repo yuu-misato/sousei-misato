@@ -20,12 +20,10 @@
 
         :root {
             --navy: #1e3a5f;
-            --navy-light: #2c4a6e;
             --teal: #0d9488;
             --teal-light: #2dd4bf;
             --teal-dark: #0f766e;
             --amber: #f59e0b;
-            --bg: #fafbfc;
             --white: #ffffff;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
@@ -46,6 +44,19 @@
             background: var(--white);
             color: var(--gray-800);
             line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--teal);
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.1s;
         }
 
         /* Header */
@@ -55,13 +66,19 @@
             left: 0;
             right: 0;
             height: 64px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             z-index: 100;
             display: flex;
             align-items: center;
             padding: 0 2rem;
             border-bottom: 1px solid var(--gray-200);
+            transform: translateY(-100%);
+            transition: transform 0.4s;
+        }
+
+        .header.visible {
+            transform: translateY(0);
         }
 
         .header-inner {
@@ -105,203 +122,185 @@
             color: var(--teal);
         }
 
-        /* Hero */
-        .hero {
+        /* Full Screen Sections */
+        .full-section {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 120px 24px 80px;
-            background: linear-gradient(180deg, #f0fdfa 0%, var(--white) 100%);
+            justify-content: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(13, 148, 136, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(13, 148, 136, 0.05) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(20px, -20px) rotate(5deg); }
-        }
-
-        .hero-content {
+        .section-content {
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 2rem;
             position: relative;
             z-index: 1;
         }
 
+        /* Hero */
+        .hero {
+            background: var(--white);
+            text-align: center;
+        }
+
         .hero-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--teal);
-            color: var(--white);
-            padding: 0.5rem 1.25rem;
-            border-radius: 100px;
+            display: inline-block;
+            color: var(--teal);
             font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.2em;
             margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease forwards;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(3rem, 10vw, 6rem);
             font-weight: 900;
             color: var(--gray-900);
-            line-height: 1.2;
+            line-height: 1.1;
             margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease 0.1s forwards;
-            opacity: 0;
+        }
+
+        .hero h1 .highlight {
+            color: var(--teal);
         }
 
         .hero-subtitle {
             font-size: 1.125rem;
             color: var(--gray-500);
             max-width: 500px;
-            margin: 0 auto 3rem;
-            animation: fadeInUp 0.8s ease 0.2s forwards;
-            opacity: 0;
+            margin: 0 auto;
+            font-weight: 300;
         }
 
-        .hero-meta {
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            justify-content: center;
-            gap: 3rem;
-            animation: fadeInUp 0.8s ease 0.3s forwards;
-            opacity: 0;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray-400);
+            font-size: 0.625rem;
+            letter-spacing: 0.2em;
         }
 
-        .hero-meta-item {
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--gray-400), transparent);
+            animation: scrollPulse 2s infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 1; transform: scaleY(1); }
+            50% { opacity: 0.5; transform: scaleY(0.8); }
+        }
+
+        /* Problem Section */
+        .problem-section {
+            background: var(--gray-900);
+            color: var(--white);
+        }
+
+        .problem-content {
             text-align: center;
         }
 
-        .hero-meta-value {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-800);
+        .problem-question {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            font-weight: 300;
+            color: var(--gray-400);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .hero-meta-label {
-            font-size: 0.75rem;
+        .problem-question.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .problem-stats {
+            display: flex;
+            justify-content: center;
+            gap: 6rem;
+            margin-bottom: 3rem;
+        }
+
+        .problem-stat {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .problem-stat.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .problem-stat-number {
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .problem-stat-unit {
+            font-size: 1.5rem;
+            font-weight: 400;
             color: var(--gray-400);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Section */
-        .section {
-            padding: 120px 24px;
-        }
-
-        .section-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--teal);
-            letter-spacing: 0.15em;
-            margin-bottom: 0.75rem;
-        }
-
-        .section-title {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            font-weight: 800;
-            color: var(--gray-900);
-        }
-
-        /* Big Stats */
-        .big-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .big-stat {
-            background: var(--gray-50);
-            border-radius: 24px;
-            padding: 2.5rem 1.5rem;
-            text-align: center;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
-        }
-
-        .big-stat:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .big-stat-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--teal-light), var(--teal));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.75rem;
-        }
-
-        .big-stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--gray-900);
-            line-height: 1;
-        }
-
-        .big-stat-unit {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--teal);
-        }
-
-        .big-stat-label {
+        .problem-stat-label {
             font-size: 0.875rem;
             color: var(--gray-500);
             margin-top: 0.5rem;
         }
 
-        /* What is Compact City */
+        .problem-message {
+            font-size: 1rem;
+            color: var(--gray-400);
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 0.8s 0.4s;
+        }
+
+        .problem-message.visible {
+            opacity: 1;
+        }
+
+        /* Concept Section */
         .concept-section {
-            background: var(--gray-900);
-            color: var(--white);
+            background: var(--white);
+            padding: 120px 0;
         }
 
-        .concept-section .section-label {
-            color: var(--teal-light);
+        .concept-header {
+            text-align: center;
+            margin-bottom: 5rem;
         }
 
-        .concept-section .section-title {
-            color: var(--white);
+        .concept-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .concept-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--gray-900);
         }
 
         .concept-visual {
@@ -309,140 +308,287 @@
             justify-content: center;
             align-items: center;
             gap: 4rem;
-            padding: 3rem 0;
+            max-width: 800px;
+            margin: 0 auto 4rem;
         }
 
         .concept-city {
             text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .concept-city.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .concept-city-visual {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
             margin: 0 auto 1.5rem;
             position: relative;
         }
 
         .concept-city-visual.spread {
-            background: rgba(245, 158, 11, 0.2);
-            border: 3px dashed var(--amber);
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px dashed var(--amber);
+            width: 200px;
+            height: 200px;
         }
 
         .concept-city-visual.compact {
-            background: rgba(45, 212, 191, 0.2);
-            border: 3px solid var(--teal-light);
-            width: 150px;
-            height: 150px;
+            background: rgba(13, 148, 136, 0.1);
+            border: 2px solid var(--teal);
+            width: 140px;
+            height: 140px;
+        }
+
+        .concept-city-visual svg {
+            width: 64px;
+            height: 64px;
+        }
+
+        .concept-city-visual.spread svg {
+            stroke: var(--amber);
+        }
+
+        .concept-city-visual.compact svg {
+            stroke: var(--teal);
         }
 
         .concept-city-label {
             font-size: 1.25rem;
             font-weight: 700;
+            color: var(--gray-900);
         }
 
         .concept-city-desc {
             font-size: 0.875rem;
-            color: var(--gray-400);
+            color: var(--gray-500);
         }
 
         .concept-arrow {
-            font-size: 3rem;
-            color: var(--teal);
+            opacity: 0;
+            transition: opacity 0.6s 0.3s;
         }
 
-        /* Benefits */
+        .concept-arrow.visible {
+            opacity: 1;
+        }
+
+        .concept-arrow svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--teal);
+        }
+
+        /* Benefits Grid */
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 4rem;
+            gap: 1px;
+            background: var(--gray-200);
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .benefit-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
+            background: var(--white);
+            padding: 2.5rem 2rem;
             text-align: center;
-            transition: transform 0.3s, background 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .benefit-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .benefit-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1.5rem;
+            stroke: var(--teal);
         }
 
         .benefit-card h4 {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
+            color: var(--gray-900);
             margin-bottom: 0.5rem;
         }
 
         .benefit-card p {
-            font-size: 0.875rem;
-            color: var(--gray-400);
+            font-size: 0.8125rem;
+            color: var(--gray-500);
         }
 
-        /* Comparison */
+        /* Stats Section */
+        .stats-section {
+            background: var(--gray-50);
+            padding: 120px 0;
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .stats-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .stats-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--gray-200);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1.5rem;
+            stroke: var(--teal);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gray-900);
+            line-height: 1;
+        }
+
+        .stat-unit {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            margin-top: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            background: var(--white);
+            padding: 120px 0;
+        }
+
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .comparison-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--amber);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
         .comparison-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .comparison-card {
             background: var(--white);
-            border-radius: 24px;
+            border: 1px solid var(--gray-200);
             padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .comparison-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .comparison-card.yonago {
-            border: 2px solid var(--teal);
+            border-color: var(--teal);
+            border-width: 2px;
         }
 
         .comparison-card.misato {
-            border: 2px solid var(--amber);
+            border-color: var(--amber);
+            border-width: 2px;
         }
 
-        .comparison-header {
+        .comparison-card-header {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .comparison-icon {
+        .comparison-card-icon {
             width: 48px;
             height: 48px;
-            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
         }
 
-        .comparison-card.yonago .comparison-icon {
-            background: var(--teal);
-            color: var(--white);
+        .comparison-card.yonago .comparison-card-icon svg {
+            stroke: var(--teal);
         }
 
-        .comparison-card.misato .comparison-icon {
-            background: var(--amber);
-            color: var(--white);
+        .comparison-card.misato .comparison-card-icon svg {
+            stroke: var(--amber);
         }
 
-        .comparison-title {
+        .comparison-card-title {
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--gray-900);
@@ -464,89 +610,140 @@
             border-bottom: none;
         }
 
-        .comparison-label {
+        .comparison-item-label {
             font-size: 0.875rem;
             color: var(--gray-500);
         }
 
-        .comparison-value {
+        .comparison-item-value {
             font-size: 1rem;
             font-weight: 700;
             color: var(--gray-900);
         }
 
-        /* Key Points */
-        .points-grid {
+        /* Learnings Section */
+        .learnings-section {
+            background: var(--navy);
+            color: var(--white);
+            padding: 120px 2rem;
+        }
+
+        .learnings-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .learnings-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal-light);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .learnings-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+        }
+
+        .learnings-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .point-card {
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: 20px;
+        .learning-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 2rem;
             display: flex;
             gap: 1.5rem;
             align-items: flex-start;
-            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .point-card:hover {
-            transform: translateX(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        .learning-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .point-number {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--teal-light), var(--teal));
-            border-radius: 12px;
+        .learning-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .learning-number {
+            width: 40px;
+            height: 40px;
+            background: var(--teal);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white);
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 800;
             flex-shrink: 0;
         }
 
-        .point-content h4 {
-            font-size: 1.125rem;
+        .learning-content h4 {
+            font-size: 1rem;
             font-weight: 700;
-            color: var(--gray-900);
             margin-bottom: 0.25rem;
         }
 
-        .point-content p {
-            font-size: 0.9375rem;
-            color: var(--gray-500);
+        .learning-content p {
+            font-size: 0.875rem;
+            color: var(--gray-400);
         }
 
-        /* Comments */
+        /* Comments Section */
+        .comments-section {
+            background: var(--gray-50);
+            padding: 120px 0;
+        }
+
+        .comments-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .comments-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .comments-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
         .comments-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .comment-card {
-            background: var(--gray-50);
-            border-radius: 20px;
+            background: var(--white);
             padding: 2rem;
-            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .comment-card::before {
-            content: '"';
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 4rem;
-            color: var(--gray-200);
-            font-family: Georgia, serif;
-            line-height: 1;
+        .comment-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .comment-header {
@@ -557,8 +754,8 @@
         }
 
         .comment-avatar {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             overflow: hidden;
             background: var(--gray-200);
@@ -573,51 +770,57 @@
         .comment-name {
             font-weight: 700;
             color: var(--gray-900);
+            font-size: 0.9375rem;
         }
 
         .comment-role {
-            font-size: 0.75rem;
-            color: var(--gray-500);
+            font-size: 0.6875rem;
+            color: var(--gray-400);
+            letter-spacing: 0.1em;
         }
 
         .comment-text {
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             color: var(--gray-600);
             line-height: 1.8;
-            position: relative;
-            z-index: 1;
         }
 
-        /* Summary */
-        .summary-section {
-            background: var(--navy);
+        /* CTA Section */
+        .cta-section {
+            background: var(--teal);
             color: var(--white);
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-
-        .summary-item {
             text-align: center;
-            padding: 2rem;
+            padding: 80px 2rem;
         }
 
-        .summary-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .cta-title {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
         }
 
-        .summary-label {
-            font-size: 1rem;
-            font-weight: 600;
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--white);
+            color: var(--teal-dark);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.875rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         /* Footer */
         .footer {
-            background: var(--gray-50);
+            background: var(--gray-900);
+            color: var(--gray-500);
             padding: 3rem 2rem;
             text-align: center;
         }
@@ -631,53 +834,35 @@
         }
 
         .footer-logo img {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
         }
 
         .footer-logo span {
-            font-weight: 700;
-            color: var(--gray-800);
+            font-weight: 600;
+            color: var(--white);
+            font-size: 0.875rem;
         }
 
         .footer-copy {
-            font-size: 0.8125rem;
-            color: var(--gray-500);
-        }
-
-        /* Scroll Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+            font-size: 0.75rem;
         }
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .big-stats {
+            .benefits-grid,
+            .stats-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
 
-            .benefits-grid {
+            .learnings-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .summary-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            .section {
-                padding: 80px 20px;
-            }
-
-            .big-stats {
+            .benefits-grid,
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -686,29 +871,31 @@
                 gap: 2rem;
             }
 
-            .concept-arrow {
+            .concept-arrow svg {
                 transform: rotate(90deg);
             }
 
             .comparison-grid,
-            .points-grid,
             .comments-grid {
                 grid-template-columns: 1fr;
             }
 
-            .summary-grid {
-                grid-template-columns: 1fr;
+            .problem-stats {
+                flex-direction: column;
+                gap: 3rem;
             }
 
-            .hero-meta {
-                flex-direction: column;
-                gap: 1rem;
+            .learnings-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+
     <!-- Header -->
     <header class="header">
         <div class="header-inner">
@@ -726,293 +913,352 @@
     </header>
 
     <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-label">
-                <span>INSPECTION REPORT</span>
+    <section class="full-section hero">
+        <div class="section-content">
+            <div class="hero-label">INSPECTION REPORT</div>
+            <h1><span class="highlight">歩いて</span>暮らせる<br>まちへ</h1>
+            <p class="hero-subtitle">米子市のコンパクトシティから学ぶ<br>三郷の未来のかたち</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="full-section problem-section">
+        <div class="section-content problem-content">
+            <p class="problem-question" data-animate>人口減少時代、私たちのまちはどう変わる？</p>
+
+            <div class="problem-stats">
+                <div class="problem-stat" data-animate data-delay="200">
+                    <div class="problem-stat-number">2050</div>
+                    <div class="problem-stat-label">日本の人口が1億人を割る年</div>
+                </div>
+                <div class="problem-stat" data-animate data-delay="400">
+                    <div class="problem-stat-number">40<span class="problem-stat-unit">%</span></div>
+                    <div class="problem-stat-label">高齢化率の将来予測</div>
+                </div>
             </div>
-            <h1>コンパクトシティの<br>先進地を訪ねて</h1>
-            <p class="hero-subtitle">米子市の「歩いて暮らせるまちづくり」から三郷市の未来を考える</p>
-            <div class="hero-meta">
-                <div class="hero-meta-item">
-                    <div class="hero-meta-value">令和7年1月</div>
-                    <div class="hero-meta-label">視察日</div>
+
+            <p class="problem-message" data-animate data-delay="600">
+                郊外に広がった都市では、インフラ維持が困難に。<br>
+                「歩いて暮らせるまち」への転換が求められています。
+            </p>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="concept-section">
+        <div class="concept-header">
+            <div class="concept-label">CONCEPT</div>
+            <h2 class="concept-title">コンパクトシティとは</h2>
+        </div>
+
+        <div class="concept-visual">
+            <div class="concept-city" data-animate>
+                <div class="concept-city-visual spread">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
                 </div>
-                <div class="hero-meta-item">
-                    <div class="hero-meta-value">鳥取県米子市</div>
-                    <div class="hero-meta-label">視察先</div>
+                <div class="concept-city-label">従来型</div>
+                <div class="concept-city-desc">郊外に拡散した都市</div>
+            </div>
+            <div class="concept-arrow" data-animate data-delay="200">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </div>
+            <div class="concept-city" data-animate data-delay="300">
+                <div class="concept-city-visual compact">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                        <path d="M9 22v-4h6v4"/>
+                        <path d="M8 6h.01"/>
+                        <path d="M16 6h.01"/>
+                        <path d="M12 6h.01"/>
+                        <path d="M12 10h.01"/>
+                        <path d="M12 14h.01"/>
+                        <path d="M16 10h.01"/>
+                        <path d="M16 14h.01"/>
+                        <path d="M8 10h.01"/>
+                        <path d="M8 14h.01"/>
+                    </svg>
                 </div>
-                <div class="hero-meta-item">
-                    <div class="hero-meta-value">14.7万人</div>
-                    <div class="hero-meta-label">人口規模</div>
+                <div class="concept-city-label">コンパクト</div>
+                <div class="concept-city-desc">機能が集約した都市</div>
+            </div>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card" data-animate>
+                <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <h4>歩いて暮らせる</h4>
+                <p>日常の買い物や医療が徒歩圏内に</p>
+            </div>
+            <div class="benefit-card" data-animate data-delay="100">
+                <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                <h4>財政効率化</h4>
+                <p>インフラ維持コストを削減</p>
+            </div>
+            <div class="benefit-card" data-animate data-delay="200">
+                <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <h4>環境にやさしい</h4>
+                <p>移動距離減でCO2排出削減</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-header">
+            <div class="stats-label">YONAGO CITY</div>
+            <h2 class="stats-title">米子市の姿</h2>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card" data-animate>
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <div class="stat-number">14.7</div>
+                <div class="stat-unit">万人</div>
+                <div class="stat-label">人口</div>
+            </div>
+            <div class="stat-card" data-animate data-delay="100">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+                    <line x1="8" y1="2" x2="8" y2="18"/>
+                    <line x1="16" y1="6" x2="16" y2="22"/>
+                </svg>
+                <div class="stat-number">132</div>
+                <div class="stat-unit">km²</div>
+                <div class="stat-label">面積</div>
+            </div>
+            <div class="stat-card" data-animate data-delay="200">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                    <path d="M9 22v-4h6v4"/>
+                    <path d="M8 6h.01"/>
+                    <path d="M16 6h.01"/>
+                    <path d="M12 6h.01"/>
+                    <path d="M12 10h.01"/>
+                    <path d="M12 14h.01"/>
+                    <path d="M16 10h.01"/>
+                    <path d="M16 14h.01"/>
+                    <path d="M8 10h.01"/>
+                    <path d="M8 14h.01"/>
+                </svg>
+                <div class="stat-number">1,112</div>
+                <div class="stat-unit">人/km²</div>
+                <div class="stat-label">人口密度</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+        <div class="comparison-header">
+            <div class="comparison-label">COMPARISON</div>
+            <h2 class="comparison-title">米子市と三郷市</h2>
+        </div>
+
+        <div class="comparison-grid">
+            <div class="comparison-card yonago" data-animate>
+                <div class="comparison-card-header">
+                    <div class="comparison-card-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18"/>
+                            <path d="M5 21V7l8-4v18"/>
+                            <path d="M19 21V11l-6-4"/>
+                            <path d="M9 9v.01"/>
+                            <path d="M9 12v.01"/>
+                            <path d="M9 15v.01"/>
+                            <path d="M9 18v.01"/>
+                        </svg>
+                    </div>
+                    <div class="comparison-card-title">米子市</div>
+                </div>
+                <ul class="comparison-list">
+                    <li>
+                        <span class="comparison-item-label">人口</span>
+                        <span class="comparison-item-value">14.7万人</span>
+                    </li>
+                    <li>
+                        <span class="comparison-item-label">面積</span>
+                        <span class="comparison-item-value">132 km²</span>
+                    </li>
+                    <li>
+                        <span class="comparison-item-label">人口密度</span>
+                        <span class="comparison-item-value">1,112人/km²</span>
+                    </li>
+                    <li>
+                        <span class="comparison-item-label">特徴</span>
+                        <span class="comparison-item-value">地方中核都市</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="comparison-card misato" data-animate data-delay="200">
+                <div class="comparison-card-header">
+                    <div class="comparison-card-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                            <path d="M9 22v-4h6v4"/>
+                            <path d="M8 6h.01"/>
+                            <path d="M16 6h.01"/>
+                            <path d="M12 6h.01"/>
+                            <path d="M12 10h.01"/>
+                            <path d="M12 14h.01"/>
+                            <path d="M16 10h.01"/>
+                            <path d="M16 14h.01"/>
+                            <path d="M8 10h.01"/>
+                            <path d="M8 14h.01"/>
+                        </svg>
+                    </div>
+                    <div class="comparison-card-title">三郷市</div>
+                </div>
+                <ul class="comparison-list">
+                    <li>
+                        <span class="comparison-item-label">人口</span>
+                        <span class="comparison-item-value">14.3万人</span>
+                    </li>
+                    <li>
+                        <span class="comparison-item-label">面積</span>
+                        <span class="comparison-item-value">30 km²</span>
+                    </li>
+                    <li>
+                        <span class="comparison-item-label">人口密度</span>
+                        <span class="comparison-item-value">4,760人/km²</span>
+                    </li>
+                    <li>
+                        <span class="comparison-item-label">特徴</span>
+                        <span class="comparison-item-value">首都圏ベッドタウン</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings Section -->
+    <section class="learnings-section">
+        <div class="learnings-header">
+            <div class="learnings-label">LEARNINGS</div>
+            <h2 class="learnings-title">三郷市への示唆</h2>
+        </div>
+
+        <div class="learnings-grid">
+            <div class="learning-card" data-animate>
+                <div class="learning-number">1</div>
+                <div class="learning-content">
+                    <h4>駅周辺への機能集約</h4>
+                    <p>三郷中央駅・新三郷駅を核とした都市機能の集中</p>
+                </div>
+            </div>
+            <div class="learning-card" data-animate data-delay="100">
+                <div class="learning-number">2</div>
+                <div class="learning-content">
+                    <h4>公共交通の充実</h4>
+                    <p>バス路線の最適化で移動の利便性向上</p>
+                </div>
+            </div>
+            <div class="learning-card" data-animate data-delay="200">
+                <div class="learning-number">3</div>
+                <div class="learning-content">
+                    <h4>空き家対策</h4>
+                    <p>中心市街地への居住誘導と空き家の有効活用</p>
+                </div>
+            </div>
+            <div class="learning-card" data-animate data-delay="300">
+                <div class="learning-number">4</div>
+                <div class="learning-content">
+                    <h4>高齢者にやさしいまち</h4>
+                    <p>歩いて暮らせる環境で健康寿命を延伸</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Big Stats -->
-    <section class="section">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">YONAGO CITY</div>
-                <h2 class="section-title">米子市の姿</h2>
-            </div>
+    <!-- Comments Section -->
+    <section class="comments-section">
+        <div class="comments-header">
+            <div class="comments-label">COMMENTS</div>
+            <h2 class="comments-title">議員の声</h2>
+        </div>
 
-            <div class="big-stats reveal">
-                <div class="big-stat">
-                    <div class="big-stat-icon">👥</div>
-                    <div class="big-stat-number">14.7</div>
-                    <div class="big-stat-unit">万人</div>
-                    <div class="big-stat-label">人口</div>
+        <div class="comments-grid">
+            <div class="comment-card" data-animate>
+                <div class="comment-header">
+                    <div class="comment-avatar">
+                        <img src="images/satohiroyuki.png" alt="佐藤裕之">
+                    </div>
+                    <div>
+                        <div class="comment-name">佐藤 裕之</div>
+                        <div class="comment-role">会長</div>
+                    </div>
                 </div>
-                <div class="big-stat">
-                    <div class="big-stat-icon">📍</div>
-                    <div class="big-stat-number">132</div>
-                    <div class="big-stat-unit">km²</div>
-                    <div class="big-stat-label">面積</div>
+                <p class="comment-text">人口規模は近いが都市構造が異なる。三郷の強みを活かした独自の戦略が必要です。</p>
+            </div>
+            <div class="comment-card" data-animate data-delay="100">
+                <div class="comment-header">
+                    <div class="comment-avatar">
+                        <img src="images/seiichitakahashi.png" alt="高橋誠一">
+                    </div>
+                    <div>
+                        <div class="comment-name">高橋 誠一</div>
+                        <div class="comment-role">幹事</div>
+                    </div>
                 </div>
-                <div class="big-stat">
-                    <div class="big-stat-icon">🏠</div>
-                    <div class="big-stat-number">1,112</div>
-                    <div class="big-stat-unit">人/km²</div>
-                    <div class="big-stat-label">人口密度</div>
+                <p class="comment-text">駅周辺の再開発と公共交通の連携。三郷でも実現可能な施策だと感じました。</p>
+            </div>
+            <div class="comment-card" data-animate data-delay="200">
+                <div class="comment-header">
+                    <div class="comment-avatar">
+                        <img src="images/chihohidaka.png" alt="日高千穂">
+                    </div>
+                    <div>
+                        <div class="comment-name">日高 千穂</div>
+                        <div class="comment-role">会計</div>
+                    </div>
                 </div>
+                <p class="comment-text">高齢者が歩いて暮らせるまちづくり。健康寿命の延伸にもつながる重要な視点です。</p>
+            </div>
+            <div class="comment-card" data-animate data-delay="300">
+                <div class="comment-header">
+                    <div class="comment-avatar">
+                        <img src="images/suzukiyusaku.png" alt="鈴木優作">
+                    </div>
+                    <div>
+                        <div class="comment-name">鈴木 優作</div>
+                        <div class="comment-role">議員</div>
+                    </div>
+                </div>
+                <p class="comment-text">コンパクトシティは単なる集約ではなく、暮らしの質を高める戦略。三郷でも検討を。</p>
             </div>
         </div>
     </section>
 
-    <!-- Concept -->
-    <section class="section concept-section">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">CONCEPT</div>
-                <h2 class="section-title">コンパクトシティとは？</h2>
-            </div>
-
-            <div class="concept-visual reveal">
-                <div class="concept-city">
-                    <div class="concept-city-visual spread">🏘️</div>
-                    <div class="concept-city-label">従来型</div>
-                    <div class="concept-city-desc">郊外に拡散した都市</div>
-                </div>
-                <div class="concept-arrow">→</div>
-                <div class="concept-city">
-                    <div class="concept-city-visual compact">🏙️</div>
-                    <div class="concept-city-label">コンパクト</div>
-                    <div class="concept-city-desc">機能が集約した都市</div>
-                </div>
-            </div>
-
-            <div class="benefits-grid reveal">
-                <div class="benefit-card">
-                    <div class="benefit-icon">🚶</div>
-                    <h4>歩いて暮らせる</h4>
-                    <p>日常の買い物や医療が徒歩圏内に</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">💰</div>
-                    <h4>財政効率化</h4>
-                    <p>インフラ維持コストを削減</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🌿</div>
-                    <h4>環境にやさしい</h4>
-                    <p>移動距離減でCO2排出削減</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison -->
-    <section class="section">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">COMPARISON</div>
-                <h2 class="section-title">米子市と三郷市</h2>
-            </div>
-
-            <div class="comparison-grid reveal">
-                <div class="comparison-card yonago">
-                    <div class="comparison-header">
-                        <div class="comparison-icon">🏯</div>
-                        <div class="comparison-title">米子市</div>
-                    </div>
-                    <ul class="comparison-list">
-                        <li>
-                            <span class="comparison-label">人口</span>
-                            <span class="comparison-value">14.7万人</span>
-                        </li>
-                        <li>
-                            <span class="comparison-label">面積</span>
-                            <span class="comparison-value">132 km²</span>
-                        </li>
-                        <li>
-                            <span class="comparison-label">人口密度</span>
-                            <span class="comparison-value">1,112人/km²</span>
-                        </li>
-                        <li>
-                            <span class="comparison-label">特徴</span>
-                            <span class="comparison-value">地方中核都市</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="comparison-card misato">
-                    <div class="comparison-header">
-                        <div class="comparison-icon">🌾</div>
-                        <div class="comparison-title">三郷市</div>
-                    </div>
-                    <ul class="comparison-list">
-                        <li>
-                            <span class="comparison-label">人口</span>
-                            <span class="comparison-value">14.3万人</span>
-                        </li>
-                        <li>
-                            <span class="comparison-label">面積</span>
-                            <span class="comparison-value">30 km²</span>
-                        </li>
-                        <li>
-                            <span class="comparison-label">人口密度</span>
-                            <span class="comparison-value">4,760人/km²</span>
-                        </li>
-                        <li>
-                            <span class="comparison-label">特徴</span>
-                            <span class="comparison-value">首都圏ベッドタウン</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Points -->
-    <section class="section" style="background: var(--gray-50);">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">LEARNINGS</div>
-                <h2 class="section-title">三郷市への示唆</h2>
-            </div>
-
-            <div class="points-grid reveal">
-                <div class="point-card">
-                    <div class="point-number">1</div>
-                    <div class="point-content">
-                        <h4>駅周辺への機能集約</h4>
-                        <p>三郷中央駅・新三郷駅を核とした都市機能の集中</p>
-                    </div>
-                </div>
-                <div class="point-card">
-                    <div class="point-number">2</div>
-                    <div class="point-content">
-                        <h4>公共交通の充実</h4>
-                        <p>バス路線の最適化で移動の利便性向上</p>
-                    </div>
-                </div>
-                <div class="point-card">
-                    <div class="point-number">3</div>
-                    <div class="point-content">
-                        <h4>空き家対策</h4>
-                        <p>中心市街地への居住誘導と空き家の有効活用</p>
-                    </div>
-                </div>
-                <div class="point-card">
-                    <div class="point-number">4</div>
-                    <div class="point-content">
-                        <h4>高齢者にやさしいまち</h4>
-                        <p>歩いて暮らせる環境で健康寿命を延伸</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comments -->
-    <section class="section">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">COMMENTS</div>
-                <h2 class="section-title">議員の声</h2>
-            </div>
-
-            <div class="comments-grid reveal">
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/satohiroyuki.png" alt="佐藤裕之">
-                        </div>
-                        <div>
-                            <div class="comment-name">佐藤 裕之</div>
-                            <div class="comment-role">会長</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">人口規模は近いが都市構造が異なる。三郷の強みを活かした独自の戦略が必要です。</p>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/seiichitakahashi.png" alt="高橋誠一">
-                        </div>
-                        <div>
-                            <div class="comment-name">高橋 誠一</div>
-                            <div class="comment-role">幹事</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">駅周辺の再開発と公共交通の連携。三郷でも実現可能な施策だと感じました。</p>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/chihohidaka.png" alt="日高千穂">
-                        </div>
-                        <div>
-                            <div class="comment-name">日高 千穂</div>
-                            <div class="comment-role">会計</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">高齢者が歩いて暮らせるまちづくり。健康寿命の延伸にもつながる重要な視点です。</p>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/suzukiyusaku.png" alt="鈴木優作">
-                        </div>
-                        <div>
-                            <div class="comment-name">鈴木 優作</div>
-                            <div class="comment-role">議員</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">コンパクトシティは単なる集約ではなく、暮らしの質を高める戦略。三郷でも検討を。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Summary -->
-    <section class="section summary-section">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label" style="color: var(--teal-light);">SUMMARY</div>
-                <h2 class="section-title" style="color: var(--white);">視察のまとめ</h2>
-            </div>
-
-            <div class="summary-grid reveal">
-                <div class="summary-item">
-                    <div class="summary-icon">🏙️</div>
-                    <div class="summary-label">機能集約</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-icon">🚌</div>
-                    <div class="summary-label">公共交通</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-icon">👴</div>
-                    <div class="summary-label">高齢者対応</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-icon">🌱</div>
-                    <div class="summary-label">持続可能性</div>
-                </div>
-            </div>
-        </div>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">一緒に、三郷の未来を創りませんか？</h2>
+        <a href="index.html#contact" class="cta-button">
+            お問い合わせ
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
     </section>
 
     <!-- Footer -->
@@ -1021,26 +1267,62 @@
             <img src="logo.png" alt="創政MISATO">
             <span>創政MISATO</span>
         </div>
-        <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
+        <p class="footer-copy">&copy; 2026 創政MISATO</p>
     </footer>
 
     <script>
-        // Scroll Reveal
+        // Progress Bar
+        const progressBar = document.querySelector('.progress-bar');
+
+        // Header visibility
+        const header = document.querySelector('.header');
+
+        // Intersection Observer for animations
         const observerOptions = {
-            threshold: 0.1,
+            threshold: 0.2,
             rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    const delay = entry.target.dataset.delay || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, delay);
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.reveal').forEach(el => {
+        document.querySelectorAll('[data-animate]').forEach(el => {
             observer.observe(el);
+        });
+
+        // Scroll event handler
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollY / docHeight) * 100;
+
+            // Update progress bar
+            progressBar.style.width = `${progress}%`;
+
+            // Show/hide header
+            if (scrollY > 100) {
+                header.classList.add('visible');
+            } else {
+                header.classList.remove('visible');
+            }
+        });
+
+        // Parallax effect for hero
+        const heroContent = document.querySelector('.hero .section-content');
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            if (scrollY < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
+                heroContent.style.opacity = 1 - (scrollY / window.innerHeight);
+            }
         });
     </script>
 </body>
