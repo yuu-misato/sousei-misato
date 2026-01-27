@@ -453,7 +453,7 @@
         .budget-breakdown {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
@@ -484,6 +484,25 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--gray-900);
+        }
+
+        .budget-per-person {
+            background: var(--teal);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.35s;
+        }
+
+        .budget-per-person.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .budget-note {
@@ -1228,7 +1247,7 @@
             }
 
             .budget-breakdown {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
 
@@ -1455,7 +1474,7 @@
                         <line x1="8" y1="2" x2="8" y2="6"/>
                         <line x1="3" y1="10" x2="21" y2="10"/>
                     </svg>
-                    2026年1月18日
+                    2026年1月27日〜29日
                 </div>
                 <div class="hero-meta-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
@@ -1500,7 +1519,7 @@
                         </svg>
                     </div>
                     <div class="overview-item-label">視察日</div>
-                    <div class="overview-item-value">2026年1月18日</div>
+                    <div class="overview-item-value">2026年1月27日〜29日</div>
                 </div>
                 <div class="overview-item">
                     <div class="overview-item-icon">
@@ -1576,24 +1595,39 @@
             <div class="budget-container">
                 <div class="budget-label">TRANSPARENCY</div>
                 <h2 class="budget-title">視察経費の公開</h2>
-                <div class="budget-big-number">0<span>円</span></div>
-                <p class="budget-subtitle">政務活動費は一切使用していません</p>
+                <div class="budget-big-number">226,760<span>円</span></div>
+                <p class="budget-subtitle">政務活動費（4名・2泊3日）</p>
                 <div class="budget-breakdown">
                     <div class="budget-item">
-                        <div class="budget-item-label">交通費</div>
-                        <div class="budget-item-value">自己負担</div>
+                        <div class="budget-item-label">航空券（往復）</div>
+                        <div class="budget-item-value">119,200円</div>
                     </div>
                     <div class="budget-item">
-                        <div class="budget-item-label">宿泊費</div>
-                        <div class="budget-item-value">自己負担</div>
+                        <div class="budget-item-label">レンタカー</div>
+                        <div class="budget-item-value">36,960円</div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-item-label">宿泊費（1泊分）</div>
+                        <div class="budget-item-value">50,600円</div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-item-label">企画手配料</div>
+                        <div class="budget-item-value">4,000円</div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-item-label">お土産代</div>
+                        <div class="budget-item-value">10,000円</div>
                     </div>
                     <div class="budget-item">
                         <div class="budget-item-label">日当</div>
                         <div class="budget-item-value">なし</div>
                     </div>
                 </div>
+                <div class="budget-per-person">
+                    <span>1人1日あたり 約18,900円</span>
+                </div>
                 <div class="budget-note">
-                    <p>創政MISATOの会派視察は全て自己負担で実施しています。市民の税金を使わず、議員の自己研鑽として視察を行い、得られた知見を三郷市の政策提言に活かしています。</p>
+                    <p>初日の宿泊費（50,600円）は私費のため、政務活動費には含まれていません。</p>
                 </div>
             </div>
         </div>
@@ -2110,6 +2144,7 @@
             const bigNumber = container.querySelector('.budget-big-number');
             const subtitle = container.querySelector('.budget-subtitle');
             const items = container.querySelectorAll('.budget-item');
+            const perPerson = container.querySelector('.budget-per-person');
             const note = container.querySelector('.budget-note');
 
             if (progress > 0.05) {
@@ -2127,7 +2162,10 @@
             if (progress > 0.5) {
                 items.forEach(item => item.classList.add('visible'));
             }
-            if (progress > 0.65) {
+            if (progress > 0.6) {
+                if (perPerson) perPerson.classList.add('visible');
+            }
+            if (progress > 0.7) {
                 note.classList.add('visible');
             }
         }
