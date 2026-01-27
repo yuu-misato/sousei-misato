@@ -355,6 +355,183 @@
             font-weight: 600;
         }
 
+        /* Why Section */
+        .why-section {
+            height: 400vh;
+            background: var(--white);
+        }
+
+        .why-section .sticky-container {
+            background: var(--white);
+        }
+
+        .why-content {
+            max-width: 1000px;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .why-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .why-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--amber);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s;
+        }
+
+        .why-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .why-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            color: var(--gray-900);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s 0.1s;
+        }
+
+        .why-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .why-card {
+            background: var(--gray-50);
+            padding: 2.5rem;
+            border-radius: 16px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .why-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .why-card.highlight {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.05));
+            border: 2px solid var(--green);
+        }
+
+        .why-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .why-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .why-card-icon.misato {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .why-card-icon.misato svg {
+            stroke: var(--amber);
+        }
+
+        .why-card-icon.facility {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .why-card-icon.facility svg {
+            stroke: var(--green);
+        }
+
+        .why-card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .why-card-subtitle {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .why-card p {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        .why-card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .why-card ul li {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .why-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+
+        .why-conclusion {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 2rem;
+            background: var(--gray-900);
+            border-radius: 16px;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .why-conclusion.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .why-conclusion p {
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .why-conclusion strong {
+            color: var(--green-light);
+        }
+
         /* Transform Section */
         .transform-section {
             height: 500vh;
@@ -1068,6 +1245,104 @@
         </div>
     </section>
 
+    <!-- Why Section -->
+    <section class="scroll-section why-section">
+        <div class="sticky-container">
+            <div class="why-content">
+                <div class="why-header">
+                    <div class="why-label">WHY HERE</div>
+                    <h2 class="why-title">なぜ東埼玉資源環境組合を視察したのか</h2>
+                </div>
+                <div class="why-grid">
+                    <div class="why-card" data-why="0">
+                        <div class="why-card-header">
+                            <div class="why-card-icon misato">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="why-card-title">三郷市の現状</div>
+                                <div class="why-card-subtitle">MISATO'S SITUATION</div>
+                            </div>
+                        </div>
+                        <p>三郷市は東埼玉資源環境組合の構成市。年間約4万トンのごみ処理を依存しています。</p>
+                        <ul>
+                            <li>処理費用：年間約8億円の負担</li>
+                            <li>施設の老朽化が進行中</li>
+                            <li>将来の更新計画への参画が必要</li>
+                        </ul>
+                    </div>
+                    <div class="why-card" data-why="1">
+                        <div class="why-card-header">
+                            <div class="why-card-icon facility">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="why-card-title">視察の狙い</div>
+                                <div class="why-card-subtitle">PURPOSE OF INSPECTION</div>
+                            </div>
+                        </div>
+                        <p>構成市の議員として、施設運営の実態を把握し、市民への説明責任を果たすため。</p>
+                        <ul>
+                            <li>処理プロセスの現場確認</li>
+                            <li>発電効率と収益構造の把握</li>
+                            <li>今後の設備更新計画の確認</li>
+                        </ul>
+                    </div>
+                    <div class="why-card highlight" data-why="2">
+                        <div class="why-card-header">
+                            <div class="why-card-icon facility">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="why-card-title">市民からの疑問に答える</div>
+                                <div class="why-card-subtitle">ANSWERING CITIZENS</div>
+                            </div>
+                        </div>
+                        <p>「税金でどこに視察に行っているのか」という疑問に、根拠をもって説明できるように。</p>
+                        <ul>
+                            <li>三郷市が負担する施設を議員が知らないのは問題</li>
+                            <li>広域連携の課題を現場で確認</li>
+                            <li>市民の税金の使途を説明する責務</li>
+                        </ul>
+                    </div>
+                    <div class="why-card" data-why="3">
+                        <div class="why-card-header">
+                            <div class="why-card-icon misato">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 4 23 10 17 10"/>
+                                    <polyline points="1 20 1 14 7 14"/>
+                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="why-card-title">三郷市への還元</div>
+                                <div class="why-card-subtitle">RETURN TO MISATO</div>
+                            </div>
+                        </div>
+                        <p>視察で得た知見を、議会質問や政策提言として三郷市に還元します。</p>
+                        <ul>
+                            <li>ごみ減量施策への提言</li>
+                            <li>分別啓発の効果検証</li>
+                            <li>広域連携の最適化議論</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="why-conclusion" data-why="4">
+                    <p>三郷市民の税金で運営される施設だからこそ、<strong>議員が現場を見て、市民に説明する責任があります。</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Transform Section -->
     <section class="scroll-section transform-section">
         <div class="sticky-container">
@@ -1388,6 +1663,18 @@
                     { el: '.problem-stat:nth-child(2) .problem-stat-number', start: 0.4, class: 'visible' },
                     { el: '.problem-stat:nth-child(2) .problem-stat-label', start: 0.45, class: 'visible' },
                     { el: '.problem-message', start: 0.6, class: 'visible' }
+                ]
+            },
+            why: {
+                el: document.querySelector('.why-section'),
+                animations: [
+                    { el: '.why-label', start: 0.05, class: 'visible' },
+                    { el: '.why-title', start: 0.1, class: 'visible' },
+                    { el: '[data-why="0"]', start: 0.2, class: 'visible' },
+                    { el: '[data-why="1"]', start: 0.35, class: 'visible' },
+                    { el: '[data-why="2"]', start: 0.5, class: 'visible' },
+                    { el: '[data-why="3"]', start: 0.65, class: 'visible' },
+                    { el: '[data-why="4"]', start: 0.8, class: 'visible' }
                 ]
             },
             transform: {
