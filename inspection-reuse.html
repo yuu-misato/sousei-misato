@@ -24,6 +24,7 @@
             --green-light: #34d399;
             --green-dark: #059669;
             --amber: #f59e0b;
+            --red: #ef4444;
             --white: #ffffff;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
@@ -36,7 +37,7 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
         }
 
         body {
@@ -52,11 +53,11 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 3px;
-            background: var(--green);
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--green-light));
             z-index: 1000;
             width: 0%;
-            transition: width 0.1s;
+            transition: width 0.05s linear;
         }
 
         /* Header */
@@ -66,7 +67,7 @@
             left: 0;
             right: 0;
             height: 64px;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             z-index: 100;
             display: flex;
@@ -74,7 +75,7 @@
             padding: 0 2rem;
             border-bottom: 1px solid var(--gray-200);
             transform: translateY(-100%);
-            transition: transform 0.4s;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .header.visible {
@@ -122,28 +123,32 @@
             color: var(--green);
         }
 
-        /* Full Screen Sections */
-        .full-section {
-            min-height: 100vh;
+        /* Scroll Section Container */
+        .scroll-section {
+            position: relative;
+            width: 100%;
+        }
+
+        .scroll-section .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .section-content {
-            max-width: 1200px;
-            width: 100%;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
+        /* Hero Section */
+        .hero-section {
+            height: 300vh;
         }
 
-        /* Hero */
-        .hero {
-            background: var(--white);
+        .hero-content {
             text-align: center;
+            max-width: 1200px;
+            padding: 0 2rem;
         }
 
         .hero-label {
@@ -151,31 +156,60 @@
             color: var(--green);
             font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
             margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .hero h1 {
-            font-size: clamp(3rem, 10vw, 6rem);
+        .hero-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 12vw, 8rem);
             font-weight: 900;
             color: var(--gray-900);
-            line-height: 1.1;
+            line-height: 1;
             margin-bottom: 1.5rem;
+            overflow: hidden;
         }
 
-        .hero h1 .highlight {
+        .hero-title .line {
+            display: block;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-title .line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-title .highlight {
             color: var(--green);
         }
 
         .hero-subtitle {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             color: var(--gray-500);
             max-width: 500px;
             margin: 0 auto;
             font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
         }
 
-        .scroll-indicator {
+        .hero-subtitle.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-hint {
             position: absolute;
             bottom: 3rem;
             left: 50%;
@@ -183,42 +217,69 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             color: var(--gray-400);
             font-size: 0.625rem;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
+            opacity: 0;
+            transition: opacity 0.5s;
         }
 
-        .scroll-line {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--gray-400), transparent);
-            animation: scrollPulse 2s infinite;
+        .scroll-hint.visible {
+            opacity: 1;
         }
 
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 1; transform: scaleY(1); }
-            50% { opacity: 0.5; transform: scaleY(0.8); }
+        .scroll-hint .mouse {
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-hint .mouse::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 2px;
+            animation: scrollMouse 1.5s infinite;
+        }
+
+        @keyframes scrollMouse {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
         }
 
         /* Problem Section */
         .problem-section {
+            height: 400vh;
             background: var(--gray-900);
-            color: var(--white);
+        }
+
+        .problem-section .sticky-container {
+            background: var(--gray-900);
         }
 
         .problem-content {
             text-align: center;
+            color: var(--white);
+            max-width: 1200px;
+            padding: 0 2rem;
         }
 
         .problem-question {
-            font-size: clamp(1.25rem, 3vw, 2rem);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             font-weight: 300;
             color: var(--gray-400);
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .problem-question.visible {
@@ -229,308 +290,449 @@
         .problem-stats {
             display: flex;
             justify-content: center;
-            gap: 6rem;
-            margin-bottom: 3rem;
+            gap: 8rem;
         }
 
         .problem-stat {
             text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .problem-stat.visible {
+        .problem-stat-number {
+            font-size: clamp(5rem, 15vw, 12rem);
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .problem-stat-number.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .problem-stat-number .unit {
+            font-size: 0.3em;
+            font-weight: 400;
+            color: var(--gray-400);
+            margin-left: 0.1em;
+        }
+
+        .problem-stat-label {
+            font-size: 1rem;
+            color: var(--gray-500);
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+        }
+
+        .problem-stat-label.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .problem-stat-number {
-            font-size: clamp(4rem, 12vw, 8rem);
-            font-weight: 900;
-            color: var(--white);
-            line-height: 1;
-            letter-spacing: -0.02em;
-        }
-
-        .problem-stat-unit {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: var(--gray-400);
-        }
-
-        .problem-stat-label {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-            margin-top: 0.5rem;
-        }
-
         .problem-message {
-            font-size: 1rem;
+            font-size: 1.125rem;
             color: var(--gray-400);
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 600px;
+            margin: 4rem auto 0;
+            line-height: 2;
             opacity: 0;
-            transition: opacity 0.8s 0.4s;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .problem-message.visible {
             opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Solution Section */
-        .solution-section {
+        .problem-message strong {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* Transform Section */
+        .transform-section {
+            height: 500vh;
             background: var(--white);
-            padding: 120px 0;
         }
 
-        .solution-header {
+        .transform-section .sticky-container {
+            background: var(--white);
+        }
+
+        .transform-content {
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .transform-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
 
-        .solution-label {
+        .transform-label {
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--green);
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
             margin-bottom: 1rem;
-        }
-
-        .solution-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            color: var(--gray-900);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1px;
-            background: var(--gray-200);
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .stat-card {
-            background: var(--white);
-            padding: 3rem 2rem;
-            text-align: center;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(20px);
+            transition: all 0.8s;
         }
 
-        .stat-card.visible {
+        .transform-label.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .stat-card:nth-child(1) { transition-delay: 0s; }
-        .stat-card:nth-child(2) { transition-delay: 0.1s; }
-        .stat-card:nth-child(3) { transition-delay: 0.2s; }
-        .stat-card:nth-child(4) { transition-delay: 0.3s; }
+        .transform-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            color: var(--gray-900);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s 0.1s;
+        }
+
+        .transform-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(40px) scale(0.8);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .process-step.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .process-step.active .process-circle {
+            background: var(--green);
+            border-color: var(--green);
+            transform: scale(1.1);
+        }
+
+        .process-step.active .process-circle svg {
+            stroke: var(--white);
+        }
+
+        .process-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .process-circle svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--gray-400);
+            transition: stroke 0.3s;
+        }
+
+        .process-step-label {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-top: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .process-step.visible .process-step-label {
+            opacity: 1;
+        }
+
+        .process-connector {
+            width: 60px;
+            height: 3px;
+            background: var(--gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-connector::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--green);
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .process-connector.filled::after {
+            width: 100%;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            height: 400vh;
+            background: var(--gray-50);
+        }
+
+        .stats-section .sticky-container {
+            background: var(--gray-50);
+        }
+
+        .stats-content {
+            max-width: 1200px;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .stats-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s;
+        }
+
+        .stats-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            color: var(--gray-900);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s 0.1s;
+        }
+
+        .stats-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(60px) rotateX(10deg);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
 
         .stat-icon {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             margin: 0 auto 1.5rem;
-            stroke: var(--green);
+            background: linear-gradient(135deg, var(--green), var(--green-light));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--white);
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 900;
             color: var(--gray-900);
             line-height: 1;
         }
 
         .stat-unit {
-            font-size: 0.875rem;
+            font-size: 1rem;
             font-weight: 500;
             color: var(--gray-500);
             margin-top: 0.25rem;
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.8125rem;
             color: var(--gray-400);
-            margin-top: 0.75rem;
+            margin-top: 1rem;
             letter-spacing: 0.1em;
-        }
-
-        /* Process Section */
-        .process-section {
-            background: var(--gray-50);
-            padding: 120px 0;
-        }
-
-        .process-header {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-
-        .process-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--green);
-            letter-spacing: 0.2em;
-            margin-bottom: 1rem;
-        }
-
-        .process-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            color: var(--gray-900);
-        }
-
-        .process-flow {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .process-step {
-            flex: 1;
-            text-align: center;
-            padding: 2rem 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .process-step.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .process-step:nth-child(1) { transition-delay: 0s; }
-        .process-step:nth-child(2) { transition-delay: 0.1s; }
-        .process-step:nth-child(3) { transition-delay: 0.2s; }
-        .process-step:nth-child(4) { transition-delay: 0.3s; }
-        .process-step:nth-child(5) { transition-delay: 0.4s; }
-
-        .process-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--white);
-            border: 2px solid var(--green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            transition: all 0.3s;
-        }
-
-        .process-step:hover .process-circle {
-            background: var(--green);
-        }
-
-        .process-step:hover .process-circle svg {
-            stroke: var(--white);
-        }
-
-        .process-circle svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--green);
-            transition: stroke 0.3s;
-        }
-
-        .process-step-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .process-connector {
-            width: 40px;
-            height: 2px;
-            background: var(--gray-300);
-            flex-shrink: 0;
         }
 
         /* Impact Section */
         .impact-section {
+            height: 400vh;
             background: var(--white);
-            padding: 120px 0;
+        }
+
+        .impact-section .sticky-container {
+            background: var(--white);
+        }
+
+        .impact-content {
+            max-width: 1000px;
+            padding: 0 2rem;
+            width: 100%;
         }
 
         .impact-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
 
         .impact-label {
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--amber);
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
             margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s;
+        }
+
+        .impact-label.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .impact-title {
             font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
+            font-weight: 900;
             color: var(--gray-900);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s 0.1s;
+        }
+
+        .impact-title.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .impact-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1px;
-            background: var(--gray-200);
-            max-width: 800px;
-            margin: 0 auto;
+            gap: 1.5rem;
         }
 
         .impact-card {
-            background: var(--white);
+            background: var(--gray-50);
             padding: 2.5rem;
+            border-radius: 16px;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .impact-card:nth-child(even) {
+            transform: translateX(40px);
         }
 
         .impact-card.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0);
         }
 
         .impact-number {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--amber);
-            margin-bottom: 0.75rem;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--amber), #fbbf24);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.25rem;
+            font-weight: 800;
+            flex-shrink: 0;
         }
 
-        .impact-content h4 {
-            font-size: 1.125rem;
+        .impact-text h4 {
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--gray-900);
             margin-bottom: 0.5rem;
         }
 
-        .impact-content p {
-            font-size: 0.875rem;
+        .impact-text p {
+            font-size: 0.9375rem;
             color: var(--gray-500);
+            line-height: 1.7;
         }
 
         /* Future Section */
         .future-section {
+            height: 300vh;
             background: var(--navy);
+        }
+
+        .future-section .sticky-container {
+            background: var(--navy);
+        }
+
+        .future-content {
+            text-align: center;
             color: var(--white);
-            padding: 120px 2rem;
+            max-width: 1000px;
+            padding: 0 2rem;
         }
 
         .future-header {
-            text-align: center;
             margin-bottom: 4rem;
         }
 
@@ -538,28 +740,41 @@
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--green-light);
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
             margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s;
+        }
+
+        .future-label.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .future-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s 0.1s;
+        }
+
+        .future-title.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .future-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
         }
 
         .future-item {
-            text-align: center;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .future-item.visible {
@@ -568,14 +783,29 @@
         }
 
         .future-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 1rem;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s;
+        }
+
+        .future-item.visible .future-icon {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .future-icon svg {
+            width: 32px;
+            height: 32px;
             stroke: var(--green-light);
         }
 
         .future-item h4 {
-            font-size: 0.9375rem;
+            font-size: 1rem;
             font-weight: 600;
         }
 
@@ -583,6 +813,12 @@
         .comments-section {
             background: var(--gray-50);
             padding: 120px 0;
+        }
+
+        .comments-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .comments-header {
@@ -594,13 +830,13 @@
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--green);
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
             margin-bottom: 1rem;
         }
 
         .comments-title {
             font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
+            font-weight: 900;
             color: var(--gray-900);
         }
 
@@ -608,22 +844,13 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }
 
         .comment-card {
             background: var(--white);
             padding: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .comment-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .comment-header {
@@ -634,8 +861,8 @@
         }
 
         .comment-avatar {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             overflow: hidden;
             background: var(--gray-200);
@@ -650,51 +877,52 @@
         .comment-name {
             font-weight: 700;
             color: var(--gray-900);
-            font-size: 0.9375rem;
+            font-size: 1rem;
         }
 
         .comment-role {
-            font-size: 0.6875rem;
+            font-size: 0.75rem;
             color: var(--gray-400);
             letter-spacing: 0.1em;
         }
 
         .comment-text {
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
             color: var(--gray-600);
             line-height: 1.8;
         }
 
         /* CTA Section */
         .cta-section {
-            background: var(--green);
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
             color: var(--white);
             text-align: center;
-            padding: 80px 2rem;
+            padding: 100px 2rem;
         }
 
         .cta-title {
-            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             background: var(--white);
             color: var(--green-dark);
-            padding: 1rem 2rem;
+            padding: 1.25rem 2.5rem;
             text-decoration: none;
             font-weight: 700;
-            font-size: 0.875rem;
+            font-size: 1rem;
+            border-radius: 60px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
         /* Footer */
@@ -714,14 +942,14 @@
         }
 
         .footer-logo img {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
         }
 
         .footer-logo span {
             font-weight: 600;
             color: var(--white);
-            font-size: 0.875rem;
+            font-size: 1rem;
         }
 
         .footer-copy {
@@ -737,21 +965,20 @@
             .future-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .process-flow {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .process-connector {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .process-flow {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .process-connector {
-                width: 2px;
-                height: 20px;
             }
 
             .impact-grid,
@@ -761,12 +988,22 @@
 
             .problem-stats {
                 flex-direction: column;
-                gap: 3rem;
+                gap: 4rem;
             }
 
             .future-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+
+            .process-circle {
+                width: 80px;
+                height: 80px;
+            }
+
+            .process-circle svg {
+                width: 32px;
+                height: 32px;
             }
         }
     </style>
@@ -792,282 +1029,314 @@
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="full-section hero">
-        <div class="section-content">
-            <div class="hero-label">INSPECTION REPORT</div>
-            <h1>ゴミから<span class="highlight">電気</span>を<br>つくる</h1>
-            <p class="hero-subtitle">東埼玉資源環境組合 第一工場で見た<br>循環型社会の最前線</p>
-        </div>
-        <div class="scroll-indicator">
-            <span>SCROLL</span>
-            <div class="scroll-line"></div>
+    <!-- Hero Section -->
+    <section class="scroll-section hero-section">
+        <div class="sticky-container">
+            <div class="hero-content">
+                <div class="hero-label">INSPECTION REPORT</div>
+                <h1 class="hero-title">
+                    <span class="line">ゴミから</span>
+                    <span class="line"><span class="highlight">電気</span>を</span>
+                    <span class="line">つくる</span>
+                </h1>
+                <p class="hero-subtitle">東埼玉資源環境組合 第一工場で見た<br>循環型社会の最前線</p>
+            </div>
+            <div class="scroll-hint">
+                <div class="mouse"></div>
+                <span>SCROLL</span>
+            </div>
         </div>
     </section>
 
     <!-- Problem Section -->
-    <section class="full-section problem-section">
-        <div class="section-content problem-content">
-            <p class="problem-question" data-animate>私たちは毎日、どれだけのゴミを出しているか</p>
-
-            <div class="problem-stats">
-                <div class="problem-stat" data-animate data-delay="200">
-                    <div class="problem-stat-number">800<span class="problem-stat-unit">t</span></div>
-                    <div class="problem-stat-label">1日の処理量</div>
+    <section class="scroll-section problem-section">
+        <div class="sticky-container">
+            <div class="problem-content">
+                <p class="problem-question">私たちは毎日、どれだけのゴミを出しているか</p>
+                <div class="problem-stats">
+                    <div class="problem-stat">
+                        <div class="problem-stat-number">800<span class="unit">t</span></div>
+                        <div class="problem-stat-label">1日の処理量</div>
+                    </div>
+                    <div class="problem-stat">
+                        <div class="problem-stat-number">100<span class="unit">万人</span></div>
+                        <div class="problem-stat-label">対象人口</div>
+                    </div>
                 </div>
-                <div class="problem-stat" data-animate data-delay="400">
-                    <div class="problem-stat-number">100<span class="problem-stat-unit">万人</span></div>
-                    <div class="problem-stat-label">対象人口</div>
-                </div>
-            </div>
-
-            <p class="problem-message" data-animate data-delay="600">
-                5市1町の住民が出すゴミ。<br>
-                これを「負担」ではなく「資源」に変える施設があります。
-            </p>
-        </div>
-    </section>
-
-    <!-- Solution Stats -->
-    <section class="solution-section">
-        <div class="solution-header">
-            <div class="solution-label">SOLUTION</div>
-            <h2 class="solution-title">ゴミを資源に変える力</h2>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card" data-animate>
-                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                </svg>
-                <div class="stat-number">800</div>
-                <div class="stat-unit">トン/日</div>
-                <div class="stat-label">処理能力</div>
-            </div>
-            <div class="stat-card" data-animate>
-                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                </svg>
-                <div class="stat-number">24,000</div>
-                <div class="stat-unit">kW</div>
-                <div class="stat-label">発電出力</div>
-            </div>
-            <div class="stat-card" data-animate>
-                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="3" y1="9" x2="21" y2="9"/>
-                    <line x1="9" y1="21" x2="9" y2="9"/>
-                </svg>
-                <div class="stat-number">4</div>
-                <div class="stat-unit">炉</div>
-                <div class="stat-label">焼却炉数</div>
-            </div>
-            <div class="stat-card" data-animate>
-                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12 6 12 12 16 14"/>
-                </svg>
-                <div class="stat-number">30</div>
-                <div class="stat-unit">年</div>
-                <div class="stat-label">安定稼働</div>
+                <p class="problem-message">5市1町の住民が出すゴミ。<br>これを「負担」ではなく<strong>「資源」</strong>に変える施設があります。</p>
             </div>
         </div>
     </section>
 
-    <!-- Process Section -->
-    <section class="process-section">
-        <div class="process-header">
-            <div class="process-label">PROCESS</div>
-            <h2 class="process-title">ゴミが電気になるまで</h2>
+    <!-- Transform Section -->
+    <section class="scroll-section transform-section">
+        <div class="sticky-container">
+            <div class="transform-content">
+                <div class="transform-header">
+                    <div class="transform-label">PROCESS</div>
+                    <h2 class="transform-title">ゴミが電気になるまで</h2>
+                </div>
+                <div class="process-flow">
+                    <div class="process-step" data-step="0">
+                        <div class="process-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="3" width="15" height="13"/>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                                <circle cx="5.5" cy="18.5" r="2.5"/>
+                                <circle cx="18.5" cy="18.5" r="2.5"/>
+                            </svg>
+                        </div>
+                        <div class="process-step-label">搬入</div>
+                    </div>
+                    <div class="process-connector" data-connector="0"></div>
+                    <div class="process-step" data-step="1">
+                        <div class="process-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
+                        </div>
+                        <div class="process-step-label">貯留</div>
+                    </div>
+                    <div class="process-connector" data-connector="1"></div>
+                    <div class="process-step" data-step="2">
+                        <div class="process-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                            </svg>
+                        </div>
+                        <div class="process-step-label">焼却</div>
+                    </div>
+                    <div class="process-connector" data-connector="2"></div>
+                    <div class="process-step" data-step="3">
+                        <div class="process-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v6m0 12v-6m-6 6H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2m12 6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2M6 6H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2m12-6h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/>
+                            </svg>
+                        </div>
+                        <div class="process-step-label">蒸気</div>
+                    </div>
+                    <div class="process-connector" data-connector="3"></div>
+                    <div class="process-step" data-step="4">
+                        <div class="process-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <div class="process-step-label">発電</div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="process-flow">
-            <div class="process-step" data-animate>
-                <div class="process-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="1" y="3" width="15" height="13"/>
-                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-                        <circle cx="5.5" cy="18.5" r="2.5"/>
-                        <circle cx="18.5" cy="18.5" r="2.5"/>
-                    </svg>
+    <!-- Stats Section -->
+    <section class="scroll-section stats-section">
+        <div class="sticky-container">
+            <div class="stats-content">
+                <div class="stats-header">
+                    <div class="stats-label">FACILITY DATA</div>
+                    <h2 class="stats-title">施設のチカラ</h2>
                 </div>
-                <div class="process-step-label">搬入</div>
-            </div>
-            <div class="process-connector"></div>
-            <div class="process-step" data-animate>
-                <div class="process-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                    </svg>
+                <div class="stats-grid">
+                    <div class="stat-card" data-index="0">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number">800</div>
+                        <div class="stat-unit">トン/日</div>
+                        <div class="stat-label">処理能力</div>
+                    </div>
+                    <div class="stat-card" data-index="1">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number">24,000</div>
+                        <div class="stat-unit">kW</div>
+                        <div class="stat-label">発電出力</div>
+                    </div>
+                    <div class="stat-card" data-index="2">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="3" y1="9" x2="21" y2="9"/>
+                                <line x1="9" y1="21" x2="9" y2="9"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number">4</div>
+                        <div class="stat-unit">炉</div>
+                        <div class="stat-label">焼却炉数</div>
+                    </div>
+                    <div class="stat-card" data-index="3">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number">30</div>
+                        <div class="stat-unit">年</div>
+                        <div class="stat-label">安定稼働</div>
+                    </div>
                 </div>
-                <div class="process-step-label">貯留</div>
-            </div>
-            <div class="process-connector"></div>
-            <div class="process-step" data-animate>
-                <div class="process-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-                    </svg>
-                </div>
-                <div class="process-step-label">焼却</div>
-            </div>
-            <div class="process-connector"></div>
-            <div class="process-step" data-animate>
-                <div class="process-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2v6m0 12v-6m-6 6H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2m12 6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2M6 6H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2m12-6h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/>
-                    </svg>
-                </div>
-                <div class="process-step-label">蒸気</div>
-            </div>
-            <div class="process-connector"></div>
-            <div class="process-step" data-animate>
-                <div class="process-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                    </svg>
-                </div>
-                <div class="process-step-label">発電</div>
             </div>
         </div>
     </section>
 
     <!-- Impact Section -->
-    <section class="impact-section">
-        <div class="impact-header">
-            <div class="impact-label">YOUR ACTION</div>
-            <h2 class="impact-title">あなたの分別が未来を変える</h2>
-        </div>
-
-        <div class="impact-grid">
-            <div class="impact-card" data-animate>
-                <div class="impact-number">01</div>
-                <div class="impact-content">
-                    <h4>施設を守る</h4>
-                    <p>正しい分別が焼却炉を守り、維持費を削減</p>
+    <section class="scroll-section impact-section">
+        <div class="sticky-container">
+            <div class="impact-content">
+                <div class="impact-header">
+                    <div class="impact-label">YOUR ACTION</div>
+                    <h2 class="impact-title">あなたの分別が未来を変える</h2>
                 </div>
-            </div>
-            <div class="impact-card" data-animate>
-                <div class="impact-number">02</div>
-                <div class="impact-content">
-                    <h4>発電効率アップ</h4>
-                    <p>適正なゴミ質がより多くの電気を生み出す</p>
-                </div>
-            </div>
-            <div class="impact-card" data-animate>
-                <div class="impact-number">03</div>
-                <div class="impact-content">
-                    <h4>資源を活かす</h4>
-                    <p>リサイクルで新たな製品に生まれ変わる</p>
-                </div>
-            </div>
-            <div class="impact-card" data-animate>
-                <div class="impact-number">04</div>
-                <div class="impact-content">
-                    <h4>税金を節約</h4>
-                    <p>効率化で住民負担を軽減できる</p>
+                <div class="impact-grid">
+                    <div class="impact-card" data-index="0">
+                        <div class="impact-number">1</div>
+                        <div class="impact-text">
+                            <h4>施設を守る</h4>
+                            <p>正しい分別が焼却炉を守り、維持費を削減します</p>
+                        </div>
+                    </div>
+                    <div class="impact-card" data-index="1">
+                        <div class="impact-number">2</div>
+                        <div class="impact-text">
+                            <h4>発電効率アップ</h4>
+                            <p>適正なゴミ質がより多くの電気を生み出します</p>
+                        </div>
+                    </div>
+                    <div class="impact-card" data-index="2">
+                        <div class="impact-number">3</div>
+                        <div class="impact-text">
+                            <h4>資源を活かす</h4>
+                            <p>リサイクルで新たな製品に生まれ変わります</p>
+                        </div>
+                    </div>
+                    <div class="impact-card" data-index="3">
+                        <div class="impact-number">4</div>
+                        <div class="impact-text">
+                            <h4>税金を節約</h4>
+                            <p>効率化で住民負担を軽減できます</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Future Section -->
-    <section class="future-section">
-        <div class="future-header">
-            <div class="future-label">MISATO'S FUTURE</div>
-            <h2 class="future-title">三郷市の未来へ</h2>
-        </div>
-
-        <div class="future-grid">
-            <div class="future-item" data-animate>
-                <svg class="future-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <h4>広域連携の強化</h4>
-            </div>
-            <div class="future-item" data-animate data-delay="100">
-                <svg class="future-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                </svg>
-                <h4>エネルギー地産地消</h4>
-            </div>
-            <div class="future-item" data-animate data-delay="200">
-                <svg class="future-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="23 4 23 10 17 10"/>
-                    <polyline points="1 20 1 14 7 14"/>
-                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                </svg>
-                <h4>循環型社会の実現</h4>
-            </div>
-            <div class="future-item" data-animate data-delay="300">
-                <svg class="future-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="2" y1="12" x2="22" y2="12"/>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
-                <h4>持続可能なまち</h4>
+    <section class="scroll-section future-section">
+        <div class="sticky-container">
+            <div class="future-content">
+                <div class="future-header">
+                    <div class="future-label">MISATO'S FUTURE</div>
+                    <h2 class="future-title">三郷市の未来へ</h2>
+                </div>
+                <div class="future-grid">
+                    <div class="future-item" data-index="0">
+                        <div class="future-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h4>広域連携の強化</h4>
+                    </div>
+                    <div class="future-item" data-index="1">
+                        <div class="future-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <h4>エネルギー地産地消</h4>
+                    </div>
+                    <div class="future-item" data-index="2">
+                        <div class="future-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <polyline points="1 20 1 14 7 14"/>
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                            </svg>
+                        </div>
+                        <h4>循環型社会の実現</h4>
+                    </div>
+                    <div class="future-item" data-index="3">
+                        <div class="future-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <h4>持続可能なまち</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Comments Section -->
     <section class="comments-section">
-        <div class="comments-header">
-            <div class="comments-label">COMMENTS</div>
-            <h2 class="comments-title">議員の声</h2>
-        </div>
-
-        <div class="comments-grid">
-            <div class="comment-card" data-animate>
-                <div class="comment-header">
-                    <div class="comment-avatar">
-                        <img src="images/satohiroyuki.png" alt="佐藤裕之">
-                    </div>
-                    <div>
-                        <div class="comment-name">佐藤 裕之</div>
-                        <div class="comment-role">会長</div>
-                    </div>
-                </div>
-                <p class="comment-text">5市1町の広域連携でスケールメリットを最大化。三郷市単独では実現できない処理能力です。</p>
+        <div class="comments-content">
+            <div class="comments-header">
+                <div class="comments-label">COMMENTS</div>
+                <h2 class="comments-title">議員の声</h2>
             </div>
-            <div class="comment-card" data-animate data-delay="100">
-                <div class="comment-header">
-                    <div class="comment-avatar">
-                        <img src="images/seiichitakahashi.png" alt="高橋誠一">
+            <div class="comments-grid">
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-avatar">
+                            <img src="images/satohiroyuki.png" alt="佐藤裕之">
+                        </div>
+                        <div>
+                            <div class="comment-name">佐藤 裕之</div>
+                            <div class="comment-role">会長</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="comment-name">高橋 誠一</div>
-                        <div class="comment-role">幹事</div>
-                    </div>
+                    <p class="comment-text">5市1町の広域連携でスケールメリットを最大化。三郷市単独では実現できない処理能力です。</p>
                 </div>
-                <p class="comment-text">ゴミをエネルギーに変える発想。これこそ循環型社会のあるべき姿だと実感しました。</p>
-            </div>
-            <div class="comment-card" data-animate data-delay="200">
-                <div class="comment-header">
-                    <div class="comment-avatar">
-                        <img src="images/chihohidaka.png" alt="日高千穂">
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-avatar">
+                            <img src="images/seiichitakahashi.png" alt="高橋誠一">
+                        </div>
+                        <div>
+                            <div class="comment-name">高橋 誠一</div>
+                            <div class="comment-role">幹事</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="comment-name">日高 千穂</div>
-                        <div class="comment-role">会計</div>
-                    </div>
+                    <p class="comment-text">ゴミをエネルギーに変える発想。これこそ循環型社会のあるべき姿だと実感しました。</p>
                 </div>
-                <p class="comment-text">市民一人ひとりの分別が、この施設を支えている。啓発活動の重要性を再認識しました。</p>
-            </div>
-            <div class="comment-card" data-animate data-delay="300">
-                <div class="comment-header">
-                    <div class="comment-avatar">
-                        <img src="images/suzukiyusaku.png" alt="鈴木優作">
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-avatar">
+                            <img src="images/chihohidaka.png" alt="日高千穂">
+                        </div>
+                        <div>
+                            <div class="comment-name">日高 千穂</div>
+                            <div class="comment-role">会計</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="comment-name">鈴木 優作</div>
-                        <div class="comment-role">議員</div>
-                    </div>
+                    <p class="comment-text">市民一人ひとりの分別が、この施設を支えている。啓発活動の重要性を再認識しました。</p>
                 </div>
-                <p class="comment-text">30年の安定稼働を支える技術と人材。長期視点のインフラ運営を学びました。</p>
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-avatar">
+                            <img src="images/suzukiyusaku.png" alt="鈴木優作">
+                        </div>
+                        <div>
+                            <div class="comment-name">鈴木 優作</div>
+                            <div class="comment-role">議員</div>
+                        </div>
+                    </div>
+                    <p class="comment-text">30年の安定稼働を支える技術と人材。長期視点のインフラ運営を学びました。</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1077,7 +1346,7 @@
         <h2 class="cta-title">一緒に、三郷の未来を創りませんか？</h2>
         <a href="index.html#contact" class="cta-button">
             お問い合わせ
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
         </a>
@@ -1095,57 +1364,162 @@
     <script>
         // Progress Bar
         const progressBar = document.querySelector('.progress-bar');
-
-        // Header visibility
         const header = document.querySelector('.header');
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
+        // Get all scroll sections
+        const sections = {
+            hero: {
+                el: document.querySelector('.hero-section'),
+                animations: [
+                    { el: '.hero-label', start: 0.1, class: 'visible' },
+                    { el: '.hero-title .line:nth-child(1)', start: 0.15, class: 'visible' },
+                    { el: '.hero-title .line:nth-child(2)', start: 0.25, class: 'visible' },
+                    { el: '.hero-title .line:nth-child(3)', start: 0.35, class: 'visible' },
+                    { el: '.hero-subtitle', start: 0.45, class: 'visible' },
+                    { el: '.scroll-hint', start: 0.6, class: 'visible' }
+                ]
+            },
+            problem: {
+                el: document.querySelector('.problem-section'),
+                animations: [
+                    { el: '.problem-question', start: 0.1, class: 'visible' },
+                    { el: '.problem-stat:nth-child(1) .problem-stat-number', start: 0.25, class: 'visible' },
+                    { el: '.problem-stat:nth-child(1) .problem-stat-label', start: 0.3, class: 'visible' },
+                    { el: '.problem-stat:nth-child(2) .problem-stat-number', start: 0.4, class: 'visible' },
+                    { el: '.problem-stat:nth-child(2) .problem-stat-label', start: 0.45, class: 'visible' },
+                    { el: '.problem-message', start: 0.6, class: 'visible' }
+                ]
+            },
+            transform: {
+                el: document.querySelector('.transform-section'),
+                animations: [
+                    { el: '.transform-label', start: 0.05, class: 'visible' },
+                    { el: '.transform-title', start: 0.1, class: 'visible' },
+                    { el: '[data-step="0"]', start: 0.2, class: 'visible' },
+                    { el: '[data-step="0"]', start: 0.2, end: 0.35, class: 'active' },
+                    { el: '[data-connector="0"]', start: 0.25, class: 'filled' },
+                    { el: '[data-step="1"]', start: 0.3, class: 'visible' },
+                    { el: '[data-step="1"]', start: 0.35, end: 0.5, class: 'active' },
+                    { el: '[data-connector="1"]', start: 0.4, class: 'filled' },
+                    { el: '[data-step="2"]', start: 0.45, class: 'visible' },
+                    { el: '[data-step="2"]', start: 0.5, end: 0.65, class: 'active' },
+                    { el: '[data-connector="2"]', start: 0.55, class: 'filled' },
+                    { el: '[data-step="3"]', start: 0.6, class: 'visible' },
+                    { el: '[data-step="3"]', start: 0.65, end: 0.8, class: 'active' },
+                    { el: '[data-connector="3"]', start: 0.7, class: 'filled' },
+                    { el: '[data-step="4"]', start: 0.75, class: 'visible' },
+                    { el: '[data-step="4"]', start: 0.8, end: 1, class: 'active' }
+                ]
+            },
+            stats: {
+                el: document.querySelector('.stats-section'),
+                animations: [
+                    { el: '.stats-label', start: 0.1, class: 'visible' },
+                    { el: '.stats-title', start: 0.15, class: 'visible' },
+                    { el: '[data-index="0"].stat-card', start: 0.25, class: 'visible' },
+                    { el: '[data-index="1"].stat-card', start: 0.4, class: 'visible' },
+                    { el: '[data-index="2"].stat-card', start: 0.55, class: 'visible' },
+                    { el: '[data-index="3"].stat-card', start: 0.7, class: 'visible' }
+                ]
+            },
+            impact: {
+                el: document.querySelector('.impact-section'),
+                animations: [
+                    { el: '.impact-label', start: 0.1, class: 'visible' },
+                    { el: '.impact-title', start: 0.15, class: 'visible' },
+                    { el: '[data-index="0"].impact-card', start: 0.25, class: 'visible' },
+                    { el: '[data-index="1"].impact-card', start: 0.4, class: 'visible' },
+                    { el: '[data-index="2"].impact-card', start: 0.55, class: 'visible' },
+                    { el: '[data-index="3"].impact-card', start: 0.7, class: 'visible' }
+                ]
+            },
+            future: {
+                el: document.querySelector('.future-section'),
+                animations: [
+                    { el: '.future-label', start: 0.1, class: 'visible' },
+                    { el: '.future-title', start: 0.15, class: 'visible' },
+                    { el: '[data-index="0"].future-item', start: 0.3, class: 'visible' },
+                    { el: '[data-index="1"].future-item', start: 0.45, class: 'visible' },
+                    { el: '[data-index="2"].future-item', start: 0.6, class: 'visible' },
+                    { el: '[data-index="3"].future-item', start: 0.75, class: 'visible' }
+                ]
+            }
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const delay = entry.target.dataset.delay || 0;
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, delay);
+        // Calculate section progress
+        function getSectionProgress(section) {
+            const rect = section.getBoundingClientRect();
+            const sectionHeight = section.offsetHeight;
+            const viewportHeight = window.innerHeight;
+
+            // Calculate how far we've scrolled through the section
+            const scrolled = -rect.top;
+            const scrollableHeight = sectionHeight - viewportHeight;
+
+            if (scrolled <= 0) return 0;
+            if (scrolled >= scrollableHeight) return 1;
+
+            return scrolled / scrollableHeight;
+        }
+
+        // Apply animations based on progress
+        function applyAnimations(sectionKey, progress) {
+            const section = sections[sectionKey];
+            if (!section) return;
+
+            section.animations.forEach(anim => {
+                const el = section.el.querySelector(anim.el);
+                if (!el) return;
+
+                const shouldBeVisible = progress >= anim.start && (anim.end === undefined || progress <= anim.end);
+
+                if (shouldBeVisible) {
+                    el.classList.add(anim.class);
+                } else if (anim.end !== undefined) {
+                    // Only remove if this is a ranged animation
+                    el.classList.remove(anim.class);
                 }
             });
-        }, observerOptions);
+        }
 
-        document.querySelectorAll('[data-animate]').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Scroll event handler
-        window.addEventListener('scroll', () => {
+        // Main scroll handler
+        function handleScroll() {
             const scrollY = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = (scrollY / docHeight) * 100;
+            const totalProgress = scrollY / docHeight;
 
             // Update progress bar
-            progressBar.style.width = `${progress}%`;
+            progressBar.style.width = `${totalProgress * 100}%`;
 
             // Show/hide header
-            if (scrollY > 100) {
+            if (scrollY > window.innerHeight * 0.5) {
                 header.classList.add('visible');
             } else {
                 header.classList.remove('visible');
             }
-        });
 
-        // Parallax effect for hero
-        const heroContent = document.querySelector('.hero .section-content');
+            // Process each section
+            Object.keys(sections).forEach(key => {
+                const section = sections[key];
+                const progress = getSectionProgress(section.el);
+                applyAnimations(key, progress);
+            });
+        }
+
+        // Throttle scroll events for performance
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            if (scrollY < window.innerHeight) {
-                heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
-                heroContent.style.opacity = 1 - (scrollY / window.innerHeight);
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
             }
         });
+
+        // Initial call
+        handleScroll();
     </script>
 </body>
 
