@@ -258,6 +258,256 @@
             }
         }
 
+        /* Pinned Section - スクロールジャック用 */
+        .pinned-section {
+            position: relative;
+            height: 300vh;
+        }
+
+        .pinned-content {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Stats Pinned Section */
+        .stats-pinned {
+            background: linear-gradient(135deg, var(--gray-900) 0%, #0f172a 100%);
+        }
+
+        .stats-pinned .pinned-content {
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .stats-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--green-light);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .stats-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.1s;
+        }
+
+        .stats-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .stat-item:nth-child(2) { transition-delay: 0.15s; }
+        .stat-item:nth-child(3) { transition-delay: 0.3s; }
+        .stat-item:nth-child(4) { transition-delay: 0.45s; }
+
+        .stat-number {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            color: var(--green);
+            line-height: 1;
+            position: relative;
+        }
+
+        .stat-number .counter {
+            display: inline-block;
+        }
+
+        .stat-unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-400);
+            margin-top: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-top: 1rem;
+        }
+
+        /* Budget Pinned Section */
+        .budget-pinned {
+            background: var(--white);
+        }
+
+        .budget-pinned .pinned-content {
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .budget-container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .budget-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .budget-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .budget-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
+            color: var(--gray-900);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.1s;
+        }
+
+        .budget-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .budget-big-number {
+            font-size: clamp(5rem, 20vw, 12rem);
+            font-weight: 900;
+            color: var(--green);
+            line-height: 1;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .budget-big-number.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .budget-big-number span {
+            font-size: 0.3em;
+            color: var(--gray-500);
+        }
+
+        .budget-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.3s;
+        }
+
+        .budget-subtitle.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .budget-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .budget-item {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .budget-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .budget-item:nth-child(2) { transition-delay: 0.1s; }
+        .budget-item:nth-child(3) { transition-delay: 0.2s; }
+
+        .budget-item-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+
+        .budget-item-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .budget-note {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--green);
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.4s;
+        }
+
+        .budget-note.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .budget-note p {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
         /* Section Base */
         .section {
             padding: 100px 2rem;
@@ -288,9 +538,9 @@
             color: var(--gray-900);
         }
 
-        /* Overview Section - 視察概要 */
+        /* Overview Section */
         .overview {
-            background: var(--white);
+            background: var(--gray-50);
         }
 
         .overview-grid {
@@ -300,7 +550,6 @@
             background: var(--gray-200);
             border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 3rem;
         }
 
         .overview-item {
@@ -343,85 +592,7 @@
             font-weight: 400;
         }
 
-        /* Budget Section - 経費の透明性 */
-        .budget {
-            background: var(--gray-50);
-        }
-
-        .budget-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-        }
-
-        .budget-total {
-            text-align: center;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--gray-200);
-            margin-bottom: 2rem;
-        }
-
-        .budget-total-label {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-            margin-bottom: 0.5rem;
-        }
-
-        .budget-total-value {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--gray-900);
-        }
-
-        .budget-total-value small {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--gray-500);
-        }
-
-        .budget-total-note {
-            font-size: 0.8125rem;
-            color: var(--green);
-            margin-top: 0.5rem;
-        }
-
-        .budget-breakdown {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .budget-item {
-            text-align: center;
-        }
-
-        .budget-item-label {
-            font-size: 0.8125rem;
-            color: var(--gray-500);
-            margin-bottom: 0.5rem;
-        }
-
-        .budget-item-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-
-        .budget-note {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(16, 185, 129, 0.05);
-            border-radius: 12px;
-            border-left: 4px solid var(--green);
-        }
-
-        .budget-note p {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-        }
-
-        /* Why Section - なぜここを視察したのか */
+        /* Why Section */
         .why {
             background: var(--white);
         }
@@ -436,7 +607,19 @@
             background: var(--gray-50);
             padding: 2rem;
             border-radius: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
+
+        .why-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .why-card:nth-child(2) { transition-delay: 0.1s; }
+        .why-card:nth-child(3) { transition-delay: 0.2s; }
+        .why-card:nth-child(4) { transition-delay: 0.3s; }
 
         .why-card.highlight {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.05));
@@ -512,7 +695,7 @@
             border-radius: 50%;
         }
 
-        /* Photos Section - 現地写真 */
+        /* Photos Section */
         .photos {
             background: var(--gray-900);
             color: var(--white);
@@ -540,26 +723,6 @@
             overflow: hidden;
         }
 
-        .photo-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .photo-card-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-        }
-
-        .photo-card-caption {
-            font-size: 0.8125rem;
-            color: var(--white);
-        }
-
         .photo-placeholder {
             width: 100%;
             height: 100%;
@@ -581,175 +744,105 @@
             font-size: 0.75rem;
         }
 
-        /* Process Section - 視察で学んだこと */
-        .process {
-            background: var(--white);
+        /* Learnings Pinned Section */
+        .learnings-pinned {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
         }
 
-        .process-flow {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
+        .learnings-pinned .pinned-content {
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .learnings-container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .learnings-header {
+            text-align: center;
             margin-bottom: 3rem;
         }
 
-        .process-step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-
-        .process-step::after {
-            content: '';
-            position: absolute;
-            top: 35px;
-            right: -50%;
-            width: 100%;
-            height: 2px;
-            background: var(--gray-200);
-        }
-
-        .process-step:last-child::after {
-            display: none;
-        }
-
-        .process-step-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, var(--green), var(--green-light));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .process-step-icon svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--white);
-        }
-
-        .process-step-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.25rem;
-        }
-
-        .process-step-desc {
-            font-size: 0.8125rem;
-            color: var(--gray-500);
-        }
-
-        .process-detail {
-            background: var(--gray-50);
-            border-radius: 16px;
-            padding: 2rem;
-        }
-
-        .process-detail h4 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
-        }
-
-        .process-detail p {
-            font-size: 0.9375rem;
-            color: var(--gray-600);
-            line-height: 1.8;
-        }
-
-        /* Stats Section */
-        .stats {
-            background: var(--gray-50);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .stat-icon {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, var(--green), var(--green-light));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .stat-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--white);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--gray-900);
-            line-height: 1;
-        }
-
-        .stat-unit {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--gray-500);
-            margin-top: 0.25rem;
-        }
-
-        .stat-label {
+        .learnings-label {
             font-size: 0.75rem;
-            color: var(--gray-400);
-            margin-top: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
         }
 
-        /* Learnings Section - 議員個別の学び */
-        .learnings {
-            background: var(--white);
+        .learnings-label.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .learning-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+        .learnings-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 900;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.1s;
+        }
+
+        .learnings-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .learnings-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .learnings-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .learning-slide {
+            min-width: 100%;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
         }
 
         .learning-card {
-            background: var(--gray-50);
-            border-radius: 16px;
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 700px;
+            width: 100%;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.6s ease-out;
+        }
+
+        .learning-card.visible {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .learning-card-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .learning-card-avatar {
-            width: 64px;
-            height: 64px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             overflow: hidden;
-            background: var(--gray-200);
+            background: rgba(255,255,255,0.2);
+            border: 3px solid rgba(255,255,255,0.3);
         }
 
         .learning-card-avatar img {
@@ -759,47 +852,86 @@
         }
 
         .learning-card-name {
-            font-size: 1.125rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--gray-900);
+            color: var(--white);
         }
 
         .learning-card-role {
-            font-size: 0.75rem;
-            color: var(--gray-500);
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.7);
         }
 
         .learning-card-content h4 {
-            font-size: 0.9375rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--green-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .learning-card-content p {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            line-height: 1.8;
+            color: var(--white);
             margin-bottom: 1rem;
         }
 
-        .learning-card-action {
-            font-size: 0.8125rem;
-            color: var(--gray-500);
-            padding: 1rem;
+        .learning-card-content p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.9;
+        }
+
+        .learnings-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .learnings-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .learnings-dot.active {
             background: var(--white);
-            border-radius: 8px;
-            border-left: 3px solid var(--green);
+            transform: scale(1.2);
         }
 
-        .learning-card-action strong {
-            color: var(--gray-800);
+        .learnings-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
-        /* Outcome Section - 成果と今後の提言 */
+        .learnings-nav button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .learnings-nav button:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .learnings-nav button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Outcome Section */
         .outcome {
             background: var(--navy);
             color: var(--white);
+            padding: 100px 2rem;
         }
 
         .outcome .section-label {
@@ -821,7 +953,18 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
+
+        .outcome-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .outcome-card:nth-child(2) { transition-delay: 0.1s; }
+        .outcome-card:nth-child(3) { transition-delay: 0.2s; }
 
         .outcome-card-number {
             width: 40px;
@@ -848,7 +991,7 @@
             line-height: 1.7;
         }
 
-        /* FAQ Section - よくある質問 */
+        /* FAQ Section */
         .faq {
             background: var(--gray-50);
         }
@@ -967,22 +1110,16 @@
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
             }
 
             .outcome-grid {
                 grid-template-columns: 1fr;
             }
 
-            .process-flow {
-                flex-wrap: wrap;
-            }
-
-            .process-step {
-                flex: 0 0 calc(33.333% - 1rem);
-            }
-
-            .process-step::after {
-                display: none;
+            .budget-breakdown {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
         }
 
@@ -991,13 +1128,11 @@
                 grid-template-columns: 1fr;
             }
 
-            .budget-breakdown {
+            .stats-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
             }
 
-            .why-grid,
-            .learning-cards {
+            .why-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1005,17 +1140,18 @@
                 grid-template-columns: 1fr;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .process-step {
-                flex: 0 0 100%;
-            }
-
             .hero-meta {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .learning-card {
+                padding: 1.5rem;
+            }
+
+            .learning-card-header {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -1143,19 +1279,46 @@
         </div>
     </section>
 
-    <!-- Budget -->
-    <section class="section budget">
-        <div class="section-inner">
-            <div class="section-header">
-                <div class="section-label">TRANSPARENCY</div>
-                <h2 class="section-title">視察経費の公開</h2>
-            </div>
-            <div class="budget-card">
-                <div class="budget-total">
-                    <div class="budget-total-label">視察にかかった総経費</div>
-                    <div class="budget-total-value">0<small>円</small></div>
-                    <div class="budget-total-note">政務活動費は一切使用していません</div>
+    <!-- Stats Pinned Section -->
+    <section class="pinned-section stats-pinned" data-section="stats">
+        <div class="pinned-content">
+            <div class="stats-container">
+                <div class="stats-label">FACILITY DATA</div>
+                <h2 class="stats-title">施設のチカラ</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-target="800">0</span></div>
+                        <div class="stat-unit">トン/日</div>
+                        <div class="stat-label">処理能力</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-target="24000">0</span></div>
+                        <div class="stat-unit">kW</div>
+                        <div class="stat-label">発電出力</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-target="4">0</span></div>
+                        <div class="stat-unit">炉</div>
+                        <div class="stat-label">焼却炉数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-target="30">0</span></div>
+                        <div class="stat-unit">年</div>
+                        <div class="stat-label">安定稼働</div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Pinned Section -->
+    <section class="pinned-section budget-pinned" data-section="budget">
+        <div class="pinned-content">
+            <div class="budget-container">
+                <div class="budget-label">TRANSPARENCY</div>
+                <h2 class="budget-title">視察経費の公開</h2>
+                <div class="budget-big-number">0<span>円</span></div>
+                <p class="budget-subtitle">政務活動費は一切使用していません</p>
                 <div class="budget-breakdown">
                     <div class="budget-item">
                         <div class="budget-item-label">交通費</div>
@@ -1171,14 +1334,14 @@
                     </div>
                 </div>
                 <div class="budget-note">
-                    <p>本視察は三郷市近郊の施設への日帰り視察のため、交通費は各自負担、政務活動費は使用していません。視察先である東埼玉資源環境組合は、三郷市が構成市として加盟しており、構成市議員の視察受け入れは通常業務の一環として行われています。</p>
+                    <p>本視察は三郷市近郊の施設への日帰り視察のため、交通費は各自負担、政務活動費は使用していません。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why -->
-    <section class="section why">
+    <!-- Why Section -->
+    <section class="section why" data-section="why">
         <div class="section-inner">
             <div class="section-header">
                 <div class="section-label">WHY HERE</div>
@@ -1258,7 +1421,7 @@
         </div>
     </section>
 
-    <!-- Photos -->
+    <!-- Photos Section -->
     <section class="section photos">
         <div class="section-inner">
             <div class="section-header">
@@ -1330,147 +1493,110 @@
         </div>
     </section>
 
-    <!-- Stats -->
-    <section class="section stats">
-        <div class="section-inner">
-            <div class="section-header">
-                <div class="section-label">FACILITY DATA</div>
-                <h2 class="section-title">施設のチカラ</h2>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+    <!-- Learnings Pinned Section -->
+    <section class="pinned-section learnings-pinned" data-section="learnings">
+        <div class="pinned-content">
+            <div class="learnings-container">
+                <div class="learnings-header">
+                    <div class="learnings-label">LEARNINGS</div>
+                    <h2 class="learnings-title">議員それぞれの学び</h2>
+                </div>
+                <div class="learnings-carousel">
+                    <div class="learnings-track">
+                        <div class="learning-slide">
+                            <div class="learning-card">
+                                <div class="learning-card-header">
+                                    <div class="learning-card-avatar">
+                                        <img src="images/satohiroyuki.png" alt="佐藤裕之">
+                                    </div>
+                                    <div>
+                                        <div class="learning-card-name">佐藤 裕之</div>
+                                        <div class="learning-card-role">会長</div>
+                                    </div>
+                                </div>
+                                <div class="learning-card-content">
+                                    <h4>広域連携のスケールメリット</h4>
+                                    <p>5市1町の広域連携により、三郷市単独では実現不可能な規模の施設運営が可能に。特に発電による売電収入が運営コスト削減に大きく寄与していることを確認しました。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="learning-slide">
+                            <div class="learning-card">
+                                <div class="learning-card-header">
+                                    <div class="learning-card-avatar">
+                                        <img src="images/seiichitakahashi.png" alt="高橋誠一">
+                                    </div>
+                                    <div>
+                                        <div class="learning-card-name">高橋 誠一</div>
+                                        <div class="learning-card-role">幹事</div>
+                                    </div>
+                                </div>
+                                <div class="learning-card-content">
+                                    <h4>循環型社会の最前線</h4>
+                                    <p>ゴミを「負担」ではなく「資源」として活用する発想に感銘を受けました。焼却熱を利用した発電システムは、エネルギーの地産地消モデルとして注目に値します。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="learning-slide">
+                            <div class="learning-card">
+                                <div class="learning-card-header">
+                                    <div class="learning-card-avatar">
+                                        <img src="images/chihohidaka.png" alt="日高千穂">
+                                    </div>
+                                    <div>
+                                        <div class="learning-card-name">日高 千穂</div>
+                                        <div class="learning-card-role">会計</div>
+                                    </div>
+                                </div>
+                                <div class="learning-card-content">
+                                    <h4>市民参加の重要性</h4>
+                                    <p>施設の効率的な運営は、市民一人ひとりの適切な分別にかかっています。啓発活動の重要性と、その効果を実感しました。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="learning-slide">
+                            <div class="learning-card">
+                                <div class="learning-card-header">
+                                    <div class="learning-card-avatar">
+                                        <img src="images/suzukiyusaku.png" alt="鈴木優作">
+                                    </div>
+                                    <div>
+                                        <div class="learning-card-name">鈴木 優作</div>
+                                        <div class="learning-card-role">議員</div>
+                                    </div>
+                                </div>
+                                <div class="learning-card-content">
+                                    <h4>長期視点のインフラ運営</h4>
+                                    <p>30年の安定稼働を支える技術と人材。施設の計画的な維持管理と、次世代への引き継ぎについて、長期的な視点の重要性を学びました。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="learnings-dots">
+                    <div class="learnings-dot active" data-index="0"></div>
+                    <div class="learnings-dot" data-index="1"></div>
+                    <div class="learnings-dot" data-index="2"></div>
+                    <div class="learnings-dot" data-index="3"></div>
+                </div>
+                <div class="learnings-nav">
+                    <button class="prev-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
                         </svg>
-                    </div>
-                    <div class="stat-number">800</div>
-                    <div class="stat-unit">トン/日</div>
-                    <div class="stat-label">処理能力</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </button>
+                    <button class="next-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
                         </svg>
-                    </div>
-                    <div class="stat-number">24,000</div>
-                    <div class="stat-unit">kW</div>
-                    <div class="stat-label">発電出力</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                            <line x1="3" y1="9" x2="21" y2="9"/>
-                            <line x1="9" y1="21" x2="9" y2="9"/>
-                        </svg>
-                    </div>
-                    <div class="stat-number">4</div>
-                    <div class="stat-unit">炉</div>
-                    <div class="stat-label">焼却炉数</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                    </div>
-                    <div class="stat-number">30</div>
-                    <div class="stat-unit">年</div>
-                    <div class="stat-label">安定稼働</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Learnings -->
-    <section class="section learnings">
-        <div class="section-inner">
-            <div class="section-header">
-                <div class="section-label">LEARNINGS</div>
-                <h2 class="section-title">議員それぞれの学び</h2>
-            </div>
-            <div class="learning-cards">
-                <div class="learning-card">
-                    <div class="learning-card-header">
-                        <div class="learning-card-avatar">
-                            <img src="images/satohiroyuki.png" alt="佐藤裕之">
-                        </div>
-                        <div>
-                            <div class="learning-card-name">佐藤 裕之</div>
-                            <div class="learning-card-role">会長</div>
-                        </div>
-                    </div>
-                    <div class="learning-card-content">
-                        <h4>広域連携のスケールメリット</h4>
-                        <p>5市1町の広域連携により、三郷市単独では実現不可能な規模の施設運営が可能に。特に発電による売電収入が運営コスト削減に大きく寄与していることを確認しました。</p>
-                        <div class="learning-card-action">
-                            <strong>今後の行動：</strong>広域連携の更なる効率化について、議会で質問を予定
-                        </div>
-                    </div>
-                </div>
-                <div class="learning-card">
-                    <div class="learning-card-header">
-                        <div class="learning-card-avatar">
-                            <img src="images/seiichitakahashi.png" alt="高橋誠一">
-                        </div>
-                        <div>
-                            <div class="learning-card-name">高橋 誠一</div>
-                            <div class="learning-card-role">幹事</div>
-                        </div>
-                    </div>
-                    <div class="learning-card-content">
-                        <h4>循環型社会の最前線</h4>
-                        <p>ゴミを「負担」ではなく「資源」として活用する発想に感銘を受けました。焼却熱を利用した発電システムは、エネルギーの地産地消モデルとして注目に値します。</p>
-                        <div class="learning-card-action">
-                            <strong>今後の行動：</strong>環境教育の場としての施設活用を提案予定
-                        </div>
-                    </div>
-                </div>
-                <div class="learning-card">
-                    <div class="learning-card-header">
-                        <div class="learning-card-avatar">
-                            <img src="images/chihohidaka.png" alt="日高千穂">
-                        </div>
-                        <div>
-                            <div class="learning-card-name">日高 千穂</div>
-                            <div class="learning-card-role">会計</div>
-                        </div>
-                    </div>
-                    <div class="learning-card-content">
-                        <h4>市民参加の重要性</h4>
-                        <p>施設の効率的な運営は、市民一人ひとりの適切な分別にかかっています。啓発活動の重要性と、その効果を実感しました。</p>
-                        <div class="learning-card-action">
-                            <strong>今後の行動：</strong>市民向けの分別啓発イベントの企画を検討
-                        </div>
-                    </div>
-                </div>
-                <div class="learning-card">
-                    <div class="learning-card-header">
-                        <div class="learning-card-avatar">
-                            <img src="images/suzukiyusaku.png" alt="鈴木優作">
-                        </div>
-                        <div>
-                            <div class="learning-card-name">鈴木 優作</div>
-                            <div class="learning-card-role">議員</div>
-                        </div>
-                    </div>
-                    <div class="learning-card-content">
-                        <h4>長期視点のインフラ運営</h4>
-                        <p>30年の安定稼働を支える技術と人材。施設の計画的な維持管理と、次世代への引き継ぎについて、長期的な視点の重要性を学びました。</p>
-                        <div class="learning-card-action">
-                            <strong>今後の行動：</strong>施設更新計画への三郷市の関与について調査
-                        </div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Outcome -->
-    <section class="section outcome">
+    <section class="section outcome" data-section="outcome">
         <div class="section-inner">
             <div class="section-header">
                 <div class="section-label">OUTCOME</div>
@@ -1545,11 +1671,200 @@
     </footer>
 
     <script>
-        // Progress Bar
+        // Progress Bar & Header
         const progressBar = document.querySelector('.progress-bar');
         const header = document.querySelector('.header');
 
-        window.addEventListener('scroll', () => {
+        // Pinned Sections
+        const pinnedSections = document.querySelectorAll('.pinned-section');
+
+        // Learnings Carousel
+        const learningsTrack = document.querySelector('.learnings-track');
+        const learningsDots = document.querySelectorAll('.learnings-dot');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        let currentSlide = 0;
+        const totalSlides = 4;
+
+        function updateCarousel(index) {
+            currentSlide = index;
+            learningsTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            learningsDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            updateCarousel((currentSlide - 1 + totalSlides) % totalSlides);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            updateCarousel((currentSlide + 1) % totalSlides);
+        });
+
+        learningsDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => updateCarousel(i));
+        });
+
+        // Counter Animation
+        function animateCounter(element, target) {
+            const duration = 2000;
+            const start = 0;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(start + (target - start) * easeProgress);
+                element.textContent = current.toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        // Scroll Animation State
+        let statsAnimated = false;
+        let budgetAnimated = false;
+        let learningsAnimated = false;
+        let scrollDirection = 'down';
+        let lastScrollY = 0;
+
+        // Check scroll direction
+        function checkScrollDirection() {
+            const currentScrollY = window.scrollY;
+            scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+            lastScrollY = currentScrollY;
+        }
+
+        // Get section progress (0-1)
+        function getSectionProgress(section) {
+            const rect = section.getBoundingClientRect();
+            const sectionHeight = section.offsetHeight;
+            const viewportHeight = window.innerHeight;
+            const scrolled = -rect.top;
+            const scrollableHeight = sectionHeight - viewportHeight;
+
+            if (scrolled <= 0) return 0;
+            if (scrolled >= scrollableHeight) return 1;
+            return scrolled / scrollableHeight;
+        }
+
+        // Animate Stats Section
+        function animateStats(progress) {
+            const container = document.querySelector('.stats-container');
+            const label = container.querySelector('.stats-label');
+            const title = container.querySelector('.stats-title');
+            const items = container.querySelectorAll('.stat-item');
+            const counters = container.querySelectorAll('.counter');
+
+            if (progress > 0.05) {
+                label.classList.add('visible');
+            }
+            if (progress > 0.1) {
+                title.classList.add('visible');
+            }
+            if (progress > 0.2) {
+                items.forEach(item => item.classList.add('visible'));
+                if (!statsAnimated) {
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.dataset.target);
+                        animateCounter(counter, target);
+                    });
+                    statsAnimated = true;
+                }
+            }
+        }
+
+        // Animate Budget Section
+        function animateBudget(progress) {
+            const container = document.querySelector('.budget-container');
+            const label = container.querySelector('.budget-label');
+            const title = container.querySelector('.budget-title');
+            const bigNumber = container.querySelector('.budget-big-number');
+            const subtitle = container.querySelector('.budget-subtitle');
+            const items = container.querySelectorAll('.budget-item');
+            const note = container.querySelector('.budget-note');
+
+            if (progress > 0.05) {
+                label.classList.add('visible');
+            }
+            if (progress > 0.1) {
+                title.classList.add('visible');
+            }
+            if (progress > 0.2) {
+                bigNumber.classList.add('visible');
+            }
+            if (progress > 0.35) {
+                subtitle.classList.add('visible');
+            }
+            if (progress > 0.5) {
+                items.forEach(item => item.classList.add('visible'));
+            }
+            if (progress > 0.65) {
+                note.classList.add('visible');
+            }
+        }
+
+        // Animate Learnings Section
+        function animateLearnings(progress) {
+            const container = document.querySelector('.learnings-container');
+            const label = container.querySelector('.learnings-label');
+            const title = container.querySelector('.learnings-title');
+            const cards = container.querySelectorAll('.learning-card');
+
+            if (progress > 0.05) {
+                label.classList.add('visible');
+            }
+            if (progress > 0.1) {
+                title.classList.add('visible');
+            }
+            if (progress > 0.2) {
+                cards.forEach(card => card.classList.add('visible'));
+            }
+
+            // Auto-advance carousel based on scroll progress
+            if (progress > 0.3 && progress < 0.95 && scrollDirection === 'down') {
+                const slideProgress = (progress - 0.3) / 0.65;
+                const targetSlide = Math.min(Math.floor(slideProgress * totalSlides), totalSlides - 1);
+                if (targetSlide !== currentSlide) {
+                    updateCarousel(targetSlide);
+                }
+            }
+        }
+
+        // Animate Why Cards
+        function animateWhyCards() {
+            const whySection = document.querySelector('.why');
+            const rect = whySection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            if (rect.top < windowHeight * 0.8) {
+                const cards = whySection.querySelectorAll('.why-card');
+                cards.forEach(card => card.classList.add('visible'));
+            }
+        }
+
+        // Animate Outcome Cards
+        function animateOutcomeCards() {
+            const outcomeSection = document.querySelector('.outcome');
+            const rect = outcomeSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            if (rect.top < windowHeight * 0.8) {
+                const cards = outcomeSection.querySelectorAll('.outcome-card');
+                cards.forEach(card => card.classList.add('visible'));
+            }
+        }
+
+        // Main scroll handler
+        function handleScroll() {
+            checkScrollDirection();
+
             const scrollY = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (scrollY / docHeight) * 100;
@@ -1561,7 +1876,40 @@
             } else {
                 header.classList.remove('visible');
             }
+
+            // Process pinned sections
+            pinnedSections.forEach(section => {
+                const sectionType = section.dataset.section;
+                const sectionProgress = getSectionProgress(section);
+
+                if (sectionType === 'stats') {
+                    animateStats(sectionProgress);
+                } else if (sectionType === 'budget') {
+                    animateBudget(sectionProgress);
+                } else if (sectionType === 'learnings') {
+                    animateLearnings(sectionProgress);
+                }
+            });
+
+            // Animate other sections
+            animateWhyCards();
+            animateOutcomeCards();
+        }
+
+        // Throttle scroll events
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
+
+        // Initial call
+        handleScroll();
     </script>
 </body>
 
