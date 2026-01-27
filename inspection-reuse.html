@@ -1124,12 +1124,21 @@
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 0 1rem;
+            }
+
             .overview-grid {
                 grid-template-columns: 1fr;
             }
 
             .stats-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: clamp(2.5rem, 15vw, 4rem);
             }
 
             .why-grid {
@@ -1145,6 +1154,18 @@
                 gap: 1rem;
             }
 
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            .budget-big-number {
+                font-size: clamp(3rem, 15vw, 8rem);
+            }
+
+            .budget-container {
+                padding: 0 1rem;
+            }
+
             .learning-card {
                 padding: 1.5rem;
             }
@@ -1152,6 +1173,26 @@
             .learning-card-header {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .learning-slide {
+                padding: 0 1rem;
+            }
+
+            .section {
+                padding: 60px 1rem;
+            }
+
+            .faq-question {
+                padding: 1rem 1rem;
+            }
+
+            .faq-answer {
+                padding: 0 1rem 1rem 3.5rem;
+            }
+
+            .learnings-container {
+                padding: 0 0.5rem;
             }
         }
     </style>
