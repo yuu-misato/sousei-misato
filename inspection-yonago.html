@@ -1382,8 +1382,8 @@
                 <h2 class="stats-title">米子市の実績</h2>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="147">0</span></div>
-                        <div class="stat-unit">千人</div>
+                        <div class="stat-number"><span class="counter" data-target="14.7" data-decimal="true">0</span></div>
+                        <div class="stat-unit">万人</div>
                         <div class="stat-label">人口</div>
                     </div>
                     <div class="stat-item">
@@ -1854,7 +1854,7 @@
         });
 
         // Counter Animation
-        function animateCounter(element, target) {
+        function animateCounter(element, target, isDecimal = false) {
             const duration = 2000;
             const start = 0;
             const startTime = performance.now();
@@ -1863,8 +1863,13 @@
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 const easeProgress = 1 - Math.pow(1 - progress, 3);
-                const current = Math.floor(start + (target - start) * easeProgress);
-                element.textContent = current.toLocaleString();
+                const current = start + (target - start) * easeProgress;
+
+                if (isDecimal) {
+                    element.textContent = current.toFixed(1);
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString();
+                }
 
                 if (progress < 1) {
                     requestAnimationFrame(update);
@@ -1919,8 +1924,9 @@
                 items.forEach(item => item.classList.add('visible'));
                 if (!statsAnimated) {
                     counters.forEach(counter => {
-                        const target = parseInt(counter.dataset.target);
-                        animateCounter(counter, target);
+                        const isDecimal = counter.dataset.decimal === 'true';
+                        const target = parseFloat(counter.dataset.target);
+                        animateCounter(counter, target, isDecimal);
                     });
                     statsAnimated = true;
                 }
