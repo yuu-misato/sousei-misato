@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>東埼玉資源環境組合 視察報告 | 創政MISATO</title>
-    <meta name="description" content="創政MISATOによる東埼玉資源環境組合 第一工場（リユース）視察報告">
+    <meta name="description" content="創政MISATOによる東埼玉資源環境組合 第一工場（リユース）視察報告。視察の目的、経費、学び、成果を透明に公開。">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,287 +123,307 @@
             color: var(--green);
         }
 
-        /* Scroll Section Container */
-        .scroll-section {
-            position: relative;
-            width: 100%;
-        }
-
-        .scroll-section .sticky-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
+        /* Hero Section - 初回表示でアニメーション */
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, var(--gray-900) 0%, #1a1a2e 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Hero Section */
-        .hero-section {
-            height: 300vh;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%2310b981" opacity="0.3"/></svg>') repeat;
+            background-size: 50px 50px;
+            animation: heroPattern 20s linear infinite;
+        }
+
+        @keyframes heroPattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
         .hero-content {
             text-align: center;
-            max-width: 1200px;
+            max-width: 1000px;
             padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .hero-label {
-            display: inline-block;
-            color: var(--green);
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--green);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.3em;
+            color: var(--green-light);
             margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-label.visible {
-            opacity: 1;
-            transform: translateY(0);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
         .hero-title {
-            font-size: clamp(3rem, 12vw, 8rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 900;
-            color: var(--gray-900);
-            line-height: 1;
+            line-height: 1.1;
             margin-bottom: 1.5rem;
-            overflow: hidden;
-        }
-
-        .hero-title .line {
-            display: block;
-            opacity: 0;
-            transform: translateY(100%);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-title .line.visible {
-            opacity: 1;
-            transform: translateY(0);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
         .hero-title .highlight {
             color: var(--green);
         }
 
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+        }
+
+        .hero-meta-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--green);
+        }
+
         .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--gray-500);
-            max-width: 500px;
+            font-size: 1.125rem;
+            color: var(--gray-400);
+            max-width: 600px;
             margin: 0 auto;
-            font-weight: 300;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
         }
 
-        .hero-subtitle.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .scroll-hint {
+        .scroll-indicator {
             position: absolute;
-            bottom: 3rem;
+            bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.75rem;
-            color: var(--gray-400);
-            font-size: 0.625rem;
-            letter-spacing: 0.3em;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .scroll-hint.visible {
-            opacity: 1;
-        }
-
-        .scroll-hint .mouse {
-            width: 24px;
-            height: 40px;
-            border: 2px solid var(--gray-300);
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .scroll-hint .mouse::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 8px;
-            background: var(--green);
-            border-radius: 2px;
-            animation: scrollMouse 1.5s infinite;
-        }
-
-        @keyframes scrollMouse {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
-        }
-
-        /* Problem Section */
-        .problem-section {
-            height: 400vh;
-            background: var(--gray-900);
-        }
-
-        .problem-section .sticky-container {
-            background: var(--gray-900);
-        }
-
-        .problem-content {
-            text-align: center;
-            color: var(--white);
-            max-width: 1200px;
-            padding: 0 2rem;
-        }
-
-        .problem-question {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 300;
-            color: var(--gray-400);
-            margin-bottom: 4rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .problem-question.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .problem-stats {
-            display: flex;
-            justify-content: center;
-            gap: 8rem;
-        }
-
-        .problem-stat {
-            text-align: center;
-        }
-
-        .problem-stat-number {
-            font-size: clamp(5rem, 15vw, 12rem);
-            font-weight: 900;
-            color: var(--white);
-            line-height: 1;
-            letter-spacing: -0.04em;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .problem-stat-number.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .problem-stat-number .unit {
-            font-size: 0.3em;
-            font-weight: 400;
-            color: var(--gray-400);
-            margin-left: 0.1em;
-        }
-
-        .problem-stat-label {
-            font-size: 1rem;
+            gap: 0.5rem;
             color: var(--gray-500);
-            margin-top: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+            font-size: 0.625rem;
+            letter-spacing: 0.2em;
+            animation: fadeInUp 0.8s ease-out 1s both;
         }
 
-        .problem-stat-label.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .scroll-indicator .arrow {
+            width: 24px;
+            height: 24px;
+            border-right: 2px solid var(--green);
+            border-bottom: 2px solid var(--green);
+            transform: rotate(45deg);
+            animation: scrollArrow 1.5s infinite;
         }
 
-        .problem-message {
-            font-size: 1.125rem;
-            color: var(--gray-400);
-            max-width: 600px;
-            margin: 4rem auto 0;
-            line-height: 2;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        @keyframes scrollArrow {
+            0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 1; }
+            50% { transform: rotate(45deg) translate(5px, 5px); opacity: 0.5; }
         }
 
-        .problem-message.visible {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .problem-message strong {
-            color: var(--green);
-            font-weight: 600;
+        /* Section Base */
+        .section {
+            padding: 100px 2rem;
         }
 
-        /* Why Section */
-        .why-section {
-            height: 400vh;
-            background: var(--white);
-        }
-
-        .why-section .sticky-container {
-            background: var(--white);
-        }
-
-        .why-content {
+        .section-inner {
             max-width: 1000px;
-            padding: 0 2rem;
-            width: 100%;
+            margin: 0 auto;
         }
 
-        .why-header {
+        .section-header {
             text-align: center;
             margin-bottom: 4rem;
         }
 
-        .why-label {
+        .section-label {
+            display: inline-block;
             font-size: 0.75rem;
             font-weight: 600;
-            color: var(--amber);
             letter-spacing: 0.3em;
+            color: var(--green);
             margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
         }
 
-        .why-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .why-title {
+        .section-title {
             font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 900;
             color: var(--gray-900);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
         }
 
-        .why-title.visible {
-            opacity: 1;
-            transform: translateY(0);
+        /* Overview Section - 視察概要 */
+        .overview {
+            background: var(--white);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--gray-200);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .overview-item {
+            background: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .overview-item-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overview-item-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--green);
+        }
+
+        .overview-item-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+
+        .overview-item-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .overview-item-value small {
+            font-size: 0.875rem;
+            font-weight: 400;
+        }
+
+        /* Budget Section - 経費の透明性 */
+        .budget {
+            background: var(--gray-50);
+        }
+
+        .budget-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .budget-total {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+        }
+
+        .budget-total-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .budget-total-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gray-900);
+        }
+
+        .budget-total-value small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-500);
+        }
+
+        .budget-total-note {
+            font-size: 0.8125rem;
+            color: var(--green);
+            margin-top: 0.5rem;
+        }
+
+        .budget-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .budget-item {
+            text-align: center;
+        }
+
+        .budget-item-label {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .budget-item-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        .budget-note {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid var(--green);
+        }
+
+        .budget-note p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* Why Section - なぜここを視察したのか */
+        .why {
+            background: var(--white);
         }
 
         .why-grid {
@@ -414,16 +434,8 @@
 
         .why-card {
             background: var(--gray-50);
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 16px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .why-card.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .why-card.highlight {
@@ -435,12 +447,12 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .why-card-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -465,32 +477,26 @@
         }
 
         .why-card-title {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--gray-900);
         }
 
-        .why-card-subtitle {
-            font-size: 0.75rem;
-            color: var(--gray-500);
-        }
-
         .why-card p {
-            font-size: 0.9375rem;
+            font-size: 0.875rem;
             color: var(--gray-600);
-            line-height: 1.8;
+            margin-bottom: 1rem;
         }
 
         .why-card ul {
             list-style: none;
-            margin-top: 1rem;
         }
 
         .why-card ul li {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--gray-600);
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
+            padding: 0.375rem 0;
+            padding-left: 1.25rem;
             position: relative;
         }
 
@@ -500,231 +506,167 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: var(--green);
             border-radius: 50%;
         }
 
-        .why-conclusion {
-            margin-top: 3rem;
-            text-align: center;
-            padding: 2rem;
+        /* Photos Section - 現地写真 */
+        .photos {
             background: var(--gray-900);
-            border-radius: 16px;
             color: var(--white);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .why-conclusion.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .why-conclusion p {
-            font-size: 1.125rem;
-            font-weight: 500;
-        }
-
-        .why-conclusion strong {
+        .photos .section-label {
             color: var(--green-light);
         }
 
-        /* Transform Section */
-        .transform-section {
-            height: 500vh;
-            background: var(--white);
+        .photos .section-title {
+            color: var(--white);
         }
 
-        .transform-section .sticky-container {
-            background: var(--white);
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
         }
 
-        .transform-content {
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .transform-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .transform-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--green);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .transform-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .transform-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 900;
-            color: var(--gray-900);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .transform-title.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Process Flow */
-        .process-flow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            width: 100%;
-            max-width: 1100px;
-        }
-
-        .process-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(40px) scale(0.8);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .process-step.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .process-step.active .process-circle {
-            background: var(--green);
-            border-color: var(--green);
-            transform: scale(1.1);
-        }
-
-        .process-step.active .process-circle svg {
-            stroke: var(--white);
-        }
-
-        .process-circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: var(--white);
-            border: 3px solid var(--gray-200);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .process-circle svg {
-            width: 40px;
-            height: 40px;
-            stroke: var(--gray-400);
-            transition: stroke 0.3s;
-        }
-
-        .process-step-label {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-top: 1.5rem;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .process-step.visible .process-step-label {
-            opacity: 1;
-        }
-
-        .process-connector {
-            width: 60px;
-            height: 3px;
-            background: var(--gray-200);
+        .photo-card {
             position: relative;
+            aspect-ratio: 4/3;
+            background: var(--gray-800);
+            border-radius: 12px;
             overflow: hidden;
         }
 
-        .process-connector::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .photo-card img {
+            width: 100%;
             height: 100%;
-            width: 0%;
-            background: var(--green);
-            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            object-fit: cover;
         }
 
-        .process-connector.filled::after {
+        .photo-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+
+        .photo-card-caption {
+            font-size: 0.8125rem;
+            color: var(--white);
+        }
+
+        .photo-placeholder {
             width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+
+        .photo-placeholder svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 0.5rem;
+            stroke: var(--gray-600);
+        }
+
+        .photo-placeholder span {
+            font-size: 0.75rem;
+        }
+
+        /* Process Section - 視察で学んだこと */
+        .process {
+            background: var(--white);
+        }
+
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .process-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 35px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: var(--gray-200);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--green), var(--green-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--white);
+        }
+
+        .process-step-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.25rem;
+        }
+
+        .process-step-desc {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .process-detail {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .process-detail h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .process-detail p {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+            line-height: 1.8;
         }
 
         /* Stats Section */
-        .stats-section {
-            height: 400vh;
+        .stats {
             background: var(--gray-50);
-        }
-
-        .stats-section .sticky-container {
-            background: var(--gray-50);
-        }
-
-        .stats-content {
-            max-width: 1200px;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        .stats-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .stats-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--green);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .stats-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stats-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            color: var(--gray-900);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .stats-title.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .stats-grid {
@@ -735,24 +677,16 @@
 
         .stat-card {
             background: var(--white);
-            padding: 2.5rem 1.5rem;
-            text-align: center;
+            padding: 2rem;
             border-radius: 16px;
+            text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            opacity: 0;
-            transform: translateY(60px) rotateX(10deg);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .stat-card.visible {
-            opacity: 1;
-            transform: translateY(0) rotateX(0);
         }
 
         .stat-icon {
             width: 56px;
             height: 56px;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 1rem;
             background: linear-gradient(135deg, var(--green), var(--green-light));
             border-radius: 16px;
             display: flex;
@@ -767,339 +701,231 @@
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
             color: var(--gray-900);
             line-height: 1;
         }
 
         .stat-unit {
-            font-size: 1rem;
+            font-size: 0.875rem;
             font-weight: 500;
             color: var(--gray-500);
             margin-top: 0.25rem;
         }
 
         .stat-label {
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             color: var(--gray-400);
-            margin-top: 1rem;
-            letter-spacing: 0.1em;
+            margin-top: 0.75rem;
         }
 
-        /* Impact Section */
-        .impact-section {
-            height: 400vh;
+        /* Learnings Section - 議員個別の学び */
+        .learnings {
             background: var(--white);
         }
 
-        .impact-section .sticky-container {
-            background: var(--white);
-        }
-
-        .impact-content {
-            max-width: 1000px;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        .impact-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .impact-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--amber);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .impact-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .impact-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            color: var(--gray-900);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .impact-title.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .impact-grid {
+        .learning-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
-        .impact-card {
+        .learning-card {
             background: var(--gray-50);
-            padding: 2.5rem;
             border-radius: 16px;
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-            opacity: 0;
-            transform: translateX(-40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .impact-card:nth-child(even) {
-            transform: translateX(40px);
-        }
-
-        .impact-card.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .impact-number {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--amber), #fbbf24);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.25rem;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .impact-text h4 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .impact-text p {
-            font-size: 0.9375rem;
-            color: var(--gray-500);
-            line-height: 1.7;
-        }
-
-        /* Future Section */
-        .future-section {
-            height: 300vh;
-            background: var(--navy);
-        }
-
-        .future-section .sticky-container {
-            background: var(--navy);
-        }
-
-        .future-content {
-            text-align: center;
-            color: var(--white);
-            max-width: 1000px;
-            padding: 0 2rem;
-        }
-
-        .future-header {
-            margin-bottom: 4rem;
-        }
-
-        .future-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--green-light);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .future-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .future-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 900;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .future-title.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .future-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .future-item {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .future-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .future-icon {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s;
-        }
-
-        .future-item.visible .future-icon {
-            background: rgba(16, 185, 129, 0.2);
-        }
-
-        .future-icon svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--green-light);
-        }
-
-        .future-item h4 {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        /* Comments Section */
-        .comments-section {
-            background: var(--gray-50);
-            padding: 120px 0;
-        }
-
-        .comments-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .comments-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .comments-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--green);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-        }
-
-        .comments-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            color: var(--gray-900);
-        }
-
-        .comments-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .comment-card {
-            background: var(--white);
             padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .comment-header {
+        .learning-card-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .comment-avatar {
-            width: 56px;
-            height: 56px;
+        .learning-card-avatar {
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             overflow: hidden;
             background: var(--gray-200);
         }
 
-        .comment-avatar img {
+        .learning-card-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .comment-name {
+        .learning-card-name {
+            font-size: 1.125rem;
             font-weight: 700;
             color: var(--gray-900);
-            font-size: 1rem;
         }
 
-        .comment-role {
+        .learning-card-role {
             font-size: 0.75rem;
-            color: var(--gray-400);
-            letter-spacing: 0.1em;
+            color: var(--gray-500);
         }
 
-        .comment-text {
+        .learning-card-content h4 {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .learning-card-content p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .learning-card-action {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border-left: 3px solid var(--green);
+        }
+
+        .learning-card-action strong {
+            color: var(--gray-800);
+        }
+
+        /* Outcome Section - 成果と今後の提言 */
+        .outcome {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .outcome .section-label {
+            color: var(--green-light);
+        }
+
+        .outcome .section-title {
+            color: var(--white);
+        }
+
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .outcome-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .outcome-card-number {
+            width: 40px;
+            height: 40px;
+            background: var(--green);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .outcome-card h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .outcome-card p {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            line-height: 1.7;
+        }
+
+        /* FAQ Section - よくある質問 */
+        .faq {
+            background: var(--gray-50);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .faq-question::before {
+            content: 'Q';
+            width: 32px;
+            height: 32px;
+            background: var(--green);
+            color: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            padding: 0 2rem 1.5rem 4.5rem;
             font-size: 0.9375rem;
             color: var(--gray-600);
             line-height: 1.8;
         }
 
         /* CTA Section */
-        .cta-section {
+        .cta {
             background: linear-gradient(135deg, var(--green), var(--green-dark));
             color: var(--white);
             text-align: center;
-            padding: 100px 2rem;
+            padding: 80px 2rem;
         }
 
         .cta-title {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 700;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             background: var(--white);
             color: var(--green-dark);
-            padding: 1.25rem 2.5rem;
+            padding: 1rem 2rem;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1rem;
-            border-radius: 60px;
+            border-radius: 50px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         /* Footer */
@@ -1119,14 +945,14 @@
         }
 
         .footer-logo img {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
         }
 
         .footer-logo span {
             font-weight: 600;
             color: var(--white);
-            font-size: 1rem;
+            font-size: 0.875rem;
         }
 
         .footer-copy {
@@ -1135,52 +961,61 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
+            .overview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .future-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .outcome-grid {
+                grid-template-columns: 1fr;
             }
 
             .process-flow {
                 flex-wrap: wrap;
-                gap: 1rem;
             }
 
-            .process-connector {
+            .process-step {
+                flex: 0 0 calc(33.333% - 1rem);
+            }
+
+            .process-step::after {
                 display: none;
             }
         }
 
         @media (max-width: 768px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .budget-breakdown {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .why-grid,
+            .learning-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .photos-grid {
+                grid-template-columns: 1fr;
+            }
+
             .stats-grid {
                 grid-template-columns: 1fr;
             }
 
-            .impact-grid,
-            .comments-grid {
-                grid-template-columns: 1fr;
+            .process-step {
+                flex: 0 0 100%;
             }
 
-            .problem-stats {
+            .hero-meta {
                 flex-direction: column;
-                gap: 4rem;
-            }
-
-            .future-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1.5rem;
-            }
-
-            .process-circle {
-                width: 80px;
-                height: 80px;
-            }
-
-            .process-circle svg {
-                width: 32px;
-                height: 32px;
+                gap: 1rem;
             }
         }
     </style>
@@ -1206,422 +1041,495 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="scroll-section hero-section">
-        <div class="sticky-container">
-            <div class="hero-content">
-                <div class="hero-label">INSPECTION REPORT</div>
-                <h1 class="hero-title">
-                    <span class="line">ゴミから</span>
-                    <span class="line"><span class="highlight">電気</span>を</span>
-                    <span class="line">つくる</span>
-                </h1>
-                <p class="hero-subtitle">東埼玉資源環境組合 第一工場で見た<br>循環型社会の最前線</p>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                INSPECTION REPORT
             </div>
-            <div class="scroll-hint">
-                <div class="mouse"></div>
-                <span>SCROLL</span>
+            <h1 class="hero-title">ゴミから<span class="highlight">電気</span>をつくる</h1>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    2025年1月15日
+                </div>
+                <div class="hero-meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    東埼玉資源環境組合 第一工場
+                </div>
+                <div class="hero-meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    参加議員 4名
+                </div>
             </div>
+            <p class="hero-subtitle">三郷市が年間約8億円を負担する広域ごみ処理施設。<br>市民の税金の使途を確認し、議員として説明責任を果たすための視察です。</p>
+        </div>
+        <div class="scroll-indicator">
+            <div class="arrow"></div>
+            <span>SCROLL</span>
         </div>
     </section>
 
-    <!-- Problem Section -->
-    <section class="scroll-section problem-section">
-        <div class="sticky-container">
-            <div class="problem-content">
-                <p class="problem-question">私たちは毎日、どれだけのゴミを出しているか</p>
-                <div class="problem-stats">
-                    <div class="problem-stat">
-                        <div class="problem-stat-number">800<span class="unit">t</span></div>
-                        <div class="problem-stat-label">1日の処理量</div>
-                    </div>
-                    <div class="problem-stat">
-                        <div class="problem-stat-number">100<span class="unit">万人</span></div>
-                        <div class="problem-stat-label">対象人口</div>
-                    </div>
-                </div>
-                <p class="problem-message">5市1町の住民が出すゴミ。<br>これを「負担」ではなく<strong>「資源」</strong>に変える施設があります。</p>
+    <!-- Overview -->
+    <section class="section overview">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">OVERVIEW</div>
+                <h2 class="section-title">視察の概要</h2>
             </div>
-        </div>
-    </section>
-
-    <!-- Why Section -->
-    <section class="scroll-section why-section">
-        <div class="sticky-container">
-            <div class="why-content">
-                <div class="why-header">
-                    <div class="why-label">WHY HERE</div>
-                    <h2 class="why-title">なぜ東埼玉資源環境組合を視察したのか</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <div class="overview-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <div class="overview-item-label">視察日</div>
+                    <div class="overview-item-value">2025年1月15日</div>
                 </div>
-                <div class="why-grid">
-                    <div class="why-card" data-why="0">
-                        <div class="why-card-header">
-                            <div class="why-card-icon misato">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">三郷市の現状</div>
-                                <div class="why-card-subtitle">MISATO'S SITUATION</div>
-                            </div>
-                        </div>
-                        <p>三郷市は東埼玉資源環境組合の構成市。年間約4万トンのごみ処理を依存しています。</p>
-                        <ul>
-                            <li>処理費用：年間約8億円の負担</li>
-                            <li>施設の老朽化が進行中</li>
-                            <li>将来の更新計画への参画が必要</li>
-                        </ul>
+                <div class="overview-item">
+                    <div class="overview-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
                     </div>
-                    <div class="why-card" data-why="1">
-                        <div class="why-card-header">
-                            <div class="why-card-icon facility">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">視察の狙い</div>
-                                <div class="why-card-subtitle">PURPOSE OF INSPECTION</div>
-                            </div>
-                        </div>
-                        <p>構成市の議員として、施設運営の実態を把握し、市民への説明責任を果たすため。</p>
-                        <ul>
-                            <li>処理プロセスの現場確認</li>
-                            <li>発電効率と収益構造の把握</li>
-                            <li>今後の設備更新計画の確認</li>
-                        </ul>
-                    </div>
-                    <div class="why-card highlight" data-why="2">
-                        <div class="why-card-header">
-                            <div class="why-card-icon facility">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">市民からの疑問に答える</div>
-                                <div class="why-card-subtitle">ANSWERING CITIZENS</div>
-                            </div>
-                        </div>
-                        <p>「税金でどこに視察に行っているのか」という疑問に、根拠をもって説明できるように。</p>
-                        <ul>
-                            <li>三郷市が負担する施設を議員が知らないのは問題</li>
-                            <li>広域連携の課題を現場で確認</li>
-                            <li>市民の税金の使途を説明する責務</li>
-                        </ul>
-                    </div>
-                    <div class="why-card" data-why="3">
-                        <div class="why-card-header">
-                            <div class="why-card-icon misato">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="23 4 23 10 17 10"/>
-                                    <polyline points="1 20 1 14 7 14"/>
-                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">三郷市への還元</div>
-                                <div class="why-card-subtitle">RETURN TO MISATO</div>
-                            </div>
-                        </div>
-                        <p>視察で得た知見を、議会質問や政策提言として三郷市に還元します。</p>
-                        <ul>
-                            <li>ごみ減量施策への提言</li>
-                            <li>分別啓発の効果検証</li>
-                            <li>広域連携の最適化議論</li>
-                        </ul>
-                    </div>
+                    <div class="overview-item-label">視察時間</div>
+                    <div class="overview-item-value">約3時間</div>
                 </div>
-                <div class="why-conclusion" data-why="4">
-                    <p>三郷市民の税金で運営される施設だからこそ、<strong>議員が現場を見て、市民に説明する責任があります。</strong></p>
+                <div class="overview-item">
+                    <div class="overview-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="overview-item-label">参加人数</div>
+                    <div class="overview-item-value">4<small>名</small></div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="overview-item-label">距離</div>
+                    <div class="overview-item-value">約15<small>km</small></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Transform Section -->
-    <section class="scroll-section transform-section">
-        <div class="sticky-container">
-            <div class="transform-content">
-                <div class="transform-header">
-                    <div class="transform-label">PROCESS</div>
-                    <h2 class="transform-title">ゴミが電気になるまで</h2>
+    <!-- Budget -->
+    <section class="section budget">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">TRANSPARENCY</div>
+                <h2 class="section-title">視察経費の公開</h2>
+            </div>
+            <div class="budget-card">
+                <div class="budget-total">
+                    <div class="budget-total-label">視察にかかった総経費</div>
+                    <div class="budget-total-value">0<small>円</small></div>
+                    <div class="budget-total-note">政務活動費は一切使用していません</div>
                 </div>
-                <div class="process-flow">
-                    <div class="process-step" data-step="0">
-                        <div class="process-circle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="1" y="3" width="15" height="13"/>
-                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-                                <circle cx="5.5" cy="18.5" r="2.5"/>
-                                <circle cx="18.5" cy="18.5" r="2.5"/>
+                <div class="budget-breakdown">
+                    <div class="budget-item">
+                        <div class="budget-item-label">交通費</div>
+                        <div class="budget-item-value">0円</div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-item-label">宿泊費</div>
+                        <div class="budget-item-value">0円</div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-item-label">その他経費</div>
+                        <div class="budget-item-value">0円</div>
+                    </div>
+                </div>
+                <div class="budget-note">
+                    <p>本視察は三郷市近郊の施設への日帰り視察のため、交通費は各自負担、政務活動費は使用していません。視察先である東埼玉資源環境組合は、三郷市が構成市として加盟しており、構成市議員の視察受け入れは通常業務の一環として行われています。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why -->
+    <section class="section why">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">WHY HERE</div>
+                <h2 class="section-title">なぜここを視察したのか</h2>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-card-header">
+                        <div class="why-card-icon misato">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
                             </svg>
                         </div>
-                        <div class="process-step-label">搬入</div>
+                        <div class="why-card-title">三郷市の現状</div>
                     </div>
-                    <div class="process-connector" data-connector="0"></div>
-                    <div class="process-step" data-step="1">
-                        <div class="process-circle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            </svg>
-                        </div>
-                        <div class="process-step-label">貯留</div>
-                    </div>
-                    <div class="process-connector" data-connector="1"></div>
-                    <div class="process-step" data-step="2">
-                        <div class="process-circle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-                            </svg>
-                        </div>
-                        <div class="process-step-label">焼却</div>
-                    </div>
-                    <div class="process-connector" data-connector="2"></div>
-                    <div class="process-step" data-step="3">
-                        <div class="process-circle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2v6m0 12v-6m-6 6H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2m12 6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2M6 6H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2m12-6h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/>
-                            </svg>
-                        </div>
-                        <div class="process-step-label">蒸気</div>
-                    </div>
-                    <div class="process-connector" data-connector="3"></div>
-                    <div class="process-step" data-step="4">
-                        <div class="process-circle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <p>三郷市は東埼玉資源環境組合の構成市。年間約4万トンのごみ処理を依存しています。</p>
+                    <ul>
+                        <li>処理費用：年間約8億円の負担</li>
+                        <li>施設の老朽化が進行中</li>
+                        <li>将来の更新計画への参画が必要</li>
+                    </ul>
+                </div>
+                <div class="why-card">
+                    <div class="why-card-header">
+                        <div class="why-card-icon facility">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
                                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
                             </svg>
                         </div>
-                        <div class="process-step-label">発電</div>
+                        <div class="why-card-title">視察の狙い</div>
                     </div>
+                    <p>構成市の議員として、施設運営の実態を把握し、市民への説明責任を果たすため。</p>
+                    <ul>
+                        <li>処理プロセスの現場確認</li>
+                        <li>発電効率と収益構造の把握</li>
+                        <li>今後の設備更新計画の確認</li>
+                    </ul>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="scroll-section stats-section">
-        <div class="sticky-container">
-            <div class="stats-content">
-                <div class="stats-header">
-                    <div class="stats-label">FACILITY DATA</div>
-                    <h2 class="stats-title">施設のチカラ</h2>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card" data-index="0">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            </svg>
-                        </div>
-                        <div class="stat-number">800</div>
-                        <div class="stat-unit">トン/日</div>
-                        <div class="stat-label">処理能力</div>
-                    </div>
-                    <div class="stat-card" data-index="1">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                            </svg>
-                        </div>
-                        <div class="stat-number">24,000</div>
-                        <div class="stat-unit">kW</div>
-                        <div class="stat-label">発電出力</div>
-                    </div>
-                    <div class="stat-card" data-index="2">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <line x1="3" y1="9" x2="21" y2="9"/>
-                                <line x1="9" y1="21" x2="9" y2="9"/>
-                            </svg>
-                        </div>
-                        <div class="stat-number">4</div>
-                        <div class="stat-unit">炉</div>
-                        <div class="stat-label">焼却炉数</div>
-                    </div>
-                    <div class="stat-card" data-index="3">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <div class="why-card highlight">
+                    <div class="why-card-header">
+                        <div class="why-card-icon facility">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
                                 <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
                             </svg>
                         </div>
-                        <div class="stat-number">30</div>
-                        <div class="stat-unit">年</div>
-                        <div class="stat-label">安定稼働</div>
+                        <div class="why-card-title">市民からの疑問に答える</div>
                     </div>
+                    <p>「税金でどこに視察に行っているのか」という疑問に、根拠をもって説明できるように。</p>
+                    <ul>
+                        <li>三郷市が負担する施設を議員が知らないのは問題</li>
+                        <li>広域連携の課題を現場で確認</li>
+                        <li>市民の税金の使途を説明する責務</li>
+                    </ul>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact Section -->
-    <section class="scroll-section impact-section">
-        <div class="sticky-container">
-            <div class="impact-content">
-                <div class="impact-header">
-                    <div class="impact-label">YOUR ACTION</div>
-                    <h2 class="impact-title">あなたの分別が未来を変える</h2>
-                </div>
-                <div class="impact-grid">
-                    <div class="impact-card" data-index="0">
-                        <div class="impact-number">1</div>
-                        <div class="impact-text">
-                            <h4>施設を守る</h4>
-                            <p>正しい分別が焼却炉を守り、維持費を削減します</p>
-                        </div>
-                    </div>
-                    <div class="impact-card" data-index="1">
-                        <div class="impact-number">2</div>
-                        <div class="impact-text">
-                            <h4>発電効率アップ</h4>
-                            <p>適正なゴミ質がより多くの電気を生み出します</p>
-                        </div>
-                    </div>
-                    <div class="impact-card" data-index="2">
-                        <div class="impact-number">3</div>
-                        <div class="impact-text">
-                            <h4>資源を活かす</h4>
-                            <p>リサイクルで新たな製品に生まれ変わります</p>
-                        </div>
-                    </div>
-                    <div class="impact-card" data-index="3">
-                        <div class="impact-number">4</div>
-                        <div class="impact-text">
-                            <h4>税金を節約</h4>
-                            <p>効率化で住民負担を軽減できます</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Future Section -->
-    <section class="scroll-section future-section">
-        <div class="sticky-container">
-            <div class="future-content">
-                <div class="future-header">
-                    <div class="future-label">MISATO'S FUTURE</div>
-                    <h2 class="future-title">三郷市の未来へ</h2>
-                </div>
-                <div class="future-grid">
-                    <div class="future-item" data-index="0">
-                        <div class="future-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </div>
-                        <h4>広域連携の強化</h4>
-                    </div>
-                    <div class="future-item" data-index="1">
-                        <div class="future-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                            </svg>
-                        </div>
-                        <h4>エネルギー地産地消</h4>
-                    </div>
-                    <div class="future-item" data-index="2">
-                        <div class="future-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <div class="why-card">
+                    <div class="why-card-header">
+                        <div class="why-card-icon misato">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
                                 <polyline points="23 4 23 10 17 10"/>
                                 <polyline points="1 20 1 14 7 14"/>
                                 <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
                             </svg>
                         </div>
-                        <h4>循環型社会の実現</h4>
+                        <div class="why-card-title">三郷市への還元</div>
                     </div>
-                    <div class="future-item" data-index="3">
-                        <div class="future-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="2" y1="12" x2="22" y2="12"/>
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                            </svg>
-                        </div>
-                        <h4>持続可能なまち</h4>
+                    <p>視察で得た知見を、議会質問や政策提言として三郷市に還元します。</p>
+                    <ul>
+                        <li>ごみ減量施策への提言</li>
+                        <li>分別啓発の効果検証</li>
+                        <li>広域連携の最適化議論</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photos -->
+    <section class="section photos">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">PHOTOS</div>
+                <h2 class="section-title">現地の様子</h2>
+            </div>
+            <div class="photos-grid">
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>施設外観</span>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>中央制御室</span>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>ごみピット</span>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>焼却炉</span>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>発電設備</span>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>説明会の様子</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Comments Section -->
-    <section class="comments-section">
-        <div class="comments-content">
-            <div class="comments-header">
-                <div class="comments-label">COMMENTS</div>
-                <h2 class="comments-title">議員の声</h2>
+    <!-- Stats -->
+    <section class="section stats">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">FACILITY DATA</div>
+                <h2 class="section-title">施設のチカラ</h2>
             </div>
-            <div class="comments-grid">
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-number">800</div>
+                    <div class="stat-unit">トン/日</div>
+                    <div class="stat-label">処理能力</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-number">24,000</div>
+                    <div class="stat-unit">kW</div>
+                    <div class="stat-label">発電出力</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="9" y1="21" x2="9" y2="9"/>
+                        </svg>
+                    </div>
+                    <div class="stat-number">4</div>
+                    <div class="stat-unit">炉</div>
+                    <div class="stat-label">焼却炉数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="stat-number">30</div>
+                    <div class="stat-unit">年</div>
+                    <div class="stat-label">安定稼働</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="section learnings">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">LEARNINGS</div>
+                <h2 class="section-title">議員それぞれの学び</h2>
+            </div>
+            <div class="learning-cards">
+                <div class="learning-card">
+                    <div class="learning-card-header">
+                        <div class="learning-card-avatar">
                             <img src="images/satohiroyuki.png" alt="佐藤裕之">
                         </div>
                         <div>
-                            <div class="comment-name">佐藤 裕之</div>
-                            <div class="comment-role">会長</div>
+                            <div class="learning-card-name">佐藤 裕之</div>
+                            <div class="learning-card-role">会長</div>
                         </div>
                     </div>
-                    <p class="comment-text">5市1町の広域連携でスケールメリットを最大化。三郷市単独では実現できない処理能力です。</p>
+                    <div class="learning-card-content">
+                        <h4>広域連携のスケールメリット</h4>
+                        <p>5市1町の広域連携により、三郷市単独では実現不可能な規模の施設運営が可能に。特に発電による売電収入が運営コスト削減に大きく寄与していることを確認しました。</p>
+                        <div class="learning-card-action">
+                            <strong>今後の行動：</strong>広域連携の更なる効率化について、議会で質問を予定
+                        </div>
+                    </div>
                 </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
+                <div class="learning-card">
+                    <div class="learning-card-header">
+                        <div class="learning-card-avatar">
                             <img src="images/seiichitakahashi.png" alt="高橋誠一">
                         </div>
                         <div>
-                            <div class="comment-name">高橋 誠一</div>
-                            <div class="comment-role">幹事</div>
+                            <div class="learning-card-name">高橋 誠一</div>
+                            <div class="learning-card-role">幹事</div>
                         </div>
                     </div>
-                    <p class="comment-text">ゴミをエネルギーに変える発想。これこそ循環型社会のあるべき姿だと実感しました。</p>
+                    <div class="learning-card-content">
+                        <h4>循環型社会の最前線</h4>
+                        <p>ゴミを「負担」ではなく「資源」として活用する発想に感銘を受けました。焼却熱を利用した発電システムは、エネルギーの地産地消モデルとして注目に値します。</p>
+                        <div class="learning-card-action">
+                            <strong>今後の行動：</strong>環境教育の場としての施設活用を提案予定
+                        </div>
+                    </div>
                 </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
+                <div class="learning-card">
+                    <div class="learning-card-header">
+                        <div class="learning-card-avatar">
                             <img src="images/chihohidaka.png" alt="日高千穂">
                         </div>
                         <div>
-                            <div class="comment-name">日高 千穂</div>
-                            <div class="comment-role">会計</div>
+                            <div class="learning-card-name">日高 千穂</div>
+                            <div class="learning-card-role">会計</div>
                         </div>
                     </div>
-                    <p class="comment-text">市民一人ひとりの分別が、この施設を支えている。啓発活動の重要性を再認識しました。</p>
+                    <div class="learning-card-content">
+                        <h4>市民参加の重要性</h4>
+                        <p>施設の効率的な運営は、市民一人ひとりの適切な分別にかかっています。啓発活動の重要性と、その効果を実感しました。</p>
+                        <div class="learning-card-action">
+                            <strong>今後の行動：</strong>市民向けの分別啓発イベントの企画を検討
+                        </div>
+                    </div>
                 </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
+                <div class="learning-card">
+                    <div class="learning-card-header">
+                        <div class="learning-card-avatar">
                             <img src="images/suzukiyusaku.png" alt="鈴木優作">
                         </div>
                         <div>
-                            <div class="comment-name">鈴木 優作</div>
-                            <div class="comment-role">議員</div>
+                            <div class="learning-card-name">鈴木 優作</div>
+                            <div class="learning-card-role">議員</div>
                         </div>
                     </div>
-                    <p class="comment-text">30年の安定稼働を支える技術と人材。長期視点のインフラ運営を学びました。</p>
+                    <div class="learning-card-content">
+                        <h4>長期視点のインフラ運営</h4>
+                        <p>30年の安定稼働を支える技術と人材。施設の計画的な維持管理と、次世代への引き継ぎについて、長期的な視点の重要性を学びました。</p>
+                        <div class="learning-card-action">
+                            <strong>今後の行動：</strong>施設更新計画への三郷市の関与について調査
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <h2 class="cta-title">一緒に、三郷の未来を創りませんか？</h2>
+    <!-- Outcome -->
+    <section class="section outcome">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">OUTCOME</div>
+                <h2 class="section-title">視察の成果と今後の提言</h2>
+            </div>
+            <div class="outcome-grid">
+                <div class="outcome-card">
+                    <div class="outcome-card-number">1</div>
+                    <h4>ごみ減量の推進</h4>
+                    <p>三郷市の1人あたりごみ排出量の削減目標を設定し、市民への啓発活動を強化することを提言します。</p>
+                </div>
+                <div class="outcome-card">
+                    <div class="outcome-card-number">2</div>
+                    <h4>分別の徹底</h4>
+                    <p>適切な分別が施設の効率運営に直結することを市民に周知し、分別ルールの再確認キャンペーンを実施します。</p>
+                </div>
+                <div class="outcome-card">
+                    <div class="outcome-card-number">3</div>
+                    <h4>施設見学の推進</h4>
+                    <p>小中学校の環境教育の一環として、施設見学を積極的に推進することを教育委員会に提案します。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">FAQ</div>
+                <h2 class="section-title">よくある質問</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">視察に税金は使われていますか？</div>
+                    <div class="faq-answer">本視察では政務活動費は一切使用していません。近隣施設への日帰り視察のため、交通費は各議員の自己負担です。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">なぜこの施設を視察先に選んだのですか？</div>
+                    <div class="faq-answer">三郷市は東埼玉資源環境組合の構成市として、年間約8億円の処理費用を負担しています。市民の税金がどのように使われているか、議員として把握する責務があると考え、視察先に選びました。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">視察の成果はどのように活かされますか？</div>
+                    <div class="faq-answer">視察で得た知見は、議会での質問・提言として活用します。具体的には、ごみ減量施策の推進、分別啓発の強化、環境教育の充実などを提案していきます。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">視察報告はどこで確認できますか？</div>
+                    <div class="faq-answer">本ページにて全ての情報を公開しています。追加の質問がございましたら、お問い合わせフォームよりご連絡ください。</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <h2 class="cta-title">ご意見・ご質問をお寄せください</h2>
         <a href="index.html#contact" class="cta-button">
             お問い合わせ
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
         </a>
@@ -1641,172 +1549,19 @@
         const progressBar = document.querySelector('.progress-bar');
         const header = document.querySelector('.header');
 
-        // Get all scroll sections
-        const sections = {
-            hero: {
-                el: document.querySelector('.hero-section'),
-                animations: [
-                    { el: '.hero-label', start: 0.1, class: 'visible' },
-                    { el: '.hero-title .line:nth-child(1)', start: 0.15, class: 'visible' },
-                    { el: '.hero-title .line:nth-child(2)', start: 0.25, class: 'visible' },
-                    { el: '.hero-title .line:nth-child(3)', start: 0.35, class: 'visible' },
-                    { el: '.hero-subtitle', start: 0.45, class: 'visible' },
-                    { el: '.scroll-hint', start: 0.6, class: 'visible' }
-                ]
-            },
-            problem: {
-                el: document.querySelector('.problem-section'),
-                animations: [
-                    { el: '.problem-question', start: 0.1, class: 'visible' },
-                    { el: '.problem-stat:nth-child(1) .problem-stat-number', start: 0.25, class: 'visible' },
-                    { el: '.problem-stat:nth-child(1) .problem-stat-label', start: 0.3, class: 'visible' },
-                    { el: '.problem-stat:nth-child(2) .problem-stat-number', start: 0.4, class: 'visible' },
-                    { el: '.problem-stat:nth-child(2) .problem-stat-label', start: 0.45, class: 'visible' },
-                    { el: '.problem-message', start: 0.6, class: 'visible' }
-                ]
-            },
-            why: {
-                el: document.querySelector('.why-section'),
-                animations: [
-                    { el: '.why-label', start: 0.05, class: 'visible' },
-                    { el: '.why-title', start: 0.1, class: 'visible' },
-                    { el: '[data-why="0"]', start: 0.2, class: 'visible' },
-                    { el: '[data-why="1"]', start: 0.35, class: 'visible' },
-                    { el: '[data-why="2"]', start: 0.5, class: 'visible' },
-                    { el: '[data-why="3"]', start: 0.65, class: 'visible' },
-                    { el: '[data-why="4"]', start: 0.8, class: 'visible' }
-                ]
-            },
-            transform: {
-                el: document.querySelector('.transform-section'),
-                animations: [
-                    { el: '.transform-label', start: 0.05, class: 'visible' },
-                    { el: '.transform-title', start: 0.1, class: 'visible' },
-                    { el: '[data-step="0"]', start: 0.2, class: 'visible' },
-                    { el: '[data-step="0"]', start: 0.2, end: 0.35, class: 'active' },
-                    { el: '[data-connector="0"]', start: 0.25, class: 'filled' },
-                    { el: '[data-step="1"]', start: 0.3, class: 'visible' },
-                    { el: '[data-step="1"]', start: 0.35, end: 0.5, class: 'active' },
-                    { el: '[data-connector="1"]', start: 0.4, class: 'filled' },
-                    { el: '[data-step="2"]', start: 0.45, class: 'visible' },
-                    { el: '[data-step="2"]', start: 0.5, end: 0.65, class: 'active' },
-                    { el: '[data-connector="2"]', start: 0.55, class: 'filled' },
-                    { el: '[data-step="3"]', start: 0.6, class: 'visible' },
-                    { el: '[data-step="3"]', start: 0.65, end: 0.8, class: 'active' },
-                    { el: '[data-connector="3"]', start: 0.7, class: 'filled' },
-                    { el: '[data-step="4"]', start: 0.75, class: 'visible' },
-                    { el: '[data-step="4"]', start: 0.8, end: 1, class: 'active' }
-                ]
-            },
-            stats: {
-                el: document.querySelector('.stats-section'),
-                animations: [
-                    { el: '.stats-label', start: 0.1, class: 'visible' },
-                    { el: '.stats-title', start: 0.15, class: 'visible' },
-                    { el: '[data-index="0"].stat-card', start: 0.25, class: 'visible' },
-                    { el: '[data-index="1"].stat-card', start: 0.4, class: 'visible' },
-                    { el: '[data-index="2"].stat-card', start: 0.55, class: 'visible' },
-                    { el: '[data-index="3"].stat-card', start: 0.7, class: 'visible' }
-                ]
-            },
-            impact: {
-                el: document.querySelector('.impact-section'),
-                animations: [
-                    { el: '.impact-label', start: 0.1, class: 'visible' },
-                    { el: '.impact-title', start: 0.15, class: 'visible' },
-                    { el: '[data-index="0"].impact-card', start: 0.25, class: 'visible' },
-                    { el: '[data-index="1"].impact-card', start: 0.4, class: 'visible' },
-                    { el: '[data-index="2"].impact-card', start: 0.55, class: 'visible' },
-                    { el: '[data-index="3"].impact-card', start: 0.7, class: 'visible' }
-                ]
-            },
-            future: {
-                el: document.querySelector('.future-section'),
-                animations: [
-                    { el: '.future-label', start: 0.1, class: 'visible' },
-                    { el: '.future-title', start: 0.15, class: 'visible' },
-                    { el: '[data-index="0"].future-item', start: 0.3, class: 'visible' },
-                    { el: '[data-index="1"].future-item', start: 0.45, class: 'visible' },
-                    { el: '[data-index="2"].future-item', start: 0.6, class: 'visible' },
-                    { el: '[data-index="3"].future-item', start: 0.75, class: 'visible' }
-                ]
-            }
-        };
-
-        // Calculate section progress
-        function getSectionProgress(section) {
-            const rect = section.getBoundingClientRect();
-            const sectionHeight = section.offsetHeight;
-            const viewportHeight = window.innerHeight;
-
-            // Calculate how far we've scrolled through the section
-            const scrolled = -rect.top;
-            const scrollableHeight = sectionHeight - viewportHeight;
-
-            if (scrolled <= 0) return 0;
-            if (scrolled >= scrollableHeight) return 1;
-
-            return scrolled / scrollableHeight;
-        }
-
-        // Apply animations based on progress
-        function applyAnimations(sectionKey, progress) {
-            const section = sections[sectionKey];
-            if (!section) return;
-
-            section.animations.forEach(anim => {
-                const el = section.el.querySelector(anim.el);
-                if (!el) return;
-
-                const shouldBeVisible = progress >= anim.start && (anim.end === undefined || progress <= anim.end);
-
-                if (shouldBeVisible) {
-                    el.classList.add(anim.class);
-                } else if (anim.end !== undefined) {
-                    // Only remove if this is a ranged animation
-                    el.classList.remove(anim.class);
-                }
-            });
-        }
-
-        // Main scroll handler
-        function handleScroll() {
+        window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const totalProgress = scrollY / docHeight;
+            const progress = (scrollY / docHeight) * 100;
 
-            // Update progress bar
-            progressBar.style.width = `${totalProgress * 100}%`;
+            progressBar.style.width = `${progress}%`;
 
-            // Show/hide header
-            if (scrollY > window.innerHeight * 0.5) {
+            if (scrollY > 100) {
                 header.classList.add('visible');
             } else {
                 header.classList.remove('visible');
             }
-
-            // Process each section
-            Object.keys(sections).forEach(key => {
-                const section = sections[key];
-                const progress = getSectionProgress(section.el);
-                applyAnimations(key, progress);
-            });
-        }
-
-        // Throttle scroll events for performance
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    handleScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
         });
-
-        // Initial call
-        handleScroll();
     </script>
 </body>
 

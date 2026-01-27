@@ -37,7 +37,7 @@
         }
 
         html {
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -57,7 +57,7 @@
             background: linear-gradient(90deg, var(--teal), var(--teal-light));
             z-index: 1000;
             width: 0%;
-            transition: width 0.05s linear;
+            transition: width 0.1s linear;
         }
 
         /* Header */
@@ -74,12 +74,6 @@
             align-items: center;
             padding: 0 2rem;
             border-bottom: 1px solid var(--gray-200);
-            transform: translateY(-100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .header.visible {
-            transform: translateY(0);
         }
 
         .header-inner {
@@ -123,287 +117,269 @@
             color: var(--teal);
         }
 
-        /* Scroll Section Container */
-        .scroll-section {
-            position: relative;
-            width: 100%;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .scroll-section .sticky-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* Hero Section */
-        .hero-section {
-            height: 300vh;
-        }
-
-        .hero-content {
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            max-width: 1200px;
-            padding: 0 2rem;
-        }
-
-        .hero-label {
-            display: inline-block;
-            color: var(--teal);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.3em;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 12vw, 8rem);
-            font-weight: 900;
-            color: var(--gray-900);
-            line-height: 1;
-            margin-bottom: 1.5rem;
+            padding: 120px 2rem 80px;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #f0fdf4 100%);
+            position: relative;
             overflow: hidden;
         }
 
-        .hero-title .line {
-            display: block;
-            opacity: 0;
-            transform: translateY(100%);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(13, 148, 136, 0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .hero-title .line.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            color: var(--gray-900);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
         .hero-title .highlight {
             color: var(--teal);
         }
 
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--gray-500);
-            max-width: 500px;
-            margin: 0 auto;
-            font-weight: 300;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-        }
-
-        .hero-subtitle.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
+        .hero-meta {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--gray-400);
-            font-size: 0.625rem;
-            letter-spacing: 0.3em;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .scroll-hint.visible {
-            opacity: 1;
-        }
-
-        .scroll-hint .mouse {
-            width: 24px;
-            height: 40px;
-            border: 2px solid var(--gray-300);
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .scroll-hint .mouse::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 8px;
-            background: var(--teal);
-            border-radius: 2px;
-            animation: scrollMouse 1.5s infinite;
-        }
-
-        @keyframes scrollMouse {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
-        }
-
-        /* Problem Section */
-        .problem-section {
-            height: 400vh;
-            background: var(--gray-900);
-        }
-
-        .problem-section .sticky-container {
-            background: var(--gray-900);
-        }
-
-        .problem-content {
-            text-align: center;
-            color: var(--white);
-            max-width: 1200px;
-            padding: 0 2rem;
-        }
-
-        .problem-question {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 300;
-            color: var(--gray-400);
-            margin-bottom: 4rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .problem-question.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .problem-stats {
-            display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 8rem;
+            gap: 2rem;
+            margin-top: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
-        .problem-stat {
-            text-align: center;
-        }
-
-        .problem-stat-number {
-            font-size: clamp(5rem, 15vw, 10rem);
-            font-weight: 900;
-            color: var(--white);
-            line-height: 1;
-            letter-spacing: -0.04em;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .problem-stat-number.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .problem-stat-number .unit {
-            font-size: 0.3em;
-            font-weight: 400;
-            color: var(--gray-400);
-            margin-left: 0.1em;
-        }
-
-        .problem-stat-label {
-            font-size: 1rem;
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             color: var(--gray-500);
-            margin-top: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+            font-size: 0.875rem;
         }
 
-        .problem-stat-label.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .hero-meta-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--teal);
         }
 
-        .problem-message {
+        /* Section Base */
+        .section {
+            padding: 100px 2rem;
+        }
+
+        .section-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(13, 148, 136, 0.1);
+            border-radius: 100px;
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        /* Overview Section */
+        .overview-section {
+            background: var(--gray-50);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .overview-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .overview-card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(13, 148, 136, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .overview-card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--teal);
+        }
+
+        .overview-card-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+
+        .overview-card-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* Budget Section */
+        .budget-section {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .budget-highlight {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .budget-amount {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            color: var(--teal-light);
+            line-height: 1;
+        }
+
+        .budget-amount-label {
             font-size: 1.125rem;
             color: var(--gray-400);
-            max-width: 600px;
-            margin: 4rem auto 0;
-            line-height: 2;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-top: 0.5rem;
         }
 
-        .problem-message.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
-        .problem-message strong {
+        .budget-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .budget-item-label {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            margin-bottom: 0.5rem;
+        }
+
+        .budget-item-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .budget-note {
+            background: rgba(45, 212, 191, 0.1);
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .budget-note p {
+            font-size: 0.9375rem;
+            color: var(--gray-300);
+            line-height: 1.8;
+        }
+
+        .budget-note strong {
             color: var(--teal-light);
-            font-weight: 600;
         }
 
         /* Why Section */
         .why-section {
-            height: 400vh;
             background: var(--white);
-        }
-
-        .why-section .sticky-container {
-            background: var(--white);
-        }
-
-        .why-content {
-            max-width: 1000px;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        .why-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .why-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--amber);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .why-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .why-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            color: var(--gray-900);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .why-title.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .why-grid {
@@ -415,15 +391,13 @@
         .why-card {
             background: var(--gray-50);
             padding: 2.5rem;
-            border-radius: 16px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .why-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .why-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
         .why-card.highlight {
@@ -513,14 +487,6 @@
             background: var(--gray-900);
             border-radius: 16px;
             color: var(--white);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .why-conclusion.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .why-conclusion p {
@@ -532,297 +498,95 @@
             color: var(--teal-light);
         }
 
-        /* Concept Section */
-        .concept-section {
-            height: 500vh;
-            background: var(--white);
+        /* Photos Section */
+        .photos-section {
+            background: var(--gray-50);
         }
 
-        .concept-section .sticky-container {
-            background: var(--white);
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
-        .concept-content {
+        .photo-card {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--gray-200);
+        }
+
+        .photo-card img {
             width: 100%;
-            max-width: 1200px;
-            padding: 0 2rem;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .concept-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .concept-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--teal);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .concept-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .concept-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 900;
-            color: var(--gray-900);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .concept-title.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* City Comparison Visual */
-        .city-comparison {
-            display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 4rem;
-            margin-bottom: 4rem;
+            height: 100%;
+            color: var(--gray-400);
         }
 
-        .city-visual {
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .city-visual.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .city-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            position: relative;
-            transition: all 0.8s;
-        }
-
-        .city-circle.spread {
-            width: 220px;
-            height: 220px;
-            background: rgba(245, 158, 11, 0.08);
-            border: 3px dashed var(--amber);
-        }
-
-        .city-circle.compact {
-            width: 140px;
-            height: 140px;
-            background: rgba(13, 148, 136, 0.1);
-            border: 3px solid var(--teal);
-        }
-
-        .city-circle svg {
-            width: 64px;
-            height: 64px;
-            transition: all 0.5s;
-        }
-
-        .city-circle.spread svg {
-            stroke: var(--amber);
-        }
-
-        .city-circle.compact svg {
-            stroke: var(--teal);
-        }
-
-        .city-visual.visible .city-circle.compact {
-            box-shadow: 0 0 60px rgba(13, 148, 136, 0.3);
-        }
-
-        .city-label {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 0.25rem;
-        }
-
-        .city-desc {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
-
-        .comparison-arrow {
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .comparison-arrow.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .comparison-arrow svg {
-            width: 64px;
-            height: 64px;
-            stroke: var(--teal);
-        }
-
-        /* Benefits Grid */
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .benefit-card {
-            background: var(--gray-50);
-            padding: 2.5rem 2rem;
-            border-radius: 16px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .benefit-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .benefit-icon {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--teal), var(--teal-light));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .benefit-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--white);
-        }
-
-        .benefit-card h4 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--gray-900);
+        .photo-placeholder svg {
+            width: 48px;
+            height: 48px;
             margin-bottom: 0.5rem;
+            stroke: var(--gray-400);
         }
 
-        .benefit-card p {
+        .photo-placeholder span {
             font-size: 0.875rem;
-            color: var(--gray-500);
         }
 
-        /* Stats Section */
-        .stats-section {
-            height: 400vh;
-            background: var(--gray-50);
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: var(--white);
+            font-size: 0.875rem;
         }
 
-        .stats-section .sticky-container {
-            background: var(--gray-50);
+        /* Facility Data Section */
+        .facility-section {
+            background: var(--white);
         }
 
-        .stats-content {
-            max-width: 1200px;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        .stats-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .stats-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--teal);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .stats-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stats-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            color: var(--gray-900);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .stats-title.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .comparison-cards {
+        .facility-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
         }
 
-        .comparison-card {
-            background: var(--white);
+        .facility-card {
+            background: var(--gray-50);
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .comparison-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .comparison-card.yonago {
+        .facility-card.yonago {
             border-top: 4px solid var(--teal);
         }
 
-        .comparison-card.misato {
+        .facility-card.misato {
             border-top: 4px solid var(--amber);
         }
 
-        .comparison-card-header {
+        .facility-card-header {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .comparison-card-icon {
+        .facility-card-icon {
             width: 48px;
             height: 48px;
             border-radius: 12px;
@@ -831,50 +595,50 @@
             justify-content: center;
         }
 
-        .comparison-card.yonago .comparison-card-icon {
+        .facility-card.yonago .facility-card-icon {
             background: rgba(13, 148, 136, 0.1);
         }
 
-        .comparison-card.misato .comparison-card-icon {
-            background: rgba(245, 158, 11, 0.1);
-        }
-
-        .comparison-card.yonago .comparison-card-icon svg {
+        .facility-card.yonago .facility-card-icon svg {
             stroke: var(--teal);
         }
 
-        .comparison-card.misato .comparison-card-icon svg {
+        .facility-card.misato .facility-card-icon {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .facility-card.misato .facility-card-icon svg {
             stroke: var(--amber);
         }
 
-        .comparison-card-title {
+        .facility-card-title {
             font-size: 1.5rem;
             font-weight: 800;
             color: var(--gray-900);
         }
 
-        .comparison-list {
+        .facility-list {
             list-style: none;
         }
 
-        .comparison-list li {
+        .facility-list li {
             padding: 1rem 0;
-            border-bottom: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--gray-200);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .comparison-list li:last-child {
+        .facility-list li:last-child {
             border-bottom: none;
         }
 
-        .comparison-item-label {
+        .facility-item-label {
             font-size: 0.9375rem;
             color: var(--gray-500);
         }
 
-        .comparison-item-value {
+        .facility-item-value {
             font-size: 1.125rem;
             font-weight: 700;
             color: var(--gray-900);
@@ -882,196 +646,200 @@
 
         /* Learnings Section */
         .learnings-section {
-            height: 400vh;
-            background: var(--navy);
-        }
-
-        .learnings-section .sticky-container {
-            background: var(--navy);
-        }
-
-        .learnings-content {
-            text-align: center;
+            background: var(--teal);
             color: var(--white);
-            max-width: 1000px;
-            padding: 0 2rem;
-            width: 100%;
         }
 
-        .learnings-header {
-            margin-bottom: 4rem;
+        .learnings-section .section-label {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
         }
 
-        .learnings-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--teal-light);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s;
-        }
-
-        .learnings-label.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .learnings-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 900;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 0.1s;
-        }
-
-        .learnings-title.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .learnings-section .section-title {
+            color: var(--white);
         }
 
         .learnings-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
-            text-align: left;
         }
 
         .learning-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
             padding: 2rem;
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-            opacity: 0;
-            transform: translateX(-40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .learning-card:nth-child(even) {
-            transform: translateX(40px);
-        }
-
-        .learning-card.visible {
-            opacity: 1;
-            transform: translateX(0);
+            transition: background 0.3s;
         }
 
         .learning-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(45, 212, 191, 0.3);
+            background: rgba(255, 255, 255, 0.15);
         }
 
-        .learning-number {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--teal), var(--teal-light));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.25rem;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .learning-content h4 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .learning-content p {
-            font-size: 0.9375rem;
-            color: var(--gray-400);
-            line-height: 1.7;
-        }
-
-        /* Comments Section */
-        .comments-section {
-            background: var(--gray-50);
-            padding: 120px 0;
-        }
-
-        .comments-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .comments-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .comments-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--teal);
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-        }
-
-        .comments-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 900;
-            color: var(--gray-900);
-        }
-
-        .comments-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .comment-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .comment-header {
+        .learning-card-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .comment-avatar {
+        .learning-avatar {
             width: 56px;
             height: 56px;
             border-radius: 50%;
             overflow: hidden;
-            background: var(--gray-200);
+            background: rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
         }
 
-        .comment-avatar img {
+        .learning-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .comment-name {
+        .learning-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .learning-role {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .learning-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--teal-light);
+        }
+
+        .learning-content p {
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+        }
+
+        .learning-action {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .learning-action-label {
+            font-size: 0.75rem;
+            color: var(--teal-light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .learning-action p {
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        /* Outcome Section */
+        .outcome-section {
+            background: var(--white);
+        }
+
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .outcome-card {
+            background: var(--gray-50);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .outcome-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .outcome-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--teal), var(--teal-light));
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+        }
+
+        .outcome-card h4 {
+            font-size: 1.125rem;
             font-weight: 700;
             color: var(--gray-900);
-            font-size: 1rem;
+            margin-bottom: 0.75rem;
         }
 
-        .comment-role {
-            font-size: 0.75rem;
-            color: var(--gray-400);
-            letter-spacing: 0.1em;
+        .outcome-card p {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+            line-height: 1.7;
         }
 
-        .comment-text {
+        /* FAQ Section */
+        .faq-section {
+            background: var(--gray-50);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .faq-question::before {
+            content: 'Q';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--teal);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 0.875rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
             font-size: 0.9375rem;
             color: var(--gray-600);
             line-height: 1.8;
+            padding-left: 2.75rem;
         }
 
         /* CTA Section */
@@ -1138,48 +906,55 @@
             font-size: 0.75rem;
         }
 
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
-            .benefits-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .overview-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .learnings-grid {
+            .budget-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .outcome-grid {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            .benefits-grid {
+            .overview-grid {
                 grid-template-columns: 1fr;
             }
 
-            .city-comparison {
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .comparison-arrow svg {
-                transform: rotate(90deg);
-            }
-
-            .comparison-cards,
-            .comments-grid {
+            .budget-grid {
                 grid-template-columns: 1fr;
             }
 
-            .problem-stats {
-                flex-direction: column;
-                gap: 4rem;
-            }
-
+            .why-grid,
+            .facility-grid,
             .learnings-grid {
                 grid-template-columns: 1fr;
             }
 
-            .learning-card,
-            .learning-card:nth-child(even) {
-                transform: translateY(40px);
+            .photos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
@@ -1206,327 +981,441 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="scroll-section hero-section">
-        <div class="sticky-container">
-            <div class="hero-content">
-                <div class="hero-label">INSPECTION REPORT</div>
-                <h1 class="hero-title">
-                    <span class="line"><span class="highlight">歩いて</span></span>
-                    <span class="line">暮らせる</span>
-                    <span class="line">まちへ</span>
-                </h1>
-                <p class="hero-subtitle">米子市のコンパクトシティから学ぶ<br>三郷の未来のかたち</p>
+    <section class="hero">
+        <div class="hero-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            INSPECTION REPORT 2026
+        </div>
+        <h1 class="hero-title">
+            <span class="highlight">歩いて</span>暮らせる<br>まちへ
+        </h1>
+        <p style="font-size: 1.25rem; color: var(--gray-500); max-width: 500px; animation: fadeInUp 0.8s ease-out 0.5s both;">
+            米子市のコンパクトシティから学ぶ<br>三郷の未来のかたち
+        </p>
+        <div class="hero-meta">
+            <div class="hero-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                2026年1月18日
             </div>
-            <div class="scroll-hint">
-                <div class="mouse"></div>
-                <span>SCROLL</span>
+            <div class="hero-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                鳥取県米子市
+            </div>
+            <div class="hero-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                議員4名参加
             </div>
         </div>
     </section>
 
-    <!-- Problem Section -->
-    <section class="scroll-section problem-section">
-        <div class="sticky-container">
-            <div class="problem-content">
-                <p class="problem-question">人口減少時代、私たちのまちはどう変わる？</p>
-                <div class="problem-stats">
-                    <div class="problem-stat">
-                        <div class="problem-stat-number">2050</div>
-                        <div class="problem-stat-label">日本の人口が1億人を割る年</div>
+    <!-- Overview Section -->
+    <section class="section overview-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">OVERVIEW</span>
+                <h2 class="section-title">視察概要</h2>
+            </div>
+            <div class="overview-grid">
+                <div class="overview-card animate-on-scroll">
+                    <div class="overview-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
                     </div>
-                    <div class="problem-stat">
-                        <div class="problem-stat-number">40<span class="unit">%</span></div>
-                        <div class="problem-stat-label">高齢化率の将来予測</div>
-                    </div>
+                    <div class="overview-card-label">視察日</div>
+                    <div class="overview-card-value">2026年1月18日</div>
                 </div>
-                <p class="problem-message">郊外に広がった都市では、インフラ維持が困難に。<br><strong>「歩いて暮らせるまち」</strong>への転換が求められています。</p>
+                <div class="overview-card animate-on-scroll">
+                    <div class="overview-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="overview-card-label">視察時間</div>
+                    <div class="overview-card-value">約3時間</div>
+                </div>
+                <div class="overview-card animate-on-scroll">
+                    <div class="overview-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="overview-card-label">参加者</div>
+                    <div class="overview-card-value">議員4名</div>
+                </div>
+                <div class="overview-card animate-on-scroll">
+                    <div class="overview-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="overview-card-label">距離</div>
+                    <div class="overview-card-value">約650km</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Section -->
+    <section class="section budget-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label" style="background: rgba(255,255,255,0.1); color: var(--teal-light);">TRANSPARENCY</span>
+                <h2 class="section-title" style="color: var(--white);">視察費用</h2>
+            </div>
+            <div class="budget-highlight animate-on-scroll">
+                <div class="budget-amount">0<span style="font-size: 0.4em; font-weight: 400;">円</span></div>
+                <div class="budget-amount-label">会派視察における公費負担額</div>
+            </div>
+            <div class="budget-grid">
+                <div class="budget-item animate-on-scroll">
+                    <div class="budget-item-label">交通費</div>
+                    <div class="budget-item-value">自己負担</div>
+                </div>
+                <div class="budget-item animate-on-scroll">
+                    <div class="budget-item-label">宿泊費</div>
+                    <div class="budget-item-value">自己負担</div>
+                </div>
+                <div class="budget-item animate-on-scroll">
+                    <div class="budget-item-label">日当</div>
+                    <div class="budget-item-value">なし</div>
+                </div>
+            </div>
+            <div class="budget-note animate-on-scroll">
+                <p>創政MISATOの会派視察は<strong>全て自己負担</strong>で実施しています。<br>
+                市民の税金を使わず、議員の自己研鑽として視察を行い、<br>
+                得られた知見を三郷市の政策提言に活かしています。</p>
             </div>
         </div>
     </section>
 
     <!-- Why Section -->
-    <section class="scroll-section why-section">
-        <div class="sticky-container">
-            <div class="why-content">
-                <div class="why-header">
-                    <div class="why-label">WHY YONAGO</div>
-                    <h2 class="why-title">なぜ米子市を視察したのか</h2>
-                </div>
-                <div class="why-grid">
-                    <div class="why-card" data-why="0">
-                        <div class="why-card-header">
-                            <div class="why-card-icon misato">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">三郷市の課題</div>
-                                <div class="why-card-subtitle">MISATO'S CHALLENGE</div>
-                            </div>
-                        </div>
-                        <p>三郷市は首都圏のベッドタウン。しかし人口減少・高齢化の波は確実に押し寄せています。</p>
-                        <ul>
-                            <li>高齢化率：24.5%（2025年）→ 30%超見込み</li>
-                            <li>車依存の生活スタイル</li>
-                            <li>郊外住宅地の空き家増加</li>
-                        </ul>
-                    </div>
-                    <div class="why-card" data-why="1">
-                        <div class="why-card-header">
-                            <div class="why-card-icon yonago">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
-                                    <path d="M9 22v-4h6v4"/>
-                                    <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">米子市を選んだ理由</div>
-                                <div class="why-card-subtitle">WHY YONAGO</div>
-                            </div>
-                        </div>
-                        <p>人口規模が三郷市と同程度（約14万人）でありながら、コンパクトシティ施策で先進的な取り組みを実施。</p>
-                        <ul>
-                            <li>人口規模が近く比較検討しやすい</li>
-                            <li>立地適正化計画を先行導入</li>
-                            <li>公共交通と連携したまちづくり</li>
-                        </ul>
-                    </div>
-                    <div class="why-card highlight" data-why="2">
-                        <div class="why-card-header">
-                            <div class="why-card-icon yonago">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">市民からの疑問に答える</div>
-                                <div class="why-card-subtitle">ANSWERING CITIZENS</div>
-                            </div>
-                        </div>
-                        <p>「なぜ遠方の視察が必要なのか」という疑問に、明確な根拠で説明できるように。</p>
-                        <ul>
-                            <li>近隣だけでは学べない先進事例がある</li>
-                            <li>人口規模が同程度の都市での成功事例</li>
-                            <li>三郷市への具体的な政策提言に直結</li>
-                        </ul>
-                    </div>
-                    <div class="why-card" data-why="3">
-                        <div class="why-card-header">
-                            <div class="why-card-icon misato">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="23 4 23 10 17 10"/>
-                                    <polyline points="1 20 1 14 7 14"/>
-                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="why-card-title">三郷市への還元</div>
-                                <div class="why-card-subtitle">RETURN TO MISATO</div>
-                            </div>
-                        </div>
-                        <p>視察で得た知見を、三郷市の都市計画・公共交通政策に具体的に提言します。</p>
-                        <ul>
-                            <li>駅周辺再開発への提言</li>
-                            <li>コミュニティバス路線の最適化</li>
-                            <li>立地適正化計画の検討促進</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="why-conclusion" data-why="4">
-                    <p>三郷市と同規模の都市だからこそ参考になる。<strong>「他所の真似」ではなく「三郷に合った施策」を考えるための視察です。</strong></p>
-                </div>
+    <section class="section why-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">WHY YONAGO</span>
+                <h2 class="section-title">なぜ米子市を視察したのか</h2>
             </div>
-        </div>
-    </section>
-
-    <!-- Concept Section -->
-    <section class="scroll-section concept-section">
-        <div class="sticky-container">
-            <div class="concept-content">
-                <div class="concept-header">
-                    <div class="concept-label">CONCEPT</div>
-                    <h2 class="concept-title">コンパクトシティとは</h2>
-                </div>
-
-                <div class="city-comparison">
-                    <div class="city-visual" data-city="spread">
-                        <div class="city-circle spread">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                                <polyline points="9 22 9 12 15 12 15 22"/>
+            <div class="why-grid">
+                <div class="why-card animate-on-scroll">
+                    <div class="why-card-header">
+                        <div class="why-card-icon misato">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
                             </svg>
                         </div>
-                        <div class="city-label">従来型</div>
-                        <div class="city-desc">郊外に拡散した都市</div>
+                        <div>
+                            <div class="why-card-title">三郷市の課題</div>
+                            <div class="why-card-subtitle">MISATO'S CHALLENGE</div>
+                        </div>
                     </div>
-                    <div class="comparison-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </div>
-                    <div class="city-visual" data-city="compact">
-                        <div class="city-circle compact">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <p>三郷市は首都圏のベッドタウン。しかし人口減少・高齢化の波は確実に押し寄せています。</p>
+                    <ul>
+                        <li>高齢化率：24.5%（2025年）→ 30%超見込み</li>
+                        <li>車依存の生活スタイル</li>
+                        <li>郊外住宅地の空き家増加</li>
+                    </ul>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <div class="why-card-header">
+                        <div class="why-card-icon yonago">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
                                 <path d="M9 22v-4h6v4"/>
-                                <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>
+                                <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01"/>
                             </svg>
                         </div>
-                        <div class="city-label">コンパクト</div>
-                        <div class="city-desc">機能が集約した都市</div>
+                        <div>
+                            <div class="why-card-title">米子市を選んだ理由</div>
+                            <div class="why-card-subtitle">WHY YONAGO</div>
+                        </div>
+                    </div>
+                    <p>人口規模が三郷市と同程度（約14万人）でありながら、コンパクトシティ施策で先進的な取り組みを実施。</p>
+                    <ul>
+                        <li>人口規模が近く比較検討しやすい</li>
+                        <li>立地適正化計画を先行導入</li>
+                        <li>公共交通と連携したまちづくり</li>
+                    </ul>
+                </div>
+                <div class="why-card highlight animate-on-scroll">
+                    <div class="why-card-header">
+                        <div class="why-card-icon yonago">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="why-card-title">市民からの疑問に答える</div>
+                            <div class="why-card-subtitle">ANSWERING CITIZENS</div>
+                        </div>
+                    </div>
+                    <p>「なぜ遠方の視察が必要なのか」という疑問に、明確な根拠で説明できるように。</p>
+                    <ul>
+                        <li>近隣だけでは学べない先進事例がある</li>
+                        <li>人口規模が同程度の都市での成功事例</li>
+                        <li>三郷市への具体的な政策提言に直結</li>
+                    </ul>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <div class="why-card-header">
+                        <div class="why-card-icon misato">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <polyline points="1 20 1 14 7 14"/>
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="why-card-title">三郷市への還元</div>
+                            <div class="why-card-subtitle">RETURN TO MISATO</div>
+                        </div>
+                    </div>
+                    <p>視察で得た知見を、三郷市の都市計画・公共交通政策に具体的に提言します。</p>
+                    <ul>
+                        <li>駅周辺再開発への提言</li>
+                        <li>コミュニティバス路線の最適化</li>
+                        <li>立地適正化計画の検討促進</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="why-conclusion animate-on-scroll">
+                <p>三郷市と同規模の都市だからこそ参考になる。<strong>「他所の真似」ではなく「三郷に合った施策」を考えるための視察です。</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photos Section -->
+    <section class="section photos-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">PHOTOS</span>
+                <h2 class="section-title">現地の様子</h2>
+            </div>
+            <div class="photos-grid">
+                <div class="photo-card animate-on-scroll">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>写真準備中</span>
                     </div>
                 </div>
-
-                <div class="benefits-grid">
-                    <div class="benefit-card" data-index="0">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                        </div>
-                        <h4>歩いて暮らせる</h4>
-                        <p>日常の買い物や医療が徒歩圏内に</p>
+                <div class="photo-card animate-on-scroll">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>写真準備中</span>
                     </div>
-                    <div class="benefit-card" data-index="1">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="1" x2="12" y2="23"/>
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                            </svg>
-                        </div>
-                        <h4>財政効率化</h4>
-                        <p>インフラ維持コストを削減</p>
-                    </div>
-                    <div class="benefit-card" data-index="2">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                            </svg>
-                        </div>
-                        <h4>環境にやさしい</h4>
-                        <p>移動距離減でCO2排出削減</p>
+                </div>
+                <div class="photo-card animate-on-scroll">
+                    <div class="photo-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>写真準備中</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="scroll-section stats-section">
-        <div class="sticky-container">
-            <div class="stats-content">
-                <div class="stats-header">
-                    <div class="stats-label">COMPARISON</div>
-                    <h2 class="stats-title">米子市と三郷市</h2>
+    <!-- Facility Data Section -->
+    <section class="section facility-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">COMPARISON</span>
+                <h2 class="section-title">米子市と三郷市の比較</h2>
+            </div>
+            <div class="facility-grid">
+                <div class="facility-card yonago animate-on-scroll">
+                    <div class="facility-card-header">
+                        <div class="facility-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 21h18"/>
+                                <path d="M5 21V7l8-4v18"/>
+                                <path d="M19 21V11l-6-4"/>
+                            </svg>
+                        </div>
+                        <div class="facility-card-title">米子市</div>
+                    </div>
+                    <ul class="facility-list">
+                        <li>
+                            <span class="facility-item-label">人口</span>
+                            <span class="facility-item-value">14.7万人</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">面積</span>
+                            <span class="facility-item-value">132 km²</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">人口密度</span>
+                            <span class="facility-item-value">1,112人/km²</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">特徴</span>
+                            <span class="facility-item-value">地方中核都市</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">コンパクト施策</span>
+                            <span class="facility-item-value">立地適正化計画導入</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="comparison-cards">
-                    <div class="comparison-card yonago" data-card="yonago">
-                        <div class="comparison-card-header">
-                            <div class="comparison-card-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M3 21h18"/>
-                                    <path d="M5 21V7l8-4v18"/>
-                                    <path d="M19 21V11l-6-4"/>
-                                    <path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
-                                </svg>
-                            </div>
-                            <div class="comparison-card-title">米子市</div>
+                <div class="facility-card misato animate-on-scroll">
+                    <div class="facility-card-header">
+                        <div class="facility-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                                <path d="M9 22v-4h6v4"/>
+                                <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01"/>
+                            </svg>
                         </div>
-                        <ul class="comparison-list">
-                            <li>
-                                <span class="comparison-item-label">人口</span>
-                                <span class="comparison-item-value">14.7万人</span>
-                            </li>
-                            <li>
-                                <span class="comparison-item-label">面積</span>
-                                <span class="comparison-item-value">132 km²</span>
-                            </li>
-                            <li>
-                                <span class="comparison-item-label">人口密度</span>
-                                <span class="comparison-item-value">1,112人/km²</span>
-                            </li>
-                            <li>
-                                <span class="comparison-item-label">特徴</span>
-                                <span class="comparison-item-value">地方中核都市</span>
-                            </li>
-                        </ul>
+                        <div class="facility-card-title">三郷市</div>
                     </div>
-                    <div class="comparison-card misato" data-card="misato">
-                        <div class="comparison-card-header">
-                            <div class="comparison-card-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
-                                    <path d="M9 22v-4h6v4"/>
-                                    <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>
-                                </svg>
-                            </div>
-                            <div class="comparison-card-title">三郷市</div>
-                        </div>
-                        <ul class="comparison-list">
-                            <li>
-                                <span class="comparison-item-label">人口</span>
-                                <span class="comparison-item-value">14.3万人</span>
-                            </li>
-                            <li>
-                                <span class="comparison-item-label">面積</span>
-                                <span class="comparison-item-value">30 km²</span>
-                            </li>
-                            <li>
-                                <span class="comparison-item-label">人口密度</span>
-                                <span class="comparison-item-value">4,760人/km²</span>
-                            </li>
-                            <li>
-                                <span class="comparison-item-label">特徴</span>
-                                <span class="comparison-item-value">首都圏ベッドタウン</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="facility-list">
+                        <li>
+                            <span class="facility-item-label">人口</span>
+                            <span class="facility-item-value">14.3万人</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">面積</span>
+                            <span class="facility-item-value">30 km²</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">人口密度</span>
+                            <span class="facility-item-value">4,760人/km²</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">特徴</span>
+                            <span class="facility-item-value">首都圏ベッドタウン</span>
+                        </li>
+                        <li>
+                            <span class="facility-item-label">コンパクト施策</span>
+                            <span class="facility-item-value">検討中</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Learnings Section -->
-    <section class="scroll-section learnings-section">
-        <div class="sticky-container">
-            <div class="learnings-content">
-                <div class="learnings-header">
-                    <div class="learnings-label">LEARNINGS</div>
-                    <h2 class="learnings-title">三郷市への示唆</h2>
+    <section class="section learnings-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">LEARNINGS</span>
+                <h2 class="section-title">議員それぞれの学び</h2>
+            </div>
+            <div class="learnings-grid">
+                <div class="learning-card animate-on-scroll">
+                    <div class="learning-card-header">
+                        <div class="learning-avatar">
+                            <img src="images/satohiroyuki.png" alt="佐藤裕之">
+                        </div>
+                        <div>
+                            <div class="learning-name">佐藤 裕之</div>
+                            <div class="learning-role">会長</div>
+                        </div>
+                    </div>
+                    <div class="learning-content">
+                        <h4>財政面からの持続可能性</h4>
+                        <p>人口規模は近いが都市構造が異なる。三郷の強みである高い人口密度を活かしつつ、インフラ維持コストを最適化する戦略が重要だと感じました。</p>
+                        <div class="learning-action">
+                            <div class="learning-action-label">今後の行動</div>
+                            <p>三郷市のインフラ維持費用の将来推計を要求し、財政的な持続可能性について議会で質問する予定</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="learnings-grid">
-                    <div class="learning-card" data-index="0">
-                        <div class="learning-number">1</div>
-                        <div class="learning-content">
-                            <h4>駅周辺への機能集約</h4>
-                            <p>三郷中央駅・新三郷駅を核とした都市機能の集中</p>
+                <div class="learning-card animate-on-scroll">
+                    <div class="learning-card-header">
+                        <div class="learning-avatar">
+                            <img src="images/seiichitakahashi.png" alt="高橋誠一">
+                        </div>
+                        <div>
+                            <div class="learning-name">高橋 誠一</div>
+                            <div class="learning-role">幹事</div>
                         </div>
                     </div>
-                    <div class="learning-card" data-index="1">
-                        <div class="learning-number">2</div>
-                        <div class="learning-content">
-                            <h4>公共交通の充実</h4>
-                            <p>バス路線の最適化で移動の利便性向上</p>
+                    <div class="learning-content">
+                        <h4>公共交通の再編</h4>
+                        <p>駅周辺の再開発と公共交通の連携が鍵。米子市のバス路線最適化の手法は、三郷のコミュニティバスにも応用可能だと確信しました。</p>
+                        <div class="learning-action">
+                            <div class="learning-action-label">今後の行動</div>
+                            <p>コミュニティバス路線の見直し検討を都市整備部に提案予定</p>
                         </div>
                     </div>
-                    <div class="learning-card" data-index="2">
-                        <div class="learning-number">3</div>
-                        <div class="learning-content">
-                            <h4>空き家対策</h4>
-                            <p>中心市街地への居住誘導と空き家の有効活用</p>
+                </div>
+                <div class="learning-card animate-on-scroll">
+                    <div class="learning-card-header">
+                        <div class="learning-avatar">
+                            <img src="images/chihohidaka.png" alt="日高千穂">
+                        </div>
+                        <div>
+                            <div class="learning-name">日高 千穂</div>
+                            <div class="learning-role">会計</div>
                         </div>
                     </div>
-                    <div class="learning-card" data-index="3">
-                        <div class="learning-number">4</div>
-                        <div class="learning-content">
-                            <h4>高齢者にやさしいまち</h4>
-                            <p>歩いて暮らせる環境で健康寿命を延伸</p>
+                    <div class="learning-content">
+                        <h4>高齢者の暮らしやすさ</h4>
+                        <p>歩いて暮らせるまちづくりは健康寿命の延伸にもつながる重要な視点です。福祉と都市計画の連携が不可欠だと実感しました。</p>
+                        <div class="learning-action">
+                            <div class="learning-action-label">今後の行動</div>
+                            <p>高齢者の移動実態調査を福祉部門と連携して実施するよう提言予定</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="learning-card animate-on-scroll">
+                    <div class="learning-card-header">
+                        <div class="learning-avatar">
+                            <img src="images/suzukiyusaku.png" alt="鈴木優作">
+                        </div>
+                        <div>
+                            <div class="learning-name">鈴木 優作</div>
+                            <div class="learning-role">議員</div>
+                        </div>
+                    </div>
+                    <div class="learning-content">
+                        <h4>デジタルとの融合</h4>
+                        <p>コンパクトシティは単なる集約ではなく、暮らしの質を高める戦略。デジタル技術と組み合わせたスマートシティの視点も必要です。</p>
+                        <div class="learning-action">
+                            <div class="learning-action-label">今後の行動</div>
+                            <p>MaaSなどデジタル交通の導入可能性について調査研究を進める</p>
                         </div>
                     </div>
                 </div>
@@ -1534,61 +1423,56 @@
         </div>
     </section>
 
-    <!-- Comments Section -->
-    <section class="comments-section">
-        <div class="comments-content">
-            <div class="comments-header">
-                <div class="comments-label">COMMENTS</div>
-                <h2 class="comments-title">議員の声</h2>
+    <!-- Outcome Section -->
+    <section class="section outcome-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">OUTCOME</span>
+                <h2 class="section-title">視察から生まれる政策提言</h2>
             </div>
-            <div class="comments-grid">
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/satohiroyuki.png" alt="佐藤裕之">
-                        </div>
-                        <div>
-                            <div class="comment-name">佐藤 裕之</div>
-                            <div class="comment-role">会長</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">人口規模は近いが都市構造が異なる。三郷の強みを活かした独自の戦略が必要です。</p>
+            <div class="outcome-grid">
+                <div class="outcome-card animate-on-scroll">
+                    <div class="outcome-number">1</div>
+                    <h4>駅周辺への都市機能集約</h4>
+                    <p>三郷中央駅・新三郷駅を核とした都市機能の集中と、それを支える公共交通網の整備</p>
                 </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/seiichitakahashi.png" alt="高橋誠一">
-                        </div>
-                        <div>
-                            <div class="comment-name">高橋 誠一</div>
-                            <div class="comment-role">幹事</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">駅周辺の再開発と公共交通の連携。三郷でも実現可能な施策だと感じました。</p>
+                <div class="outcome-card animate-on-scroll">
+                    <div class="outcome-number">2</div>
+                    <h4>立地適正化計画の策定</h4>
+                    <p>居住誘導区域・都市機能誘導区域を設定し、計画的なコンパクト化を推進</p>
                 </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/chihohidaka.png" alt="日高千穂">
-                        </div>
-                        <div>
-                            <div class="comment-name">日高 千穂</div>
-                            <div class="comment-role">会計</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">高齢者が歩いて暮らせるまちづくり。健康寿命の延伸にもつながる重要な視点です。</p>
+                <div class="outcome-card animate-on-scroll">
+                    <div class="outcome-number">3</div>
+                    <h4>歩いて暮らせる環境整備</h4>
+                    <p>歩道の整備、ベンチの設置、休憩スポットの確保など、高齢者にやさしいインフラ整備</p>
                 </div>
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">
-                            <img src="images/suzukiyusaku.png" alt="鈴木優作">
-                        </div>
-                        <div>
-                            <div class="comment-name">鈴木 優作</div>
-                            <div class="comment-role">議員</div>
-                        </div>
-                    </div>
-                    <p class="comment-text">コンパクトシティは単なる集約ではなく、暮らしの質を高める戦略。三郷でも検討を。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">FAQ</span>
+                <h2 class="section-title">市民の皆様からのよくある質問</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">なぜ遠くの米子市まで行く必要があるのですか？</div>
+                    <p class="faq-answer">三郷市と同規模（約14万人）でコンパクトシティの先進事例を持つ都市は全国でも限られています。近隣では学べない実践的な知見を得るため、適切な視察先を選定しました。なお、費用は全額自己負担です。</p>
+                </div>
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">視察の成果は具体的にどう活かされますか？</div>
+                    <p class="faq-answer">議会での一般質問や委員会での政策提言に活用します。今回の視察では、駅周辺の都市機能集約、公共交通の再編、立地適正化計画の策定について具体的な提言を行う予定です。</p>
+                </div>
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">他の議会も同様の視察を行っていますか？</div>
+                    <p class="faq-answer">はい、多くの議会で先進事例を学ぶための視察は一般的に行われています。ただし、創政MISATOでは公費を使わず自己負担で実施することで、より自由な視点での調査研究を可能にしています。</p>
+                </div>
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">視察報告の詳細資料は見られますか？</div>
+                    <p class="faq-answer">より詳細な報告書は、各議員の議会報告や会派の活動報告でご確認いただけます。また、ご質問があれば各議員への直接のお問い合わせも歓迎しています。</p>
                 </div>
             </div>
         </div>
@@ -1617,153 +1501,46 @@
     <script>
         // Progress Bar
         const progressBar = document.querySelector('.progress-bar');
-        const header = document.querySelector('.header');
 
-        // Get all scroll sections
-        const sections = {
-            hero: {
-                el: document.querySelector('.hero-section'),
-                animations: [
-                    { el: '.hero-label', start: 0.1, class: 'visible' },
-                    { el: '.hero-title .line:nth-child(1)', start: 0.15, class: 'visible' },
-                    { el: '.hero-title .line:nth-child(2)', start: 0.25, class: 'visible' },
-                    { el: '.hero-title .line:nth-child(3)', start: 0.35, class: 'visible' },
-                    { el: '.hero-subtitle', start: 0.45, class: 'visible' },
-                    { el: '.scroll-hint', start: 0.6, class: 'visible' }
-                ]
-            },
-            problem: {
-                el: document.querySelector('.problem-section'),
-                animations: [
-                    { el: '.problem-question', start: 0.1, class: 'visible' },
-                    { el: '.problem-stat:nth-child(1) .problem-stat-number', start: 0.25, class: 'visible' },
-                    { el: '.problem-stat:nth-child(1) .problem-stat-label', start: 0.3, class: 'visible' },
-                    { el: '.problem-stat:nth-child(2) .problem-stat-number', start: 0.45, class: 'visible' },
-                    { el: '.problem-stat:nth-child(2) .problem-stat-label', start: 0.5, class: 'visible' },
-                    { el: '.problem-message', start: 0.65, class: 'visible' }
-                ]
-            },
-            why: {
-                el: document.querySelector('.why-section'),
-                animations: [
-                    { el: '.why-label', start: 0.05, class: 'visible' },
-                    { el: '.why-title', start: 0.1, class: 'visible' },
-                    { el: '[data-why="0"]', start: 0.2, class: 'visible' },
-                    { el: '[data-why="1"]', start: 0.35, class: 'visible' },
-                    { el: '[data-why="2"]', start: 0.5, class: 'visible' },
-                    { el: '[data-why="3"]', start: 0.65, class: 'visible' },
-                    { el: '[data-why="4"]', start: 0.8, class: 'visible' }
-                ]
-            },
-            concept: {
-                el: document.querySelector('.concept-section'),
-                animations: [
-                    { el: '.concept-label', start: 0.05, class: 'visible' },
-                    { el: '.concept-title', start: 0.1, class: 'visible' },
-                    { el: '[data-city="spread"]', start: 0.2, class: 'visible' },
-                    { el: '.comparison-arrow', start: 0.3, class: 'visible' },
-                    { el: '[data-city="compact"]', start: 0.35, class: 'visible' },
-                    { el: '[data-index="0"].benefit-card', start: 0.5, class: 'visible' },
-                    { el: '[data-index="1"].benefit-card', start: 0.6, class: 'visible' },
-                    { el: '[data-index="2"].benefit-card', start: 0.7, class: 'visible' }
-                ]
-            },
-            stats: {
-                el: document.querySelector('.stats-section'),
-                animations: [
-                    { el: '.stats-label', start: 0.1, class: 'visible' },
-                    { el: '.stats-title', start: 0.15, class: 'visible' },
-                    { el: '[data-card="yonago"]', start: 0.3, class: 'visible' },
-                    { el: '[data-card="misato"]', start: 0.5, class: 'visible' }
-                ]
-            },
-            learnings: {
-                el: document.querySelector('.learnings-section'),
-                animations: [
-                    { el: '.learnings-label', start: 0.1, class: 'visible' },
-                    { el: '.learnings-title', start: 0.15, class: 'visible' },
-                    { el: '[data-index="0"].learning-card', start: 0.3, class: 'visible' },
-                    { el: '[data-index="1"].learning-card', start: 0.45, class: 'visible' },
-                    { el: '[data-index="2"].learning-card', start: 0.6, class: 'visible' },
-                    { el: '[data-index="3"].learning-card', start: 0.75, class: 'visible' }
-                ]
-            }
-        };
-
-        // Calculate section progress
-        function getSectionProgress(section) {
-            const rect = section.getBoundingClientRect();
-            const sectionHeight = section.offsetHeight;
-            const viewportHeight = window.innerHeight;
-
-            // Calculate how far we've scrolled through the section
-            const scrolled = -rect.top;
-            const scrollableHeight = sectionHeight - viewportHeight;
-
-            if (scrolled <= 0) return 0;
-            if (scrolled >= scrollableHeight) return 1;
-
-            return scrolled / scrollableHeight;
+        function updateProgressBar() {
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollY / docHeight) * 100;
+            progressBar.style.width = `${progress}%`;
         }
 
-        // Apply animations based on progress
-        function applyAnimations(sectionKey, progress) {
-            const section = sections[sectionKey];
-            if (!section) return;
+        // Scroll Animation
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
 
-            section.animations.forEach(anim => {
-                const el = section.el.querySelector(anim.el);
-                if (!el) return;
+        function checkScroll() {
+            animateElements.forEach((el, index) => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
 
-                const shouldBeVisible = progress >= anim.start && (anim.end === undefined || progress <= anim.end);
-
-                if (shouldBeVisible) {
-                    el.classList.add(anim.class);
-                } else if (anim.end !== undefined) {
-                    // Only remove if this is a ranged animation
-                    el.classList.remove(anim.class);
+                if (rect.top < windowHeight * 0.85) {
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                    }, index * 50);
                 }
             });
         }
 
-        // Main scroll handler
-        function handleScroll() {
-            const scrollY = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const totalProgress = scrollY / docHeight;
-
-            // Update progress bar
-            progressBar.style.width = `${totalProgress * 100}%`;
-
-            // Show/hide header
-            if (scrollY > window.innerHeight * 0.5) {
-                header.classList.add('visible');
-            } else {
-                header.classList.remove('visible');
-            }
-
-            // Process each section
-            Object.keys(sections).forEach(key => {
-                const section = sections[key];
-                const progress = getSectionProgress(section.el);
-                applyAnimations(key, progress);
-            });
-        }
-
-        // Throttle scroll events for performance
+        // Throttle scroll events
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    handleScroll();
+                    updateProgressBar();
+                    checkScroll();
                     ticking = false;
                 });
                 ticking = true;
             }
         });
 
-        // Initial call
-        handleScroll();
+        // Initial check
+        updateProgressBar();
+        checkScroll();
     </script>
 </body>
 
