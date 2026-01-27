@@ -1189,6 +1189,25 @@
             font-size: 0.875rem;
         }
 
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--teal);
+        }
+
         .footer-copy {
             font-size: 0.75rem;
         }
@@ -1228,7 +1247,7 @@
             }
 
             .stats-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1.5rem;
             }
 
@@ -1944,9 +1963,9 @@
 
     <!-- CTA -->
     <section class="cta">
-        <h2 class="cta-title">一緒に、三郷の未来を創りませんか？</h2>
-        <a href="index.html#contact" class="cta-button">
-            お問い合わせ
+        <h2 class="cta-title">創政MISATOの活動情報を受け取る</h2>
+        <a href="index.html#newsletter" class="cta-button">
+            LINE登録
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -1959,7 +1978,12 @@
             <img src="logo.png" alt="創政MISATO">
             <span>創政MISATO</span>
         </div>
-        <p class="footer-copy">&copy; 2026 創政MISATO</p>
+        <div class="footer-links">
+            <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
+            <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">三郷市公式サイト</a>
+            <a href="policy.html">会派理念・運営規則</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
     </footer>
 
     <script>
