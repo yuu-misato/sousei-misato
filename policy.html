@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会派理念・運営規則 | 創政MISATO</title>
+    <meta name="description" content="創政MISATOの会派理念、基本方針、および運営規則について。私たちは「市民とともに創る、新しい政治のかたち」を目指します。">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="会派理念・運営規則 | 創政MISATO">
+    <meta property="og:description" content="創政MISATOの理念と運営方針。市民とともに創る新しい政治のかたち。">
+    <meta property="og:url" content="https://sousei-misato.com/policy.html">
+    <meta property="og:site_name" content="創政MISATO">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Common Styles (Copied from index.html for consistency) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .header-logo-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .header-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header-logo-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .header-nav a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: var(--navy);
+        }
+
+        /* Page Content */
+        .page-header {
+            padding-top: 8rem;
+            padding-bottom: 4rem;
+            background: linear-gradient(135deg, var(--white) 0%, #f0fdf4 100%);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Content Policy Styling */
+        .policy-section {
+            margin-bottom: 5rem;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .policy-section h2 {
+            font-size: 1.75rem;
+            color: var(--navy);
+            border-bottom: 3px solid var(--green);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .main-philosophy {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .main-philosophy h3 {
+            font-size: 1.5rem;
+            color: var(--green-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .main-philosophy p {
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 1rem;
+        }
+
+        .policy-item {
+            margin-bottom: 2rem;
+        }
+
+        .policy-item h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .policy-item h3::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 1.25rem;
+            background: var(--green);
+            border-radius: 3px;
+        }
+
+        .policy-item p {
+            color: var(--text-light);
+            padding-left: 1rem;
+        }
+
+        .rules-list {
+            list-style: none;
+            counter-reset: rule;
+        }
+
+        .rules-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .rules-item:last-child {
+            border-bottom: none;
+        }
+
+        .rules-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .rules-content li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .rules-content li::before {
+            content: '・';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        .five-articles {
+            background: #f0fdf4;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+        }
+
+        .five-articles h3 {
+            text-align: center;
+            color: var(--green-dark);
+            margin-bottom: 2rem;
+        }
+
+        .article-box {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        .article-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-desc {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-example {
+            font-size: 0.85rem;
+            color: var(--green-dark);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-light);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .footer-logo-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--green);
+        }
+
+        .footer-copy {
+            font-size: 0.8125rem;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+
+            /* Simplified for now */
+            .policy-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="header-logo">
+                <div class="header-logo-icon">
+                    <img src="logo.png" alt="創政MISATO">
+                </div>
+                <span class="header-logo-text">創政MISATO</span>
+            </a>
+            <nav class="header-nav">
+                <a href="/#vision">理念</a>
+                <a href="/#members">所属議員</a>
+                <a href="/#activity">活動報告</a>
+                <a href="/#contact">お問い合わせ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1 class="page-title">会派理念・運営規則</h1>
+        <p class="page-subtitle">Mission, Policy & Rules</p>
+    </div>
+
+    <main class="container">
+        <!-- 1. 会派理念 -->
+        <section class="policy-section">
+            <h2>1. 会派理念</h2>
+            <div class="main-philosophy">
+                <h3>「市民とともに創る、新しい政治のかたち」</h3>
+                <p>
+                    創政MISATOは、「対話」「民間感覚」「市民ファースト」を基盤に共創を目指し、<br>
+                    三郷市に新しい政治文化を根付かせることを目的として設立された会派です。
+                </p>
+                <p>
+                    私たちは、市政を一部の人のものではなく、すべての市民とともに考え、ともに行動し、<br>
+                    ともに未来を創る「共創の政治」を目指します。
+                </p>
+                <p>
+                    民間の常識や生活者の視点を持ち込みながら、誠実で透明な議会活動を通じて、<br>
+                    市民に信頼される自治を築いていきます。
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. 基本方針 -->
+        <section class="policy-section">
+            <h2>2. 基本方針</h2>
+
+            <div class="policy-item">
+                <h3>1. 市民との協働による政策形成</h3>
+                <p>市民との対話を通じて課題を共有し、解決策を共に考え、共に形にしていく姿勢を大切にします。</p>
+            </div>
+
+            <div class="policy-item">
+                <h3>2. 情報公開と説明責任</h3>
+                <p>政策決定の背景や過程を含めて丁寧に伝え、市民が納得できる議会活動を実践します。</p>
+            </div>
+
+            <div class="policy-item">
+                <h3>3. 民間スタンダードの導入</h3>
+                <p>スピード感、合理性、成果責任など、民間で求められる当たり前の価値を行政にも取り入れます。</p>
+            </div>
+
+            <div class="policy-item">
+                <h3>4. 議員としての学びと成長</h3>
+                <p>創政MISATOのメンバーは、常に学び、自己を高め続けることを重視し、変化する市民ニーズに応えられる存在を目指します。</p>
+            </div>
+
+            <div class="policy-item">
+                <h3>5. 市職員への敬意と協働</h3>
+                <p>行政職員に敬意を持ち、対話と協力の関係を築いていきます。</p>
+            </div>
+
+            <div class="policy-item">
+                <h3>6. 個人の尊重と会派の協調の両立</h3>
+                <p>多様な意見を受け入れ、個人の表現や立場を尊重したうえで、会派としての共通理念のもとに行動します。</p>
+            </div>
+
+            <div class="policy-item">
+                <h3>7. 他会派との建設的連携</h3>
+                <p>立場の違いを乗り越え、必要に応じ他会派と連携し、まちの未来に資する合意形成を追求します。</p>
+            </div>
+
+            <div class="policy-item">
+                <h3>8. 専門知見と外部連携の活用</h3>
+                <p>会派だけに閉じず、必要に応じて外部の有識者や市民と連携し、現実的かつ創造的な政策立案を行います。</p>
+            </div>
+
+            <!-- 市民目線の5箇条 -->
+            <div class="five-articles">
+                <h3>私たちが大切にする市民目線の5箇条</h3>
+
+                <div class="article-box">
+                    <div class="article-title">1. 生活起点主義</div>
+                    <div class="article-desc">制度や効率ではなく、「市民の暮らしの実情・実感」から出発する。</div>
+                    <div class="article-example">例：制度が正しくても「市民が使いづらい」なら見直す柔軟性を持つ。</div>
+                </div>
+
+                <div class="article-box">
+                    <div class="article-title">2. 共創型の意思決定</div>
+                    <div class="article-desc">市民を「対象」として扱うのではなく、「一緒に考える主体」として尊重する。</div>
+                    <div class="article-example">例：意見募集を義務ではなく価値ある対話の機会と位置づける。</div>
+                </div>
+
+                <div class="article-box">
+                    <div class="article-title">3. 地域価値の創出</div>
+                    <div class="article-desc">一人ひとりの暮らしの満足度や地域への誇りを育み、三郷の「らしさ」「魅力」が広がる状態を目指す。</div>
+                    <div class="article-example">例：「子育てしやすい」「商店街が元気」などの実感が“まちの価値”となる。</div>
+                </div>
+
+                <div class="article-box">
+                    <div class="article-title">4. 持続可能性の確保</div>
+                    <div class="article-desc">一時的な人気取りや施策ではなく、次世代に誇れる形で地域を残す視点を持つ。</div>
+                    <div class="article-example">例：「市民の声を聞いたから」ではなく、「その声をどう地域の未来とつなぐか」を考える。</div>
+                </div>
+
+                <div class="article-box">
+                    <div class="article-title">5. 信頼と透明性</div>
+                    <div class="article-desc">行政や議会の行動が「なぜそうするのか」「誰のためなのか」を市民が理解でき、納得できるように丁寧に説明されている。</div>
+                    <div class="article-example">例：「反対されないこと」ではなく、「信頼されること」がゴール。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 運営規則 -->
+        <section class="policy-section">
+            <h2>3. 運営規則</h2>
+            <ul class="rules-list">
+                <li class="rules-item">
+                    <div class="rules-title">第1条　入会に関する原則</div>
+                    <ul class="rules-content">
+                        <li>創政MISATOの理念と方針に賛同し、共創・対話・市民本位の政治を実践できる三郷市議会議員であること。</li>
+                        <li>入会希望者は、既存メンバーとの対話を経た上で、相互理解を確認し、全会一致による合意をもって入会を承認する。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第2条　意思決定の方法</div>
+                    <ul class="rules-content">
+                        <li>会派の意思決定は、全会一致（コンセンサス）を原則とする。</li>
+                        <li>意見が分かれる場合は、合意に至るまでの対話と説明を重ねる。</li>
+                        <li>意見がまとまらない場合、議員個人として異なる見解を表明することを認め、その際は理由を市民に丁寧に説明する。</li>
+                        <li>会派内の議論においては相互に敬意を持ち、人格否定や圧力的な言動を禁止する。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第3条　会派人数の拡大と対応</div>
+                    <ul class="rules-content">
+                        <li>会派の構成人数が7名を超える場合は、議題ごとに少人数グループでの分散協議を行う。</li>
+                        <li>グループの代表は意見を集約し、最終的には全体で全会一致の意思決定を行う。</li>
+                        <li>必要に応じて内部ディベートを活用し、視点の多様性と議論の質を高める。</li>
+                        <li>会派の拡大は目的とせず、理念と価値観を共有できる議員との協働を大切にする。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第4条　他会派との関係</div>
+                    <ul class="rules-content">
+                        <li>他会派との協議や協働においては、対立ではなく対話を重視し、政策課題に真摯に向き合う。</li>
+                        <li>批判は個人や組織ではなく、制度や構造に焦点を当て、分断を生まない姿勢を貫く。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第5条　会派内役職と選任方法</div>
+                    <ul class="rules-content">
+                        <li>設置する役職：（1）会長　（2）幹事　(3)会計</li>
+                        <li>役職の選任は全会一致を原則とし、議論と納得を前提に決定する。</li>
+                        <li>任期は1年とし、年次のふりかえりをもとに継続または交代を協議する。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第6条　ふりかえりと改善</div>
+                    <ul class="rules-content">
+                        <li>年に2回以上、会派運営のふりかえりを実施し、課題の抽出と改善策の共有を行う。</li>
+                        <li>本規則は固定的なものとせず、市民の声と社会の変化に応じて柔軟に見直す。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第7条　外部アドバイザーの活用</div>
+                    <ul class="rules-content">
+                        <li>会派は必要に応じて、課題ごとに外部の有識者・実務家をアドバイザーとして招くことができる。</li>
+                        <li>アドバイザーは理念を理解し、信頼と専門性を備えていることを条件とする。</li>
+                        <li>意見交換は記録し、必要に応じて市民にも共有する。</li>
+                        <li>意見は参考とし、意思決定は会派の責任で行う。</li>
+                        <li>個人として専門家と連携することも妨げないが、会派で活用する際は事前共有を行う。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第8条　会派方針との重大な乖離への対応</div>
+                    <ul class="rules-content">
+                        <li>会派の理念・方針に著しく反する行動があった場合、全会一致により当該議員の除名を決定できる。</li>
+                        <li>除名前には十分な対話と説明の機会を設ける。</li>
+                        <li>除名の理由と経緯は記録し、必要に応じて市民に説明する。</li>
+                    </ul>
+                </li>
+
+                <li class="rules-item">
+                    <div class="rules-title">第9条　フラットな組織運営と世代間のバランス</div>
+                    <ul class="rules-content">
+                        <li>創政MISATOは、在籍年数・年齢・経歴にかかわらず、すべての議員が対等に意見を述べ、議論に参加できる環境を保障する。</li>
+                        <li>発言機会や役職選出は、序列ではなく議論への貢献・熱意・責任意識を基準として決定する。</li>
+                        <li>特定の個人や古参議員が過度な影響力を持たないよう意識し、平等な対話文化を維持する。</li>
+                        <li>若手や新規メンバーにも積極的に役割を担う機会を設け、多様な視点が活かされる組織を構築する。</li>
+                        <li>会派文化が硬直化しないよう、年1回以上の「リフレクション・セッション（内省と見直しの対話）」を設け、柔軟な運営を図る。</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 4. 補足 -->
+        <section class="policy-section" style="background: var(--bg-warm); border: 1px solid var(--gray-light);">
+            <h2>4. 補足：会派拡大のリスクと方針</h2>
+            <p style="margin-bottom: 1.5rem;">創政MISATOでは、会派人数の過度な増加によって、以下のようなリスクが生じる可能性を認識しています。</p>
+            <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text);">
+                <li>意思決定の柔軟性や迅速性の低下</li>
+                <li>会派としての影響力の肥大化による議会バランスの喪失</li>
+                <li>少数意見の埋没と議論の形骸化</li>
+            </ul>
+            <p>
+                このような状況を避けるため、創政MISATOは<strong>人数の拡大を目的とせず、理念の共有を最も重視する方針</strong>を掲げ、必要に応じて組織構造の見直しを行っていきます。
+            </p>
+        </section>
+
+        <!-- 5. 結びに -->
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <p style="font-size: 1.1rem; line-height: 2;">
+                創政MISATOは、「ともに創る政治」を掲げ、市民との協働を重視しながら、<br>
+                議員一人ひとりが学び、成長し続ける会派であることを誓います。<br>
+                対話を重ね、信頼を積み重ね、市民に開かれた政治を実現していきます。
+            </p>
+            <div style="margin-top: 2rem; color: var(--text-light); font-size: 0.9rem;">
+                2025年7月24日 ドラフト作成<br>
+                2025年7月28日 初稿
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="logo.png" alt="創政MISATO">
+            <span class="footer-logo-text">創政MISATO</span>
+        </div>
+        <div class="footer-links">
+            <a href="/" class="active">ホーム</a>
+            <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
+            <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">三郷市公式サイト</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
+    </footer>
+</body>
+
+</html>

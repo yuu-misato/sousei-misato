@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE友だち追加 | 創政MISATO - 市政情報をお届け</title>
+    <meta name="description" content="創政MISATOのLINE公式アカウント。議会活動や市政に関する最新情報をお届けします。">
+    <meta name="keywords" content="創政MISATO,LINE,友だち追加,情報配信,三郷市議会,鈴木優作,日高千穂,高橋誠一,佐藤裕之">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="LINE友だち追加 | 創政MISATO">
+    <meta property="og:description" content="議会活動や市政に関する最新情報をお届けします。">
+    <meta property="og:url" content="https://sousei-misato.com/line.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --line-green: #06C755;
+            --line-green-dark: #00B900;
+            --line-green-light: #06D85F;
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --text: #374151;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(180deg, #f0fdf4 0%, var(--white) 50%, var(--bg) 100%);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .header-logo-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .header-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header-logo-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .back-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--navy);
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Member Photo Hero */
+        .member-photo-hero {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .member-photo-hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .member-photo-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* LINE Badge */
+        .line-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--line-green);
+            color: white;
+            padding: 0.625rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(6, 199, 85, 0.3);
+        }
+
+        .line-badge svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .line-badge-wrapper {
+            text-align: center;
+        }
+
+        /* Content Card */
+        .card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .sousei-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--green) 100%);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .sousei-badge img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* LINE Add Button */
+        .line-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: var(--line-green);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(6, 199, 85, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .line-button:hover {
+            background: var(--line-green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(6, 199, 85, 0.4);
+        }
+
+        .line-button:active {
+            transform: translateY(0);
+        }
+
+        .line-button svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            border: 2px solid #86efac;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 0.75rem;
+        }
+
+        .info-title svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--green);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .info-text {
+            font-size: 0.9375rem;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* Members Section */
+        .members-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .members-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .member-badge {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .member-badge:hover {
+            background: #f0fdf4;
+            transform: translateY(-2px);
+        }
+
+        .member-name {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .member-role {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .qr-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: white;
+            border: 2px dashed var(--gray-light);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-light);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.8125rem;
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .main {
+                padding: 2rem 1rem;
+            }
+
+            .card {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .subtitle {
+                font-size: 0.9375rem;
+            }
+
+            .line-button {
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+            }
+
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .member-photo-hero {
+                border-radius: 16px;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="header-logo">
+                <div class="header-logo-icon">
+                    <img src="logo.png" alt="創政MISATO">
+                </div>
+                <span class="header-logo-text">創政MISATO</span>
+            </a>
+            <a href="/" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                トップページへ
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Member Photo Hero -->
+            <div class="member-photo-hero">
+                <img src="sousei.jpg" alt="創政MISATO メンバー" loading="eager">
+            </div>
+
+            <!-- LINE Badge -->
+            <div class="line-badge-wrapper">
+                <div class="line-badge">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314" />
+                    </svg>
+                    LINE公式アカウント
+                </div>
+            </div>
+
+            <!-- Content Card -->
+            <div class="card">
+                <div class="sousei-badge">
+                    <img src="logo.png" alt="創政MISATO" class="sousei-badge-logo">
+                    創政MISATO公式
+                </div>
+
+                <h1>LINEで<br>市政情報をお届けします</h1>
+
+                <p class="subtitle">
+                    創政MISATOのLINE公式アカウントです。<br>
+                    三郷市に関する最新情報や活動報告を<br>
+                    皆様にお届けいたします。
+                </p>
+
+                <!-- LINE Add Button -->
+                <a href="https://line.me/R/ti/p/@YOUR_LINE_ID" class="line-button" target="_blank"
+                    rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314" />
+                    </svg>
+                    友だち追加する
+                </a>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <div class="info-title">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4M12 8h.01" />
+                        </svg>
+                        配信内容について
+                    </div>
+                    <p class="info-text">
+                        議会活動や市政に関する情報を定期的にお届けします。<br>
+                        ※個別のご相談への返信は行っておりませんのでご了承ください。
+                    </p>
+                </div>
+
+                <!-- Members Section -->
+                <div class="members-section">
+                    <div class="members-title">所属議員</div>
+                    <div class="members-grid">
+                        <div class="member-badge">
+                            <div class="member-name">鈴木 優作</div>
+                            <div class="member-role">市議会議員</div>
+                        </div>
+                        <div class="member-badge">
+                            <div class="member-name">日高 千穂</div>
+                            <div class="member-role">市議会議員</div>
+                        </div>
+                        <div class="member-badge">
+                            <div class="member-name">高橋 誠一</div>
+                            <div class="member-role">市議会議員</div>
+                        </div>
+                        <div class="member-badge">
+                            <div class="member-name">佐藤 裕之</div>
+                            <div class="member-role">市議会議員</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Code Section (Optional) -->
+                <div class="qr-section">
+                    <div class="qr-title">スマートフォンでQRコードを読み取る</div>
+                    <div class="qr-placeholder">
+                        QRコードを<br>ここに配置
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-text">© 2025 創政MISATO - 三郷市議会 会派</p>
+    </footer>
+</body>
+
+</html>

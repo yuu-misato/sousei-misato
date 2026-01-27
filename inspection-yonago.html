@@ -1,0 +1,2919 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>米子市視察報告 - コンパクトシティの未来 | 創政MISATO</title>
+    <meta name="description" content="創政MISATOによる米子市コンパクトシティ視察報告。三郷市の未来のまちづくりに向けた学びと提言。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #38b2ac;
+            --accent-light: #81e6d9;
+            --accent-glow: rgba(56, 178, 172, 0.3);
+            --warning: #ed8936;
+            --success: #48bb78;
+            --bg-dark: #0f172a;
+            --bg-medium: #1e293b;
+            --bg-light: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --misato-color: #f59e0b;
+            --yonago-color: #38b2ac;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Slide Navigation Dots */
+        .slide-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .slide-dot::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .slide-dot:hover::before {
+            opacity: 1;
+        }
+
+        .slide-dot:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .slide-dot.active {
+            background: var(--accent);
+            border-color: var(--accent-light);
+            transform: scale(1.3);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), #818cf8);
+            z-index: 1001;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(56, 178, 172, 0.1);
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .nav.visible {
+            transform: translateY(0);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo img {
+            width: 36px;
+            height: 36px;
+        }
+
+        .nav-logo span {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ================================
+           HERO SECTION - Centered Layout
+           ================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        /* Animated Background Grid */
+        .city-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(56, 178, 172, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 178, 172, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center top;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: orbFloat 25s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(56, 178, 172, 0.12);
+            top: 10%;
+            left: 20%;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(129, 140, 248, 0.1);
+            bottom: 10%;
+            right: 20%;
+            animation-delay: -12s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.1); }
+            66% { transform: translate(-20px, 30px) scale(0.95); }
+        }
+
+        /* Particles */
+        .particles-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleRise 10s linear infinite;
+        }
+
+        @keyframes particleRise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Hero Content - Centered */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(56, 178, 172, 0.1);
+            border: 1px solid rgba(56, 178, 172, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s 0.2s forwards;
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s 0.4s forwards;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s 0.6s forwards;
+            line-height: 2;
+        }
+
+        /* Hero Stats - Horizontal Centered */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s 0.8s forwards;
+        }
+
+        .hero-stat {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            min-width: 160px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .hero-stat:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 178, 172, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .hero-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s 1s forwards;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            position: relative;
+        }
+
+        .scroll-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -2px;
+            width: 5px;
+            height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: scrollDot 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDot {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(50px); opacity: 0; }
+        }
+
+        /* ================================
+           SLIDE SECTIONS
+           ================================ */
+        .slide-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 4rem 2rem;
+            overflow: hidden;
+        }
+
+        .slide-inner {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-number::before,
+        .section-number::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent));
+        }
+
+        .section-number::after {
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-desc {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-header.visible .section-number,
+        .section-header.visible .section-title,
+        .section-header.visible .section-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================================
+           CHALLENGE SECTION - Infographic Style
+           ================================ */
+        .challenge-section {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-medium) 100%);
+        }
+
+        .challenge-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(237, 137, 54, 0.08) 0%, rgba(237, 137, 54, 0.02) 100%);
+            border: 1px solid rgba(237, 137, 54, 0.2);
+            border-radius: 24px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .challenge-intro.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .challenge-intro p {
+            font-size: 1.125rem;
+            line-height: 2;
+        }
+
+        .challenge-intro strong {
+            color: var(--warning);
+        }
+
+        /* Challenge Cards - Staggered Grid */
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .challenge-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .challenge-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warning), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s;
+        }
+
+        .challenge-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(237, 137, 54, 0.3);
+            box-shadow: 0 30px 60px rgba(237, 137, 54, 0.1);
+        }
+
+        .challenge-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(237, 137, 54, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s;
+        }
+
+        .challenge-card:hover .challenge-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .challenge-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--warning);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .challenge-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .challenge-card p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.8;
+        }
+
+        /* ================================
+           JOURNEY SECTION - Interactive Map
+           ================================ */
+        .journey-section {
+            background: var(--bg-medium);
+            position: relative;
+        }
+
+        .journey-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .journey-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+            position: relative;
+            padding: 4rem 0;
+        }
+
+        .city-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            min-width: 280px;
+            position: relative;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .city-card.misato {
+            border: 2px solid var(--misato-color);
+            transform: translateX(-100px);
+        }
+
+        .city-card.yonago {
+            border: 2px solid var(--yonago-color);
+            transform: translateX(100px);
+        }
+
+        .city-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .city-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .city-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+
+        .city-card.misato .city-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+            box-shadow: 0 0 60px rgba(245, 158, 11, 0.3);
+        }
+
+        .city-card.yonago .city-icon {
+            background: linear-gradient(135deg, rgba(56, 178, 172, 0.2) 0%, rgba(56, 178, 172, 0.1) 100%);
+            box-shadow: 0 0 60px rgba(56, 178, 172, 0.3);
+        }
+
+        .city-icon::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 2px dashed;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: iconSpin 20s linear infinite;
+        }
+
+        .city-card.misato .city-icon::before {
+            border-color: var(--misato-color);
+        }
+
+        .city-card.yonago .city-icon::before {
+            border-color: var(--yonago-color);
+            animation-direction: reverse;
+        }
+
+        @keyframes iconSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .city-icon svg {
+            width: 48px;
+            height: 48px;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .city-card.misato .city-icon svg {
+            stroke: var(--misato-color);
+        }
+
+        .city-card.yonago .city-icon svg {
+            stroke: var(--yonago-color);
+        }
+
+        .city-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .city-card.misato .city-name {
+            color: var(--misato-color);
+        }
+
+        .city-card.yonago .city-name {
+            color: var(--yonago-color);
+        }
+
+        .city-info {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Journey Path - Animated Arrow */
+        .journey-path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 3rem;
+            opacity: 0;
+            transition: opacity 0.8s 0.4s;
+        }
+
+        .journey-path.visible {
+            opacity: 1;
+        }
+
+        .path-arrow {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .path-line {
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--misato-color), var(--yonago-color));
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .path-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: pathShine 2s infinite;
+        }
+
+        @keyframes pathShine {
+            to { left: 100%; }
+        }
+
+        .path-arrow svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--yonago-color);
+            fill: none;
+            animation: arrowPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(5px); opacity: 0.5; }
+        }
+
+        .path-label {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .path-distance {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Journey Highlight Box */
+        .journey-highlight {
+            margin-top: 4rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(56, 178, 172, 0.1) 0%, rgba(56, 178, 172, 0.02) 100%);
+            border: 1px solid rgba(56, 178, 172, 0.2);
+            border-radius: 24px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .journey-highlight.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .journey-highlight h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .journey-highlight p {
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+            line-height: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .journey-highlight strong {
+            color: var(--accent-light);
+        }
+
+        /* ================================
+           COMPARISON SECTION - Infographic
+           ================================ */
+        .comparison-section {
+            background: var(--bg-dark);
+            position: relative;
+        }
+
+        /* Visual Comparison Cards */
+        .comparison-visual {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: stretch;
+            margin-bottom: 4rem;
+        }
+
+        .comparison-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 24px;
+            padding: 2.5rem;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .comparison-card.misato {
+            border: 2px solid var(--misato-color);
+            transform: translateX(-60px);
+        }
+
+        .comparison-card.yonago {
+            border: 2px solid var(--yonago-color);
+            transform: translateX(60px);
+        }
+
+        .comparison-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .comparison-city-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .comparison-city-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .comparison-card.misato .comparison-city-name {
+            color: var(--misato-color);
+        }
+
+        .comparison-card.yonago .comparison-city-name {
+            color: var(--yonago-color);
+        }
+
+        .comparison-city-sub {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Stat Items with Animated Bars */
+        .comparison-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .comparison-card.misato .stat-value {
+            color: var(--misato-color);
+        }
+
+        .comparison-card.yonago .stat-value {
+            color: var(--yonago-color);
+        }
+
+        .stat-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            border-radius: 4px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-fill.animated {
+            transform: scaleX(1);
+        }
+
+        .comparison-card.misato .stat-fill {
+            background: linear-gradient(90deg, var(--misato-color), rgba(245, 158, 11, 0.5));
+        }
+
+        .comparison-card.yonago .stat-fill {
+            background: linear-gradient(90deg, var(--yonago-color), rgba(56, 178, 172, 0.5));
+        }
+
+        /* VS Badge */
+        .comparison-vs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vs-badge {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--misato-color), var(--yonago-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--bg-dark);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.6s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .vs-badge.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Comparison Table */
+        .comparison-table-wrapper {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .comparison-table-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .comparison-table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            background: rgba(56, 178, 172, 0.1);
+            padding: 1.25rem 2rem;
+        }
+
+        .comparison-table-header-cell {
+            font-weight: 700;
+            font-size: 0.9375rem;
+        }
+
+        .comparison-table-header-cell:not(:first-child) {
+            text-align: center;
+        }
+
+        .comparison-table-header-cell.misato {
+            color: var(--misato-color);
+        }
+
+        .comparison-table-header-cell.yonago {
+            color: var(--yonago-color);
+        }
+
+        .comparison-table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .comparison-table-row.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .comparison-table-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-table-row:hover {
+            background: rgba(56, 178, 172, 0.05);
+        }
+
+        .comparison-table-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .comparison-table-cell:not(:first-child) {
+            justify-content: center;
+        }
+
+        .comparison-table-label {
+            font-weight: 500;
+        }
+
+        .comparison-table-value {
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        .comparison-table-value.misato {
+            color: var(--misato-color);
+        }
+
+        .comparison-table-value.yonago {
+            color: var(--yonago-color);
+        }
+
+        /* ================================
+           SOLUTION SECTION - Interactive Tabs
+           ================================ */
+        .solution-section {
+            background: linear-gradient(180deg, var(--bg-medium) 0%, var(--bg-dark) 100%);
+        }
+
+        .solution-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .solution-tabs.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .solution-tab {
+            padding: 1rem 2rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .solution-tab:hover {
+            border-color: rgba(56, 178, 172, 0.3);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .solution-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .solution-content {
+            display: none;
+            animation: fadeSlideIn 0.6s ease;
+        }
+
+        .solution-content.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .solution-card {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 3rem;
+        }
+
+        /* Animated Diagram */
+        .diagram-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .diagram-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 80px var(--accent-glow);
+            z-index: 10;
+            animation: centerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes centerPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 80px var(--accent-glow); }
+            50% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 100px var(--accent-glow); }
+        }
+
+        .diagram-center svg {
+            width: 44px;
+            height: 44px;
+            fill: var(--bg-dark);
+        }
+
+        .diagram-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px dashed rgba(56, 178, 172, 0.2);
+            border-radius: 50%;
+        }
+
+        .diagram-ring:nth-child(1) {
+            width: 55%;
+            height: 55%;
+            animation: ringRotate 25s linear infinite;
+        }
+
+        .diagram-ring:nth-child(2) {
+            width: 75%;
+            height: 75%;
+            animation: ringRotate 35s linear infinite reverse;
+        }
+
+        .diagram-ring:nth-child(3) {
+            width: 95%;
+            height: 95%;
+            animation: ringRotate 45s linear infinite;
+        }
+
+        @keyframes ringRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .diagram-node {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            background: var(--bg-medium);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+
+        .diagram-node:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .diagram-node svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            fill: none;
+        }
+
+        .diagram-node:nth-child(5) { top: 2%; left: 50%; transform: translateX(-50%); }
+        .diagram-node:nth-child(6) { top: 18%; right: 8%; }
+        .diagram-node:nth-child(7) { top: 50%; right: -2%; transform: translateY(-50%); }
+        .diagram-node:nth-child(8) { bottom: 18%; right: 8%; }
+        .diagram-node:nth-child(9) { bottom: 2%; left: 50%; transform: translateX(-50%); }
+        .diagram-node:nth-child(10) { bottom: 18%; left: 8%; }
+        .diagram-node:nth-child(11) { top: 50%; left: -2%; transform: translateY(-50%); }
+        .diagram-node:nth-child(12) { top: 18%; left: 8%; }
+
+        .solution-text h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .solution-text > p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 2;
+        }
+
+        .solution-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .solution-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: rgba(56, 178, 172, 0.05);
+            border: 1px solid rgba(56, 178, 172, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+
+        .solution-feature:hover {
+            background: rgba(56, 178, 172, 0.1);
+            border-color: rgba(56, 178, 172, 0.3);
+            transform: translateX(10px);
+        }
+
+        .solution-feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(56, 178, 172, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .solution-feature-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent);
+            fill: none;
+        }
+
+        .solution-feature h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .solution-feature p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* ================================
+           PROPOSAL SECTION - 3D Cards
+           ================================ */
+        .proposal-section {
+            background: var(--bg-dark);
+            position: relative;
+        }
+
+        .proposal-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .proposal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .proposal-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border: 1px solid rgba(56, 178, 172, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(60px) rotateX(10deg);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+        }
+
+        .proposal-card.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+
+        .proposal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(56, 178, 172, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .proposal-card:hover::before {
+            opacity: 1;
+        }
+
+        .proposal-card:hover {
+            transform: translateY(-15px) rotateX(0);
+            border-color: var(--accent);
+            box-shadow: 0 40px 80px rgba(56, 178, 172, 0.15);
+        }
+
+        .proposal-number {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(56, 178, 172, 0.08);
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .proposal-card:hover .proposal-number {
+            color: rgba(56, 178, 172, 0.15);
+        }
+
+        .proposal-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(56, 178, 172, 0.1);
+            border: 1px solid rgba(56, 178, 172, 0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s;
+        }
+
+        .proposal-card:hover .proposal-icon {
+            background: rgba(56, 178, 172, 0.2);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .proposal-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .proposal-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .proposal-card p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .proposal-tag {
+            display: inline-block;
+            background: rgba(56, 178, 172, 0.2);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ================================
+           MEMBERS SECTION
+           ================================ */
+        .members-section {
+            background: var(--bg-medium);
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .member-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .member-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(56, 178, 172, 0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .member-avatar::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border: 2px dashed var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .member-card:hover .member-avatar::before {
+            opacity: 1;
+            animation: iconSpin 10s linear infinite;
+        }
+
+        .member-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .member-role {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .member-position {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        /* ================================
+           GALLERY SECTION
+           ================================ */
+        .gallery-section {
+            background: var(--bg-dark);
+            padding: 6rem 2rem;
+        }
+
+        /* Coming Soon Box */
+        .coming-soon-box {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            background: linear-gradient(135deg, rgba(56, 178, 172, 0.08) 0%, rgba(56, 178, 172, 0.02) 100%);
+            border: 2px dashed rgba(56, 178, 172, 0.3);
+            border-radius: 24px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .coming-soon-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .coming-soon-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(56, 178, 172, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .coming-soon-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--accent);
+        }
+
+        .coming-soon-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon-text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 4/3;
+            background: var(--bg-medium);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            z-index: 10;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 60%);
+            z-index: 1;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 0.7;
+        }
+
+        .gallery-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-medium) 100%);
+        }
+
+        .gallery-placeholder svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--text-muted);
+            fill: none;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            z-index: 2;
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ================================
+           CTA SECTION
+           ================================ */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .cta-btn-primary {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+        }
+
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .cta-btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .cta-btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ================================
+           FOOTER
+           ================================ */
+        .footer {
+            background: var(--bg-dark);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-logo img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .footer-logo span {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+
+        /* ================================
+           RESPONSIVE
+           ================================ */
+        @media (max-width: 1024px) {
+            .slide-nav {
+                display: none;
+            }
+
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-visual {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .comparison-vs {
+                order: -1;
+            }
+
+            .comparison-card.misato,
+            .comparison-card.yonago {
+                transform: translateY(40px);
+            }
+
+            .comparison-card.visible {
+                transform: translateY(0);
+            }
+
+            .solution-card {
+                grid-template-columns: 1fr;
+            }
+
+            .proposal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .members-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .journey-visual {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .journey-path {
+                transform: rotate(90deg);
+            }
+
+            .city-card.misato,
+            .city-card.yonago {
+                transform: translateY(40px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero-stat {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .slide-section {
+                padding: 4rem 1.5rem;
+                min-height: auto;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .comparison-table-header,
+            .comparison-table-row {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            .comparison-table-cell {
+                justify-content: center !important;
+            }
+
+            .comparison-table-cell:first-child {
+                font-weight: 600;
+                color: var(--accent);
+            }
+
+            .solution-tabs {
+                gap: 0.5rem;
+            }
+
+            .solution-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.8125rem;
+            }
+
+            .members-grid {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Slide Navigation Dots -->
+    <nav class="slide-nav" id="slideNav">
+        <div class="slide-dot active" data-section="hero" data-label="トップ"></div>
+        <div class="slide-dot" data-section="challenge" data-label="課題"></div>
+        <div class="slide-dot" data-section="journey" data-label="視察"></div>
+        <div class="slide-dot" data-section="comparison" data-label="比較"></div>
+        <div class="slide-dot" data-section="solution" data-label="取組"></div>
+        <div class="slide-dot" data-section="proposal" data-label="提言"></div>
+        <div class="slide-dot" data-section="members" data-label="議員"></div>
+    </nav>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.png" alt="創政MISATO">
+                <span>創政MISATO</span>
+            </a>
+            <div class="nav-links">
+                <a href="#challenge">三郷市の課題</a>
+                <a href="#comparison">両市の比較</a>
+                <a href="#solution">米子市の取組</a>
+                <a href="#proposal">三郷市への提言</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================================
+         HERO SECTION
+         ================================ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="city-grid"></div>
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="particles-container" id="particles"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                会派視察報告 2025
+            </div>
+            <h1 class="hero-title">
+                <span class="gradient-text">コンパクトシティ</span>で<br>
+                変わるまちの未来
+            </h1>
+            <p class="hero-subtitle">
+                私たちと同じ人口14万人の米子市が実現している、<br>
+                「歩いて暮らせる便利なまち」づくり。<br>
+                三郷市の未来のヒントを探しに行きました。
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">令和7年1月</div>
+                    <div class="hero-stat-label">視察実施</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">鳥取県米子市</div>
+                    <div class="hero-stat-label">視察先</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">4名</div>
+                    <div class="hero-stat-label">参加議員</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ================================
+         CHALLENGE SECTION
+         ================================ -->
+    <section class="slide-section challenge-section" id="challenge">
+        <div class="slide-inner">
+            <div class="section-header" data-animate>
+                <div class="section-number">01 — BACKGROUND</div>
+                <h2 class="section-title">三郷市が抱える課題</h2>
+                <p class="section-desc">なぜ今、「まちの形」を考える必要があるのか</p>
+            </div>
+
+            <div class="challenge-intro" data-animate>
+                <p>
+                    三郷市は都心へのアクセスが良く、これまで人口が増えてきました。<br>
+                    しかし、これからは<strong>少子高齢化</strong>が進み、<br>
+                    今のままでは暮らしにくいまちになってしまう心配があります。
+                </p>
+            </div>
+
+            <div class="challenge-grid">
+                <div class="challenge-card" data-animate>
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>若い人が減り、高齢者が増える</h3>
+                    <p>働く世代が減り、お年寄りが増えると、まちの活気が失われ、福祉サービスを続けることも難しくなります。</p>
+                </div>
+
+                <div class="challenge-card" data-animate>
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                    </div>
+                    <h3>お店や病院がバラバラにある</h3>
+                    <p>買い物や病院に行くのに、あちこち移動しなければならず、特にお年寄りや車を持たない方には大変です。</p>
+                </div>
+
+                <div class="challenge-card" data-animate>
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <h3>バスの本数が減っている</h3>
+                    <p>運転手不足でバスの便が減り、免許を返したあとの移動手段がなくなる心配があります。</p>
+                </div>
+
+                <div class="challenge-card" data-animate>
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3>道路や施設の維持にお金がかかる</h3>
+                    <p>広い範囲に道路や水道があると、修理や管理にたくさんのお金がかかり続けます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         JOURNEY SECTION
+         ================================ -->
+    <section class="slide-section journey-section" id="journey">
+        <div class="slide-inner">
+            <div class="section-header" data-animate>
+                <div class="section-number">02 — JOURNEY</div>
+                <h2 class="section-title">三郷市から米子市へ</h2>
+                <p class="section-desc">同じ人口規模の先進都市を訪ねました</p>
+            </div>
+
+            <div class="journey-visual">
+                <div class="city-card misato" data-animate>
+                    <div class="city-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <div class="city-name">三郷市</div>
+                    <div class="city-info">埼玉県・人口約14万人</div>
+                </div>
+
+                <div class="journey-path" data-animate>
+                    <div class="path-arrow">
+                        <div class="path-line"></div>
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                    <div class="path-label">視察の旅</div>
+                    <div class="path-distance">約700km</div>
+                </div>
+
+                <div class="city-card yonago" data-animate>
+                    <div class="city-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="city-name">米子市</div>
+                    <div class="city-info">鳥取県・人口約14万人</div>
+                </div>
+            </div>
+
+            <div class="journey-highlight" data-animate>
+                <h3>なぜ米子市を選んだのか</h3>
+                <p>
+                    三郷市と同じ<strong>人口約14万人</strong>なのに、<br>
+                    国から<strong>「お手本になるまちづくり」</strong>と認められている米子市。<br>
+                    同じ規模だからこそ、三郷市でもできるはず。その秘訣を学びに行きました。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         COMPARISON SECTION
+         ================================ -->
+    <section class="slide-section comparison-section" id="comparison">
+        <div class="slide-inner">
+            <div class="section-header" data-animate>
+                <div class="section-number">03 — COMPARISON</div>
+                <h2 class="section-title">三郷市と米子市を比べてみると</h2>
+                <p class="section-desc">数字で見る両市の違い</p>
+            </div>
+
+            <div class="comparison-visual">
+                <div class="comparison-card misato" data-animate>
+                    <div class="comparison-city-header">
+                        <div class="comparison-city-name">三郷市</div>
+                        <div class="comparison-city-sub">埼玉県</div>
+                    </div>
+                    <div class="comparison-stats">
+                        <div class="stat-item">
+                            <div class="stat-header">
+                                <span class="stat-label">人口</span>
+                                <span class="stat-value">約14.3万人</span>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 95%;" data-animate-bar></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header">
+                                <span class="stat-label">面積</span>
+                                <span class="stat-value">30.1 km²</span>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 23%;" data-animate-bar></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header">
+                                <span class="stat-label">人口密度</span>
+                                <span class="stat-value">4,751人/km²</span>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 100%;" data-animate-bar></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-vs">
+                    <div class="vs-badge" data-animate>VS</div>
+                </div>
+
+                <div class="comparison-card yonago" data-animate>
+                    <div class="comparison-city-header">
+                        <div class="comparison-city-name">米子市</div>
+                        <div class="comparison-city-sub">鳥取県</div>
+                    </div>
+                    <div class="comparison-stats">
+                        <div class="stat-item">
+                            <div class="stat-header">
+                                <span class="stat-label">人口</span>
+                                <span class="stat-value">約14.5万人</span>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 97%;" data-animate-bar></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header">
+                                <span class="stat-label">面積</span>
+                                <span class="stat-value">132.4 km²</span>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 100%;" data-animate-bar></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header">
+                                <span class="stat-label">人口密度</span>
+                                <span class="stat-value">1,095人/km²</span>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 23%;" data-animate-bar></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-table-wrapper" data-animate>
+                <div class="comparison-table">
+                    <div class="comparison-table-header">
+                        <div class="comparison-table-header-cell">比較項目</div>
+                        <div class="comparison-table-header-cell misato">三郷市</div>
+                        <div class="comparison-table-header-cell yonago">米子市</div>
+                    </div>
+                    <div class="comparison-table-row" data-animate-row>
+                        <div class="comparison-table-cell"><span class="comparison-table-label">まちづくり計画</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value misato">これから検討</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value yonago">国のお手本に選定</span></div>
+                    </div>
+                    <div class="comparison-table-row" data-animate-row>
+                        <div class="comparison-table-cell"><span class="comparison-table-label">まちの形</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value misato">あちこちに分散</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value yonago">駅周辺に集約</span></div>
+                    </div>
+                    <div class="comparison-table-row" data-animate-row>
+                        <div class="comparison-table-cell"><span class="comparison-table-label">循環バス</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value misato">一部地域のみ</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value yonago">100円で乗れる循環バス</span></div>
+                    </div>
+                    <div class="comparison-table-row" data-animate-row>
+                        <div class="comparison-table-cell"><span class="comparison-table-label">民間との協力</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value misato">個別対応</span></div>
+                        <div class="comparison-table-cell"><span class="comparison-table-value yonago">まちづくり会社と連携</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         SOLUTION SECTION
+         ================================ -->
+    <section class="slide-section solution-section" id="solution">
+        <div class="slide-inner">
+            <div class="section-header" data-animate>
+                <div class="section-number">04 — SOLUTION</div>
+                <h2 class="section-title">米子市はこうやっている</h2>
+                <p class="section-desc">国に認められた「便利で暮らしやすいまち」の作り方</p>
+            </div>
+
+            <div class="solution-tabs" data-animate>
+                <button class="solution-tab active" data-tab="compact">まちを集める</button>
+                <button class="solution-tab" data-tab="transport">便利なバス</button>
+                <button class="solution-tab" data-tab="center">駅前を元気に</button>
+                <button class="solution-tab" data-tab="partnership">民間と協力</button>
+            </div>
+
+            <div class="solution-content active" id="compact">
+                <div class="solution-card">
+                    <div class="diagram-container">
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-center">
+                            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                        </div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/></svg></div>
+                        <div class="diagram-node"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+                    </div>
+                    <div class="solution-text">
+                        <h3>駅の周りに便利な施設を集める</h3>
+                        <p>米子市では、病院やお店、市役所の窓口などを駅の近くに集めています。これにより、車がなくても歩いて用事が済ませられるようになります。20年かけて少しずつ進める計画なので、無理なく変わっていきます。</p>
+                        <div class="solution-features">
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <div>
+                                    <h4>便利エリアを決める</h4>
+                                    <p>病院・お店・役所を駅の近くに集める</p>
+                                </div>
+                            </div>
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                                </div>
+                                <div>
+                                    <h4>住みやすいエリアを作る</h4>
+                                    <p>便利な場所の近くに住んでもらう</p>
+                                </div>
+                            </div>
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                </div>
+                                <div>
+                                    <h4>20年かけてゆっくり</h4>
+                                    <p>急がず、みんなが納得できるペースで</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-content" id="transport">
+                <div class="solution-card">
+                    <div class="diagram-container">
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-center" style="background: var(--success);">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>
+                        </div>
+                    </div>
+                    <div class="solution-text">
+                        <h3>100円で乗れる「だんだんバス」</h3>
+                        <p>米子市では「だんだんバス」という循環バスが走っています。どこまで乗っても100円。お年寄りでも気軽に使えて、車がなくても困りません。</p>
+                        <div class="solution-features">
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon" style="background: rgba(72, 187, 120, 0.2);">
+                                    <svg viewBox="0 0 24 24" style="stroke: var(--success);"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>
+                                </div>
+                                <div>
+                                    <h4>100円バス「だんだんバス」</h4>
+                                    <p>まちの中をぐるぐる回る便利なバス</p>
+                                </div>
+                            </div>
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon" style="background: rgba(72, 187, 120, 0.2);">
+                                    <svg viewBox="0 0 24 24" style="stroke: var(--success);"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/></svg>
+                                </div>
+                                <div>
+                                    <h4>乗り換えも便利</h4>
+                                    <p>主要な場所で乗り換えできる仕組み</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-content" id="center">
+                <div class="solution-card">
+                    <div class="diagram-container">
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-center" style="background: var(--warning);">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                    </div>
+                    <div class="solution-text">
+                        <h3>駅前がにぎやかに生まれ変わる</h3>
+                        <p>米子駅の前を再開発して、お店や病院、住まいが一緒になった建物を作っています。駅から歩いてすぐの場所で、買い物も通院もできるようになります。</p>
+                        <div class="solution-features">
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon" style="background: rgba(237, 137, 54, 0.2);">
+                                    <svg viewBox="0 0 24 24" style="stroke: var(--warning);"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                                </div>
+                                <div>
+                                    <h4>いろいろ入った建物</h4>
+                                    <p>お店・病院・住まいが一か所に</p>
+                                </div>
+                            </div>
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon" style="background: rgba(237, 137, 54, 0.2);">
+                                    <svg viewBox="0 0 24 24" style="stroke: var(--warning);"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                </div>
+                                <div>
+                                    <h4>歩いて暮らせる</h4>
+                                    <p>車がなくても便利に暮らせるまち</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-content" id="partnership">
+                <div class="solution-card">
+                    <div class="diagram-container">
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-ring"></div>
+                        <div class="diagram-center" style="background: #818cf8;">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                    </div>
+                    <div class="solution-text">
+                        <h3>市役所だけでなく、企業や市民と一緒に</h3>
+                        <p>米子市では、民間の会社やまちづくりに関心のある市民と一緒にまちづくりを進めています。市役所だけでなく、みんなの知恵とお金を出し合う仕組みです。</p>
+                        <div class="solution-features">
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon" style="background: rgba(129, 140, 248, 0.2);">
+                                    <svg viewBox="0 0 24 24" style="stroke: #818cf8;"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+                                </div>
+                                <div>
+                                    <h4>民間の力を借りる</h4>
+                                    <p>企業のお金やノウハウを活用</p>
+                                </div>
+                            </div>
+                            <div class="solution-feature">
+                                <div class="solution-feature-icon" style="background: rgba(129, 140, 248, 0.2);">
+                                    <svg viewBox="0 0 24 24" style="stroke: #818cf8;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                </div>
+                                <div>
+                                    <h4>市民の声を聞く</h4>
+                                    <p>話し合いや意見募集をたくさん実施</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         PROPOSAL SECTION
+         ================================ -->
+    <section class="slide-section proposal-section" id="proposal">
+        <div class="slide-inner">
+            <div class="section-header" data-animate>
+                <div class="section-number">05 — PROPOSAL</div>
+                <h2 class="section-title">三郷市でできること</h2>
+                <p class="section-desc">視察で学んだことを、私たちのまちに活かす提案</p>
+            </div>
+
+            <div class="proposal-grid">
+                <div class="proposal-card" data-animate>
+                    <span class="proposal-number">01</span>
+                    <div class="proposal-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>まちの将来計画を作る</h3>
+                    <p>三郷中央駅や三郷駅の周りを「便利エリア」として、病院やお店、役所の窓口を集める計画を作りましょう。</p>
+                    <span class="proposal-tag">まちづくり</span>
+                </div>
+
+                <div class="proposal-card" data-animate>
+                    <span class="proposal-number">02</span>
+                    <div class="proposal-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <h3>バスをもっと便利に</h3>
+                    <p>「だんだんバス」のような、まちをぐるぐる回る安いバスや、電話で呼べるバスを検討しましょう。</p>
+                    <span class="proposal-tag">交通</span>
+                </div>
+
+                <div class="proposal-card" data-animate>
+                    <span class="proposal-number">03</span>
+                    <div class="proposal-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>民間と一緒に進める</h3>
+                    <p>市役所だけでなく、企業や市民の皆さんと一緒にまちづくりを進める仕組みを作りましょう。</p>
+                    <span class="proposal-tag">協働</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         MEMBERS SECTION
+         ================================ -->
+    <section class="slide-section members-section" id="members">
+        <div class="slide-inner">
+            <div class="section-header" data-animate>
+                <div class="section-number">06 — MEMBERS</div>
+                <h2 class="section-title">視察に参加した議員</h2>
+                <p class="section-desc">創政MISATO 4名全員で学んできました</p>
+            </div>
+
+            <div class="members-grid">
+                <div class="member-card" data-animate>
+                    <div class="member-avatar">佐</div>
+                    <div class="member-name">佐藤 裕之</div>
+                    <div class="member-role">会長</div>
+                    <div class="member-position">建設水道常任委員会 副委員長</div>
+                </div>
+                <div class="member-card" data-animate>
+                    <div class="member-avatar">高</div>
+                    <div class="member-name">高橋 誠一</div>
+                    <div class="member-role">幹事</div>
+                    <div class="member-position">文教経済常任委員会</div>
+                </div>
+                <div class="member-card" data-animate>
+                    <div class="member-avatar">日</div>
+                    <div class="member-name">日高 千穂</div>
+                    <div class="member-role">会計</div>
+                    <div class="member-position">健康福祉常任委員会</div>
+                </div>
+                <div class="member-card" data-animate>
+                    <div class="member-avatar">鈴</div>
+                    <div class="member-name">鈴木 優作</div>
+                    <div class="member-role">議員</div>
+                    <div class="member-position">総務常任委員会</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         GALLERY SECTION - Coming Soon
+         ================================ -->
+    <section class="gallery-section">
+        <div class="slide-inner">
+            <div class="section-header" data-animate>
+                <div class="section-number">07 — GALLERY</div>
+                <h2 class="section-title">視察の様子</h2>
+                <p class="section-desc">現地で見て、聞いて、学んだこと</p>
+            </div>
+
+            <div class="coming-soon-box" data-animate>
+                <div class="coming-soon-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                </div>
+                <h3 class="coming-soon-title">視察終了後に更新予定</h3>
+                <p class="coming-soon-text">
+                    米子市での視察写真は、視察終了後に掲載いたします。<br>
+                    現地での学びの様子をお届けしますので、お楽しみに。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         CTA SECTION
+         ================================ -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">三郷市の未来を、一緒に創りましょう</h2>
+            <p class="cta-text">
+                創政MISATOは、市民の皆さまの声を聞きながら、<br>
+                暮らしやすいまちづくりを進めてまいります。
+            </p>
+            <div class="cta-buttons">
+                <a href="index.html" class="cta-btn cta-btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    トップページへ
+                </a>
+                <a href="index.html#contact" class="cta-btn cta-btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    お問い合わせ
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         FOOTER
+         ================================ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <img src="logo.png" alt="創政MISATO">
+                <span>創政MISATO</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">トップページ</a>
+                <a href="index.html#activity">活動報告</a>
+                <a href="policy.html">会派理念</a>
+            </div>
+            <div class="footer-copy">&copy; 2025 創政MISATO - 三郷市議会 会派</div>
+        </div>
+    </footer>
+
+    <script>
+        // ================================
+        // INITIALIZATION
+        // ================================
+        const progressBar = document.getElementById('progressBar');
+        const nav = document.getElementById('nav');
+        const slideNav = document.getElementById('slideNav');
+        const slideDots = document.querySelectorAll('.slide-dot');
+        const sections = ['hero', 'challenge', 'journey', 'comparison', 'solution', 'proposal', 'members'];
+
+        // ================================
+        // PARTICLES
+        // ================================
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (8 + Math.random() * 6) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // ================================
+        // SCROLL HANDLER
+        // ================================
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollTop = window.pageYOffset;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = scrollTop / docHeight;
+
+                    // Progress bar
+                    progressBar.style.transform = `scaleX(${scrollPercent})`;
+
+                    // Navigation visibility
+                    if (scrollTop > 100) {
+                        nav.classList.add('visible');
+                    } else {
+                        nav.classList.remove('visible');
+                    }
+
+                    // Update slide dots
+                    updateSlideDots();
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // ================================
+        // SLIDE DOTS NAVIGATION
+        // ================================
+        function updateSlideDots() {
+            const scrollTop = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+
+            sections.forEach((sectionId, index) => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + scrollTop;
+                    const sectionMiddle = sectionTop + section.offsetHeight / 2;
+
+                    if (scrollTop + windowHeight / 2 >= sectionTop && scrollTop + windowHeight / 2 < sectionTop + section.offsetHeight) {
+                        slideDots.forEach(dot => dot.classList.remove('active'));
+                        slideDots[index]?.classList.add('active');
+                    }
+                }
+            });
+        }
+
+        // Click on slide dots
+        slideDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const sectionId = dot.dataset.section;
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ================================
+        // INTERSECTION OBSERVER - ANIMATIONS
+        // ================================
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Animate stat bars
+                    const bars = entry.target.querySelectorAll('[data-animate-bar]');
+                    bars.forEach((bar, index) => {
+                        setTimeout(() => {
+                            bar.classList.add('animated');
+                        }, index * 150);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animatable elements
+        document.querySelectorAll('[data-animate], .section-header, .challenge-intro, .challenge-card, .city-card, .journey-path, .journey-highlight, .comparison-card, .vs-badge, .comparison-table-wrapper, .solution-tabs, .proposal-card, .member-card, .gallery-item, .coming-soon-box').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Table rows with staggered animation
+        const rowObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    const rows = document.querySelectorAll('[data-animate-row]');
+                    rows.forEach((row, i) => {
+                        setTimeout(() => {
+                            row.classList.add('visible');
+                        }, i * 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-animate-row]').forEach(el => {
+            rowObserver.observe(el);
+        });
+
+        // ================================
+        // SOLUTION TABS
+        // ================================
+        const tabs = document.querySelectorAll('.solution-tab');
+        const contents = document.querySelectorAll('.solution-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // ================================
+        // SMOOTH SCROLL FOR ANCHOR LINKS
+        // ================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ================================
+        // 3D CARD EFFECT FOR PROPOSAL CARDS
+        // ================================
+        document.querySelectorAll('.proposal-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (centerX - x) / 15;
+
+                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // ================================
+        // STAGGERED ANIMATION DELAYS
+        // ================================
+        document.querySelectorAll('.challenge-card').forEach((card, i) => {
+            card.style.transitionDelay = `${i * 0.15}s`;
+        });
+
+        document.querySelectorAll('.proposal-card').forEach((card, i) => {
+            card.style.transitionDelay = `${i * 0.2}s`;
+        });
+
+        document.querySelectorAll('.member-card').forEach((card, i) => {
+            card.style.transitionDelay = `${i * 0.15}s`;
+        });
+
+        document.querySelectorAll('.gallery-item').forEach((item, i) => {
+            item.style.transitionDelay = `${i * 0.1}s`;
+        });
+
+        // Initial slide dot update
+        updateSlideDots();
+    </script>
+</body>
+
+</html>
