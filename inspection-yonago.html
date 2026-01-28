@@ -445,6 +445,25 @@
             color: var(--gray-500);
         }
 
+        .budget-trip-info {
+            display: inline-block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--teal);
+            background: rgba(13, 148, 136, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.15s;
+        }
+
+        .budget-trip-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .budget-subtitle {
             font-size: 1.25rem;
             color: var(--gray-600);
@@ -3141,6 +3160,7 @@
             <div class="budget-container">
                 <div class="budget-label">TRANSPARENCY</div>
                 <h2 class="budget-title">視察経費</h2>
+                <p class="budget-trip-info">米子市視察 + 翌日視察（2視察分・2泊3日）</p>
                 <div class="budget-big-number">54,190<span>円/人</span></div>
                 <p class="budget-subtitle">政務活動費 1人あたり</p>
                 <div class="budget-breakdown">
@@ -3169,7 +3189,7 @@
                     <span>4名 合計 216,760円</span>
                 </div>
                 <div class="budget-note">
-                    <p>前泊分の宿泊費（50,600円）と企画手配料（4,000円）は私費負担としており、政務活動費には含まれていません。翌日は別の行政視察のため連泊しています。</p>
+                    <p>本経費は米子市と翌日の視察先を含む2視察分の合計です。前泊分の宿泊費（50,600円）と企画手配料（4,000円）は私費負担のため、政務活動費には含まれていません。</p>
                 </div>
             </div>
         </div>
@@ -3434,6 +3454,7 @@
             const container = document.querySelector('.budget-container');
             const label = container.querySelector('.budget-label');
             const title = container.querySelector('.budget-title');
+            const tripInfo = container.querySelector('.budget-trip-info');
             const bigNumber = container.querySelector('.budget-big-number');
             const subtitle = container.querySelector('.budget-subtitle');
             const items = container.querySelectorAll('.budget-item');
@@ -3445,6 +3466,9 @@
             }
             if (progress > 0.1) {
                 title.classList.add('visible');
+            }
+            if (progress > 0.15 && tripInfo) {
+                tripInfo.classList.add('visible');
             }
             if (progress > 0.2) {
                 bigNumber.classList.add('visible');
