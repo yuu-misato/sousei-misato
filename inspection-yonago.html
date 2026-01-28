@@ -905,28 +905,6 @@
             margin-bottom: 1.5rem;
         }
 
-        .hypothesis-method {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-100);
-        }
-
-        .method-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--white);
-            background: var(--teal);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        .method-value {
-            font-size: 0.8125rem;
-            color: var(--gray-600);
-        }
-
         .hypothesis-note {
             display: flex;
             align-items: center;
@@ -1180,15 +1158,15 @@
         }
 
         .flip-card-inner {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 24px;
             padding: 2.5rem;
             height: 100%;
             display: flex;
             flex-direction: column;
             text-align: left;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .flip-card-number {
@@ -1316,6 +1294,191 @@
         }
 
         .flip-dot.done {
+            background: var(--teal-light);
+        }
+
+        /* Swipe Card Section - Concept */
+        .concept-flip-section {
+            background: linear-gradient(135deg, var(--gray-900) 0%, #0f172a 100%);
+            color: var(--white);
+        }
+
+        .swipe-card-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            user-select: none;
+        }
+
+        .swipe-card-progress {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            margin-bottom: 2rem;
+        }
+
+        .swipe-card-current {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--teal-light);
+        }
+
+        .swipe-card-stack {
+            position: relative;
+            height: 380px;
+            perspective: 1000px;
+            margin-bottom: 2rem;
+            touch-action: pan-y;
+        }
+
+        .swipe-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: grab;
+        }
+
+        .swipe-card:active {
+            cursor: grabbing;
+        }
+
+        .swipe-card.active {
+            z-index: 10;
+            transform: rotateX(0deg) translateY(0);
+            opacity: 1;
+        }
+
+        .swipe-card.flipped {
+            transform: rotateX(-90deg) translateY(-50%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .swipe-card.waiting {
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .swipe-card-inner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 24px;
+            padding: 2.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .swipe-card-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--teal);
+            opacity: 0.5;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .swipe-card-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .swipe-card-subtitle {
+            font-size: 1rem;
+            color: var(--gray-400);
+            margin-bottom: 1.5rem;
+        }
+
+        .swipe-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .swipe-card-list {
+            list-style: none;
+        }
+
+        .swipe-card-list li {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .swipe-card-list li:last-child {
+            border-bottom: none;
+        }
+
+        .swipe-card-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--teal);
+            border-radius: 50%;
+        }
+
+        .swipe-card-list li strong {
+            color: var(--teal-light);
+            font-weight: 600;
+        }
+
+        .swipe-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            animation: swipeHint 2s infinite;
+        }
+
+        @keyframes swipeHint {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(5px); opacity: 1; }
+        }
+
+        .swipe-hint svg {
+            animation: bounceDown 1s infinite;
+        }
+
+        .swipe-card-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .swipe-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .swipe-dot.active {
+            background: var(--teal);
+            transform: scale(1.3);
+        }
+
+        .swipe-dot.done {
             background: var(--teal-light);
         }
 
@@ -1931,6 +2094,22 @@
                 font-size: 0.9375rem;
             }
 
+            .swipe-card-stack {
+                height: 420px;
+            }
+
+            .swipe-card-inner {
+                padding: 2rem 1.5rem;
+            }
+
+            .swipe-card-title {
+                font-size: 1.5rem;
+            }
+
+            .swipe-card-list li {
+                font-size: 0.9375rem;
+            }
+
             .hero-meta {
                 flex-direction: column;
                 gap: 1rem;
@@ -2123,6 +2302,38 @@
             .flip-card-button {
                 padding: 0.875rem 1.5rem;
                 font-size: 0.9375rem;
+            }
+
+            .swipe-card-stack {
+                height: 450px;
+            }
+
+            .swipe-card-inner {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .swipe-card-number {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .swipe-card-title {
+                font-size: 1.25rem;
+            }
+
+            .swipe-card-subtitle {
+                font-size: 0.875rem;
+                margin-bottom: 1rem;
+            }
+
+            .swipe-card-list li {
+                font-size: 0.875rem;
+                padding: 0.625rem 0;
+                padding-left: 1.25rem;
+            }
+
+            .swipe-hint {
+                font-size: 0.8125rem;
             }
 
             .hero-title {
@@ -2408,8 +2619,8 @@
         </div>
     </section>
 
-    <!-- Compact + Network Infographic Section -->
-    <section class="section compact-network-section">
+    <!-- Compact + Network Section - Swipe Cards -->
+    <section class="section concept-flip-section" data-section="concept">
         <div class="section-inner">
             <div class="section-header">
                 <div class="section-label">CONCEPT</div>
@@ -2417,123 +2628,89 @@
                 <p class="section-description">国が推進する、人口減少時代のまちづくり戦略</p>
             </div>
 
-            <div class="infographic-container">
-                <div class="infographic-comparison">
-                    <!-- Before -->
-                    <div class="infographic-before">
-                        <div class="infographic-label">従来のまち</div>
-                        <div class="infographic-diagram before">
-                            <div class="diagram-icon hospital" style="top: 10%; left: 15%;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M3 21h18"/>
-                                    <path d="M5 21V7l8-4v18"/>
-                                    <path d="M19 21V11l-6-4"/>
-                                </svg>
-                            </div>
-                            <div class="diagram-icon shop" style="top: 15%; right: 20%;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                                </svg>
-                            </div>
-                            <div class="diagram-icon house" style="top: 40%; left: 25%;"></div>
-                            <div class="diagram-icon house" style="top: 35%; left: 45%;"></div>
-                            <div class="diagram-icon house" style="top: 50%; right: 25%;"></div>
-                            <div class="diagram-icon house" style="top: 65%; left: 35%;"></div>
-                            <div class="diagram-icon house" style="top: 70%; right: 35%;"></div>
-                            <div class="diagram-icon school" style="bottom: 15%; left: 20%;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                                </svg>
+            <div class="swipe-card-container" id="conceptSwipeContainer">
+                <div class="swipe-card-progress">
+                    <span class="swipe-card-current" id="conceptCurrent">1</span> / <span class="swipe-card-total">4</span>
+                </div>
+
+                <div class="swipe-card-stack" id="conceptCardStack">
+                    <!-- Card 1: 従来のまちの問題 -->
+                    <div class="swipe-card active" data-card="1">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">01</div>
+                            <h3 class="swipe-card-title">従来のまちの問題</h3>
+                            <p class="swipe-card-subtitle">施設がバラバラに点在</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li>病院・商業施設・学校が<strong>各地に散在</strong></li>
+                                    <li>移動は<strong>車が前提</strong>の生活スタイル</li>
+                                    <li>高齢者や免許返納者が<strong>孤立しやすい</strong></li>
+                                </ul>
                             </div>
                         </div>
-                        <p class="infographic-caption">施設がバラバラに点在<br>車がないと生活が不便</p>
                     </div>
 
-                    <!-- Arrow -->
-                    <div class="infographic-arrow">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </div>
-
-                    <!-- After -->
-                    <div class="infographic-after">
-                        <div class="infographic-label">コンパクト+ネットワーク</div>
-                        <div class="infographic-diagram after">
-                            <div class="diagram-center">
-                                <div class="center-label">駅前</div>
-                                <div class="center-icons">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M3 21h18"/>
-                                        <path d="M5 21V7l8-4v18"/>
-                                    </svg>
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                                    </svg>
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="diagram-line line-1"></div>
-                            <div class="diagram-line line-2"></div>
-                            <div class="diagram-area area-1">住宅エリア</div>
-                            <div class="diagram-area area-2">住宅エリア</div>
-                            <div class="diagram-bus">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M8 6v6M16 6v6M2 12h20"/>
-                                    <rect x="4" y="4" width="16" height="12" rx="2"/>
-                                    <circle cx="7" cy="18" r="2"/>
-                                    <circle cx="17" cy="18" r="2"/>
-                                </svg>
+                    <!-- Card 2: コンパクトの考え方 -->
+                    <div class="swipe-card" data-card="2">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">02</div>
+                            <h3 class="swipe-card-title">「コンパクト」の考え方</h3>
+                            <p class="swipe-card-subtitle">都市機能を駅前に集約</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li><strong>医療・商業・子育て施設</strong>を駅周辺に</li>
+                                    <li>歩いて用事が済む<strong>コンパクトな拠点</strong></li>
+                                    <li>郊外への無秩序な拡散を<strong>抑制</strong></li>
+                                </ul>
                             </div>
                         </div>
-                        <p class="infographic-caption">都市機能を駅前に集約<br>公共交通でエリアを結ぶ</p>
+                    </div>
+
+                    <!-- Card 3: ネットワークの考え方 -->
+                    <div class="swipe-card" data-card="3">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">03</div>
+                            <h3 class="swipe-card-title">「ネットワーク」の考え方</h3>
+                            <p class="swipe-card-subtitle">公共交通でエリアを結ぶ</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li>バス路線で<strong>住宅エリアと拠点を連携</strong></li>
+                                    <li>運行頻度・ルートを<strong>最適化</strong></li>
+                                    <li>車がなくても<strong>移動できる環境</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: 期待される効果 -->
+                    <div class="swipe-card" data-card="4">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">04</div>
+                            <h3 class="swipe-card-title">期待される効果</h3>
+                            <p class="swipe-card-subtitle">コスト削減と利便性向上の両立</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li>道路・水道等の<strong>インフラ維持費を削減</strong></li>
+                                    <li>高齢者も<strong>歩いて暮らせる</strong>まちへ</li>
+                                    <li>地域経済の<strong>活性化</strong>にも貢献</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Key Points -->
-                <div class="infographic-points">
-                    <div class="infographic-point">
-                        <div class="point-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M3 21h18"/>
-                                <path d="M5 21V7l8-4v18"/>
-                                <path d="M19 21V11l-6-4"/>
-                            </svg>
-                        </div>
-                        <div class="point-content">
-                            <h4>都市機能を集約</h4>
-                            <p>医療・商業・子育て施設を駅周辺に</p>
-                        </div>
-                    </div>
-                    <div class="infographic-point">
-                        <div class="point-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="4" y="4" width="16" height="12" rx="2"/>
-                                <path d="M8 6v6M16 6v6M2 12h20"/>
-                                <circle cx="7" cy="18" r="2"/>
-                                <circle cx="17" cy="18" r="2"/>
-                            </svg>
-                        </div>
-                        <div class="point-content">
-                            <h4>公共交通で結ぶ</h4>
-                            <p>バス路線でエリア間を効率的に連携</p>
-                        </div>
-                    </div>
-                    <div class="infographic-point">
-                        <div class="point-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <line x1="12" y1="1" x2="12" y2="23"/>
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                            </svg>
-                        </div>
-                        <div class="point-content">
-                            <h4>コスト削減+利便性向上</h4>
-                            <p>インフラ維持費を抑えながら暮らしやすく</p>
-                        </div>
-                    </div>
+                <div class="swipe-hint" id="conceptHint">
+                    <span>スワイプして次へ</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+
+                <div class="swipe-card-dots" id="conceptDots">
+                    <span class="swipe-dot active" data-dot="1"></span>
+                    <span class="swipe-dot" data-dot="2"></span>
+                    <span class="swipe-dot" data-dot="3"></span>
+                    <span class="swipe-dot" data-dot="4"></span>
                 </div>
             </div>
         </div>
@@ -2554,10 +2731,6 @@
                     <div class="hypothesis-content">
                         <h4 class="hypothesis-question">駅前集約で本当に便利になった？</h4>
                         <p class="hypothesis-detail">都市機能を駅周辺に集めることで、住民の生活利便性は実際に向上したのか</p>
-                        <div class="hypothesis-method">
-                            <span class="method-label">検証方法</span>
-                            <span class="method-value">現地視察・住民の声</span>
-                        </div>
                     </div>
                 </div>
                 <div class="hypothesis-card">
@@ -2565,10 +2738,6 @@
                     <div class="hypothesis-content">
                         <h4 class="hypothesis-question">バス再編で利用者は増えた？</h4>
                         <p class="hypothesis-detail">路線の見直しや運行頻度の改善により、公共交通の利用者数は増加したのか</p>
-                        <div class="hypothesis-method">
-                            <span class="method-label">検証方法</span>
-                            <span class="method-value">データ確認・担当者ヒアリング</span>
-                        </div>
                     </div>
                 </div>
                 <div class="hypothesis-card">
@@ -2576,10 +2745,6 @@
                     <div class="hypothesis-content">
                         <h4 class="hypothesis-question">計画策定で住民合意はどう得た？</h4>
                         <p class="hypothesis-detail">立地適正化計画を進める上で、住民の理解・合意をどのように形成したのか</p>
-                        <div class="hypothesis-method">
-                            <span class="method-label">検証方法</span>
-                            <span class="method-value">行政担当者へのヒアリング</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -2595,7 +2760,7 @@
         </div>
     </section>
 
-    <!-- Why Section - Card Flip -->
+    <!-- Why Section - Swipe Cards -->
     <section class="section why-flip-section" data-section="why">
         <div class="section-inner">
             <div class="section-header">
@@ -2603,81 +2768,89 @@
                 <h2 class="section-title">なぜ米子市を視察したのか</h2>
             </div>
 
-            <div class="flip-card-container">
-                <div class="flip-card-progress">
-                    <span class="flip-card-current">1</span> / <span class="flip-card-total">4</span>
+            <div class="swipe-card-container" id="whySwipeContainer">
+                <div class="swipe-card-progress">
+                    <span class="swipe-card-current" id="whyCurrent">1</span> / <span class="swipe-card-total">4</span>
                 </div>
 
-                <div class="flip-card-stack">
+                <div class="swipe-card-stack" id="whyCardStack">
                     <!-- Card 1: 三郷市の課題 -->
-                    <div class="flip-card active" data-card="1">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-number">01</div>
-                            <h3 class="flip-card-title">三郷市の課題</h3>
-                            <p class="flip-card-subtitle">このまま何もしなければ...</p>
-                            <ul class="flip-card-list">
-                                <li>高齢化率：24.5%（2025年）→ <strong>30%超</strong>見込み</li>
-                                <li>車がないと暮らしにくい生活スタイル</li>
-                                <li>郊外住宅地の空き家・空き店舗の増加</li>
-                            </ul>
+                    <div class="swipe-card active" data-card="1">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">01</div>
+                            <h3 class="swipe-card-title">三郷市の課題</h3>
+                            <p class="swipe-card-subtitle">このまま何もしなければ...</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li>高齢化率：24.5%（2025年）→ <strong>30%超</strong>見込み</li>
+                                    <li>車がないと暮らしにくい生活スタイル</li>
+                                    <li>郊外住宅地の空き家・空き店舗の増加</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Card 2: コンパクト+ネットワークとは -->
-                    <div class="flip-card" data-card="2">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-number">02</div>
-                            <h3 class="flip-card-title">解決策がある</h3>
-                            <p class="flip-card-subtitle">国が推進する「コンパクト+ネットワーク」</p>
-                            <ul class="flip-card-list">
-                                <li>駅・中心部に都市機能（医療・商業）を<strong>集約</strong></li>
-                                <li>公共交通でエリア間を<strong>効率的に連携</strong></li>
-                                <li>インフラ維持コストの削減と生活利便性の両立</li>
-                            </ul>
+                    <div class="swipe-card" data-card="2">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">02</div>
+                            <h3 class="swipe-card-title">解決策がある</h3>
+                            <p class="swipe-card-subtitle">国が推進する「コンパクト+ネットワーク」</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li>駅・中心部に都市機能（医療・商業）を<strong>集約</strong></li>
+                                    <li>公共交通でエリア間を<strong>効率的に連携</strong></li>
+                                    <li>インフラ維持コストの削減と生活利便性の両立</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Card 3: なぜ近くではダメなのか -->
-                    <div class="flip-card" data-card="3">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-number">03</div>
-                            <h3 class="flip-card-title">近くに成功例がない</h3>
-                            <p class="flip-card-subtitle">関東近郊では条件に合う都市が見つからない</p>
-                            <ul class="flip-card-list">
-                                <li>人口<strong>14万人規模</strong>で三郷市と同程度</li>
-                                <li>コンパクト+ネットワークを<strong>先進的に実践中</strong></li>
-                                <li>具体的な<strong>成果が出ている</strong>都市</li>
-                            </ul>
+                    <div class="swipe-card" data-card="3">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">03</div>
+                            <h3 class="swipe-card-title">近くに成功例がない</h3>
+                            <p class="swipe-card-subtitle">関東近郊では条件に合う都市が見つからない</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li>人口<strong>14万人規模</strong>で三郷市と同程度</li>
+                                    <li>コンパクト+ネットワークを<strong>先進的に実践中</strong></li>
+                                    <li>具体的な<strong>成果が出ている</strong>都市</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Card 4: だから米子市 -->
-                    <div class="flip-card" data-card="4">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-number">04</div>
-                            <h3 class="flip-card-title">だから米子市</h3>
-                            <p class="flip-card-subtitle">三郷と同じ14万人、先進的な取り組み</p>
-                            <ul class="flip-card-list">
-                                <li><strong>立地適正化計画</strong>を策定・推進中</li>
-                                <li>JR米子駅を中心とした<strong>都市機能の集約</strong></li>
-                                <li>バス路線の再編と<strong>利便性向上</strong></li>
-                            </ul>
+                    <div class="swipe-card" data-card="4">
+                        <div class="swipe-card-inner">
+                            <div class="swipe-card-number">04</div>
+                            <h3 class="swipe-card-title">だから米子市</h3>
+                            <p class="swipe-card-subtitle">三郷と同じ14万人、先進的な取り組み</p>
+                            <div class="swipe-card-content">
+                                <ul class="swipe-card-list">
+                                    <li><strong>立地適正化計画</strong>を策定・推進中</li>
+                                    <li>JR米子駅を中心とした<strong>都市機能の集約</strong></li>
+                                    <li>バス路線の再編と<strong>利便性向上</strong></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <button class="flip-card-button" id="flipNextBtn">
-                    <span class="flip-btn-text">次へ</span>
+                <div class="swipe-hint" id="whyHint">
+                    <span>スワイプして次へ</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M6 9l6 6 6-6"/>
                     </svg>
-                </button>
+                </div>
 
-                <div class="flip-card-dots">
-                    <span class="flip-dot active" data-dot="1"></span>
-                    <span class="flip-dot" data-dot="2"></span>
-                    <span class="flip-dot" data-dot="3"></span>
-                    <span class="flip-dot" data-dot="4"></span>
+                <div class="swipe-card-dots" id="whyDots">
+                    <span class="swipe-dot active" data-dot="1"></span>
+                    <span class="swipe-dot" data-dot="2"></span>
+                    <span class="swipe-dot" data-dot="3"></span>
+                    <span class="swipe-dot" data-dot="4"></span>
                 </div>
             </div>
         </div>
@@ -3063,72 +3236,118 @@
             dot.addEventListener('click', () => updateCarousel(i));
         });
 
-        // Flip Card
-        const flipCards = document.querySelectorAll('.flip-card');
-        const flipDots = document.querySelectorAll('.flip-dot');
-        const flipNextBtn = document.getElementById('flipNextBtn');
-        const flipCurrentSpan = document.querySelector('.flip-card-current');
-        let currentCard = 0;
-        const totalCards = flipCards.length;
+        // Swipe Card System - 共通関数
+        function initSwipeCards(containerId, stackId, dotsId, currentId, hintId) {
+            const container = document.getElementById(containerId);
+            const stack = document.getElementById(stackId);
+            const dots = document.getElementById(dotsId);
+            const currentSpan = document.getElementById(currentId);
+            const hint = document.getElementById(hintId);
 
-        function updateFlipCard(newIndex) {
-            // 現在のカードをめくる
-            flipCards.forEach((card, i) => {
-                card.classList.remove('active', 'flipped', 'next', 'waiting');
+            if (!stack) return null;
 
-                if (i < newIndex) {
-                    card.classList.add('flipped');
-                } else if (i === newIndex) {
-                    card.classList.add('active');
-                } else {
-                    card.classList.add('waiting');
+            const cards = stack.querySelectorAll('.swipe-card');
+            const dotElements = dots ? dots.querySelectorAll('.swipe-dot') : [];
+            const totalCards = cards.length;
+            let currentCard = 0;
+            let startY = 0;
+            let currentY = 0;
+            let isDragging = false;
+
+            function updateCard(newIndex) {
+                if (newIndex < 0 || newIndex >= totalCards) return;
+
+                cards.forEach((card, i) => {
+                    card.classList.remove('active', 'flipped', 'waiting');
+                    if (i < newIndex) {
+                        card.classList.add('flipped');
+                    } else if (i === newIndex) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.add('waiting');
+                    }
+                });
+
+                dotElements.forEach((dot, i) => {
+                    dot.classList.remove('active', 'done');
+                    if (i < newIndex) {
+                        dot.classList.add('done');
+                    } else if (i === newIndex) {
+                        dot.classList.add('active');
+                    }
+                });
+
+                if (currentSpan) {
+                    currentSpan.textContent = newIndex + 1;
                 }
-            });
 
-            // ドットを更新
-            flipDots.forEach((dot, i) => {
-                dot.classList.remove('active', 'done');
-                if (i < newIndex) {
-                    dot.classList.add('done');
-                } else if (i === newIndex) {
-                    dot.classList.add('active');
+                // ヒントを非表示（最初のカード以外）
+                if (hint && newIndex > 0) {
+                    hint.style.opacity = '0';
                 }
-            });
 
-            // カウンター更新
-            flipCurrentSpan.textContent = newIndex + 1;
-
-            // ボタンテキスト更新
-            if (newIndex >= totalCards - 1) {
-                flipNextBtn.classList.add('completed');
-            } else {
-                flipNextBtn.classList.remove('completed');
+                currentCard = newIndex;
             }
 
-            currentCard = newIndex;
+            // タッチ/マウスイベント
+            function handleStart(e) {
+                isDragging = true;
+                startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                stack.style.cursor = 'grabbing';
+            }
+
+            function handleMove(e) {
+                if (!isDragging) return;
+                currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            }
+
+            function handleEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                stack.style.cursor = 'grab';
+
+                const diff = startY - currentY;
+                const threshold = 50;
+
+                if (diff > threshold && currentCard < totalCards - 1) {
+                    updateCard(currentCard + 1);
+                } else if (diff < -threshold && currentCard > 0) {
+                    updateCard(currentCard - 1);
+                }
+            }
+
+            // イベントリスナー
+            stack.addEventListener('mousedown', handleStart);
+            stack.addEventListener('mousemove', handleMove);
+            stack.addEventListener('mouseup', handleEnd);
+            stack.addEventListener('mouseleave', handleEnd);
+
+            stack.addEventListener('touchstart', handleStart, { passive: true });
+            stack.addEventListener('touchmove', handleMove, { passive: true });
+            stack.addEventListener('touchend', handleEnd);
+
+            // カードクリックで次へ
+            cards.forEach((card, i) => {
+                card.addEventListener('click', () => {
+                    if (i === currentCard && currentCard < totalCards - 1) {
+                        updateCard(currentCard + 1);
+                    }
+                });
+            });
+
+            // ドットクリック
+            dotElements.forEach((dot, i) => {
+                dot.addEventListener('click', () => updateCard(i));
+            });
+
+            return { updateCard, currentCard };
         }
 
-        flipNextBtn.addEventListener('click', () => {
-            if (currentCard < totalCards - 1) {
-                updateFlipCard(currentCard + 1);
-            }
-        });
+        // コンパクト+ネットワークセクション
+        initSwipeCards('conceptSwipeContainer', 'conceptCardStack', 'conceptDots', 'conceptCurrent', 'conceptHint');
 
-        // カード自体をクリックしても次へ
-        flipCards.forEach((card, i) => {
-            card.addEventListener('click', () => {
-                if (i === currentCard && currentCard < totalCards - 1) {
-                    updateFlipCard(currentCard + 1);
-                }
-            });
-        });
-
-        // ドットをクリックしてジャンプ
-        flipDots.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                updateFlipCard(i);
-            });
-        });
+        // なぜ米子市セクション
+        initSwipeCards('whySwipeContainer', 'whyCardStack', 'whyDots', 'whyCurrent', 'whyHint');
 
         // Counter Animation
         function animateCounter(element, target, isDecimal = false) {
