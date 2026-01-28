@@ -1316,40 +1316,97 @@
             background: var(--teal-light);
         }
 
-        /* Swipe Card Section - Concept */
-        .concept-flip-section {
+        /* Scroll Card Pinned Section */
+        .scroll-card-pinned {
+            position: relative;
+            height: 400vh;
             background: linear-gradient(135deg, var(--gray-900) 0%, #0f172a 100%);
-            color: var(--white);
         }
 
-        .swipe-card-container {
-            max-width: 600px;
-            margin: 0 auto;
+        .scroll-card-pinned .pinned-content {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .scroll-card-container {
+            max-width: 700px;
+            width: 100%;
             text-align: center;
-            user-select: none;
         }
 
-        .swipe-card-progress {
-            font-size: 0.875rem;
-            color: var(--gray-400);
+        .scroll-card-header {
             margin-bottom: 2rem;
         }
 
-        .swipe-card-current {
+        .scroll-card-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal-light);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-card-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-card-title {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.1s;
+        }
+
+        .scroll-card-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-card-desc {
+            font-size: 1rem;
+            color: var(--gray-400);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.2s;
+        }
+
+        .scroll-card-desc.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-card-progress {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            margin-bottom: 1.5rem;
+        }
+
+        .scroll-card-current {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--teal-light);
         }
 
-        .swipe-card-stack {
+        .scroll-card-stack {
             position: relative;
             height: 380px;
             perspective: 1000px;
-            margin-bottom: 2rem;
-            touch-action: pan-y;
+            margin-bottom: 1.5rem;
         }
 
-        .swipe-card {
+        .scroll-card {
             position: absolute;
             top: 0;
             left: 0;
@@ -1357,32 +1414,27 @@
             height: 100%;
             transform-style: preserve-3d;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: grab;
         }
 
-        .swipe-card:active {
-            cursor: grabbing;
-        }
-
-        .swipe-card.active {
+        .scroll-card.active {
             z-index: 10;
             transform: rotateX(0deg) translateY(0);
             opacity: 1;
         }
 
-        .swipe-card.flipped {
+        .scroll-card.flipped {
             transform: rotateX(-90deg) translateY(-50%);
             opacity: 0;
             pointer-events: none;
         }
 
-        .swipe-card.waiting {
+        .scroll-card.waiting {
             transform: translateY(20px) scale(0.95);
             opacity: 0;
             z-index: 1;
         }
 
-        .swipe-card-inner {
+        .scroll-card-inner {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 24px;
@@ -1394,7 +1446,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .swipe-card-number {
+        .scroll-card-number {
             font-size: 3rem;
             font-weight: 900;
             color: var(--teal);
@@ -1403,31 +1455,31 @@
             margin-bottom: 1rem;
         }
 
-        .swipe-card-title {
+        .scroll-card-item-title {
             font-size: 1.75rem;
             font-weight: 800;
             color: var(--white);
             margin-bottom: 0.75rem;
         }
 
-        .swipe-card-subtitle {
+        .scroll-card-subtitle {
             font-size: 1rem;
             color: var(--gray-400);
             margin-bottom: 1.5rem;
         }
 
-        .swipe-card-content {
+        .scroll-card-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        .swipe-card-list {
+        .scroll-card-list {
             list-style: none;
         }
 
-        .swipe-card-list li {
+        .scroll-card-list li {
             font-size: 1rem;
             color: rgba(255,255,255,0.9);
             padding: 0.75rem 0;
@@ -1436,11 +1488,11 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .swipe-card-list li:last-child {
+        .scroll-card-list li:last-child {
             border-bottom: none;
         }
 
-        .swipe-card-list li::before {
+        .scroll-card-list li::before {
             content: '';
             position: absolute;
             left: 0;
@@ -1452,53 +1504,51 @@
             border-radius: 50%;
         }
 
-        .swipe-card-list li strong {
+        .scroll-card-list li strong {
             color: var(--teal-light);
             font-weight: 600;
         }
 
-        .swipe-hint {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: var(--gray-400);
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
-            animation: swipeHint 2s infinite;
-        }
-
-        @keyframes swipeHint {
-            0%, 100% { transform: translateY(0); opacity: 0.7; }
-            50% { transform: translateY(5px); opacity: 1; }
-        }
-
-        .swipe-hint svg {
-            animation: bounceDown 1s infinite;
-        }
-
-        .swipe-card-dots {
+        .scroll-card-dots {
             display: flex;
             justify-content: center;
             gap: 0.75rem;
         }
 
-        .swipe-dot {
+        .scroll-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             background: rgba(255,255,255,0.3);
-            cursor: pointer;
             transition: all 0.3s;
         }
 
-        .swipe-dot.active {
+        .scroll-dot.active {
             background: var(--teal);
             transform: scale(1.3);
         }
 
-        .swipe-dot.done {
+        .scroll-dot.done {
             background: var(--teal-light);
+        }
+
+        .scroll-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--gray-500);
+            font-size: 0.8125rem;
+            margin-top: 1rem;
+        }
+
+        .scroll-hint svg {
+            animation: bounceDown 1.5s infinite;
+        }
+
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
         }
 
         /* Comparison Section */
@@ -2961,29 +3011,29 @@
         </div>
     </section>
 
-    <!-- Compact + Network Section - Swipe Cards -->
-    <section class="section concept-flip-section" data-section="concept">
-        <div class="section-inner">
-            <div class="section-header">
-                <div class="section-label">CONCEPT</div>
-                <h2 class="section-title">コンパクト+ネットワークとは？</h2>
-                <p class="section-description">国が推進する、人口減少時代のまちづくり戦略</p>
-            </div>
-
-            <div class="swipe-card-container" id="conceptSwipeContainer">
-                <div class="swipe-card-progress">
-                    <span class="swipe-card-current" id="conceptCurrent">1</span> / <span class="swipe-card-total">4</span>
+    <!-- Compact + Network Section - Scroll Cards -->
+    <section class="scroll-card-pinned" data-section="concept-cards" id="conceptSection">
+        <div class="pinned-content">
+            <div class="scroll-card-container">
+                <div class="scroll-card-header">
+                    <div class="scroll-card-label">CONCEPT</div>
+                    <h2 class="scroll-card-title">コンパクト+ネットワークとは？</h2>
+                    <p class="scroll-card-desc">国が推進する、人口減少時代のまちづくり戦略</p>
                 </div>
 
-                <div class="swipe-card-stack" id="conceptCardStack">
-                    <!-- Card 1: 従来のまちの問題 -->
-                    <div class="swipe-card active" data-card="1">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">01</div>
-                            <h3 class="swipe-card-title">従来のまちの問題</h3>
-                            <p class="swipe-card-subtitle">施設がバラバラに点在</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                <div class="scroll-card-progress">
+                    <span class="scroll-card-current" id="conceptCurrent">1</span> / <span class="scroll-card-total">4</span>
+                </div>
+
+                <div class="scroll-card-stack" id="conceptCardStack">
+                    <!-- Card 1 -->
+                    <div class="scroll-card active" data-card="1">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">01</div>
+                            <h3 class="scroll-card-item-title">従来のまちの問題</h3>
+                            <p class="scroll-card-subtitle">施設がバラバラに点在</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li>病院・商業施設・学校が<strong>各地に散在</strong></li>
                                     <li>移動は<strong>車が前提</strong>の生活スタイル</li>
                                     <li>高齢者や免許返納者が<strong>孤立しやすい</strong></li>
@@ -2992,14 +3042,14 @@
                         </div>
                     </div>
 
-                    <!-- Card 2: コンパクトの考え方 -->
-                    <div class="swipe-card" data-card="2">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">02</div>
-                            <h3 class="swipe-card-title">「コンパクト」の考え方</h3>
-                            <p class="swipe-card-subtitle">都市機能を駅前に集約</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                    <!-- Card 2 -->
+                    <div class="scroll-card waiting" data-card="2">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">02</div>
+                            <h3 class="scroll-card-item-title">「コンパクト」の考え方</h3>
+                            <p class="scroll-card-subtitle">都市機能を駅前に集約</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li><strong>医療・商業・子育て施設</strong>を駅周辺に</li>
                                     <li>歩いて用事が済む<strong>コンパクトな拠点</strong></li>
                                     <li>郊外への無秩序な拡散を<strong>抑制</strong></li>
@@ -3008,14 +3058,14 @@
                         </div>
                     </div>
 
-                    <!-- Card 3: ネットワークの考え方 -->
-                    <div class="swipe-card" data-card="3">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">03</div>
-                            <h3 class="swipe-card-title">「ネットワーク」の考え方</h3>
-                            <p class="swipe-card-subtitle">公共交通でエリアを結ぶ</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                    <!-- Card 3 -->
+                    <div class="scroll-card waiting" data-card="3">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">03</div>
+                            <h3 class="scroll-card-item-title">「ネットワーク」の考え方</h3>
+                            <p class="scroll-card-subtitle">公共交通でエリアを結ぶ</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li>バス路線で<strong>住宅エリアと拠点を連携</strong></li>
                                     <li>運行頻度・ルートを<strong>最適化</strong></li>
                                     <li>車がなくても<strong>移動できる環境</strong></li>
@@ -3024,14 +3074,14 @@
                         </div>
                     </div>
 
-                    <!-- Card 4: 期待される効果 -->
-                    <div class="swipe-card" data-card="4">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">04</div>
-                            <h3 class="swipe-card-title">期待される効果</h3>
-                            <p class="swipe-card-subtitle">コスト削減と利便性向上の両立</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                    <!-- Card 4 -->
+                    <div class="scroll-card waiting" data-card="4">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">04</div>
+                            <h3 class="scroll-card-item-title">期待される効果</h3>
+                            <p class="scroll-card-subtitle">コスト削減と利便性向上の両立</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li>道路・水道等の<strong>インフラ維持費を削減</strong></li>
                                     <li>高齢者も<strong>歩いて暮らせる</strong>まちへ</li>
                                     <li>地域経済の<strong>活性化</strong>にも貢献</li>
@@ -3041,18 +3091,18 @@
                     </div>
                 </div>
 
-                <div class="swipe-hint" id="conceptHint">
-                    <span>スワイプして次へ</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M6 9l6 6 6-6"/>
-                    </svg>
+                <div class="scroll-card-dots" id="conceptDots">
+                    <span class="scroll-dot active" data-dot="1"></span>
+                    <span class="scroll-dot" data-dot="2"></span>
+                    <span class="scroll-dot" data-dot="3"></span>
+                    <span class="scroll-dot" data-dot="4"></span>
                 </div>
 
-                <div class="swipe-card-dots" id="conceptDots">
-                    <span class="swipe-dot active" data-dot="1"></span>
-                    <span class="swipe-dot" data-dot="2"></span>
-                    <span class="swipe-dot" data-dot="3"></span>
-                    <span class="swipe-dot" data-dot="4"></span>
+                <div class="scroll-hint">
+                    <span>スクロールして続きを見る</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -3102,28 +3152,28 @@
         </div>
     </section>
 
-    <!-- Why Section - Swipe Cards -->
-    <section class="section why-flip-section" data-section="why">
-        <div class="section-inner">
-            <div class="section-header">
-                <div class="section-label">WHY YONAGO</div>
-                <h2 class="section-title">なぜ米子市を視察したのか</h2>
-            </div>
-
-            <div class="swipe-card-container" id="whySwipeContainer">
-                <div class="swipe-card-progress">
-                    <span class="swipe-card-current" id="whyCurrent">1</span> / <span class="swipe-card-total">4</span>
+    <!-- Why Section - Scroll Cards -->
+    <section class="scroll-card-pinned" data-section="why-cards" id="whySection">
+        <div class="pinned-content">
+            <div class="scroll-card-container">
+                <div class="scroll-card-header">
+                    <div class="scroll-card-label">WHY YONAGO</div>
+                    <h2 class="scroll-card-title">なぜ米子市を視察したのか</h2>
                 </div>
 
-                <div class="swipe-card-stack" id="whyCardStack">
-                    <!-- Card 1: 三郷市の課題 -->
-                    <div class="swipe-card active" data-card="1">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">01</div>
-                            <h3 class="swipe-card-title">三郷市の課題</h3>
-                            <p class="swipe-card-subtitle">このまま何もしなければ...</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                <div class="scroll-card-progress">
+                    <span class="scroll-card-current" id="whyCurrent">1</span> / <span class="scroll-card-total">4</span>
+                </div>
+
+                <div class="scroll-card-stack" id="whyCardStack">
+                    <!-- Card 1 -->
+                    <div class="scroll-card active" data-card="1">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">01</div>
+                            <h3 class="scroll-card-item-title">三郷市の課題</h3>
+                            <p class="scroll-card-subtitle">このまま何もしなければ...</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li>高齢化率：24.5%（2025年）→ <strong>30%超</strong>見込み</li>
                                     <li>車がないと暮らしにくい生活スタイル</li>
                                     <li>郊外住宅地の空き家・空き店舗の増加</li>
@@ -3132,14 +3182,14 @@
                         </div>
                     </div>
 
-                    <!-- Card 2: コンパクト+ネットワークとは -->
-                    <div class="swipe-card" data-card="2">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">02</div>
-                            <h3 class="swipe-card-title">解決策がある</h3>
-                            <p class="swipe-card-subtitle">国が推進する「コンパクト+ネットワーク」</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                    <!-- Card 2 -->
+                    <div class="scroll-card waiting" data-card="2">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">02</div>
+                            <h3 class="scroll-card-item-title">解決策がある</h3>
+                            <p class="scroll-card-subtitle">国が推進する「コンパクト+ネットワーク」</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li>駅・中心部に都市機能（医療・商業）を<strong>集約</strong></li>
                                     <li>公共交通でエリア間を<strong>効率的に連携</strong></li>
                                     <li>インフラ維持コストの削減と生活利便性の両立</li>
@@ -3148,14 +3198,14 @@
                         </div>
                     </div>
 
-                    <!-- Card 3: なぜ近くではダメなのか -->
-                    <div class="swipe-card" data-card="3">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">03</div>
-                            <h3 class="swipe-card-title">近くに成功例がない</h3>
-                            <p class="swipe-card-subtitle">関東近郊では条件に合う都市が見つからない</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                    <!-- Card 3 -->
+                    <div class="scroll-card waiting" data-card="3">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">03</div>
+                            <h3 class="scroll-card-item-title">近くに成功例がない</h3>
+                            <p class="scroll-card-subtitle">関東近郊では条件に合う都市が見つからない</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li>人口<strong>14万人規模</strong>で三郷市と同程度</li>
                                     <li>コンパクト+ネットワークを<strong>先進的に実践中</strong></li>
                                     <li>具体的な<strong>成果が出ている</strong>都市</li>
@@ -3164,14 +3214,14 @@
                         </div>
                     </div>
 
-                    <!-- Card 4: だから米子市 -->
-                    <div class="swipe-card" data-card="4">
-                        <div class="swipe-card-inner">
-                            <div class="swipe-card-number">04</div>
-                            <h3 class="swipe-card-title">だから米子市</h3>
-                            <p class="swipe-card-subtitle">三郷と同じ14万人、先進的な取り組み</p>
-                            <div class="swipe-card-content">
-                                <ul class="swipe-card-list">
+                    <!-- Card 4 -->
+                    <div class="scroll-card waiting" data-card="4">
+                        <div class="scroll-card-inner">
+                            <div class="scroll-card-number">04</div>
+                            <h3 class="scroll-card-item-title">だから米子市</h3>
+                            <p class="scroll-card-subtitle">三郷と同じ14万人、先進的な取り組み</p>
+                            <div class="scroll-card-content">
+                                <ul class="scroll-card-list">
                                     <li><strong>立地適正化計画</strong>を策定・推進中</li>
                                     <li>JR米子駅を中心とした<strong>都市機能の集約</strong></li>
                                     <li>バス路線の再編と<strong>利便性向上</strong></li>
@@ -3181,18 +3231,18 @@
                     </div>
                 </div>
 
-                <div class="swipe-hint" id="whyHint">
-                    <span>スワイプして次へ</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M6 9l6 6 6-6"/>
-                    </svg>
+                <div class="scroll-card-dots" id="whyDots">
+                    <span class="scroll-dot active" data-dot="1"></span>
+                    <span class="scroll-dot" data-dot="2"></span>
+                    <span class="scroll-dot" data-dot="3"></span>
+                    <span class="scroll-dot" data-dot="4"></span>
                 </div>
 
-                <div class="swipe-card-dots" id="whyDots">
-                    <span class="swipe-dot active" data-dot="1"></span>
-                    <span class="swipe-dot" data-dot="2"></span>
-                    <span class="swipe-dot" data-dot="3"></span>
-                    <span class="swipe-dot" data-dot="4"></span>
+                <div class="scroll-hint">
+                    <span>スクロールして続きを見る</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -3730,8 +3780,8 @@
         const progressBar = document.querySelector('.progress-bar');
         const header = document.querySelector('.header');
 
-        // Pinned Sections
-        const pinnedSections = document.querySelectorAll('.pinned-section');
+        // Pinned Sections (including scroll-card-pinned)
+        const pinnedSections = document.querySelectorAll('.pinned-section, .scroll-card-pinned');
 
         // Learnings Carousel
         const learningsTrack = document.querySelector('.learnings-track');
@@ -3761,26 +3811,24 @@
             dot.addEventListener('click', () => updateCarousel(i));
         });
 
-        // Swipe Card System - 共通関数
-        function initSwipeCards(containerId, stackId, dotsId, currentId, hintId) {
-            const container = document.getElementById(containerId);
+        // Scroll Card System - スクロール連動でカードを切り替え
+        function initScrollCards(sectionId, stackId, dotsId, currentId) {
+            const section = document.getElementById(sectionId);
             const stack = document.getElementById(stackId);
             const dots = document.getElementById(dotsId);
             const currentSpan = document.getElementById(currentId);
-            const hint = document.getElementById(hintId);
 
-            if (!stack) return null;
+            if (!stack || !section) return null;
 
-            const cards = stack.querySelectorAll('.swipe-card');
-            const dotElements = dots ? dots.querySelectorAll('.swipe-dot') : [];
+            const cards = stack.querySelectorAll('.scroll-card');
+            const dotElements = dots ? dots.querySelectorAll('.scroll-dot') : [];
             const totalCards = cards.length;
-            let currentCard = 0;
-            let startY = 0;
-            let currentY = 0;
-            let isDragging = false;
+            let lastCardIndex = -1;
 
             function updateCard(newIndex) {
-                if (newIndex < 0 || newIndex >= totalCards) return;
+                if (newIndex < 0) newIndex = 0;
+                if (newIndex >= totalCards) newIndex = totalCards - 1;
+                if (newIndex === lastCardIndex) return;
 
                 cards.forEach((card, i) => {
                     card.classList.remove('active', 'flipped', 'waiting');
@@ -3806,73 +3854,30 @@
                     currentSpan.textContent = newIndex + 1;
                 }
 
-                // ヒントを非表示（最初のカード以外）
-                if (hint && newIndex > 0) {
-                    hint.style.opacity = '0';
-                }
-
-                currentCard = newIndex;
+                lastCardIndex = newIndex;
             }
 
-            // タッチ/マウスイベント
-            function handleStart(e) {
-                isDragging = true;
-                startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-                stack.style.cursor = 'grabbing';
+            // スクロール進行度に基づいてカードを更新
+            function updateFromProgress(progress) {
+                // 進行度を4等分してカードインデックスを決定
+                // 0-0.25 = card 0, 0.25-0.5 = card 1, 0.5-0.75 = card 2, 0.75-1 = card 3
+                const cardIndex = Math.min(Math.floor(progress * totalCards), totalCards - 1);
+                updateCard(cardIndex);
             }
 
-            function handleMove(e) {
-                if (!isDragging) return;
-                currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-            }
-
-            function handleEnd() {
-                if (!isDragging) return;
-                isDragging = false;
-                stack.style.cursor = 'grab';
-
-                const diff = startY - currentY;
-                const threshold = 50;
-
-                if (diff > threshold && currentCard < totalCards - 1) {
-                    updateCard(currentCard + 1);
-                } else if (diff < -threshold && currentCard > 0) {
-                    updateCard(currentCard - 1);
-                }
-            }
-
-            // イベントリスナー
-            stack.addEventListener('mousedown', handleStart);
-            stack.addEventListener('mousemove', handleMove);
-            stack.addEventListener('mouseup', handleEnd);
-            stack.addEventListener('mouseleave', handleEnd);
-
-            stack.addEventListener('touchstart', handleStart, { passive: true });
-            stack.addEventListener('touchmove', handleMove, { passive: true });
-            stack.addEventListener('touchend', handleEnd);
-
-            // カードクリックで次へ
-            cards.forEach((card, i) => {
-                card.addEventListener('click', () => {
-                    if (i === currentCard && currentCard < totalCards - 1) {
-                        updateCard(currentCard + 1);
-                    }
-                });
-            });
-
-            // ドットクリック
+            // ドットクリックでも切り替え可能
             dotElements.forEach((dot, i) => {
                 dot.addEventListener('click', () => updateCard(i));
             });
 
-            return { updateCard, currentCard };
+            return { updateCard, updateFromProgress };
         }
 
         // コンパクト+ネットワークセクション
-        initSwipeCards('conceptSwipeContainer', 'conceptCardStack', 'conceptDots', 'conceptCurrent', 'conceptHint');
+        const conceptScrollCards = initScrollCards('conceptSection', 'conceptCardStack', 'conceptDots', 'conceptCurrent');
 
         // なぜ米子市セクション
-        initSwipeCards('whySwipeContainer', 'whyCardStack', 'whyDots', 'whyCurrent', 'whyHint');
+        const whyScrollCards = initScrollCards('whySection', 'whyCardStack', 'whyDots', 'whyCurrent');
 
         // Counter Animation
         function animateCounter(element, target, isDecimal = false) {
@@ -4019,18 +4024,6 @@
             }
         }
 
-        // Animate Why Cards
-        function animateWhyCards() {
-            const whySection = document.querySelector('.why');
-            const rect = whySection.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-
-            if (rect.top < windowHeight * 0.8) {
-                const cards = whySection.querySelectorAll('.why-card');
-                cards.forEach(card => card.classList.add('visible'));
-            }
-        }
-
         // Animate Outcome Cards
         function animateOutcomeCards() {
             const outcomeSection = document.querySelector('.outcome');
@@ -4070,11 +4063,14 @@
                     animateBudget(sectionProgress);
                 } else if (sectionType === 'learnings') {
                     animateLearnings(sectionProgress);
+                } else if (sectionType === 'concept-cards' && conceptScrollCards) {
+                    conceptScrollCards.updateFromProgress(sectionProgress);
+                } else if (sectionType === 'why-cards' && whyScrollCards) {
+                    whyScrollCards.updateFromProgress(sectionProgress);
                 }
             });
 
             // Animate other sections
-            animateWhyCards();
             animateOutcomeCards();
         }
 
