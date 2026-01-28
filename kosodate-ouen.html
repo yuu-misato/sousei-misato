@@ -19,9 +19,9 @@
         }
 
         :root {
-            --primary: #ec4899;
-            --primary-light: #f472b6;
-            --primary-dark: #db2777;
+            --green: #10b981;
+            --green-light: #34d399;
+            --green-dark: #059669;
             --navy: #1e3a5f;
             --white: #ffffff;
             --gray-50: #f9fafb;
@@ -35,7 +35,7 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
         }
 
         body {
@@ -43,6 +43,19 @@
             background: var(--white);
             color: var(--gray-800);
             line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--green-light));
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.05s linear;
         }
 
         /* Header */
@@ -59,6 +72,12 @@
             align-items: center;
             padding: 0 2rem;
             border-bottom: 1px solid var(--gray-200);
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .header.visible {
+            transform: translateY(0);
         }
 
         .header-inner {
@@ -99,347 +118,586 @@
         }
 
         .header-back:hover {
-            color: var(--primary);
+            color: var(--green);
         }
 
         /* Hero Section */
         .hero {
-            padding: 120px 2rem 80px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gray-900) 0%, #1a1a2e 100%);
             color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%2310b981" opacity="0.3"/></svg>') repeat;
+            background-size: 50px 50px;
+            animation: heroPattern 20s linear infinite;
+        }
+
+        @keyframes heroPattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
             text-align: center;
+            max-width: 1000px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--green);
             padding: 0.5rem 1rem;
             border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            color: var(--green-light);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
         .hero-title {
-            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-size: clamp(1.75rem, 6vw, 3rem);
             font-weight: 900;
             line-height: 1.2;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
         .hero-amount {
-            font-size: clamp(3rem, 10vw, 5rem);
+            font-size: clamp(4rem, 15vw, 8rem);
             font-weight: 900;
-            margin: 1.5rem 0;
+            color: var(--green);
+            line-height: 1;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
         .hero-amount span {
-            font-size: 0.4em;
+            font-size: 0.3em;
+            color: var(--gray-400);
         }
 
         .hero-subtitle {
             font-size: 1.125rem;
-            opacity: 0.9;
+            color: var(--gray-400);
             max-width: 600px;
             margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
         }
 
-        /* Main Content */
-        .main-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Section */
-        .section {
-            padding: 60px 0;
-        }
-
-        .section + .section {
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            color: var(--gray-500);
+            font-size: 0.625rem;
+            letter-spacing: 0.2em;
+            animation: fadeInUp 0.8s ease-out 1s both;
         }
 
-        .section-title-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(236, 72, 153, 0.1);
-            border-radius: 10px;
+        .scroll-indicator .arrow {
+            width: 24px;
+            height: 24px;
+            border-right: 2px solid var(--green);
+            border-bottom: 2px solid var(--green);
+            transform: rotate(45deg);
+            animation: scrollArrow 1.5s infinite;
+        }
+
+        @keyframes scrollArrow {
+            0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 1; }
+            50% { transform: rotate(45deg) translate(5px, 5px); opacity: 0.5; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pinned Section */
+        .pinned-section {
+            position: relative;
+            height: 300vh;
+        }
+
+        .pinned-content {
+            position: sticky;
+            top: 0;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
-        .section-title-icon svg {
-            width: 22px;
-            height: 22px;
-            stroke: var(--primary);
+        /* Amount Pinned Section */
+        .amount-pinned {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
         }
 
-        /* Info Cards */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+        .amount-pinned .pinned-content {
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .amount-container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .amount-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .amount-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .amount-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
+            color: var(--white);
             margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.1s;
         }
 
-        .info-card {
-            background: var(--gray-50);
+        .amount-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .amount-big-number {
+            font-size: clamp(4rem, 18vw, 10rem);
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .amount-big-number.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .amount-big-number span {
+            font-size: 0.25em;
+            opacity: 0.8;
+        }
+
+        .amount-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.3s;
+        }
+
+        .amount-subtitle.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .amount-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .amount-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
             padding: 1.5rem;
             border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
 
-        .info-card.highlight {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(244, 114, 182, 0.05));
-            border: 2px solid var(--primary);
+        .amount-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .info-card-label {
+        .amount-card:nth-child(2) { transition-delay: 0.1s; }
+        .amount-card:nth-child(3) { transition-delay: 0.2s; }
+
+        .amount-card-label {
             font-size: 0.8125rem;
-            color: var(--gray-500);
+            color: rgba(255,255,255,0.7);
             margin-bottom: 0.5rem;
         }
 
-        .info-card-value {
+        .amount-card-value {
             font-size: 1.5rem;
             font-weight: 700;
+            color: var(--white);
+        }
+
+        /* Target Pinned Section */
+        .target-pinned {
+            background: var(--white);
+        }
+
+        .target-pinned .pinned-content {
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .target-container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .target-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .target-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .target-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
             color: var(--gray-900);
+            margin-bottom: 3rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.1s;
         }
 
-        .info-card-value.large {
-            font-size: 2rem;
-            color: var(--primary);
+        .target-title.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Target List */
-        .target-list {
-            list-style: none;
-        }
-
-        .target-list li {
-            padding: 1rem 0;
-            padding-left: 2rem;
-            position: relative;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .target-list li:last-child {
-            border-bottom: none;
-        }
-
-        .target-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 1.4rem;
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 50%;
-        }
-
-        .target-list li strong {
-            color: var(--gray-900);
-        }
-
-        /* Flow Section */
-        .flow-cards {
+        .target-cards {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
+        .target-card {
+            background: var(--gray-50);
+            padding: 2rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .target-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .target-card:nth-child(2) { transition-delay: 0.15s; }
+
+        .target-card-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--green);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .target-card-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--white);
+        }
+
+        .target-card-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .target-card-content p {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+        }
+
+        .target-note {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--green);
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out 0.3s;
+        }
+
+        .target-note.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .target-note p {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+        }
+
+        .target-note strong {
+            color: var(--green-dark);
+        }
+
+        /* Section Base */
+        .section {
+            padding: 100px 2rem;
+        }
+
+        .section-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            color: var(--green);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            font-weight: 900;
+            color: var(--gray-900);
+        }
+
+        /* Flow Section */
+        .flow {
+            background: var(--gray-50);
+        }
+
+        .flow-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
         .flow-card {
             background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: 16px;
-            padding: 2rem;
-            position: relative;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
 
-        .flow-card::before {
-            content: '';
-            position: absolute;
-            left: 2rem;
-            top: 100%;
-            width: 2px;
-            height: 1.5rem;
-            background: var(--gray-200);
+        .flow-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .flow-card:last-child::before {
-            display: none;
-        }
+        .flow-card:nth-child(2) { transition-delay: 0.1s; }
+        .flow-card:nth-child(3) { transition-delay: 0.2s; }
 
         .flow-card-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .flow-card-number {
-            width: 36px;
-            height: 36px;
-            background: var(--primary);
+            width: 48px;
+            height: 48px;
+            background: var(--green);
             color: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 900;
+            font-size: 1.25rem;
             flex-shrink: 0;
         }
 
         .flow-card-title {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--gray-900);
         }
 
-        .flow-card-content {
-            padding-left: 3rem;
-        }
-
         .flow-card-content p {
             color: var(--gray-600);
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .flow-card-highlight {
-            background: rgba(236, 72, 153, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.05));
+            border: 1px solid var(--green);
+            padding: 1.25rem;
+            border-radius: 12px;
             margin-top: 1rem;
         }
 
         .flow-card-highlight p {
             margin: 0;
-            color: var(--primary-dark);
-            font-weight: 500;
+            color: var(--green-dark);
+            font-weight: 600;
         }
 
-        /* Date Badge */
         .date-badge {
             display: inline-block;
-            background: var(--primary);
+            background: var(--green);
             color: var(--white);
             padding: 0.25rem 0.75rem;
             border-radius: 4px;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-        }
-
-        /* Notice Box */
-        .notice-box {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            margin: 2rem 0;
-        }
-
-        .notice-box-title {
-            font-weight: 700;
-            color: #92400e;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .notice-box p {
-            color: #78350f;
-            font-size: 0.9375rem;
         }
 
         /* Contact Section */
-        .contact-box {
+        .contact {
             background: var(--gray-900);
             color: var(--white);
-            padding: 2rem;
+        }
+
+        .contact .section-label {
+            color: var(--green-light);
+        }
+
+        .contact .section-title {
+            color: var(--white);
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
 
-        .contact-box-title {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+        .contact-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .contact-items {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+        .contact-card:nth-child(2) { transition-delay: 0.1s; }
 
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .contact-item-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+        .contact-card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            margin-bottom: 1rem;
         }
 
-        .contact-item-icon svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--primary-light);
+        .contact-card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--green-light);
         }
 
-        .contact-item-content {
-            flex: 1;
-        }
-
-        .contact-item-label {
+        .contact-card-label {
             font-size: 0.8125rem;
             color: var(--gray-400);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
         }
 
-        .contact-item-value {
-            font-size: 1.125rem;
-            font-weight: 600;
+        .contact-card-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
         }
 
-        .contact-item-note {
+        .contact-card-note {
             font-size: 0.8125rem;
             color: var(--gray-400);
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
         }
 
-        /* Source Link */
         .source-link {
             text-align: center;
-            padding: 2rem;
-            background: var(--gray-50);
-            border-radius: 12px;
-            margin-top: 2rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .source-link p {
@@ -449,21 +707,26 @@
         }
 
         .source-link a {
-            color: var(--primary);
+            color: var(--green-light);
             font-size: 0.875rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .source-link a:hover {
+            color: var(--white);
         }
 
         /* CTA Section */
         .cta {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
             color: var(--white);
             text-align: center;
-            padding: 60px 2rem;
-            margin-top: 60px;
+            padding: 80px 2rem;
         }
 
         .cta-title {
-            font-size: 1.5rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 700;
             margin-bottom: 1.5rem;
         }
@@ -473,7 +736,7 @@
             align-items: center;
             gap: 0.5rem;
             background: var(--white);
-            color: var(--primary-dark);
+            color: var(--green-dark);
             padding: 1rem 2rem;
             text-decoration: none;
             font-weight: 700;
@@ -529,7 +792,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--primary);
+            color: var(--green);
         }
 
         .footer-copy {
@@ -537,58 +800,91 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .amount-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 0 1rem;
             }
 
-            .hero {
-                padding: 100px 1rem 60px;
+            .hero-content {
+                padding: 0 1rem;
             }
 
-            .info-grid {
-                grid-template-columns: 1fr;
+            .amount-container {
+                padding: 0 1rem;
+            }
+
+            .target-container {
+                padding: 0 1rem;
+            }
+
+            .target-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .target-card-icon {
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 60px 1rem;
             }
 
             .flow-card {
                 padding: 1.5rem;
             }
-
-            .flow-card-content {
-                padding-left: 0;
-                margin-top: 1rem;
-            }
-
-            .section {
-                padding: 40px 0;
-            }
-
-            .contact-item {
-                flex-direction: column;
-            }
         }
 
         @media (max-width: 480px) {
             .hero-title {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
             }
 
             .hero-amount {
-                font-size: 2.5rem;
+                font-size: 3.5rem;
             }
 
-            .section-title {
+            .amount-big-number {
+                font-size: 4rem;
+            }
+
+            .amount-title {
                 font-size: 1.25rem;
             }
 
-            .info-card-value.large {
+            .target-title {
+                font-size: 1.25rem;
+            }
+
+            .section-title {
                 font-size: 1.5rem;
+            }
+
+            .flow-card-title {
+                font-size: 1rem;
+            }
+
+            .cta-title {
+                font-size: 1.25rem;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+
     <!-- Header -->
     <header class="header">
         <div class="header-inner">
@@ -607,104 +903,97 @@
 
     <!-- Hero -->
     <section class="hero">
-        <div class="hero-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            三郷市 子育て支援
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                三郷市 子育て支援
+            </div>
+            <h1 class="hero-title">物価高対応<br>子育て応援手当</h1>
+            <div class="hero-amount">2万円<span>/人</span></div>
+            <p class="hero-subtitle">0〜18歳のお子さまがいるご家庭に<br>児童1人あたり2万円を支給します</p>
         </div>
-        <h1 class="hero-title">物価高対応<br>子育て応援手当</h1>
-        <div class="hero-amount">2万円<span>/児童1人</span></div>
-        <p class="hero-subtitle">0〜18歳のお子さまがいるご家庭に、<br>1人あたり2万円を支給します</p>
+        <div class="scroll-indicator">
+            <div class="arrow"></div>
+            <span>SCROLL</span>
+        </div>
     </section>
 
-    <!-- Main Content -->
-    <div class="main-content">
-
-        <!-- Overview Section -->
-        <section class="section">
-            <h2 class="section-title">
-                <div class="section-title-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4M12 8h.01"/>
-                    </svg>
-                </div>
-                制度の概要
-            </h2>
-
-            <div class="info-grid">
-                <div class="info-card highlight">
-                    <div class="info-card-label">支給額</div>
-                    <div class="info-card-value large">2万円/人</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-label">支給回数</div>
-                    <div class="info-card-value">1回限り</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-label">対象年齢</div>
-                    <div class="info-card-value">0〜18歳</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-label">支給予定日</div>
-                    <div class="info-card-value">2026年2月27日</div>
+    <!-- Amount Pinned Section -->
+    <section class="pinned-section amount-pinned" data-section="amount">
+        <div class="pinned-content">
+            <div class="amount-container">
+                <div class="amount-label">SUPPORT</div>
+                <h2 class="amount-title">支給内容</h2>
+                <div class="amount-big-number">2万円<span>/児童1人</span></div>
+                <p class="amount-subtitle">1回限りの給付金です</p>
+                <div class="amount-cards">
+                    <div class="amount-card">
+                        <div class="amount-card-label">対象年齢</div>
+                        <div class="amount-card-value">0〜18歳</div>
+                    </div>
+                    <div class="amount-card">
+                        <div class="amount-card-label">支給予定日</div>
+                        <div class="amount-card-value">2026年2月27日</div>
+                    </div>
+                    <div class="amount-card">
+                        <div class="amount-card-label">支給回数</div>
+                        <div class="amount-card-value">1回限り</div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <p>令和7年11月21日の閣議決定「強い経済」を実現する総合経済対策に基づき、物価高の影響を受ける子育て世帯を支援するため、三郷市が実施する給付金です。</p>
-        </section>
-
-        <!-- Target Section -->
-        <section class="section">
-            <h2 class="section-title">
-                <div class="section-title-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
+    <!-- Target Pinned Section -->
+    <section class="pinned-section target-pinned" data-section="target">
+        <div class="pinned-content">
+            <div class="target-container">
+                <div class="target-label">TARGET</div>
+                <h2 class="target-title">対象となる方</h2>
+                <div class="target-cards">
+                    <div class="target-card">
+                        <div class="target-card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <div class="target-card-content">
+                            <h3>令和7年9月分の児童手当受給児童</h3>
+                            <p>現在、児童手当を受給しているご家庭が対象です。<br>※9月生まれのお子さまは10月分が対象となります。</p>
+                        </div>
+                    </div>
+                    <div class="target-card">
+                        <div class="target-card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <div class="target-card-content">
+                            <h3>令和7年10月1日〜令和8年3月31日に出生した新生児</h3>
+                            <p>出生届の提出時に児童手当の手続きをされた方が対象です。</p>
+                        </div>
+                    </div>
                 </div>
-                対象となる方
-            </h2>
-
-            <ul class="target-list">
-                <li>
-                    <strong>令和7年9月分の児童手当を受給している児童</strong><br>
-                    ※9月生まれのお子さまは10月分が対象
-                </li>
-                <li>
-                    <strong>令和7年10月1日〜令和8年3月31日に出生した新生児</strong><br>
-                    出生届と同時に児童手当の手続きをされた方
-                </li>
-            </ul>
-
-            <div class="notice-box">
-                <div class="notice-box-title">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                        <line x1="12" y1="9" x2="12" y2="13"/>
-                        <line x1="12" y1="17" x2="12.01" y2="17"/>
-                    </svg>
-                    受給者について
+                <div class="target-note">
+                    <p><strong>受給者について：</strong>支給対象者は、対象児童の<strong>児童手当受給者（父母等）</strong>です。お子さま本人ではなく、保護者の口座に振り込まれます。</p>
                 </div>
-                <p>支給対象者は、対象児童の<strong>児童手当受給者（父母等）</strong>です。お子さま本人ではなく、保護者の口座に振り込まれます。</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Flow Section -->
-        <section class="section">
-            <h2 class="section-title">
-                <div class="section-title-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                        <polyline points="9 11 12 14 22 4"/>
-                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                    </svg>
-                </div>
-                申請方法・支給時期
-            </h2>
-
+    <!-- Flow Section -->
+    <section class="section flow" data-section="flow">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">HOW TO</div>
+                <h2 class="section-title">申請方法・支給時期</h2>
+            </div>
             <div class="flow-cards">
                 <div class="flow-card">
                     <div class="flow-card-header">
@@ -713,9 +1002,10 @@
                     </div>
                     <div class="flow-card-content">
                         <p><strong>申請は不要です</strong></p>
-                        <p>児童手当の登録口座に自動的に振り込まれます。</p>
+                        <p>児童手当の登録口座に自動的に振り込まれます。特別な手続きは必要ありません。</p>
                         <div class="flow-card-highlight">
-                            <p><span class="date-badge">支給予定日</span><br>令和8年（2026年）2月27日</p>
+                            <span class="date-badge">支給予定日</span>
+                            <p>令和8年（2026年）2月27日</p>
                         </div>
                     </div>
                 </div>
@@ -727,7 +1017,7 @@
                     </div>
                     <div class="flow-card-content">
                         <p>出生届の提出時に児童手当の手続きをされた方は、<strong>申請不要</strong>です。</p>
-                        <p>手続き完了後、1〜2か月程度で支給されます。</p>
+                        <p>手続き完了後、1〜2か月程度で児童手当の登録口座に支給されます。</p>
                     </div>
                 </div>
 
@@ -738,63 +1028,53 @@
                     </div>
                     <div class="flow-card-content">
                         <p><strong>申請が必要です</strong></p>
-                        <p>受付開始は令和8年2月上旬を予定しています。</p>
+                        <p>受付開始は令和8年2月上旬を予定しています。詳細は追ってお知らせします。</p>
                         <div class="flow-card-highlight">
-                            <p><span class="date-badge">申請期限</span><br>令和8年（2026年）3月31日</p>
+                            <span class="date-badge">申請期限</span>
+                            <p>令和8年（2026年）3月31日</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section class="section">
-            <h2 class="section-title">
-                <div class="section-title-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                    </svg>
+    <!-- Contact Section -->
+    <section class="section contact" data-section="contact">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">CONTACT</div>
+                <h2 class="section-title">お問い合わせ</h2>
+            </div>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-label">三郷市 こども家庭センター</div>
+                    <div class="contact-card-value">048-930-7780</div>
+                    <div class="contact-card-note">または 048-930-7781</div>
                 </div>
-                お問い合わせ
-            </h2>
-
-            <div class="contact-box">
-                <div class="contact-box-title">ご不明な点は下記までお問い合わせください</div>
-                <div class="contact-items">
-                    <div class="contact-item">
-                        <div class="contact-item-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                        </div>
-                        <div class="contact-item-content">
-                            <div class="contact-item-label">三郷市 こども家庭センター</div>
-                            <div class="contact-item-value">048-930-7780 / 7781</div>
-                        </div>
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-item-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                        </div>
-                        <div class="contact-item-content">
-                            <div class="contact-item-label">こども家庭庁コールセンター</div>
-                            <div class="contact-item-value">0120-252-071</div>
-                            <div class="contact-item-note">平日 9:00〜18:00（通話料無料）</div>
-                        </div>
-                    </div>
+                    <div class="contact-card-label">こども家庭庁コールセンター</div>
+                    <div class="contact-card-value">0120-252-071</div>
+                    <div class="contact-card-note">平日 9:00〜18:00（通話料無料）</div>
                 </div>
             </div>
-
             <div class="source-link">
                 <p>この情報は三郷市公式サイトを基に作成しています</p>
                 <a href="https://www.city.misato.lg.jp/soshiki/kodomomirai/kodomoshien/8/ouenteate/12363.html" target="_blank" rel="noopener">三郷市公式サイトで詳細を確認する →</a>
             </div>
-        </section>
-
-    </div>
+        </div>
+    </section>
 
     <!-- CTA -->
     <section class="cta">
@@ -821,6 +1101,159 @@
         </div>
         <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
     </footer>
+
+    <script>
+        // Progress Bar & Header
+        const progressBar = document.querySelector('.progress-bar');
+        const header = document.querySelector('.header');
+
+        // Pinned Sections
+        const pinnedSections = document.querySelectorAll('.pinned-section');
+
+        // Scroll Animation State
+        let scrollDirection = 'down';
+        let lastScrollY = 0;
+
+        // Check scroll direction
+        function checkScrollDirection() {
+            const currentScrollY = window.scrollY;
+            scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+            lastScrollY = currentScrollY;
+        }
+
+        // Get section progress (0-1)
+        function getSectionProgress(section) {
+            const rect = section.getBoundingClientRect();
+            const sectionHeight = section.offsetHeight;
+            const viewportHeight = window.innerHeight;
+            const scrolled = -rect.top;
+            const scrollableHeight = sectionHeight - viewportHeight;
+
+            if (scrolled <= 0) return 0;
+            if (scrolled >= scrollableHeight) return 1;
+            return scrolled / scrollableHeight;
+        }
+
+        // Animate Amount Section
+        function animateAmount(progress) {
+            const container = document.querySelector('.amount-container');
+            const label = container.querySelector('.amount-label');
+            const title = container.querySelector('.amount-title');
+            const bigNumber = container.querySelector('.amount-big-number');
+            const subtitle = container.querySelector('.amount-subtitle');
+            const cards = container.querySelectorAll('.amount-card');
+
+            if (progress > 0.05) {
+                label.classList.add('visible');
+            }
+            if (progress > 0.1) {
+                title.classList.add('visible');
+            }
+            if (progress > 0.2) {
+                bigNumber.classList.add('visible');
+            }
+            if (progress > 0.35) {
+                subtitle.classList.add('visible');
+            }
+            if (progress > 0.5) {
+                cards.forEach(card => card.classList.add('visible'));
+            }
+        }
+
+        // Animate Target Section
+        function animateTarget(progress) {
+            const container = document.querySelector('.target-container');
+            const label = container.querySelector('.target-label');
+            const title = container.querySelector('.target-title');
+            const cards = container.querySelectorAll('.target-card');
+            const note = container.querySelector('.target-note');
+
+            if (progress > 0.05) {
+                label.classList.add('visible');
+            }
+            if (progress > 0.1) {
+                title.classList.add('visible');
+            }
+            if (progress > 0.3) {
+                cards.forEach(card => card.classList.add('visible'));
+            }
+            if (progress > 0.6) {
+                note.classList.add('visible');
+            }
+        }
+
+        // Animate Flow Cards
+        function animateFlowCards() {
+            const flowSection = document.querySelector('.flow');
+            const rect = flowSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            if (rect.top < windowHeight * 0.8) {
+                const cards = flowSection.querySelectorAll('.flow-card');
+                cards.forEach(card => card.classList.add('visible'));
+            }
+        }
+
+        // Animate Contact Cards
+        function animateContactCards() {
+            const contactSection = document.querySelector('.contact');
+            const rect = contactSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            if (rect.top < windowHeight * 0.8) {
+                const cards = contactSection.querySelectorAll('.contact-card');
+                cards.forEach(card => card.classList.add('visible'));
+            }
+        }
+
+        // Main scroll handler
+        function handleScroll() {
+            checkScrollDirection();
+
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollY / docHeight) * 100;
+
+            progressBar.style.width = `${progress}%`;
+
+            if (scrollY > 100) {
+                header.classList.add('visible');
+            } else {
+                header.classList.remove('visible');
+            }
+
+            // Process pinned sections
+            pinnedSections.forEach(section => {
+                const sectionType = section.dataset.section;
+                const sectionProgress = getSectionProgress(section);
+
+                if (sectionType === 'amount') {
+                    animateAmount(sectionProgress);
+                } else if (sectionType === 'target') {
+                    animateTarget(sectionProgress);
+                }
+            });
+
+            // Animate other sections
+            animateFlowCards();
+            animateContactCards();
+        }
+
+        // Throttle scroll events
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Initial call
+        handleScroll();
+    </script>
 </body>
 
 </html>
