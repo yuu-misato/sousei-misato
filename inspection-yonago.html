@@ -790,6 +790,220 @@
             border-radius: 50%;
         }
 
+        /* Flip Card Section */
+        .why-flip-section {
+            background: linear-gradient(135deg, var(--gray-900) 0%, #0f172a 100%);
+            color: var(--white);
+            padding: 80px 2rem;
+        }
+
+        .why-flip-section .section-label {
+            color: var(--teal-light);
+        }
+
+        .why-flip-section .section-title {
+            color: var(--white);
+        }
+
+        .flip-card-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .flip-card-progress {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            margin-bottom: 2rem;
+        }
+
+        .flip-card-current {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--teal-light);
+        }
+
+        .flip-card-stack {
+            position: relative;
+            height: 380px;
+            perspective: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        .flip-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .flip-card.active {
+            z-index: 10;
+            transform: rotateX(0deg) translateY(0);
+            opacity: 1;
+        }
+
+        .flip-card.flipped {
+            transform: rotateX(-90deg) translateY(-50%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .flip-card.next {
+            transform: rotateX(90deg) translateY(50%);
+            opacity: 0;
+        }
+
+        .flip-card.waiting {
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .flip-card-inner {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .flip-card-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--teal);
+            opacity: 0.5;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .flip-card-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .flip-card-subtitle {
+            font-size: 1rem;
+            color: var(--gray-400);
+            margin-bottom: 1.5rem;
+        }
+
+        .flip-card-list {
+            list-style: none;
+            flex: 1;
+        }
+
+        .flip-card-list li {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .flip-card-list li:last-child {
+            border-bottom: none;
+        }
+
+        .flip-card-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--teal);
+            border-radius: 50%;
+        }
+
+        .flip-card-list li strong {
+            color: var(--teal-light);
+            font-weight: 600;
+        }
+
+        .flip-card-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--teal);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .flip-card-button:hover {
+            background: var(--teal-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.3);
+        }
+
+        .flip-card-button svg {
+            animation: bounceDown 1s infinite;
+        }
+
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        .flip-card-button.completed {
+            background: var(--gray-600);
+        }
+
+        .flip-card-button.completed .flip-btn-text::after {
+            content: '完了';
+        }
+
+        .flip-card-button.completed .flip-btn-text {
+            font-size: 0;
+        }
+
+        .flip-card-button.completed svg {
+            display: none;
+        }
+
+        .flip-card-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .flip-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .flip-dot.active {
+            background: var(--teal);
+            transform: scale(1.3);
+        }
+
+        .flip-dot.done {
+            background: var(--teal-light);
+        }
+
         /* Comparison Section */
         .comparison {
             background: var(--gray-50);
@@ -1363,6 +1577,22 @@
                 grid-template-columns: 1fr;
             }
 
+            .flip-card-stack {
+                height: 420px;
+            }
+
+            .flip-card-inner {
+                padding: 2rem 1.5rem;
+            }
+
+            .flip-card-title {
+                font-size: 1.5rem;
+            }
+
+            .flip-card-list li {
+                font-size: 0.9375rem;
+            }
+
             .hero-meta {
                 flex-direction: column;
                 gap: 1rem;
@@ -1455,6 +1685,39 @@
 
             .section-title {
                 font-size: 1.5rem;
+            }
+
+            .flip-card-stack {
+                height: 450px;
+            }
+
+            .flip-card-inner {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .flip-card-number {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .flip-card-title {
+                font-size: 1.25rem;
+            }
+
+            .flip-card-subtitle {
+                font-size: 0.875rem;
+                margin-bottom: 1rem;
+            }
+
+            .flip-card-list li {
+                font-size: 0.875rem;
+                padding: 0.625rem 0;
+                padding-left: 1.25rem;
+            }
+
+            .flip-card-button {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.9375rem;
             }
 
             .hero-title {
@@ -1740,87 +2003,89 @@
         </div>
     </section>
 
-    <!-- Why Section -->
-    <section class="section why" data-section="why">
+    <!-- Why Section - Card Flip -->
+    <section class="section why-flip-section" data-section="why">
         <div class="section-inner">
             <div class="section-header">
                 <div class="section-label">WHY YONAGO</div>
                 <h2 class="section-title">なぜ米子市を視察したのか</h2>
             </div>
-            <div class="why-grid">
-                <div class="why-card">
-                    <div class="why-card-header">
-                        <div class="why-card-icon misato">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                        </div>
-                        <div class="why-card-title">三郷市の課題</div>
-                    </div>
-                    <p>首都圏のベッドタウンとして発展してきた三郷市。しかし高齢化・人口減少の波が迫っています。</p>
-                    <ul>
-                        <li>高齢化率：24.5%（2025年）→ 30%超見込み</li>
-                        <li>車がないと暮らしにくい生活スタイル</li>
-                        <li>郊外住宅地の空き家・空き店舗の増加</li>
-                    </ul>
+
+            <div class="flip-card-container">
+                <div class="flip-card-progress">
+                    <span class="flip-card-current">1</span> / <span class="flip-card-total">4</span>
                 </div>
-                <div class="why-card highlight">
-                    <div class="why-card-header">
-                        <div class="why-card-icon yonago">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                                <circle cx="12" cy="12" r="3"/>
-                                <circle cx="12" cy="12" r="8"/>
-                                <line x1="12" y1="4" x2="12" y2="1"/>
-                                <line x1="12" y1="23" x2="12" y2="20"/>
-                                <line x1="4" y1="12" x2="1" y2="12"/>
-                                <line x1="23" y1="12" x2="20" y2="12"/>
-                            </svg>
+
+                <div class="flip-card-stack">
+                    <!-- Card 1: 三郷市の課題 -->
+                    <div class="flip-card active" data-card="1">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-number">01</div>
+                            <h3 class="flip-card-title">三郷市の課題</h3>
+                            <p class="flip-card-subtitle">このまま何もしなければ...</p>
+                            <ul class="flip-card-list">
+                                <li>高齢化率：24.5%（2025年）→ <strong>30%超</strong>見込み</li>
+                                <li>車がないと暮らしにくい生活スタイル</li>
+                                <li>郊外住宅地の空き家・空き店舗の増加</li>
+                            </ul>
                         </div>
-                        <div class="why-card-title">コンパクト+ネットワークとは</div>
                     </div>
-                    <p>国が推進する人口減少時代のまちづくり戦略。都市機能を集約し、公共交通で結ぶ考え方です。</p>
-                    <ul>
-                        <li>駅・中心部に都市機能（医療・商業）を集約</li>
-                        <li>公共交通でエリア間を効率的に連携</li>
-                        <li>インフラ維持コストの削減と生活利便性の両立</li>
-                    </ul>
+
+                    <!-- Card 2: コンパクト+ネットワークとは -->
+                    <div class="flip-card" data-card="2">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-number">02</div>
+                            <h3 class="flip-card-title">解決策がある</h3>
+                            <p class="flip-card-subtitle">国が推進する「コンパクト+ネットワーク」</p>
+                            <ul class="flip-card-list">
+                                <li>駅・中心部に都市機能（医療・商業）を<strong>集約</strong></li>
+                                <li>公共交通でエリア間を<strong>効率的に連携</strong></li>
+                                <li>インフラ維持コストの削減と生活利便性の両立</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: なぜ近くではダメなのか -->
+                    <div class="flip-card" data-card="3">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-number">03</div>
+                            <h3 class="flip-card-title">近くに成功例がない</h3>
+                            <p class="flip-card-subtitle">関東近郊では条件に合う都市が見つからない</p>
+                            <ul class="flip-card-list">
+                                <li>人口<strong>14万人規模</strong>で三郷市と同程度</li>
+                                <li>コンパクト+ネットワークを<strong>先進的に実践中</strong></li>
+                                <li>具体的な<strong>成果が出ている</strong>都市</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: だから米子市 -->
+                    <div class="flip-card" data-card="4">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-number">04</div>
+                            <h3 class="flip-card-title">だから米子市</h3>
+                            <p class="flip-card-subtitle">三郷と同じ14万人、先進的な取り組み</p>
+                            <ul class="flip-card-list">
+                                <li><strong>立地適正化計画</strong>を策定・推進中</li>
+                                <li>JR米子駅を中心とした<strong>都市機能の集約</strong></li>
+                                <li>バス路線の再編と<strong>利便性向上</strong></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="why-card">
-                    <div class="why-card-header">
-                        <div class="why-card-icon yonago">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
-                                <path d="M9 22v-4h6v4"/>
-                                <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01"/>
-                            </svg>
-                        </div>
-                        <div class="why-card-title">米子市の取り組み</div>
-                    </div>
-                    <p>人口約14万人の同規模都市でありながら、コンパクト+ネットワークを先進的に実践。</p>
-                    <ul>
-                        <li>立地適正化計画を策定・推進中</li>
-                        <li>JR米子駅を中心とした都市機能の集約</li>
-                        <li>バス路線の再編と利便性向上</li>
-                    </ul>
-                </div>
-                <div class="why-card">
-                    <div class="why-card-header">
-                        <div class="why-card-icon misato">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                                <polyline points="23 4 23 10 17 10"/>
-                                <polyline points="1 20 1 14 7 14"/>
-                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                            </svg>
-                        </div>
-                        <div class="why-card-title">三郷市への還元</div>
-                    </div>
-                    <p>視察で得た知見を、三郷市の都市計画・公共交通政策に具体的に提言します。</p>
-                    <ul>
-                        <li>三郷中央駅・新三郷駅周辺への都市機能集約</li>
-                        <li>コミュニティバス路線の再編・最適化</li>
-                        <li>立地適正化計画の策定検討</li>
-                    </ul>
+
+                <button class="flip-card-button" id="flipNextBtn">
+                    <span class="flip-btn-text">次へ</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+
+                <div class="flip-card-dots">
+                    <span class="flip-dot active" data-dot="1"></span>
+                    <span class="flip-dot" data-dot="2"></span>
+                    <span class="flip-dot" data-dot="3"></span>
+                    <span class="flip-dot" data-dot="4"></span>
                 </div>
             </div>
         </div>
@@ -2204,6 +2469,73 @@
 
         learningsDots.forEach((dot, i) => {
             dot.addEventListener('click', () => updateCarousel(i));
+        });
+
+        // Flip Card
+        const flipCards = document.querySelectorAll('.flip-card');
+        const flipDots = document.querySelectorAll('.flip-dot');
+        const flipNextBtn = document.getElementById('flipNextBtn');
+        const flipCurrentSpan = document.querySelector('.flip-card-current');
+        let currentCard = 0;
+        const totalCards = flipCards.length;
+
+        function updateFlipCard(newIndex) {
+            // 現在のカードをめくる
+            flipCards.forEach((card, i) => {
+                card.classList.remove('active', 'flipped', 'next', 'waiting');
+
+                if (i < newIndex) {
+                    card.classList.add('flipped');
+                } else if (i === newIndex) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.add('waiting');
+                }
+            });
+
+            // ドットを更新
+            flipDots.forEach((dot, i) => {
+                dot.classList.remove('active', 'done');
+                if (i < newIndex) {
+                    dot.classList.add('done');
+                } else if (i === newIndex) {
+                    dot.classList.add('active');
+                }
+            });
+
+            // カウンター更新
+            flipCurrentSpan.textContent = newIndex + 1;
+
+            // ボタンテキスト更新
+            if (newIndex >= totalCards - 1) {
+                flipNextBtn.classList.add('completed');
+            } else {
+                flipNextBtn.classList.remove('completed');
+            }
+
+            currentCard = newIndex;
+        }
+
+        flipNextBtn.addEventListener('click', () => {
+            if (currentCard < totalCards - 1) {
+                updateFlipCard(currentCard + 1);
+            }
+        });
+
+        // カード自体をクリックしても次へ
+        flipCards.forEach((card, i) => {
+            card.addEventListener('click', () => {
+                if (i === currentCard && currentCard < totalCards - 1) {
+                    updateFlipCard(currentCard + 1);
+                }
+            });
+        });
+
+        // ドットをクリックしてジャンプ
+        flipDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                updateFlipCard(i);
+            });
         });
 
         // Counter Animation
