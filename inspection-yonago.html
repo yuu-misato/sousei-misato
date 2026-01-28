@@ -557,6 +557,73 @@
             color: var(--gray-900);
         }
 
+        /* Yonago Features Section */
+        .yonago-features {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
+        }
+
+        .features-intro {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            line-height: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .features-intro strong {
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(13, 148, 136, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .feature-icon svg {
+            stroke: var(--teal);
+        }
+
+        .feature-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
         /* Overview Section */
         .overview {
             background: var(--gray-50);
@@ -1278,6 +1345,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
             .photos-grid {
                 grid-template-columns: 1fr;
             }
@@ -1406,6 +1478,18 @@
 
             .why-card {
                 padding: 1.25rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .features-intro {
+                font-size: 1rem;
             }
 
             .comparison-card {
@@ -1562,10 +1646,10 @@
         <div class="pinned-content">
             <div class="stats-container">
                 <div class="stats-label">CITY DATA</div>
-                <h2 class="stats-title">米子市の実績</h2>
+                <h2 class="stats-title">米子市の概要</h2>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="14.7" data-decimal="true">0</span></div>
+                        <div class="stat-number"><span class="counter" data-target="14.3" data-decimal="true">0</span></div>
                         <div class="stat-unit">万人</div>
                         <div class="stat-label">人口</div>
                     </div>
@@ -1575,14 +1659,71 @@
                         <div class="stat-label">面積</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="10">0</span></div>
-                        <div class="stat-unit">年</div>
-                        <div class="stat-label">施策推進期間</div>
+                        <div class="stat-number"><span class="counter" data-target="6.9" data-decimal="true">0</span></div>
+                        <div class="stat-unit">万世帯</div>
+                        <div class="stat-label">世帯数</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="15">0</span></div>
-                        <div class="stat-unit">%</div>
-                        <div class="stat-label">中心部居住増加</div>
+                        <div class="stat-number"><span class="counter" data-target="1927">0</span></div>
+                        <div class="stat-unit">年</div>
+                        <div class="stat-label">市制施行</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Yonago Features Section -->
+    <section class="section yonago-features" data-section="features">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">ABOUT YONAGO</div>
+                <h2 class="section-title">「山陰の商都」米子市とは</h2>
+            </div>
+            <div class="features-content">
+                <p class="features-intro">米子市は鳥取県西部、山陰のほぼ中央に位置し、南東に中国地方最高峰の<strong>大山（だいせん）</strong>、北に日本海、西にラムサール条約登録の<strong>中海（なかうみ）</strong>を有する、豊かな自然環境に恵まれた街です。</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <h4>交通の要衝</h4>
+                        <p>道路、鉄道、空港の利便性が高く、古くから地域の交通結節点・宿泊拠点として栄えてきました。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M3 21h18"/>
+                                <path d="M5 21V7l8-4v18"/>
+                                <path d="M19 21V11l-6-4"/>
+                                <path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
+                            </svg>
+                        </div>
+                        <h4>暮らしやすい都市構造</h4>
+                        <p>市街地と住宅地や農地がある郊外など、地域により特徴があり、それらがうまく融合しています。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <h4>充実の医療環境</h4>
+                        <p>鳥取大学医学部附属病院をはじめ医療機関が充実。高齢者にも子育て世帯にもやさしい環境です。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <h4>レジャー環境</h4>
+                        <p>皆生温泉は「トライアスロン日本発祥の地」。海水浴、登山、スキーなど四季を通じてレジャーを楽しめます。</p>
                     </div>
                 </div>
             </div>
@@ -1625,11 +1766,11 @@
                         </div>
                         <div class="why-card-title">米子市を選んだ理由</div>
                     </div>
-                    <p>人口規模が三郷市と同程度（約14万人）でありながら、コンパクトシティ施策で先進的な取り組みを実施。</p>
+                    <p>人口規模が三郷市と同程度（約14万人）で、「山陰の商都」として栄えてきた交通結節点。</p>
                     <ul>
-                        <li>人口規模が近く比較検討しやすい</li>
-                        <li>立地適正化計画を先行導入</li>
-                        <li>公共交通と連携したまちづくり</li>
+                        <li>道路・鉄道・空港の利便性が高い</li>
+                        <li>市街地と郊外がうまく融合した街</li>
+                        <li>医療機関が充実し暮らしやすい環境</li>
                     </ul>
                 </div>
                 <div class="why-card highlight">
@@ -1694,23 +1835,23 @@
                     <ul class="comparison-list">
                         <li>
                             <span class="comparison-item-label">人口</span>
-                            <span class="comparison-item-value">14.7万人</span>
+                            <span class="comparison-item-value">14.3万人</span>
                         </li>
                         <li>
                             <span class="comparison-item-label">面積</span>
-                            <span class="comparison-item-value">132 km²</span>
+                            <span class="comparison-item-value">132.42 km²</span>
                         </li>
                         <li>
                             <span class="comparison-item-label">人口密度</span>
-                            <span class="comparison-item-value">1,112人/km²</span>
+                            <span class="comparison-item-value">1,081人/km²</span>
                         </li>
                         <li>
                             <span class="comparison-item-label">特徴</span>
-                            <span class="comparison-item-value">地方中核都市</span>
+                            <span class="comparison-item-value">山陰の商都・交通結節点</span>
                         </li>
                         <li>
-                            <span class="comparison-item-label">コンパクト施策</span>
-                            <span class="comparison-item-value">立地適正化計画導入</span>
+                            <span class="comparison-item-label">市制施行</span>
+                            <span class="comparison-item-value">1927年（昭和2年）</span>
                         </li>
                     </ul>
                 </div>
