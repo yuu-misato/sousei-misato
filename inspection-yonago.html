@@ -1592,6 +1592,286 @@
             color: var(--gray-900);
         }
 
+        /* Plan Details Section */
+        .plan-details {
+            background: var(--white);
+        }
+
+        .plan-vision {
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, rgba(13, 148, 136, 0.02) 100%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .plan-vision-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .plan-vision-text {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            line-height: 1.4;
+        }
+
+        .plan-goals {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .plan-goal-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .plan-goal-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--teal);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .plan-goal-icon svg {
+            stroke: var(--white);
+        }
+
+        .plan-goal-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-goal-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Zoning Section */
+        .zoning-section {
+            background: var(--gray-50);
+        }
+
+        .zoning-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .zoning-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .zoning-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .zoning-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoning-card.residential .zoning-card-icon {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .zoning-card.residential .zoning-card-icon svg {
+            stroke: #3b82f6;
+        }
+
+        .zoning-card.function .zoning-card-icon {
+            background: rgba(13, 148, 136, 0.1);
+        }
+
+        .zoning-card.function .zoning-card-icon svg {
+            stroke: var(--teal);
+        }
+
+        .zoning-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .zoning-card-subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .zoning-card-content p {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .zoning-points {
+            list-style: none;
+        }
+
+        .zoning-points li {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .zoning-points li:last-child {
+            border-bottom: none;
+        }
+
+        .zoning-points li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--teal);
+            border-radius: 50%;
+        }
+
+        /* Initiatives Section */
+        .initiatives-section {
+            background: var(--white);
+        }
+
+        .initiatives-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .initiative-card {
+            background: var(--gray-50);
+            border-radius: 20px;
+            padding: 2rem;
+            border-left: 4px solid var(--teal);
+        }
+
+        .initiative-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .initiative-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+        }
+
+        .initiative-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .initiative-example {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .initiative-example-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .initiative-example-text {
+            font-size: 0.8125rem;
+            color: var(--gray-700);
+        }
+
+        /* Key Takeaways Section */
+        .takeaways-section {
+            background: linear-gradient(135deg, var(--gray-900) 0%, #0f172a 100%);
+            color: var(--white);
+        }
+
+        .takeaways-section .section-label {
+            color: var(--teal-light);
+        }
+
+        .takeaways-section .section-title {
+            color: var(--white);
+        }
+
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .takeaway-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .takeaway-number {
+            width: 40px;
+            height: 40px;
+            background: var(--teal);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .takeaway-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .takeaway-desc {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            line-height: 1.7;
+        }
+
         /* Photos Section */
         .photos {
             background: var(--gray-900);
@@ -2074,6 +2354,25 @@
                 grid-template-columns: 1fr;
             }
 
+            .plan-goals {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .zoning-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .initiatives-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .takeaways-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
             .infographic-comparison {
                 flex-direction: column;
                 gap: 1.5rem;
@@ -2192,6 +2491,30 @@
 
             .stat-label {
                 font-size: 0.75rem;
+            }
+
+            .plan-vision {
+                padding: 1.5rem;
+            }
+
+            .plan-vision-text {
+                font-size: 1.25rem;
+            }
+
+            .plan-goal-card {
+                padding: 1.25rem;
+            }
+
+            .zoning-card {
+                padding: 1.5rem;
+            }
+
+            .initiative-card {
+                padding: 1.5rem;
+            }
+
+            .takeaway-card {
+                padding: 1.5rem;
             }
 
             .compact-network-section,
@@ -2950,6 +3273,188 @@
                             <span class="comparison-item-value">検討中</span>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plan Details Section -->
+    <section class="section plan-details">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">PLAN OVERVIEW</div>
+                <h2 class="section-title">立地適正化計画の概要</h2>
+            </div>
+
+            <div class="plan-vision">
+                <div class="plan-vision-label">米子市が掲げる20年後のビジョン</div>
+                <p class="plan-vision-text">「歩いて暮らせる 住んで楽しいまち よなご」</p>
+            </div>
+
+            <div class="plan-goals">
+                <div class="plan-goal-card">
+                    <div class="plan-goal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <path d="M3 21h18"/>
+                            <path d="M5 21V7l8-4v18"/>
+                            <path d="M19 21V11l-6-4"/>
+                        </svg>
+                    </div>
+                    <h4 class="plan-goal-title">生活サービスの維持</h4>
+                    <p class="plan-goal-desc">医療・福祉・商業施設を集約し、人口減少下でもサービスを持続</p>
+                </div>
+                <div class="plan-goal-card">
+                    <div class="plan-goal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h4 class="plan-goal-title">地域経済の活性化</h4>
+                    <p class="plan-goal-desc">駅周辺の賑わい創出と観光拠点（皆生温泉）の強化</p>
+                </div>
+                <div class="plan-goal-card">
+                    <div class="plan-goal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h4 class="plan-goal-title">行政コストの縮減</h4>
+                    <p class="plan-goal-desc">市街地拡散を抑制し、インフラ維持費を最適化</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zoning Section -->
+    <section class="section zoning-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">ZONING</div>
+                <h2 class="section-title">ゾーニング（区域設定）の考え方</h2>
+                <p class="section-description">「住む場所」と「都市機能」を明確に区分し、効率的なまちづくりを推進</p>
+            </div>
+
+            <div class="zoning-grid">
+                <div class="zoning-card residential">
+                    <div class="zoning-card-header">
+                        <div class="zoning-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="zoning-card-title">居住誘導区域</div>
+                            <div class="zoning-card-subtitle">住む場所</div>
+                        </div>
+                    </div>
+                    <div class="zoning-card-content">
+                        <p>人口密度を維持し、生活サービスを持続させるエリア。災害リスクが高い場所（土砂災害特別警戒区域など）は原則除外。</p>
+                        <ul class="zoning-points">
+                            <li>人口密度維持により生活サービスを持続</li>
+                            <li>土砂災害特別警戒区域は原則除外</li>
+                            <li>市街地中心部の浸水リスクエリアは防災対策とセットで区域内に含める</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="zoning-card function">
+                    <div class="zoning-card-header">
+                        <div class="zoning-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                                <path d="M3 21h18"/>
+                                <path d="M5 21V7l8-4v18"/>
+                                <path d="M19 21V11l-6-4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="zoning-card-title">都市機能誘導区域</div>
+                            <div class="zoning-card-subtitle">働く・楽しむ・サービスを受ける場所</div>
+                        </div>
+                    </div>
+                    <div class="zoning-card-content">
+                        <p>目的別に明確なブロック分けを行い、ハード面・ソフト面の両対策をセットで実施。</p>
+                        <ul class="zoning-points">
+                            <li><strong>中心拠点</strong>：米子駅周辺（行政・医療・商業）</li>
+                            <li><strong>観光拠点</strong>：皆生温泉エリア（レクリエーション）</li>
+                            <li><strong>地域生活拠点</strong>：合併前の旧役場周辺など</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Initiatives Section -->
+    <section class="section initiatives-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">INITIATIVES</div>
+                <h2 class="section-title">米子市の特徴的な取り組み</h2>
+            </div>
+
+            <div class="initiatives-grid">
+                <div class="initiative-card">
+                    <div class="initiative-number">INITIATIVE 01</div>
+                    <h4 class="initiative-title">公共施設の集約・複合化</h4>
+                    <p class="initiative-desc">老朽化した施設の建て替えにあたり、県と市の共同建設でコストを抑制。既存ストックを活用し、新設より維持・向上に重点。</p>
+                    <div class="initiative-example">
+                        <div class="initiative-example-label">具体例</div>
+                        <div class="initiative-example-text">米子アリーナ、市役所の一部機能を県と共同で整備</div>
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <div class="initiative-number">INITIATIVE 02</div>
+                    <h4 class="initiative-title">防災との共存</h4>
+                    <p class="initiative-desc">市街地中心部にも浸水リスクがあるが、既成市街地の全移転は困難。「リスクを回避・低減しながら住み続ける」方針を採用。</p>
+                    <div class="initiative-example">
+                        <div class="initiative-example-label">対策</div>
+                        <div class="initiative-example-text">流域治水（ハード）+ 地区防災計画・避難訓練（ソフト）</div>
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <div class="initiative-number">INITIATIVE 03</div>
+                    <h4 class="initiative-title">自動運転バスの実証実験</h4>
+                    <p class="initiative-desc">運転手不足を見据え、自動運転バスの実証実験を実施中。市民に「受け入れられる」環境醸成を進めている段階。</p>
+                    <div class="initiative-example">
+                        <div class="initiative-example-label">進捗</div>
+                        <div class="initiative-example-text">現在レベル2、将来的にレベル4を目指す</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Takeaways Section -->
+    <section class="section takeaways-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">KEY TAKEAWAYS</div>
+                <h2 class="section-title">三郷市への3つの示唆</h2>
+                <p class="section-description" style="color: var(--gray-400);">担当者の説明から読み取れる、特に重要なポイント</p>
+            </div>
+
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-number">1</div>
+                    <h4 class="takeaway-title">「防災」と「居住」の現実的な折り合い</h4>
+                    <p class="takeaway-desc">災害リスクがあるエリアでも、ハード整備とソフト対策（防災組織の結成など）を組み合わせることで、居住区域として維持する現実的な判断をしている。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-number">2</div>
+                    <h4 class="takeaway-title">広域連携によるコストダウン</h4>
+                    <p class="takeaway-desc">県と市が施設を共同化（合築）することで、人口減少時代の財政難に対応。三郷市も県や近隣市との連携を検討する余地がある。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-number">3</div>
+                    <h4 class="takeaway-title">計画策定を「財源獲得」の手段に</h4>
+                    <p class="takeaway-desc">国の計画制度に乗ることで、大型事業の補助金（事業費の約50%）を最大限に引き出し、まちづくりの駆動力にしている。</p>
                 </div>
             </div>
         </div>
