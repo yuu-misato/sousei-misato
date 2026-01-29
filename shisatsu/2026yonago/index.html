@@ -397,16 +397,13 @@
         /* Pinned Section - スクロールジャック用 */
         .pinned-section {
             position: relative;
-            height: 300vh;
         }
 
         .pinned-content {
-            position: sticky;
-            top: 0;
-            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
             overflow: hidden;
         }
 
@@ -4434,9 +4431,6 @@
         const progressBar = document.querySelector('.progress-bar');
         const header = document.querySelector('.header');
 
-        // Pinned Sections (including scroll-card-pinned)
-        const pinnedSections = document.querySelectorAll('.pinned-section');
-
         // Learning Card Expand/Collapse
         const expandBtns = document.querySelectorAll('.learning-expand-btn');
         expandBtns.forEach(btn => {
@@ -4499,123 +4493,11 @@
             requestAnimationFrame(update);
         }
 
-        // Scroll Animation State
-        let statsAnimated = false;
-        let budgetAnimated = false;
-        let scrollDirection = 'down';
-        let lastScrollY = 0;
-
-        // Check scroll direction
-        function checkScrollDirection() {
-            const currentScrollY = window.scrollY;
-            scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-            lastScrollY = currentScrollY;
-        }
-
-        // Get section progress (0-1)
-        function getSectionProgress(section) {
-            const rect = section.getBoundingClientRect();
-            const sectionHeight = section.offsetHeight;
-            const viewportHeight = window.innerHeight;
-            const scrolled = -rect.top;
-            const scrollableHeight = sectionHeight - viewportHeight;
-
-            if (scrolled <= 0) return 0;
-            if (scrolled >= scrollableHeight) return 1;
-            return scrolled / scrollableHeight;
-        }
-
-        // Animate Stats Section
-        function animateStats(progress) {
-            const container = document.querySelector('.stats-container');
-            const label = container.querySelector('.stats-label');
-            const title = container.querySelector('.stats-title');
-            const items = container.querySelectorAll('.stat-item');
-            const counters = container.querySelectorAll('.counter');
-
-            if (progress > 0.05) {
-                label.classList.add('visible');
-            }
-            if (progress > 0.1) {
-                title.classList.add('visible');
-            }
-            if (progress > 0.2) {
-                items.forEach(item => item.classList.add('visible'));
-                if (!statsAnimated) {
-                    counters.forEach(counter => {
-                        const isDecimal = counter.dataset.decimal === 'true';
-                        const target = parseFloat(counter.dataset.target);
-                        animateCounter(counter, target, isDecimal);
-                    });
-                    statsAnimated = true;
-                    // After animation, collapse pinned height so scroll doesn't stop on revisit
-                    setTimeout(() => {
-                        const statsSection = document.querySelector('.stats-pinned');
-                        statsSection.style.height = 'auto';
-                        statsSection.querySelector('.pinned-content').style.position = 'static';
-                    }, 1500);
-                }
-            }
-        }
-
-        // Animate Budget Section
-        function animateBudget(progress) {
-            const container = document.querySelector('.budget-container');
-            const label = container.querySelector('.budget-label');
-            const title = container.querySelector('.budget-title');
-            const tripInfo = container.querySelector('.budget-trip-info');
-            const bigNumber = container.querySelector('.budget-big-number');
-            const subtitle = container.querySelector('.budget-subtitle');
-            const items = container.querySelectorAll('.budget-item');
-            const perPerson = container.querySelector('.budget-per-person');
-            const note = container.querySelector('.budget-note');
-
-            if (progress > 0.05) {
-                label.classList.add('visible');
-            }
-            if (progress > 0.1) {
-                title.classList.add('visible');
-            }
-            if (progress > 0.15 && tripInfo) {
-                tripInfo.classList.add('visible');
-            }
-            if (progress > 0.2) {
-                bigNumber.classList.add('visible');
-            }
-            if (progress > 0.35) {
-                subtitle.classList.add('visible');
-            }
-            if (progress > 0.5) {
-                items.forEach(item => item.classList.add('visible'));
-            }
-            if (progress > 0.6) {
-                if (perPerson) perPerson.classList.add('visible');
-            }
-            if (progress > 0.7) {
-                note.classList.add('visible');
-            }
-        }
-
-        // Animate Outcome Cards
-        function animateOutcomeCards() {
-            const outcomeSection = document.querySelector('.outcome');
-            const rect = outcomeSection.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-
-            if (rect.top < windowHeight * 0.8) {
-                const cards = outcomeSection.querySelectorAll('.outcome-card');
-                cards.forEach(card => card.classList.add('visible'));
-            }
-        }
-
-        // Main scroll handler
+        // Simple scroll handler for progress bar and header
         function handleScroll() {
-            checkScrollDirection();
-
             const scrollY = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (scrollY / docHeight) * 100;
-
             progressBar.style.width = `${progress}%`;
 
             if (scrollY > 100) {
@@ -4623,24 +4505,8 @@
             } else {
                 header.classList.remove('visible');
             }
-
-            // Process pinned sections
-            pinnedSections.forEach(section => {
-                const sectionType = section.dataset.section;
-                const sectionProgress = getSectionProgress(section);
-
-                if (sectionType === 'stats') {
-                    animateStats(sectionProgress);
-                } else if (sectionType === 'budget') {
-                    animateBudget(sectionProgress);
-                }
-            });
-
-            // Animate other sections
-            animateOutcomeCards();
         }
 
-        // Throttle scroll events
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
@@ -4651,9 +4517,43 @@
                 ticking = true;
             }
         });
-
-        // Initial call
         handleScroll();
+
+        // IntersectionObserver for one-time animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                const section = entry.target;
+
+                // Stats section
+                if (section.classList.contains('stats-pinned')) {
+                    const container = section.querySelector('.stats-container');
+                    container.querySelector('.stats-label').classList.add('visible');
+                    setTimeout(() => container.querySelector('.stats-title').classList.add('visible'), 150);
+                    setTimeout(() => {
+                        container.querySelectorAll('.stat-item').forEach(item => item.classList.add('visible'));
+                        container.querySelectorAll('.counter').forEach(counter => {
+                            const isDecimal = counter.dataset.decimal === 'true';
+                            const target = parseFloat(counter.dataset.target);
+                            animateCounter(counter, target, isDecimal);
+                        });
+                    }, 400);
+                    observer.unobserve(section);
+                }
+
+                // Outcome section
+                if (section.classList.contains('outcome')) {
+                    section.querySelectorAll('.outcome-card').forEach(card => card.classList.add('visible'));
+                    observer.unobserve(section);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsSection = document.querySelector('.stats-pinned');
+        if (statsSection) observer.observe(statsSection);
+        const outcomeSection = document.querySelector('.outcome');
+        if (outcomeSection) observer.observe(outcomeSection);
 
         // Menu
         const menuOpenBtn = document.getElementById('menuOpenBtn');
