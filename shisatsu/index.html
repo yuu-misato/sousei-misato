@@ -86,18 +86,145 @@
             font-size: 1rem;
         }
 
-        .header-back {
+        .header-menu-btn {
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-500);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
         }
 
-        .header-back:hover {
+        .header-menu-btn:hover {
+            background: var(--gray-100);
+        }
+
+        .header-menu-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--gray-600);
+        }
+
+        /* Overlay Menu */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .menu-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .menu-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(320px, 85vw);
+            height: 100vh;
+            background: var(--white);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .menu-panel.open {
+            transform: translateX(0);
+        }
+
+        .menu-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .menu-panel-header span {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--gray-800);
+        }
+
+        .menu-close-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .menu-close-btn:hover {
+            background: var(--gray-100);
+        }
+
+        .menu-close-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray-500);
+        }
+
+        .menu-nav {
+            padding: 1rem 0;
+            flex: 1;
+        }
+
+        .menu-nav-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--gray-400);
+            letter-spacing: 0.1em;
+            padding: 0.75rem 1.5rem 0.5rem;
+        }
+
+        .menu-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.5rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .menu-nav a:hover {
+            background: var(--gray-50);
             color: var(--teal);
+        }
+
+        .menu-nav a svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--gray-400);
+            flex-shrink: 0;
+        }
+
+        .menu-nav a:hover svg {
+            stroke: var(--teal);
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 0.5rem 1.5rem;
         }
 
         /* Hero */
@@ -503,14 +630,58 @@
                 <img src="../logo.png" alt="創政MISATO">
                 <span>創政MISATO</span>
             </a>
-            <a href="../index.html" class="header-back">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <button class="header-menu-btn" id="menuOpenBtn" aria-label="メニューを開く">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
                 </svg>
-                トップページ
-            </a>
+            </button>
         </div>
     </header>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="menu-panel" id="menuPanel">
+        <div class="menu-panel-header">
+            <span>メニュー</span>
+            <button class="menu-close-btn" id="menuCloseBtn" aria-label="メニューを閉じる">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="menu-nav">
+            <div class="menu-nav-label">サイト</div>
+            <a href="../index.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                トップページ
+            </a>
+            <a href="./">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                視察レポート一覧
+            </a>
+            <a href="../index.html#activity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                活動報告
+            </a>
+            <a href="../index.html#newsletter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                LINE登録
+            </a>
+            <div class="menu-divider"></div>
+            <div class="menu-nav-label">外部リンク</div>
+            <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                三郷市議会
+            </a>
+            <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                三郷市公式サイト
+            </a>
+        </nav>
+    </div>
 
     <!-- Hero -->
     <section class="hero">
@@ -711,6 +882,33 @@
         }
 
         render();
+    </script>
+    <script>
+        // Menu
+        const menuOpenBtn = document.getElementById('menuOpenBtn');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuPanel = document.getElementById('menuPanel');
+
+        function openMenu() {
+            menuOverlay.classList.add('open');
+            menuPanel.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            menuOverlay.classList.remove('open');
+            menuPanel.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        menuOpenBtn.addEventListener('click', openMenu);
+        menuCloseBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        menuPanel.querySelectorAll('.menu-nav a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
     </script>
 </body>
 </html>
