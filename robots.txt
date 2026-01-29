@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Disallow: /draft/
 
 # Sitemap location
 Sitemap: https://sousei-misato.com/sitemap.xml
