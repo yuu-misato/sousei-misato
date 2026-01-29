@@ -1420,7 +1420,8 @@
 
         .scroll-card-stack {
             position: relative;
-            height: 380px;
+            min-height: 380px;
+            height: auto;
             perspective: 1000px;
             margin-bottom: 1.5rem;
         }
@@ -3009,11 +3010,11 @@
     <!-- Header -->
     <header class="header">
         <div class="header-inner">
-            <a href="index.html" class="header-logo">
-                <img src="logo.png" alt="創政MISATO">
+            <a href="../../index.html" class="header-logo">
+                <img src="../../logo.png" alt="創政MISATO">
                 <span>創政MISATO</span>
             </a>
-            <a href="index.html#activity" class="header-back">
+            <a href="../../index.html#activity" class="header-back">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
@@ -3126,11 +3127,11 @@
             <!-- 視察写真 -->
             <div class="overview-photos">
                 <div class="overview-photo">
-                    <img src="images/yonago/yonagoeki.jpeg" alt="米子駅前の様子">
+                    <img src="../../images/yonago/yonagoeki.jpeg" alt="米子駅前の様子">
                     <div class="overview-photo-caption">米子駅前・だんだんバス広場</div>
                 </div>
                 <div class="overview-photo">
-                    <img src="images/yonago/shiyakusyo.jpg" alt="米子市役所">
+                    <img src="../../images/yonago/shiyakusyo.jpg" alt="米子市役所">
                     <div class="overview-photo-caption">米子市役所</div>
                 </div>
             </div>
@@ -3735,10 +3736,10 @@
             </div>
             <div class="photos-grid" style="grid-template-columns: 1fr 1fr;">
                 <div class="photo-card" style="aspect-ratio: auto;">
-                    <img src="images/yonago/yonagoshisatu.jpg" alt="米子市担当課からの説明を受ける様子" style="width:100%; height:auto; display:block;">
+                    <img src="../../images/yonago/yonagoshisatu.jpg" alt="米子市担当課からの説明を受ける様子" style="width:100%; height:auto; display:block;">
                 </div>
                 <div class="photo-card" style="aspect-ratio: auto;">
-                    <img src="images/yonago/yonagoeki.jpeg" alt="米子駅前の様子" style="width:100%; height:auto; display:block;">
+                    <img src="../../images/yonago/yonagoeki.jpeg" alt="米子駅前の様子" style="width:100%; height:auto; display:block;">
                 </div>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
@@ -3747,16 +3748,16 @@
             </div>
             <div style="margin-top: 1.5rem; text-align: center;">
                 <div class="photo-card" style="aspect-ratio: auto; max-width: 600px; margin: 0 auto;">
-                    <img src="images/yonago/dandan.png" alt="だんだんバス" style="width:100%; height:auto; display:block;">
+                    <img src="../../images/yonago/dandan.png" alt="だんだんバス" style="width:100%; height:auto; display:block;">
                 </div>
                 <p style="color: var(--gray-400); font-size: 0.85rem; margin-top: 0.5rem;">米子駅を起点に街を回遊する「だんだんバス」</p>
             </div>
             <div class="photos-grid" style="grid-template-columns: 1fr 1fr; margin-top: 1.5rem;">
                 <div class="photo-card" style="aspect-ratio: auto;">
-                    <img src="images/yonago/jidouunten1.jpg" alt="自動運転バス実証実験の様子" style="width:100%; height:auto; display:block;">
+                    <img src="../../images/yonago/jidouunten1.jpg" alt="自動運転バス実証実験の様子" style="width:100%; height:auto; display:block;">
                 </div>
                 <div class="photo-card" style="aspect-ratio: auto;">
-                    <img src="images/yonago/jidouunten2.jpg" alt="自動運転バス外観" style="width:100%; height:auto; display:block;">
+                    <img src="../../images/yonago/jidouunten2.jpg" alt="自動運転バス外観" style="width:100%; height:auto; display:block;">
                 </div>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
@@ -3771,7 +3772,7 @@
         <div class="learnings-container">
             <div class="learnings-header">
                 <div class="learnings-group-photo">
-                    <img src="images/yonago/sousei.jpg" alt="創政MISATO 米子市役所前での集合写真">
+                    <img src="../../images/yonago/sousei.jpg" alt="創政MISATO 米子市役所前での集合写真">
                 </div>
                 <div class="learnings-label">LEARNINGS</div>
                 <h2 class="learnings-title">議員それぞれの学び</h2>
@@ -4142,7 +4143,7 @@
     <!-- CTA -->
     <section class="cta">
         <h2 class="cta-title">創政MISATOの活動情報を受け取る</h2>
-        <a href="index.html#newsletter" class="cta-button">
+        <a href="../../index.html#newsletter" class="cta-button">
             LINE登録
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -4153,7 +4154,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-logo">
-            <img src="logo.png" alt="創政MISATO">
+            <img src="../../logo.png" alt="創政MISATO">
             <span>創政MISATO</span>
         </div>
         <div class="footer-links">
@@ -4249,8 +4250,25 @@
                     currentSpan.textContent = newIndex + 1;
                 }
 
+                // アクティブカードの高さにスタックを合わせる
+                const activeCard = cards[newIndex];
+                if (activeCard) {
+                    const inner = activeCard.querySelector('.scroll-card-inner');
+                    if (inner) {
+                        stack.style.height = inner.scrollHeight + 'px';
+                    }
+                }
+
                 lastCardIndex = newIndex;
             }
+
+            // 初期高さ設定
+            requestAnimationFrame(() => {
+                const firstInner = cards[0] && cards[0].querySelector('.scroll-card-inner');
+                if (firstInner) {
+                    stack.style.height = firstInner.scrollHeight + 'px';
+                }
+            });
 
             // スクロール進行度に基づいてカードを更新
             function updateFromProgress(progress) {
