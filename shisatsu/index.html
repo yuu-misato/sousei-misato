@@ -547,16 +547,28 @@
         .footer {
             background: var(--gray-900);
             color: var(--gray-400);
-            text-align: center;
-            padding: 3rem 2rem;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
         .footer-logo {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.75rem;
-            margin-bottom: 1rem;
         }
 
         .footer-logo img {
@@ -570,8 +582,49 @@
             font-weight: 700;
         }
 
+        .footer-tagline {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        .footer-nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-nav-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-nav-group a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-group a:hover {
+            color: var(--teal);
+        }
+
         .footer-copy {
             font-size: 0.75rem;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 640px) {
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
         }
 
         /* Responsive */
@@ -738,9 +791,26 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-logo">
-            <img src="../logo.png" alt="創政MISATO">
-            <span>創政MISATO</span>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="../logo.png" alt="創政MISATO">
+                    <span>創政MISATO</span>
+                </div>
+                <p class="footer-tagline">三郷市議会 会派<br>新しい発想で三郷の未来を創る</p>
+            </div>
+            <div class="footer-nav-group">
+                <div class="footer-nav-title">コンテンツ</div>
+                <a href="../index.html">トップページ</a>
+                <a href="./">視察レポート一覧</a>
+                <a href="../index.html#activity">活動報告</a>
+                <a href="../index.html#newsletter">LINE登録</a>
+            </div>
+            <div class="footer-nav-group">
+                <div class="footer-nav-title">外部リンク</div>
+                <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
+                <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">三郷市公式サイト</a>
+            </div>
         </div>
         <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
     </footer>

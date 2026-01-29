@@ -1007,16 +1007,28 @@
             background: var(--white);
             border-top: 1px solid var(--gray-light);
             color: var(--text-light);
-            padding: 3rem 2rem;
-            text-align: center;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
         .footer-logo {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.75rem;
-            margin-bottom: 1.5rem;
         }
 
         .footer-logo img {
@@ -1031,29 +1043,52 @@
             color: var(--text);
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+        .footer-tagline {
+            font-size: 0.8125rem;
+            color: var(--text-light);
+            line-height: 1.6;
         }
 
-        .footer-links a {
+        .footer-nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-nav-title {
+            font-size: 0.7rem;
+            font-weight: 600;
             color: var(--text-light);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-nav-group a {
+            color: var(--text);
             text-decoration: none;
             font-size: 0.875rem;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
 
-        .footer-links a:hover {
-            color: var(--green);
+        .footer-nav-group a:hover {
+            color: #0d9488;
         }
 
         .footer-copy {
-            font-size: 0.8125rem;
-            color: var(--gray);
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
         }
+
+        @media (max-width: 640px) {
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
 
         /* Responsive */
         @media (max-width: 1024px) {
@@ -1632,15 +1667,26 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-logo">
-            <img src="logo.png" alt="創政MISATO">
-            <span class="footer-logo-text">創政MISATO</span>
-        </div>
-        <div class="footer-links">
-            <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
-            <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">三郷市公式サイト</a>
-            <a href="policy.html">会派理念・運営規則</a>
-
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="創政MISATO">
+                    <span class="footer-logo-text">創政MISATO</span>
+                </div>
+                <p class="footer-tagline">三郷市議会 会派<br>新しい発想で三郷の未来を創る</p>
+            </div>
+            <div class="footer-nav-group">
+                <div class="footer-nav-title">コンテンツ</div>
+                <a href="index.html">トップページ</a>
+                <a href="shisatsu/">視察レポート一覧</a>
+                <a href="#activity">活動報告</a>
+                <a href="#newsletter">LINE登録</a>
+            </div>
+            <div class="footer-nav-group">
+                <div class="footer-nav-title">外部リンク</div>
+                <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
+                <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">三郷市公式サイト</a>
+            </div>
         </div>
         <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
     </footer>
