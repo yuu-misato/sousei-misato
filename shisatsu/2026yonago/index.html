@@ -1338,18 +1338,13 @@
         /* Scroll Card Pinned Section */
         .scroll-card-pinned {
             position: relative;
-            height: 400vh;
             background: linear-gradient(135deg, var(--gray-900) 0%, #0f172a 100%);
+            padding: 4rem 2rem;
         }
 
         .scroll-card-pinned .pinned-content {
-            position: sticky;
-            top: 0;
-            height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 2rem;
         }
 
         .scroll-card-container {
@@ -1359,7 +1354,7 @@
         }
 
         .scroll-card-header {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .scroll-card-label {
@@ -1368,14 +1363,6 @@
             color: var(--teal-light);
             letter-spacing: 0.3em;
             margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-        }
-
-        .scroll-card-label.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .scroll-card-title {
@@ -1383,83 +1370,33 @@
             font-weight: 900;
             color: var(--white);
             margin-bottom: 0.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out 0.1s;
-        }
-
-        .scroll-card-title.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .scroll-card-desc {
             font-size: 1rem;
             color: var(--gray-400);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out 0.2s;
-        }
-
-        .scroll-card-desc.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .scroll-card-progress {
-            font-size: 0.875rem;
-            color: var(--gray-400);
-            margin-bottom: 1.5rem;
-        }
-
-        .scroll-card-current {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--teal-light);
+            display: none;
         }
 
         .scroll-card-stack {
-            position: relative;
-            min-height: 380px;
-            height: auto;
-            perspective: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
         .scroll-card {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .scroll-card.active {
-            z-index: 10;
-            transform: rotateX(0deg) translateY(0);
-            opacity: 1;
-        }
-
-        .scroll-card.flipped {
-            transform: rotateX(-90deg) translateY(-50%);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .scroll-card.waiting {
-            transform: translateY(20px) scale(0.95);
-            opacity: 0;
-            z-index: 1;
         }
 
         .scroll-card-inner {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 24px;
-            padding: 2.5rem;
-            height: 100%;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             text-align: left;
@@ -1467,32 +1404,29 @@
         }
 
         .scroll-card-number {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
             color: var(--teal);
             opacity: 0.5;
             line-height: 1;
-            margin-bottom: 1rem;
-        }
-
-        .scroll-card-item-title {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--white);
             margin-bottom: 0.75rem;
         }
 
+        .scroll-card-item-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
         .scroll-card-subtitle {
-            font-size: 1rem;
+            font-size: 0.9375rem;
             color: var(--gray-400);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .scroll-card-content {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         .scroll-card-list {
@@ -1500,9 +1434,9 @@
         }
 
         .scroll-card-list li {
-            font-size: 1rem;
+            font-size: 0.9375rem;
             color: rgba(255,255,255,0.9);
-            padding: 0.75rem 0;
+            padding: 0.625rem 0;
             padding-left: 1.5rem;
             position: relative;
             border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -1530,9 +1464,7 @@
         }
 
         .scroll-card-dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
+            display: none;
         }
 
         .scroll-dot {
@@ -2664,6 +2596,7 @@
 
             .hero-meta {
                 flex-direction: column;
+                align-items: center;
                 gap: 1rem;
             }
 
@@ -3093,16 +3026,6 @@
                 <div class="overview-item">
                     <div class="overview-item-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                    </div>
-                    <div class="overview-item-label">視察時間</div>
-                    <div class="overview-item-value">約3時間</div>
-                </div>
-                <div class="overview-item">
-                    <div class="overview-item-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -3243,7 +3166,7 @@
 
                 <div class="scroll-card-stack" id="conceptCardStack">
                     <!-- Card 1 -->
-                    <div class="scroll-card active" data-card="1">
+                    <div class="scroll-card" data-card="1">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">01</div>
                             <h3 class="scroll-card-item-title">従来のまちの問題</h3>
@@ -3259,7 +3182,7 @@
                     </div>
 
                     <!-- Card 2 -->
-                    <div class="scroll-card waiting" data-card="2">
+                    <div class="scroll-card" data-card="2">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">02</div>
                             <h3 class="scroll-card-item-title">「コンパクト」の考え方</h3>
@@ -3275,7 +3198,7 @@
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="scroll-card waiting" data-card="3">
+                    <div class="scroll-card" data-card="3">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">03</div>
                             <h3 class="scroll-card-item-title">「ネットワーク」の考え方</h3>
@@ -3291,7 +3214,7 @@
                     </div>
 
                     <!-- Card 4 -->
-                    <div class="scroll-card waiting" data-card="4">
+                    <div class="scroll-card" data-card="4">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">04</div>
                             <h3 class="scroll-card-item-title">期待される効果</h3>
@@ -3383,7 +3306,7 @@
 
                 <div class="scroll-card-stack" id="whyCardStack">
                     <!-- Card 1 -->
-                    <div class="scroll-card active" data-card="1">
+                    <div class="scroll-card" data-card="1">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">01</div>
                             <h3 class="scroll-card-item-title">三郷市の課題</h3>
@@ -3399,7 +3322,7 @@
                     </div>
 
                     <!-- Card 2 -->
-                    <div class="scroll-card waiting" data-card="2">
+                    <div class="scroll-card" data-card="2">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">02</div>
                             <h3 class="scroll-card-item-title">解決策がある</h3>
@@ -3415,7 +3338,7 @@
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="scroll-card waiting" data-card="3">
+                    <div class="scroll-card" data-card="3">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">03</div>
                             <h3 class="scroll-card-item-title">近くに成功例がない</h3>
@@ -3431,7 +3354,7 @@
                     </div>
 
                     <!-- Card 4 -->
-                    <div class="scroll-card waiting" data-card="4">
+                    <div class="scroll-card" data-card="4">
                         <div class="scroll-card-inner">
                             <div class="scroll-card-number">04</div>
                             <h3 class="scroll-card-item-title">だから米子市</h3>
@@ -4403,90 +4326,7 @@
             });
         });
 
-        // Scroll Card System - スクロール連動でカードを切り替え
-        function initScrollCards(sectionId, stackId, dotsId, currentId) {
-            const section = document.getElementById(sectionId);
-            const stack = document.getElementById(stackId);
-            const dots = document.getElementById(dotsId);
-            const currentSpan = document.getElementById(currentId);
-
-            if (!stack || !section) return null;
-
-            const cards = stack.querySelectorAll('.scroll-card');
-            const dotElements = dots ? dots.querySelectorAll('.scroll-dot') : [];
-            const totalCards = cards.length;
-            let lastCardIndex = -1;
-
-            function updateCard(newIndex) {
-                if (newIndex < 0) newIndex = 0;
-                if (newIndex >= totalCards) newIndex = totalCards - 1;
-                if (newIndex === lastCardIndex) return;
-
-                cards.forEach((card, i) => {
-                    card.classList.remove('active', 'flipped', 'waiting');
-                    if (i < newIndex) {
-                        card.classList.add('flipped');
-                    } else if (i === newIndex) {
-                        card.classList.add('active');
-                    } else {
-                        card.classList.add('waiting');
-                    }
-                });
-
-                dotElements.forEach((dot, i) => {
-                    dot.classList.remove('active', 'done');
-                    if (i < newIndex) {
-                        dot.classList.add('done');
-                    } else if (i === newIndex) {
-                        dot.classList.add('active');
-                    }
-                });
-
-                if (currentSpan) {
-                    currentSpan.textContent = newIndex + 1;
-                }
-
-                // アクティブカードの高さにスタックを合わせる
-                const activeCard = cards[newIndex];
-                if (activeCard) {
-                    const inner = activeCard.querySelector('.scroll-card-inner');
-                    if (inner) {
-                        stack.style.height = inner.scrollHeight + 'px';
-                    }
-                }
-
-                lastCardIndex = newIndex;
-            }
-
-            // 初期高さ設定
-            requestAnimationFrame(() => {
-                const firstInner = cards[0] && cards[0].querySelector('.scroll-card-inner');
-                if (firstInner) {
-                    stack.style.height = firstInner.scrollHeight + 'px';
-                }
-            });
-
-            // スクロール進行度に基づいてカードを更新
-            function updateFromProgress(progress) {
-                // 進行度を4等分してカードインデックスを決定
-                // 0-0.25 = card 0, 0.25-0.5 = card 1, 0.5-0.75 = card 2, 0.75-1 = card 3
-                const cardIndex = Math.min(Math.floor(progress * totalCards), totalCards - 1);
-                updateCard(cardIndex);
-            }
-
-            // ドットクリックでも切り替え可能
-            dotElements.forEach((dot, i) => {
-                dot.addEventListener('click', () => updateCard(i));
-            });
-
-            return { updateCard, updateFromProgress };
-        }
-
-        // コンパクト+ネットワークセクション
-        const conceptScrollCards = initScrollCards('conceptSection', 'conceptCardStack', 'conceptDots', 'conceptCurrent');
-
-        // なぜ米子市セクション
-        const whyScrollCards = initScrollCards('whySection', 'whyCardStack', 'whyDots', 'whyCurrent');
+        // Scroll Card System removed - cards now displayed as vertical list
 
         // Counter Animation
         function animateCounter(element, target, isDecimal = false) {
@@ -4642,10 +4482,6 @@
                     animateStats(sectionProgress);
                 } else if (sectionType === 'budget') {
                     animateBudget(sectionProgress);
-                } else if (sectionType === 'concept-cards' && conceptScrollCards) {
-                    conceptScrollCards.updateFromProgress(sectionProgress);
-                } else if (sectionType === 'why-cards' && whyScrollCards) {
-                    whyScrollCards.updateFromProgress(sectionProgress);
                 }
             });
 
