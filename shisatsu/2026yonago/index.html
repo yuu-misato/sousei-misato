@@ -37,7 +37,7 @@
         }
 
         html {
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -4661,7 +4661,19 @@
         menuCloseBtn.addEventListener('click', closeMenu);
         menuOverlay.addEventListener('click', closeMenu);
 
-        menuPanel.querySelectorAll('.menu-nav a').forEach(link => {
+        menuPanel.querySelectorAll('.menu-nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeMenu();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                }
+            });
+        });
+        menuPanel.querySelectorAll('.menu-nav a:not([href^="#"])').forEach(link => {
             link.addEventListener('click', closeMenu);
         });
     </script>
