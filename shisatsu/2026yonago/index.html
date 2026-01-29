@@ -4538,6 +4538,12 @@
                         animateCounter(counter, target, isDecimal);
                     });
                     statsAnimated = true;
+                    // After animation, collapse pinned height so scroll doesn't stop on revisit
+                    setTimeout(() => {
+                        const statsSection = document.querySelector('.stats-pinned');
+                        statsSection.style.height = 'auto';
+                        statsSection.querySelector('.pinned-content').style.position = 'static';
+                    }, 1500);
                 }
             }
         }
