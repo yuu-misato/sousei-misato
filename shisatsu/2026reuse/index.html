@@ -1311,6 +1311,18 @@
             line-height: 1.8;
         }
 
+        /* Budget Section */
+        .budget-section { background: var(--white); }
+        .budget-section .section-inner { display: flex; flex-direction: column; align-items: center; padding: 2rem; }
+        .budget-container { max-width: 900px; width: 100%; text-align: center; }
+        .budget-label { font-size: 0.75rem; font-weight: 600; color: var(--teal); letter-spacing: 0.3em; margin-bottom: 1rem; }
+        .budget-title { font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; color: var(--gray-900); margin-bottom: 2rem; }
+        .budget-big-number { font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 900; color: var(--teal); line-height: 1; margin-bottom: 1rem; }
+        .budget-big-number span { font-size: 0.3em; color: var(--gray-500); }
+        .budget-trip-info { display: inline-block; font-size: 0.875rem; font-weight: 600; color: var(--teal); background: rgba(13, 148, 136, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1.5rem; }
+        .budget-note { background: rgba(13, 148, 136, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--teal); text-align: left; }
+        .budget-note p { font-size: 0.9375rem; color: var(--gray-600); line-height: 1.8; }
+
         /* CTA */
         .cta {
             background: linear-gradient(135deg, var(--teal), var(--teal-dark));
@@ -2224,6 +2236,22 @@
                     <div class="outcome-card-number">3</div>
                     <h4>「見て知る」ことの大切さ</h4>
                     <p>一般市民も見学可能。巨大クレーンや焼却炉を目の当たりにすることで、ゴミ問題を自分ごととして考えるきっかけになる。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Section -->
+    <section class="section budget-section">
+        <div class="section-inner">
+            <div class="budget-container">
+                <div class="budget-label">TRANSPARENCY</div>
+                <h2 class="budget-title">視察経費</h2>
+                <p class="budget-trip-info">近隣施設視察（車移動・日帰り）</p>
+                <div class="budget-big-number">0<span>円</span></div>
+                <p style="font-size: 1.25rem; color: var(--gray-600); margin-bottom: 2rem;">政務活動費の支出なし</p>
+                <div class="budget-note">
+                    <p>東埼玉資源環境組合は三郷市が構成市町として参加する一部事務組合であり、近隣に所在する施設です。本視察は会派メンバーが自家用車で移動し、日帰りで実施しました。交通費・飲食費等を含め、<strong>すべて議員の私費負担</strong>であり、政務活動費からの支出は一切ありません。</p>
                 </div>
             </div>
         </div>
