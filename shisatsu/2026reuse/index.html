@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>東埼玉資源環境組合 視察報告 - ゴミ処理施設リユース | 創政MISATO</title>
+    <title>東埼玉資源環境組合 視察報告 | 創政MISATO</title>
     <meta name="description" content="三郷市議会 会派 創政MISATO（鈴木優作・日高千穂・高橋誠一・佐藤裕之）が東埼玉資源環境組合 第一工場ゴミ処理施設（リユース）を視察。広域連携によるゴミ処理、分別の重要性、堆肥化事業など循環型社会の取り組みを報告。">
     <meta name="keywords" content="東埼玉資源環境組合,リユース,ゴミ処理施設,視察報告,三郷市議会,創政MISATO,広域連携,循環型社会,分別,堆肥化,鈴木優作,日高千穂,高橋誠一,佐藤裕之,三郷市,埼玉県,越谷市">
     <meta name="author" content="創政MISATO">
@@ -22,6 +22,10 @@
     <meta property="og:url" content="https://sousei-misato.com/shisatsu/2026reuse/">
     <meta property="og:site_name" content="創政MISATO">
     <meta property="og:locale" content="ja_JP">
+    <meta property="og:image" content="https://sousei-misato.com/images/saitamashigen/team_photo_front_of_facility.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="創政MISATOメンバーが東埼玉資源環境組合の施設前で集合写真">
     <meta property="article:published_time" content="2026-02-02">
     <meta property="article:author" content="創政MISATO">
     <meta property="article:section" content="視察レポート">
@@ -29,11 +33,17 @@
     <meta property="article:tag" content="ゴミ処理">
     <meta property="article:tag" content="循環型社会">
     <meta property="article:tag" content="堆肥化">
+    <meta property="article:modified_time" content="2026-02-02">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="東埼玉資源環境組合 視察報告 - ゴミ処理施設リユース | 創政MISATO">
     <meta name="twitter:description" content="三郷市議会 創政MISATOによる東埼玉資源環境組合 第一工場視察レポート。広域連携・循環型社会の先進事例。">
+    <meta name="twitter:image" content="https://sousei-misato.com/images/saitamashigen/team_photo_front_of_facility.jpg">
+    <meta name="twitter:image:alt" content="創政MISATOメンバーが東埼玉資源環境組合の施設前で集合写真">
+
+    <!-- Additional Meta -->
+    <meta name="theme-color" content="#1a1a2e">
 
     <!-- 構造化データ -->
     <script type="application/ld+json">
@@ -51,7 +61,16 @@
         "publisher": {
           "@type": "Organization",
           "name": "創政MISATO",
-          "url": "https://sousei-misato.com/"
+          "url": "https://sousei-misato.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://sousei-misato.com/images/sousei-misato-logo.png"
+          }
+        },
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://sousei-misato.com/images/saitamashigen/team_photo_front_of_facility.jpg",
+          "caption": "創政MISATOメンバーが東埼玉資源環境組合の施設前で集合写真"
         },
         "datePublished": "2026-02-02",
         "dateModified": "2026-02-02",
@@ -477,8 +496,10 @@
         .scroll-indicator {
             position: absolute;
             bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: fit-content;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -682,6 +703,34 @@
             margin-top: 3rem;
         }
 
+        /* Photos Section */
+        .photos {
+            background: var(--gray-900);
+            color: var(--white);
+        }
+
+        .photos .section-label {
+            color: var(--teal-light);
+        }
+
+        .photos .section-title {
+            color: var(--white);
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .photo-card {
+            position: relative;
+            background: var(--gray-800);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
         .overview-photo {
             border-radius: 16px;
             overflow: hidden;
@@ -875,7 +924,7 @@
 
         .flow-detail:last-child { margin-bottom: 0; }
 
-        .flow-detail h4 {
+        .flow-detail h3 {
             font-size: 0.95rem;
             font-weight: 700;
             color: var(--teal);
@@ -1051,7 +1100,7 @@
             color: rgba(255,255,255,0.7);
         }
 
-        .learning-card-content h4 {
+        .learning-card-content h3 {
             font-size: 1rem;
             font-weight: 700;
             color: var(--white);
@@ -1284,7 +1333,7 @@
             margin-bottom: 1rem;
         }
 
-        .outcome-card h4 {
+        .outcome-card h3 {
             font-size: 1.125rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
@@ -1455,6 +1504,7 @@
             .faq-question { padding: 1rem; }
             .faq-answer { padding: 0 1rem 1rem 3.5rem; }
             .flow-step { padding: 1.5rem; }
+            .photos-grid { grid-template-columns: 1fr !important; }
         }
 
         @media (max-width: 640px) {
@@ -1550,6 +1600,8 @@
         </nav>
     </div>
 
+    <main>
+    <article>
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
@@ -1824,15 +1876,15 @@
                     <h3 class="flow-step-title">搬入と計量</h3>
                 </div>
                 <div class="flow-detail">
-                    <h4>自動計量システム</h4>
+                    <h3>自動計量システム</h3>
                     <p>ゴミ収集車は専用カードで自動計量され、コンピューターが自治体別に集計。どのゲートに投入するか指示が出る。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>プラットフォーム</h4>
+                    <h3>プラットフォーム</h3>
                     <p>螺旋状のスロープを約200メートル上がって到着。扉は自動開閉で臭気漏れを抑制。雨水を利用したタイヤ洗浄も実施。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>ゴミピット</h4>
+                    <h3>ゴミピット</h3>
                     <p>縦90m×横60m×深さ31mの巨大空間。約1週間分（約4,000トン）を貯留。クレーン（1回約2.5トン）で攪拌し、約15分に1回焼却炉に投入。クレーン操作は産業廃棄物の混入確認のため手動で行われている。</p>
                 </div>
             </div>
@@ -1843,15 +1895,15 @@
                     <h3 class="flow-step-title">焼却と有害物質除去</h3>
                 </div>
                 <div class="flow-detail">
-                    <h4>高温燃焼</h4>
+                    <h3>高温燃焼</h3>
                     <p>850度以上の高温で燃焼し、ダイオキシン類などの有害ガス発生を抑制。中央操作室で24時間365日監視。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>排ガス処理</h4>
+                    <h3>排ガス処理</h3>
                     <p>バグフィルター（ろ過式集塵機）で有害物質を除去。約7年に1回交換。法定基準値を大きく下回る排出を確認。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>臭気対策</h4>
+                    <h3>臭気対策</h3>
                     <p>焼却用の空気をゴミピット内から吸引することで、ピット内を常に負圧状態に保ち、臭気の外部漏出を抑制。</p>
                 </div>
             </div>
@@ -1862,15 +1914,15 @@
                     <h3 class="flow-step-title">発電と熱利用</h3>
                 </div>
                 <div class="flow-detail">
-                    <h4>タービン発電</h4>
+                    <h3>タービン発電</h3>
                     <p>焼却熱で300度以上の高温高圧蒸気を発生させ、2基のタービン発電機で最大24,000kWの発電が可能。令和6年度の発電量は約89,800万kWh。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>売電</h4>
+                    <h3>売電</h3>
                     <p>約24,000kWhは工場内で使用し、残りの約65,000kWhは小売電気事業者に売電。1日あたり約20万〜30万円の売電収入。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>温水利用</h4>
+                    <h3>温水利用</h3>
                     <p>高温高圧蒸気を利用して温水を作り、工場内の給湯・冷暖房のほか、周辺施設への熱供給にも活用。</p>
                 </div>
             </div>
@@ -1881,7 +1933,7 @@
                     <h3 class="flow-step-title">焼却灰の処理</h3>
                 </div>
                 <div class="flow-detail">
-                    <h4>外部搬出</h4>
+                    <h3>外部搬出</h3>
                     <p>主灰と飛灰は薬剤処理後、秋田県・山形県・埼玉県寄居町などの最終処分場へ搬出。かつては施設内の溶融炉でスラグ化していたが、エネルギー消費・CO2排出の観点から休止し、外部搬出に切り替え。</p>
                 </div>
             </div>
@@ -1903,11 +1955,11 @@
                     <h3 class="flow-step-title">受入と破砕</h3>
                 </div>
                 <div class="flow-detail">
-                    <h4>搬入</h4>
+                    <h3>搬入</h3>
                     <p>5市1町から発生する剪定枝・落ち葉・刈り草を受入。年間搬入量は約1,000トン程度。枝と草は堆肥の混合割合や破砕方法が異なるため分けて搬入。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>3段階の破砕</h4>
+                    <h3>3段階の破砕</h3>
                     <p>1次破砕（12cm）→ 2次破砕（5cm）→ 3次破砕（枝のみ、2.5cm）。3次破砕では防爆処理を実施し、木質を柔らかくして吸水性向上と微生物分解を促進。</p>
                 </div>
             </div>
@@ -1918,15 +1970,15 @@
                     <h3 class="flow-step-title">発酵と製品化</h3>
                 </div>
                 <div class="flow-detail">
-                    <h4>6か月間の発酵</h4>
+                    <h3>6か月間の発酵</h3>
                     <p>14区画の発酵棟で枝と草を各35トン（計70トン）投入。2週間に1回攪拌し、温度は70度程度まで上昇。毎年12ロット程度を製造。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>厳格な検査基準</h4>
+                    <h3>厳格な検査基準</h3>
                     <p>国の基準（400ベクレル/kg以下）に対し、組合独自基準は食品基準と同等の100ベクレル/kg以下。70トンの原料から25〜30トン（約40%）の堆肥を製造。</p>
                 </div>
                 <div class="flow-detail">
-                    <h4>販売</h4>
+                    <h3>販売</h3>
                     <p>毎週月曜日9:30〜11:30、10kgあたり100円で5市1町の住民限定に販売。品質の良さと価格の手頃さで好評。</p>
                 </div>
             </div>
@@ -1943,15 +1995,15 @@
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                 <div style="background: var(--gray-50); border-radius: 16px; padding: 2rem; border-left: 4px solid #ef4444;">
-                    <h4 style="font-size: 1.1rem; font-weight: 700; color: #ef4444; margin-bottom: 1rem;">火災リスク</h4>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: #ef4444; margin-bottom: 1rem;">火災リスク</h3>
                     <p style="font-size: 0.9rem; color: var(--gray-600); line-height: 1.8;">スプレー缶や乾電池、リチウムイオン電池が可燃ゴミに混入すると、焼却時に火災や爆発の原因に。視察当日もリチウムイオン電池が原因と思われる火災が発生。</p>
                 </div>
                 <div style="background: var(--gray-50); border-radius: 16px; padding: 2rem; border-left: 4px solid var(--amber);">
-                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--amber); margin-bottom: 1rem;">リサイクル阻害</h4>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--amber); margin-bottom: 1rem;">リサイクル阻害</h3>
                     <p style="font-size: 0.9rem; color: var(--gray-600); line-height: 1.8;">アルミ缶やペットボトルなど、本来リサイクル可能なものが可燃ゴミに混入すると資源の無駄遣いに。プラスチック資源循環法の施行により、分別の流れが加速。</p>
                 </div>
                 <div style="background: var(--gray-50); border-radius: 16px; padding: 2rem; border-left: 4px solid var(--teal);">
-                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--teal); margin-bottom: 1rem;">啓発活動</h4>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--teal); margin-bottom: 1rem;">啓発活動</h3>
                     <p style="font-size: 0.9rem; color: var(--gray-600); line-height: 1.8;">リユース祭り（11月）、夏休み親子スクール（埼玉県内最大規模）、小学校の施設見学などを通じて、住民の分別意識向上に取り組んでいる。</p>
                 </div>
             </div>
@@ -1969,22 +2021,22 @@
             <div class="takeaways-grid">
                 <div class="takeaway-card">
                     <div class="takeaway-number">1</div>
-                    <h4 class="takeaway-title">広域連携の重要性</h4>
+                    <h3 class="takeaway-title">広域連携の重要性</h3>
                     <p class="takeaway-desc">5市1町による共同運営は、スケールメリットを活かした効率的なゴミ処理を可能にしている。今後の消防指令センター共同運用など、他の広域連携事業の参考となる。</p>
                 </div>
                 <div class="takeaway-card">
                     <div class="takeaway-number">2</div>
-                    <h4 class="takeaway-title">分別の徹底</h4>
+                    <h3 class="takeaway-title">分別の徹底</h3>
                     <p class="takeaway-desc">火災事故の防止、リサイクルの推進、処理施設の安全運転のため、住民一人ひとりの分別意識が極めて重要。議員として、市民への啓発活動に積極的に関わっていく。</p>
                 </div>
                 <div class="takeaway-card">
                     <div class="takeaway-number">3</div>
-                    <h4 class="takeaway-title">循環型社会の実現</h4>
+                    <h3 class="takeaway-title">循環型社会の実現</h3>
                     <p class="takeaway-desc">発電・売電、堆肥化事業など、単なるゴミ処理にとどまらない資源循環の取り組みが進められている。三郷市としても、これらの取り組みを市民に広く周知し、協力を呼びかけていく必要がある。</p>
                 </div>
                 <div class="takeaway-card">
                     <div class="takeaway-number">4</div>
-                    <h4 class="takeaway-title">施設の持続可能性</h4>
+                    <h3 class="takeaway-title">施設の持続可能性</h3>
                     <p class="takeaway-desc">プラント更新事業により、今後も安定したゴミ処理が継続できる体制が整備されつつある。構成市町の一員として、適切な負担と協力が求められる。</p>
                 </div>
             </div>
@@ -1993,32 +2045,36 @@
 
     <!-- Learnings Section -->
     <!-- Photos Section -->
-    <section class="section" style="background: var(--gray-50);">
+    <section class="section photos">
         <div class="section-inner">
             <div class="section-header">
                 <div class="section-label">PHOTOS</div>
                 <h2 class="section-title">視察の様子</h2>
-                <p class="section-description">東埼玉資源環境組合 第一工場ゴミ処理施設（リユース）を視察しました</p>
+                <p class="section-desc" style="color: var(--gray-400);">東埼玉資源環境組合 第一工場ゴミ処理施設（リユース）を視察しました</p>
             </div>
-            <div class="overview-photos">
-                <div class="overview-photo">
-                    <img src="../../images/saitamashigen/assembly_hall_meeting_room.jpg" alt="東埼玉資源環境組合の議場">
-                    <div class="overview-photo-caption">東埼玉資源環境組合の議場</div>
+            <div class="photos-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="photo-card" style="aspect-ratio: auto;">
+                    <img src="../../images/saitamashigen/assembly_hall_meeting_room.jpg" alt="東埼玉資源環境組合の議場" style="width:100%; height:auto; display:block;">
                 </div>
-                <div class="overview-photo">
-                    <img src="../../images/saitamashigen/observation_deck_panoramic_view.jpg" alt="展望台からの眺望">
-                    <div class="overview-photo-caption">地上80メートルの展望台からの眺望</div>
+                <div class="photo-card" style="aspect-ratio: auto;">
+                    <img src="../../images/saitamashigen/observation_deck_panoramic_view.jpg" alt="地上80メートルの展望台からの眺望" style="width:100%; height:auto; display:block;">
                 </div>
             </div>
-            <div class="overview-photos" style="margin-top: 1.5rem;">
-                <div class="overview-photo">
-                    <img src="../../images/saitamashigen/team_photo_crane_grab_bucket.jpg" alt="ゴミクレーングラブバケット前での集合写真">
-                    <div class="overview-photo-caption">実物大ゴミクレーングラブバケット前での集合写真</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">東埼玉資源環境組合の議場</p>
+                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">地上80メートルの展望台からの眺望</p>
+            </div>
+            <div class="photos-grid" style="grid-template-columns: 1fr 1fr; margin-top: 1.5rem;">
+                <div class="photo-card" style="aspect-ratio: auto;">
+                    <img src="../../images/saitamashigen/team_photo_crane_grab_bucket.jpg" alt="実物大ゴミクレーングラブバケット前での集合写真" style="width:100%; height:auto; display:block;">
                 </div>
-                <div class="overview-photo">
-                    <img src="../../images/saitamashigen/team_photo_front_of_facility.jpg" alt="施設前での集合写真">
-                    <div class="overview-photo-caption">施設前での集合写真</div>
+                <div class="photo-card" style="aspect-ratio: auto;">
+                    <img src="../../images/saitamashigen/team_photo_front_of_facility.jpg" alt="施設前での集合写真" style="width:100%; height:auto; display:block;">
                 </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">実物大ゴミクレーングラブバケット前での集合写真</p>
+                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">施設前での集合写真</p>
             </div>
         </div>
     </section>
@@ -2044,7 +2100,7 @@
                         </div>
                     </div>
                     <div class="learning-card-content">
-                        <h4>百聞は一見に如かず、市民の皆さんもぜひ見学を</h4>
+                        <h3>百聞は一見に如かず、市民の皆さんもぜひ見学を</h3>
                         <div class="learning-card-text collapsed" data-card="sato">
                             <p>百聞は一見に如かず。議員だから視察ができるということではなく、一般市民の方々も見学可能である。町会やグループでの見学を通じて、ゴミ分別の意識を高めていただきたい。</p>
                         </div>
@@ -2067,7 +2123,7 @@
                         </div>
                     </div>
                     <div class="learning-card-content">
-                        <h4>ゴミ処理の重要性を改めて痛感、啓蒙活動に取り組みたい</h4>
+                        <h3>ゴミ処理の重要性を改めて痛感、啓蒙活動に取り組みたい</h3>
                         <div class="learning-card-text collapsed" data-card="takahashi">
                             <p>今回の会派視察では、給食センターや消防施設に続き、こうした公共施設を見学させていただいた。私自身、これまでゴミ処理施設にはあまり関心を持っていなかったが、今日2時間以上かけて職員の方にご説明いただき、ゴミ処理や環境問題の重要性を改めて痛感した。もっと勉強して、市民の皆さんにゴミ処理の問題をどう解決していくか、啓蒙活動に取り組んでいきたい。</p>
                         </div>
@@ -2090,7 +2146,7 @@
                         </div>
                     </div>
                     <div class="learning-card-content">
-                        <h4>全てがエコ、循環型社会の実現に向けた取り組みが随所に</h4>
+                        <h3>全てがエコ、循環型社会の実現に向けた取り組みが随所に</h3>
                         <div class="learning-card-text collapsed" data-card="hidaka">
                             <p>全てがエコだと感じた。雨水の利用、発電による熱利用、堆肥化など、循環型社会の実現に向けた取り組みが随所に見られた。皆さん、ゴミの分別をしっかりやりましょう。</p>
                         </div>
@@ -2113,7 +2169,7 @@
                         </div>
                     </div>
                     <div class="learning-card-content">
-                        <h4>ここは最後の砦、分別された状態で搬入できるかが重要</h4>
+                        <h3>ここは最後の砦、分別された状態で搬入できるかが重要</h3>
                         <div class="learning-card-text collapsed" data-card="suzuki">
                             <p>ここは最後の砦であり、各市そして個人がここに来るまでの間でいかにゴミを適切に処理し、分別された状態で搬入できるかが重要。ゴミを見ていると世の中の動きが見えるという職員の言葉が印象的だった。</p>
                         </div>
@@ -2251,17 +2307,17 @@
             <div class="outcome-grid">
                 <div class="outcome-card">
                     <div class="outcome-card-number">1</div>
-                    <h4>分別は「安全」を守る行動</h4>
+                    <h3>分別は「安全」を守る行動</h3>
                     <p>スプレー缶やリチウムイオン電池の混入は火災の原因に。正しい分別は、施設で働く人と地域の安全を守ることにつながる。</p>
                 </div>
                 <div class="outcome-card">
                     <div class="outcome-card-number">2</div>
-                    <h4>ゴミは「資源」に変わる</h4>
+                    <h3>ゴミは「資源」に変わる</h3>
                     <p>焼却熱で発電し、剪定枝は堆肥に。ゴミ処理施設は単なる焼却場ではなく、エネルギーと資源を生み出す循環の拠点。</p>
                 </div>
                 <div class="outcome-card">
                     <div class="outcome-card-number">3</div>
-                    <h4>「見て知る」ことの大切さ</h4>
+                    <h3>「見て知る」ことの大切さ</h3>
                     <p>一般市民も見学可能。巨大クレーンや焼却炉を目の当たりにすることで、ゴミ問題を自分ごととして考えるきっかけになる。</p>
                 </div>
             </div>
@@ -2328,6 +2384,8 @@
     </section>
 
     <!-- Footer -->
+    </article>
+    </main>
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-brand">
