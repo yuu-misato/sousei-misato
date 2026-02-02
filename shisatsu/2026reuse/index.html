@@ -675,6 +675,34 @@
             font-weight: 400;
         }
 
+        .overview-photos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .overview-photo {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .overview-photo img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .overview-photo-caption {
+            background: var(--gray-800);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
         .overview-map {
             margin-top: 2.5rem;
         }
@@ -1623,14 +1651,14 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem;">
-                <div style="border-radius: 12px; overflow: hidden; position: relative;">
-                    <img src="../../images/saitamashigen/facility_exterior_tower_view.jpg" alt="第一工場外観と100メートルの煙突" style="width:100%; height:100%; object-fit:cover; display:block;">
-                    <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(30,58,95,0.85)); padding:1rem 1.25rem 0.875rem; color:#fff; font-size:0.9rem; font-weight:600;">第一工場外観と煙突（高さ100m）</div>
+            <div class="overview-photos">
+                <div class="overview-photo">
+                    <img src="../../images/saitamashigen/facility_exterior_tower_view.jpg" alt="第一工場外観と100メートルの煙突">
+                    <div class="overview-photo-caption">第一工場外観と煙突（高さ100m）</div>
                 </div>
-                <div style="border-radius: 12px; overflow: hidden; position: relative;">
-                    <img src="../../images/saitamashigen/garbage_trucks_indoor_bay.jpg" alt="プラットフォームに搬入するゴミ収集車" style="width:100%; height:100%; object-fit:cover; display:block;">
-                    <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(30,58,95,0.85)); padding:1rem 1.25rem 0.875rem; color:#fff; font-size:0.9rem; font-weight:600;">プラットフォームの収集車</div>
+                <div class="overview-photo">
+                    <img src="../../images/saitamashigen/garbage_trucks_indoor_bay.jpg" alt="プラットフォームに搬入するゴミ収集車">
+                    <div class="overview-photo-caption">プラットフォームの収集車</div>
                 </div>
             </div>
 
@@ -1970,39 +1998,27 @@
             <div class="section-header">
                 <div class="section-label">PHOTOS</div>
                 <h2 class="section-title">視察の様子</h2>
-                <p class="section-description" style="color: var(--gray-500);">東埼玉資源環境組合 第一工場ゴミ処理施設（リユース）を視察しました</p>
+                <p class="section-description">東埼玉資源環境組合 第一工場ゴミ処理施設（リユース）を視察しました</p>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div style="border-radius: 12px; overflow: hidden;">
-                    <img src="../../images/saitamashigen/facility_exterior_tower_view.jpg" alt="第一工場外観と100メートルの煙突" style="width:100%; height:auto; display:block;">
+            <div class="overview-photos">
+                <div class="overview-photo">
+                    <img src="../../images/saitamashigen/assembly_hall_meeting_room.jpg" alt="東埼玉資源環境組合の議場">
+                    <div class="overview-photo-caption">東埼玉資源環境組合の議場</div>
                 </div>
-                <div style="border-radius: 12px; overflow: hidden;">
-                    <img src="../../images/saitamashigen/garbage_trucks_indoor_bay.jpg" alt="プラットフォームに搬入するゴミ収集車" style="width:100%; height:auto; display:block;">
-                </div>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
-                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">第一工場外観と高さ100メートルの煙突</p>
-                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">プラットフォームに搬入するゴミ収集車</p>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
-                <div style="border-radius: 12px; overflow: hidden;">
-                    <img src="../../images/saitamashigen/assembly_hall_meeting_room.jpg" alt="東埼玉資源環境組合の議場" style="width:100%; height:auto; display:block;">
-                </div>
-                <div style="border-radius: 12px; overflow: hidden;">
-                    <img src="../../images/saitamashigen/observation_deck_panoramic_view.jpg" alt="展望台からの眺望" style="width:100%; height:auto; display:block;">
+                <div class="overview-photo">
+                    <img src="../../images/saitamashigen/observation_deck_panoramic_view.jpg" alt="展望台からの眺望">
+                    <div class="overview-photo-caption">地上80メートルの展望台からの眺望</div>
                 </div>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
-                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">東埼玉資源環境組合の議場</p>
-                <p style="color: var(--gray-400); font-size: 0.85rem; text-align: center;">地上80メートルの展望台からの眺望</p>
-            </div>
-
-            <div style="margin-top: 1.5rem; text-align: center;">
-                <div style="border-radius: 12px; overflow: hidden; max-width: 600px; margin: 0 auto;">
-                    <img src="../../images/saitamashigen/team_photo_crane_grab_bucket.jpg" alt="ゴミクレーングラブバケット前での集合写真" style="width:100%; height:auto; display:block;">
+            <div class="overview-photos" style="margin-top: 1.5rem;">
+                <div class="overview-photo">
+                    <img src="../../images/saitamashigen/team_photo_crane_grab_bucket.jpg" alt="ゴミクレーングラブバケット前での集合写真">
+                    <div class="overview-photo-caption">実物大ゴミクレーングラブバケット前での集合写真</div>
                 </div>
-                <p style="color: var(--gray-400); font-size: 0.85rem; margin-top: 0.5rem;">実物大ゴミクレーングラブバケット前での集合写真</p>
+                <div class="overview-photo">
+                    <img src="../../images/saitamashigen/team_photo_front_of_facility.jpg" alt="施設前での集合写真">
+                    <div class="overview-photo-caption">施設前での集合写真</div>
+                </div>
             </div>
         </div>
     </section>
