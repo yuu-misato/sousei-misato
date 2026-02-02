@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンバーガイドライン | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: #64748b;
+            font-size: 0.82rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f1f5f9;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: #38bdf8; }
+        .login-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            color: #0f172a;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .login-btn:hover { opacity: 0.9; }
+        .login-error {
+            background: #991b1b;
+            color: #fecaca;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* ===== Guide Content ===== */
+        #guideContent { display: none; }
+
+        .guide-header {
+            background: linear-gradient(135deg, #0f2557 0%, #1e40af 50%, #4f46e5 100%);
+            padding: 2.5rem 2rem 2rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .guide-header h1 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+        .guide-header p {
+            font-size: 0.78rem;
+            color: #93c5fd;
+        }
+        .guide-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+        .guide-nav a {
+            color: #bfdbfe;
+            font-size: 0.72rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            text-decoration: none;
+            border: 1px solid rgba(191,219,254,0.3);
+            transition: all 0.2s;
+        }
+        .guide-nav a:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+
+        .guide-body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #334155;
+        }
+        .section-num {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            color: #0f172a;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .section h2 {
+            font-size: 1.15rem;
+            color: #f1f5f9;
+            font-weight: 700;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 0.8rem;
+            border-left: 3px solid #334155;
+        }
+        .card.important {
+            border-left-color: #f59e0b;
+            background: #1e293b;
+        }
+        .card.rule {
+            border-left-color: #38bdf8;
+        }
+        .card.warn {
+            border-left-color: #ef4444;
+        }
+        .card.tip {
+            border-left-color: #22c55e;
+        }
+
+        .card h3 {
+            font-size: 0.92rem;
+            color: #93c5fd;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .card p, .card li {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+        .card ul, .card ol {
+            padding-left: 1.2rem;
+            margin-top: 0.3rem;
+        }
+        .card li { margin-bottom: 0.3rem; }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.3rem;
+        }
+        .badge-must { background: #dc2626; color: #fff; }
+        .badge-recommend { background: #2563eb; color: #fff; }
+        .badge-note { background: #d97706; color: #fff; }
+
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #334155;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.2rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: #38bdf8;
+            border-radius: 50%;
+        }
+        .timeline-item strong {
+            color: #93c5fd;
+            font-size: 0.82rem;
+        }
+        .timeline-item p {
+            font-size: 0.82rem;
+            color: #94a3b8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0;
+            font-size: 0.82rem;
+        }
+        th {
+            background: #0f172a;
+            color: #93c5fd;
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid #1e293b;
+            color: #cbd5e1;
+        }
+        tr:hover td { background: rgba(56,189,248,0.05); }
+
+        .faq-item {
+            margin-bottom: 0.5rem;
+        }
+        .faq-q {
+            font-weight: 700;
+            color: #38bdf8;
+            font-size: 0.88rem;
+            margin-bottom: 0.2rem;
+        }
+        .faq-a {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            padding-left: 1rem;
+            border-left: 2px solid #334155;
+        }
+
+        .guide-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.72rem;
+            color: #475569;
+            border-top: 1px solid #1e293b;
+        }
+
+        @media (max-width: 600px) {
+            .guide-header { padding: 1.5rem 1rem 1rem; }
+            .guide-header h1 { font-size: 1.1rem; }
+            .guide-body { padding: 1rem 1rem 3rem; }
+            .card { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== Login Screen ===== -->
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-logo">創政MISATO</div>
+        <p class="login-sub">メンバー専用ガイドライン</p>
+        <div class="login-error" id="loginError">パスワードが正しくありません</div>
+        <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力" autofocus>
+        <button class="login-btn" onclick="tryLogin()">ログイン</button>
+    </div>
+</div>
+
+<!-- ===== Guide Content ===== -->
+<div id="guideContent">
+    <header class="guide-header">
+        <h1>創政MISATO メンバーガイドライン</h1>
+        <p>会派メンバーが知っておくべきルール・所作・考え方</p>
+        <nav class="guide-nav">
+            <a href="#sec1">理念</a>
+            <a href="#sec2">会派ルール</a>
+            <a href="#sec3">議場の所作</a>
+            <a href="#sec4">一般質問</a>
+            <a href="#sec5">情報管理</a>
+            <a href="#sec6">連絡</a>
+            <a href="#sec7">視察</a>
+            <a href="#sec8">FAQ</a>
+        </nav>
+    </header>
+
+    <main class="guide-body">
+
+        <!-- Section 1 -->
+        <div class="section" id="sec1">
+            <div class="section-header">
+                <span class="section-num">1</span>
+                <h2>創政MISATOの理念と方針</h2>
+            </div>
+
+            <div class="card important">
+                <h3>基本理念</h3>
+                <p>「<strong>市民とともに創る、新しい政治のかたち</strong>」</p>
+                <p>私たちは既存の枠にとらわれず、新しい発想と行動力で三郷市の未来を創造します。</p>
+            </div>
+
+            <div class="card rule">
+                <h3>行動原則</h3>
+                <ol>
+                    <li><strong>現場主義</strong> — 机上の議論だけでなく、現場に足を運び、市民の声を直接聞く</li>
+                    <li><strong>データに基づく政策提言</strong> — 感覚ではなく数字・根拠に基づいて発言する</li>
+                    <li><strong>超党派の連携</strong> — 党派を超えて良い政策は協力する。市民のためが最優先</li>
+                    <li><strong>透明性の確保</strong> — 活動内容・判断根拠を市民にオープンにする</li>
+                    <li><strong>若い力の活用</strong> — 新しいテクノロジーや手法を積極的に取り入れる</li>
+                </ol>
+            </div>
+
+            <div class="card tip">
+                <h3>会派として大切にしていること</h3>
+                <ul>
+                    <li>メンバー同士の意見が違っても、議論を通じて最善を見つける姿勢</li>
+                    <li>一人ひとりの個性と専門性を尊重する</li>
+                    <li>失敗を恐れず、チャレンジし続ける</li>
+                    <li>市民に説明できない判断はしない</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="section" id="sec2">
+            <div class="section-header">
+                <span class="section-num">2</span>
+                <h2>会派のルール</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>会派会議</h3>
+                <ul>
+                    <li><span class="badge badge-must">必須</span> 定例会開会前の会派会議には必ず出席する</li>
+                    <li><span class="badge badge-must">必須</span> やむを得ず欠席する場合は、前日までに会派代表に連絡する</li>
+                    <li><span class="badge badge-recommend">推奨</span> 会議前に議案資料に目を通しておく</li>
+                    <li>会派会議での決定事項は全メンバーで共有し、外部には合意なく発信しない</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>議案への対応</h3>
+                <ul>
+                    <li>議案への賛否は、会派会議で議論した上で方針を決める</li>
+                    <li>全員一致が原則。ただし、議員個人の信条に関わる場合は自由投票を認める</li>
+                    <li>自由投票の場合は、事前に会派内で共有し、対外的にも「会派として自由投票」と説明する</li>
+                    <li><span class="badge badge-warn">注意</span> 本会議での突然の造反は会派の信頼を損なう。必ず事前に相談すること</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>委員会活動</h3>
+                <ul>
+                    <li>所属委員会での質疑は事前に会派で情報共有する</li>
+                    <li>委員会視察の報告は全メンバーに共有する</li>
+                    <li>他会派との調整が必要な場合は、会派代表を通じて行う</li>
+                </ul>
+            </div>
+
+            <div class="card important">
+                <h3>表決のルール</h3>
+                <table>
+                    <tr><th>場面</th><th>原則</th><th>例外</th></tr>
+                    <tr><td>予算案</td><td>会派統一</td><td>なし</td></tr>
+                    <tr><td>条例案</td><td>会派統一</td><td>信条に関わる場合は自由投票</td></tr>
+                    <tr><td>請願・陳情</td><td>会派統一</td><td>議論の上、自由投票可</td></tr>
+                    <tr><td>人事案</td><td>会派統一</td><td>なし</td></tr>
+                    <tr><td>意見書</td><td>会派で協議</td><td>自由投票可</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="section" id="sec3">
+            <div class="section-header">
+                <span class="section-num">3</span>
+                <h2>議場での所作・マナー</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>本会議場でのルール</h3>
+                <ul>
+                    <li><span class="badge badge-must">必須</span> 服装はスーツ着用（クールビズ期間は議長の指示に従う）</li>
+                    <li><span class="badge badge-must">必須</span> 開会10分前には着席する</li>
+                    <li>議場内ではスマートフォンをマナーモードに設定</li>
+                    <li>議長の発言中は私語を慎む</li>
+                    <li>採決時は明確に起立・着席で意思表示する（中途半端な姿勢はNG）</li>
+                    <li>他の議員の質問中に野次を飛ばさない</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>発言のマナー</h3>
+                <ul>
+                    <li>質問・発言は必ず議長の許可を得てから行う</li>
+                    <li>「○番、△△△△です」と名乗ってから発言する</li>
+                    <li>感情的にならず、冷静かつ論理的に発言する</li>
+                    <li>行政職員への質問は「○○部長にお伺いします」と答弁者を明示する</li>
+                    <li>答弁が不十分な場合は再質問で掘り下げる（感情的な追及は避ける）</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>好印象を与えるポイント</h3>
+                <ul>
+                    <li>他の議員の質問にも関心を持ち、うなずくなど反応を示す</li>
+                    <li>傍聴者がいることを常に意識する</li>
+                    <li>休憩時間に他会派の議員とも積極的にコミュニケーションをとる</li>
+                    <li>議場の入退場時は議長席に一礼する</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="section" id="sec4">
+            <div class="section-header">
+                <span class="section-num">4</span>
+                <h2>一般質問の手順</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>一般質問の流れ</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>3週間前〜</strong>
+                        <p>テーマの検討開始。会派会議で方向性を相談。gian.souseimisato.comでリサーチ開始。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>2週間前</strong>
+                        <p>通告書の下書き作成。質問項目を整理。会派内でレビュー。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>通告締切日</strong>
+                        <p>議会事務局に通告書を提出。提出順が質問順になるため、早めの提出が有利。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>1週間前</strong>
+                        <p>担当課とのヒアリング（任意）。質問の趣旨を事前に伝えることで、充実した答弁を引き出しやすくなる。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>3日前〜前日</strong>
+                        <p>質問原稿の最終確認。時間配分のリハーサル。答弁予測と再質問の準備。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>当日</strong>
+                        <p>持ち時間60分（答弁含む）。導入→国県の動向→質問→要望の流れ。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card important">
+                <h3>質問のコツ</h3>
+                <ul>
+                    <li><strong>具体的な数字を入れる</strong> — 「多い」ではなく「○○件、前年比○%増」</li>
+                    <li><strong>他市の事例を引用する</strong> — 「○○市では□□年から実施し、△△の成果」</li>
+                    <li><strong>法的根拠を示す</strong> — 「○○法第○条に基づき」</li>
+                    <li><strong>質問は短く、明確に</strong> — 「そこでお伺いします。○○について市の見解をお聞かせください。」</li>
+                    <li><strong>「検討する」で終わらせない</strong> — 再質問で「いつまでに」「どのような形で」を確認する</li>
+                </ul>
+            </div>
+
+            <div class="card warn">
+                <h3>やってはいけないこと</h3>
+                <ul>
+                    <li>通告外の内容を質問する（議長から制止される）</li>
+                    <li>個人を攻撃する質問（品位を欠くと判断される）</li>
+                    <li>持ち時間を超過する（時計を常に確認）</li>
+                    <li>資料を見せるだけで質問しない（議事録に残らない）</li>
+                    <li>答弁内容を事前にSNSなどで漏らす</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="section" id="sec5">
+            <div class="section-header">
+                <span class="section-num">5</span>
+                <h2>情報管理・SNSルール</h2>
+            </div>
+
+            <div class="card warn">
+                <h3>機密情報の取り扱い</h3>
+                <ul>
+                    <li><span class="badge badge-must">厳守</span> 議員懇談会・全員協議会の非公開情報は外部に漏らさない</li>
+                    <li><span class="badge badge-must">厳守</span> 人事に関する情報は公表まで一切外部に出さない</li>
+                    <li><span class="badge badge-must">厳守</span> 会派会議の議論内容（途中経過）は会派外に出さない</li>
+                    <li>行政から事前に提供された資料は、公表時期を確認してから使用する</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>SNS発信ルール</h3>
+                <ul>
+                    <li>個人のSNSでの発信は自由。ただし「会派の見解」と「個人の見解」を明確に区別する</li>
+                    <li>会派としての公式見解は、会派で合意の上で発信する</li>
+                    <li>他の議員・行政職員への個人攻撃は行わない</li>
+                    <li>議場内の撮影は議会のルールに従う</li>
+                    <li><span class="badge badge-recommend">推奨</span> 活動報告は積極的に発信する（透明性の確保）</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>効果的な発信のコツ</h3>
+                <ul>
+                    <li>質問のポイントを簡潔にまとめてSNSで速報する</li>
+                    <li>答弁の要点を「○○について→市は○○と回答」の形で報告する</li>
+                    <li>視察レポートは写真付きで発信すると反響が大きい</li>
+                    <li>市民からのコメントには丁寧に対応する</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="section" id="sec6">
+            <div class="section-header">
+                <span class="section-num">6</span>
+                <h2>会派内コミュニケーション</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>連絡手段</h3>
+                <table>
+                    <tr><th>用途</th><th>ツール</th><th>レスポンス目安</th></tr>
+                    <tr><td>日常連絡・共有</td><td>LINEグループ</td><td>当日中</td></tr>
+                    <tr><td>緊急連絡</td><td>電話</td><td>即時</td></tr>
+                    <tr><td>資料共有</td><td>LINEグループ / メール</td><td>確認次第</td></tr>
+                    <tr><td>議案・政策の議論</td><td>会派会議（対面）</td><td>-</td></tr>
+                </table>
+            </div>
+
+            <div class="card important">
+                <h3>定例ミーティング</h3>
+                <ul>
+                    <li>定例会開会前：議案検討会議（必須）</li>
+                    <li>月1回：定例会派会議（原則出席）</li>
+                    <li>必要に応じて：臨時会派会議</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>心がけ</h3>
+                <ul>
+                    <li>「報連相」を徹底する。特に問題が起きそうな時ほど早めに共有</li>
+                    <li>他のメンバーの活動に関心を持ち、互いにサポートする</li>
+                    <li>意見が対立しても、人格攻撃はしない。「意見」と「人」を分ける</li>
+                    <li>決まったことには全員で責任を持つ</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="section" id="sec7">
+            <div class="section-header">
+                <span class="section-num">7</span>
+                <h2>行政視察・研修</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>視察参加のルール</h3>
+                <ul>
+                    <li>会派視察は年1〜2回を目安に企画する</li>
+                    <li>視察先は政策課題に直結する先進自治体を選定する</li>
+                    <li>視察前に事前調査を行い、質問事項を準備する</li>
+                    <li><span class="badge badge-must">必須</span> 視察後1週間以内に報告書を作成し、会派で共有する</li>
+                    <li>視察で得た知見は一般質問や政策提言に必ず反映させる</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>視察報告書のテンプレート</h3>
+                <ol>
+                    <li><strong>視察先</strong>：自治体名・担当部署・日時</li>
+                    <li><strong>目的</strong>：何を学ぶために行ったか</li>
+                    <li><strong>概要</strong>：視察先の取り組み内容（事実ベース）</li>
+                    <li><strong>成果・効果</strong>：数字を含む成果データ</li>
+                    <li><strong>三郷市への示唆</strong>：三郷市で導入する場合の課題と提案</li>
+                    <li><strong>今後のアクション</strong>：具体的な次のステップ</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Section 8 -->
+        <div class="section" id="sec8">
+            <div class="section-header">
+                <span class="section-num">8</span>
+                <h2>新人議員向けFAQ</h2>
+            </div>
+
+            <div class="card">
+                <div class="faq-item">
+                    <div class="faq-q">Q. 一般質問のテーマはどうやって決めればいい？</div>
+                    <div class="faq-a">市民からの相談、地域の課題、国の動向、日頃の問題意識から選びましょう。gian.souseimisato.comで事前リサーチすると、テーマの深さと幅が見えてきます。会派会議で相談するのも有効です。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 他会派の議員とはどう接すればいい？</div>
+                    <div class="faq-a">政策で意見が違っても、人間関係は大切にしましょう。休憩時間の雑談や、委員会での協力など、日常のコミュニケーションが円滑な議会運営につながります。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 行政職員とはどう関わるべき？</div>
+                    <div class="faq-a">行政職員は「敵」ではなく「パートナー」です。丁寧なコミュニケーションを心がけ、データや情報提供をお願いする際も敬意を持って接しましょう。良い関係が良い答弁を引き出します。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 市民から要望・苦情を受けたらどうする？</div>
+                    <div class="faq-a">まず傾聴する。内容をメモし、会派で共有。対応可能なものは担当課につなぐ。議会で取り上げるべき課題は一般質問のテーマに。対応状況は市民に必ずフィードバックしましょう。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 議案の賛否で迷ったら？</div>
+                    <div class="faq-a">一人で悩まず、会派で議論しましょう。判断の軸は「市民にとって良い結果になるか」。データに基づく判断を心がけ、感情や人間関係で賛否を決めないこと。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 「検討します」という答弁をもらったら？</div>
+                    <div class="faq-a">議事録に残っているので、次の定例会でフォローアップ質問をしましょう。「前回○月の質問で検討するとのことでしたが、進捗をお聞かせください」が効果的です。gian.souseimisato.comの整合性チェック機能が役立ちます。</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="guide-footer">
+        創政MISATO メンバーガイドライン — 最終更新: 2026年2月<br>
+        ※ 内容は随時更新されます。不明点は会派代表にご確認ください。
+    </footer>
+</div>
+
+<script>
+const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
+
+async function sha256(text) {
+    const data = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function tryLogin() {
+    const pw = document.getElementById('passwordInput').value;
+    const hash = await sha256(pw);
+    if (hash === HASH) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('guideContent').style.display = 'block';
+        sessionStorage.setItem('member_auth', '1');
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+    }
+}
+
+document.getElementById('passwordInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') tryLogin();
+});
+
+// セッション中はログイン不要
+if (sessionStorage.getItem('member_auth') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('guideContent').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
