@@ -3389,10 +3389,13 @@ function filterByCategory(category) {
 function renderOrdinances() {
     const results = allOrdinanceData.filter(ord => {
         const matchesCategory = currentCategory === 'all' || ord.category === currentCategory;
+        // fullText（本文）も検索対象に追加
+        const fullTextContent = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
         const matchesSearch = currentSearchTerm === '' ||
             ord.title.toLowerCase().includes(currentSearchTerm) ||
             ord.keywords.some(kw => kw.toLowerCase().includes(currentSearchTerm)) ||
-            ord.summary.toLowerCase().includes(currentSearchTerm);
+            ord.summary.toLowerCase().includes(currentSearchTerm) ||
+            fullTextContent.includes(currentSearchTerm);
         return matchesCategory && matchesSearch;
     });
 

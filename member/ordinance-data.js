@@ -4,19 +4,63 @@
 
 const allOrdinanceData = [
     // ===== 第1編 総規 =====
-    { id: 1, title: '三郷市役所の位置を定める条例', category: '総規・基本', keywords: ['市役所', '位置', '庁舎'], summary: '三郷市役所の位置を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000001.html' },
-    { id: 2, title: '町を市とする処分', category: '総規・基本', keywords: ['市制施行', '三郷市'], summary: '三郷町を三郷市とする処分。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000002.html' },
-    { id: 3, title: '三郷市の休日を定める条例', category: '総規・基本', keywords: ['休日', '祝日', '閉庁'], summary: '市の休日を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000005.html' },
-    { id: 4, title: '三郷市民憲章', category: '総規・基本', keywords: ['市民憲章', '理念', '宣言'], summary: '三郷市民の行動規範となる憲章。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000006.html' },
-    { id: 5, title: '三郷市章', category: '総規・基本', keywords: ['市章', 'シンボル', 'マーク'], summary: '三郷市の市章を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000007.html' },
-    { id: 6, title: '三郷市旗', category: '総規・基本', keywords: ['市旗', 'シンボル', '旗'], summary: '三郷市の市旗を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000008.html' },
-    { id: 7, title: '三郷市民の歌', category: '総規・基本', keywords: ['市歌', '歌', '音楽'], summary: '三郷市民の歌を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000009.html' },
-    { id: 8, title: '市の木、市の花', category: '総規・基本', keywords: ['市の木', '市の花', 'シンボル'], summary: '市の木と市の花を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000626.html' },
-    { id: 9, title: '市の鳥', category: '総規・基本', keywords: ['市の鳥', 'シンボル', '鳥'], summary: '市の鳥を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000757.html' },
-    { id: 10, title: '三郷市交通安全都市宣言', category: '総規・基本', keywords: ['交通安全', '宣言', '都市'], summary: '交通安全都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000010.html' },
-    { id: 11, title: '三郷市非核平和都市宣言', category: '総規・基本', keywords: ['非核', '平和', '宣言'], summary: '非核平和都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000011.html' },
-    { id: 12, title: '三郷市スポーツ健康都市宣言', category: '総規・基本', keywords: ['スポーツ', '健康', '宣言'], summary: 'スポーツ健康都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000012.html' },
-    { id: 13, title: '日本一の読書のまち宣言', category: '総規・基本', keywords: ['読書', '日本一', '宣言', '図書館'], summary: '日本一の読書のまち宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001008.html' },
+    { id: 1, title: '三郷市役所の位置を定める条例', category: '総規・基本', keywords: ['市役所', '位置', '庁舎'], summary: '三郷市役所の位置を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000001.html',
+        fullText: `<div class="jorei-header">○三郷市役所の位置を定める条例<br>昭和33年5月3日 条例第8号</div>
+<div class="jorei-article">三郷市役所の位置を次のとおり定める。<br><br>埼玉県三郷市花和田648番地1</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。<br><br>附則（昭和47年4月27日条例第23号）<br>この条例は、昭和47年5月3日から施行する。<br><br>附則（昭和58年6月16日条例第17号）<br>1　この条例は、昭和58年7月4日から施行する。</div>` },
+    { id: 2, title: '町を市とする処分', category: '総規・基本', keywords: ['市制施行', '三郷市'], summary: '三郷町を三郷市とする処分。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000002.html',
+        fullText: `<div class="jorei-header">○町を市とする処分<br>昭和47年4月12日 自治省告示第101号</div>
+<div class="jorei-article">地方自治法（昭和22年法律第67号）第8条第3項の規定により、埼玉県北葛飾郡三郷町を三郷市とする旨、埼玉県知事から届出があった。<br><br>右の処分は、昭和47年5月3日からその効力を生ずるものとする。</div>` },
+    { id: 3, title: '三郷市の休日を定める条例', category: '総規・基本', keywords: ['休日', '祝日', '閉庁'], summary: '市の休日を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000005.html',
+        fullText: `<div class="jorei-header">○三郷市の休日を定める条例<br>平成元年12月15日 条例第24号</div>
+<div class="jorei-article"><span class="article-title">（市の休日）</span><br>第1条 次に掲げる日は、市の休日とし、市の機関の執務は、原則として行わないものとする。<br>（1）日曜日及び土曜日<br>（2）国民の祝日に関する法律（昭和23年法律第178号）に規定する休日<br>（3）12月29日から翌年の1月3日までの日（前号に掲げる日を除く。）<br>2 前項の規定は、市の休日に市の機関がその所掌事務を遂行することを妨げるものではない。</div>
+<div class="jorei-article"><span class="article-title">（期限の特例）</span><br>第2条 市の行政庁に対する申請、届出その他の行為の期限で条例又は規則で規定する期間（時をもって定める期間を除く。）をもって定めるものが市の休日に当たるときは、市の休日の翌日をもってその期限とみなす。ただし、条例又は規則に別段の定めがある場合は、この限りでない。</div>
+<div class="jorei-supplementary">附則<br>（施行期日）<br>1 この条例は、平成2年4月1日から施行する。<br><br>附則（平成4年12月15日条例第22号）<br>（施行期日）<br>1 この条例は、平成5年4月1日から施行する。</div>` },
+    { id: 4, title: '三郷市民憲章', category: '総規・基本', keywords: ['市民憲章', '理念', '宣言'], summary: '三郷市民の行動規範となる憲章。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000006.html',
+        fullText: `<div class="jorei-header">○三郷市民憲章<br>昭和47年5月3日</div>
+<div class="jorei-preamble">水とみどりの美しい自然につつまれたわたくしたちのまち三郷は、新しい時代のいぶきをうけて、近代都市をめざして躍進をつづけております。<br>わたくしたちは、このまちを明るく健康で、住みよいまちとするために、全市民の願いをこめて、この市民憲章を定めます。</div>
+<div class="jorei-article">1　環境をととのえ、川や道路をきれいにし、花とみどりを愛して、美しいまちをつくりましょう。</div>
+<div class="jorei-article">1　老人やこどもをいたわり、おたがいに人格を尊重し、しあわせな家庭、豊かな都市をつくりましょう。</div>
+<div class="jorei-article">1　教養を高め文化の向上をはかり、若い力を伸ばして明るい社会をつくりましょう。</div>
+<div class="jorei-article">1　スポーツを愛し、自然に親しみ、健康で住みよい郷土をつくりましょう。</div>
+<div class="jorei-article">1　すべてのきまりを守り、交通災害や暴力のない平和な三郷をつくりましょう。</div>` },
+    { id: 5, title: '三郷市章', category: '総規・基本', keywords: ['市章', 'シンボル', 'マーク'], summary: '三郷市の市章を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000007.html',
+        fullText: `<div class="jorei-header">○三郷市章<br>昭和60年1月1日 告示第1号</div>
+<div class="jorei-article">三郷市章の図法<br><br>三郷市章の図法は、次のとおりとする。<br><br>（図省略）</div>` },
+    { id: 6, title: '三郷市旗', category: '総規・基本', keywords: ['市旗', 'シンボル', '旗'], summary: '三郷市の市旗を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000008.html',
+        fullText: `<div class="jorei-header">○三郷市旗<br>昭和60年1月1日 告示第2号</div>
+<div class="jorei-article">旗の地色は白とし、市章部分は、赤染め抜きとする。</div>
+<div class="jorei-article">三郷市旗の図法<br><br>三郷市旗の図法は、次のとおりとする。<br><br>（図省略）</div>` },
+    { id: 7, title: '三郷市民の歌', category: '総規・基本', keywords: ['市歌', '歌', '音楽'], summary: '三郷市民の歌を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000009.html',
+        fullText: `<div class="jorei-header">○三郷市民の歌<br>昭和60年1月1日 告示第3号</div>
+<div class="jorei-article">作詞　狛　森<br>作曲　狛林　正一<br><br>（楽譜・歌詞は三郷市例規集をご参照ください）</div>` },
+    { id: 8, title: '市の木、市の花', category: '総規・基本', keywords: ['市の木', '市の花', 'シンボル'], summary: '市の木と市の花を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000626.html',
+        fullText: `<div class="jorei-header">○市の木、市の花<br>昭和49年5月3日 告示第55号</div>
+<div class="jorei-article">花や緑につつまれた生活環境をつくるとともに緑化思想の高揚を図るため、市の木、市の花を次のとおり制定する。<br><br>市の木「シイノキ」<br>市の花「サツキ」</div>` },
+    { id: 9, title: '市の鳥', category: '総規・基本', keywords: ['市の鳥', 'シンボル', '鳥'], summary: '市の鳥を定める。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000757.html',
+        fullText: `<div class="jorei-header">○市の鳥<br>平成17年1月1日 告示第1号</div>
+<div class="jorei-article">緑を生かし、自然と共生した環境づくりを進めるとともに、地球環境を大切にする心を養うため、その象徴として「市の鳥」を次のとおり制定する。<br><br>市の鳥「カイツブリ」</div>` },
+    { id: 10, title: '三郷市交通安全都市宣言', category: '総規・基本', keywords: ['交通安全', '宣言', '都市'], summary: '交通安全都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000010.html',
+        fullText: `<div class="jorei-header">○三郷市交通安全都市宣言<br>昭和52年8月19日</div>
+<div class="jorei-article">自動車は、近代文明が生んだ利器として人々に多大の便益をもたらし、快適な生活を楽しませるものであるが、これを使用する人々の心構えと道路などの施設環境如何によっては、人々の生命を脅かし、生活を破壊する恐るべき凶器となりうるものであり、幾多の悲劇が繰り返しひき起こされているのが現状である。<br><br>三郷市は首都20キロ圏内に位置し、埼玉県東南部における人口急増都市として発展してきたが、近年、自動車交通量の激増、国道6号及び同4号に囲まれているための通過交通の増加等によりひき起こされる各種の交通事故は、市民の生命を脅かし、市民生活に危機をもたらすなど、極めて事態が容易でないことを憂慮しなければならない。<br><br>かかる事情から当市は、本年5月、埼玉県下における交通事故防止最重点地域に指定されるに至ったが、将来、常磐自動車道・首都高速6号線の完成によって、通過交通量の緩和が予測される一方、公共開発に伴う車両交通の増加も考えられ、交通安全対策は、最も緊要な行政課題となるに至った。<br><br>東和・彦成・早稲田の3か村合併後8年にして村から町へ、更に8年にして市へと飛躍を遂げた三郷市の十数年間はまさに激動の時期であったが、本年は市制施行5年目に当たり、交通安全対策についても更に一層の進展を期すべきときである。<br><br>よって我々は、本市におけるこれら交通事故の絶滅を期するため、市における交通安全組織を結集し、市内道路網の整備と交通安全施設の完備を促進し、同時に交通安全思想の徹底浸透を図り、全市民と共に安全で明るく住みよい都市建設を目指すため、ここにわれらが郷土三郷市を「交通安全都市」とすることを宣言する。</div>` },
+    { id: 11, title: '三郷市非核平和都市宣言', category: '総規・基本', keywords: ['非核', '平和', '宣言'], summary: '非核平和都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000011.html',
+        fullText: `<div class="jorei-header">○三郷市非核平和都市宣言<br>昭和63年3月14日</div>
+<div class="jorei-article">平和を愛する心は、私たち人類の共通の願いです。<br><br>しかし、今なお、世界には核兵器の脅威をはじめ、悲惨な争いがあとをたたず、このことは人類を滅亡に導きかねません。<br><br>私たちは、ただ一つの被爆国の国民として、非核三原則の堅持を願い、すべての国のあらゆる核兵器がすみやかに廃絶され、人類永遠の平和が確立されることを強く切望するものです。<br><br>三郷市民は、世界の恒久平和実現のため、平和を願う心を結集し市民一人ひとりが平和のために努力することを誓い、ここに非核平和都市を宣言します。</div>` },
+    { id: 12, title: '三郷市スポーツ健康都市宣言', category: '総規・基本', keywords: ['スポーツ', '健康', '宣言'], summary: 'スポーツ健康都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000012.html',
+        fullText: `<div class="jorei-header">○三郷市スポーツ健康都市宣言<br>平成2年7月14日</div>
+<div class="jorei-preamble">わたくしたち三郷市民は、スポーツを愛し、スポーツに親しみ、健康で住みよい郷土をつくるため、ここにスポーツ健康都市を宣言します。</div>
+<div class="jorei-article">1　スポーツをとおし、健全な心と体をつくりましょう。</div>
+<div class="jorei-article">1　スポーツをとおし、仲間をつくり、友情の輪をひろめましょう。</div>
+<div class="jorei-article">1　スポーツをとおし、豊かな明るいまちづくりをすすめましょう。</div>` },
+    { id: 13, title: '日本一の読書のまち宣言', category: '総規・基本', keywords: ['読書', '日本一', '宣言', '図書館'], summary: '日本一の読書のまち宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001008.html',
+        fullText: `<div class="jorei-header">○日本一の読書のまち宣言<br>平成25年3月18日</div>
+<div class="jorei-preamble">読書は、先人の想い、人類の英知を伝えるとともに、みずみずしい感性や旺盛な好奇心を育み、より深く豊かに生きるための力となって、生涯にわたり大きな財産となります。<br><br>三郷市は、「日本一の「読書のまち三郷」づくり」をかかげ、子どもたちに「読書の楽しさ、知る喜び」を伝えるため、家庭・地域・学校・図書館が一体となり、おはなし会やブックトーク、朝読や家読（うちどく）、子どもが感想などを伝えあう読書郵便、市が独自に編集した『言葉の力』、子ども司書の養成、読書フェスティバルなどにより、読書活動を推進してきました。<br><br>市制施行40周年の節目では、「全国家読（うちどく）サミット」において、三郷市を全国に向け発信しました。<br><br>私たちは、読書活動をとおして人と人との絆を結び、誰もが、いつでも読書に親しみ、心豊かに暮らすことができる、文化のかおり高いまちを創ることを願い、</div>
+<div class="jorei-article">1　乳幼児期から読書の世界に触れる機会を大切にします。</div>
+<div class="jorei-article">1　「家読（うちどく）ゆうびんコンクール」をはじめとし、家読（うちどく）をすすめます。</div>
+<div class="jorei-article">1　三郷の歴史・民話など、郷土を深く知る機会を大切にします。</div>
+<div class="jorei-article">1　図書館などを活用し、読書に親しむ機会を大切にします。</div>
+<div class="jorei-article">1　人と本をつなぐネットワークづくりをすすめます。</div>
+<div class="jorei-article" style="font-weight:bold;text-align:center;margin-top:1.5rem;">ここに三郷市は「日本一の読書のまち」を宣言します。</div>` },
     { id: 14, title: '三郷市自治基本条例', category: '総規・基本', keywords: ['自治', '基本条例', '市民参加', '協働'], summary: '自治の基本理念、市民参加、協働のまちづくりの基本を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000897.html',
         fullText: `<div class="jorei-header">○三郷市自治基本条例<br>平成21年6月12日 条例第16号</div>
 <div class="jorei-toc">目次<br>前文<br>第1章 総則(第1条―第3条)<br>第2章 市民等<br>　第1節 市民等の権利(第4条―第7条)<br>　第2節 市民等の責務(第8条)<br>第3章 議会(第9条―第11条)<br>第4章 市長等(第12条―第14条)<br>第5章 市政運営(第15条―第28条)<br>第6章 参加と協働<br>　第1節 情報の共有(第29条―第32条)<br>　第2節 参加(第33条―第41条)<br>　第3節 協働(第42条・第43条)<br>第7章 コミュニティ(第44条―第46条)<br>第8章 市民投票(第47条―第50条)<br>第9章 国、埼玉県、他の地方自治体等との連携(第51条―第53条)<br>第10章 条例の位置付け及び見直し等(第54条―第56条)<br>附則</div>
@@ -93,8 +137,26 @@ const allOrdinanceData = [
 <div class="jorei-article"><span class="article-title">（条例の検証及び見直し）</span><br>第55条 市長は、この条例の施行状況を検証し、必要に応じて見直しを行うものとする。</div>
 <div class="jorei-article"><span class="article-title">（条例の基本理念の普及）</span><br>第56条 市長は、市民等がこの条例の内容を深く理解し、積極的に市民等の権利を行使できるよう、普及及び啓発を継続して行うものとする。</div>
 <div class="jorei-supplementary">附則<br>この条例は、平成21年10月1日から施行する。</div>` },
-    { id: 15, title: '三郷市公告式条例', category: '総規・基本', keywords: ['公告', '告示', '公布'], summary: '条例等の公布方法を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000013.html' },
-    { id: 16, title: '三郷市表彰条例', category: '総規・基本', keywords: ['表彰', '功績', '栄誉'], summary: '市の表彰に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000014.html' },
+    { id: 15, title: '三郷市公告式条例', category: '総規・基本', keywords: ['公告', '告示', '公布'], summary: '条例等の公布方法を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000013.html',
+        fullText: `<div class="jorei-header">○三郷市公告式条例<br>昭和31年9月30日 条例第1号</div>
+<div class="jorei-article"><span class="article-title">（趣旨）</span><br>第1条 地方自治法（昭和22年法律第67号）第16条の規定に基づく公告式は、この条例の定めるところによる。</div>
+<div class="jorei-article"><span class="article-title">（条例の公布）</span><br>第2条 条例を、公布するときは、公布の旨の前文及び年月日を記入してその末尾に市長が署名しなければならない。<br>2 条例の公布は、三郷市役所の掲示場に掲示してこれを行う。</div>
+<div class="jorei-article"><span class="article-title">（規則に関する準用）</span><br>第3条 前条の規定は、規則にこれを準用する。</div>
+<div class="jorei-article"><span class="article-title">（規程の公表）</span><br>第4条 規則を除くほか、市長の定める規程を公表しようとするときは、公表の旨の前文、年月日及び市長名を記入し、市長印を押さなければならない。<br>2 第2条第2項の規定は、前項の規程に準用する。</div>
+<div class="jorei-article"><span class="article-title">（その他の規則及び規程の公表）</span><br>第5条 第2条の規定は、議会の会議規則、傍聴規則その他教育委員会を除く市の機関の定める規則で公表を要するものにこれを準用する。この場合において、同条第1項中「市長」とあるのは、「当該機関又は当該機関を代表する者」と読み替えるものとする。<br>2 前条の規定は、教育委員会を除く市の機関の定める規程で公表を要するものにこれを準用する。この場合において、同条第1項中「市長名」とあるのは「当該機関名又は当該機関を代表する者の名」と、「市長印」とあるのは「当該機関印又は当該機関を代表する者の印」と読み替えるものとする。</div>
+<div class="jorei-article"><span class="article-title">（施行期日の特例）</span><br>第6条 規則又は市の機関の定める規則若しくは規程は、それぞれ当該規則又は規程をもって特に施行期日を定めることができる。</div>
+<div class="jorei-supplementary">附則<br>この条例は、昭和31年9月30日から施行する。<br><br>附則（昭和39年12月24日条例第26号）<br>この条例は、公布の日から施行する。</div>` },
+    { id: 16, title: '三郷市表彰条例', category: '総規・基本', keywords: ['表彰', '功績', '栄誉'], summary: '市の表彰に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000014.html',
+        fullText: `<div class="jorei-header">○三郷市表彰条例<br>昭和44年6月30日 条例第26号</div>
+<div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、市の発展に寄与し、又は広く市民の模範となるべき功績のあった個人及び団体の表彰に関し、必要な事項を定めることを目的とする。</div>
+<div class="jorei-article"><span class="article-title">（表彰の基準）</span><br>第2条 表彰は、次に該当する個人又は団体について行う。<br>（1）市議会議員として10年以上在職し、特に功労があった者<br>（2）選挙によって就任した各種委員又は任命及び選任について議会の同意を得て就任した各種委員として10年以上在職し、特に功労があった者<br>（3）前号に掲げるもののほか、特別職の職員で非常勤のものの報酬及び費用弁償に関する条例（昭和48年条例第2号）別表第1から別表第3までに掲げる各種委員等として10年以上在職し、特に功労があった者<br>（4）消防団員として15年以上在職し、特に功労があった者<br>（5）副市長として10年以上在職し、特に功労があった者<br>（6）教育長として10年以上在職し、特に功労があった者<br>（7）市の職員として25年以上在職し、特に功労があった者<br>（8）市の公益又は発展に貢献し、特に功労があった者<br>（9）市の公益のため、50万円以上の金品を寄附した者<br>（10）善行が特に優れ他の模範となる者<br>（11）その他特に表彰に値すると認められる者</div>
+<div class="jorei-article"><span class="article-title">（表彰の方法）</span><br>第3条 表彰は、市長が行う。<br>2 表彰は、表彰状に副賞を添えるものとする。</div>
+<div class="jorei-article"><span class="article-title">（在職年数の計算）</span><br>第4条 第2条の在職年数は、月をもって計算し、中断した場合であっても前後の年数を通算する。</div>
+<div class="jorei-article"><span class="article-title">（表彰の時期）</span><br>第5条 表彰は、毎年1月1日に行う。ただし、特に必要がある場合は、臨時に行うことができる。</div>
+<div class="jorei-article"><span class="article-title">（追賞）</span><br>第6条 この条例により表彰される者が表彰前に死亡したときは、追賞し、表彰及び副賞は、その遺族に授与する。</div>
+<div class="jorei-article"><span class="article-title">（表彰者名簿）</span><br>第7条 市長は、この条例により表彰したときは、表彰を受けた者の氏名その他必要事項を表彰者名簿に登録し、永久保存するものとする。</div>
+<div class="jorei-article"><span class="article-title">（規則への委任）</span><br>第8条 この条例の施行について必要な事項は、規則で定める。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。<br><br>附則（平成18年9月27日条例第25号）<br>この条例は、公布の日から施行する。<br><br>附則（平成18年12月14日条例第35号）<br>この条例は、平成19年4月1日から施行する。<br><br>附則（平成29年3月27日条例第2号）<br>この条例は、平成29年4月1日から施行する。</div>` },
 
     // ===== 第2編 議会 =====
     { id: 17, title: '三郷市議会基本条例', category: '議会', keywords: ['議会', '基本条例', '議員', '民主主義'], summary: '議会運営の基本理念と議員の責務を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000965.html',
