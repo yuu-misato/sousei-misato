@@ -17,12 +17,114 @@ const allOrdinanceData = [
     { id: 11, title: '三郷市非核平和都市宣言', category: '総規・基本', keywords: ['非核', '平和', '宣言'], summary: '非核平和都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000011.html' },
     { id: 12, title: '三郷市スポーツ健康都市宣言', category: '総規・基本', keywords: ['スポーツ', '健康', '宣言'], summary: 'スポーツ健康都市宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000012.html' },
     { id: 13, title: '日本一の読書のまち宣言', category: '総規・基本', keywords: ['読書', '日本一', '宣言', '図書館'], summary: '日本一の読書のまち宣言。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001008.html' },
-    { id: 14, title: '三郷市自治基本条例', category: '総規・基本', keywords: ['自治', '基本条例', '市民参加', '協働'], summary: '自治の基本理念、市民参加、協働のまちづくりの基本を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000897.html' },
+    { id: 14, title: '三郷市自治基本条例', category: '総規・基本', keywords: ['自治', '基本条例', '市民参加', '協働'], summary: '自治の基本理念、市民参加、協働のまちづくりの基本を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000897.html',
+        fullText: `<div class="jorei-header">○三郷市自治基本条例<br>平成21年6月12日 条例第16号</div>
+<div class="jorei-toc">目次<br>前文<br>第1章 総則(第1条―第3条)<br>第2章 市民等<br>　第1節 市民等の権利(第4条―第7条)<br>　第2節 市民等の責務(第8条)<br>第3章 議会(第9条―第11条)<br>第4章 市長等(第12条―第14条)<br>第5章 市政運営(第15条―第28条)<br>第6章 参加と協働<br>　第1節 情報の共有(第29条―第32条)<br>　第2節 参加(第33条―第41条)<br>　第3節 協働(第42条・第43条)<br>第7章 コミュニティ(第44条―第46条)<br>第8章 市民投票(第47条―第50条)<br>第9章 国、埼玉県、他の地方自治体等との連携(第51条―第53条)<br>第10章 条例の位置付け及び見直し等(第54条―第56条)<br>附則</div>
+<div class="jorei-preamble">私たちには夢があります。市民一人ひとりの知恵をいかして、すべての人が幸せにいきいきと暮らせるまち、愛着と誇りと希望の持てるまちを実現することです。<br>そのためには、市民の信託と参加に基づく市政、市民をはじめ、多様なまちづくりの主体による協働が必要です。<br>私たちは、ここに三郷市の自治のあり方を明らかにする市民共有の最高規範として、この条例を定めます。</div>
+<div class="jorei-chapter">第1章 総則</div>
+<div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、三郷市の自治の基本理念を明らかにするとともに、市民等の権利及び責務、議会及び執行機関の責務並びに市政運営及び参加と協働の基本的な事項を定めることにより、地方自治の確立を図り、もって豊かな地域社会を実現することを目的とする。</div>
+<div class="jorei-article"><span class="article-title">（用語の定義）</span><br>第2条 この条例において、次の各号に掲げる用語の意義は、それぞれ当該各号に定めるところによる。<br>(1) 市民 市内に住所を有する個人をいう。<br>(2) 市民等 市民及び市内において働き、学び、若しくは活動する個人又は団体をいう。<br>(3) 執行機関 市長、教育委員会、選挙管理委員会、公平委員会、農業委員会、固定資産評価審査委員会及び監査委員をいう。<br>(4) 参加 政策の立案、実施又は評価の過程に主体的に関わることをいう。<br>(5) 協働 市民等及び執行機関が、それぞれの役割及び責任の下、互いに尊重し、対等な立場で補完又は協力して公益的な活動を行うことをいう。<br>(6) まちづくり 地域社会の維持及び向上に役立つ活動をいう。</div>
+<div class="jorei-article"><span class="article-title">（自治の基本理念）</span><br>第3条 三郷市の自治の基本理念は、次に掲げるものとする。<br>(1) 市民等、議会及び執行機関は、互いに協力して、一人ひとりの人権が尊重され、だれもが安心していきいきと暮らせる豊かな地域社会を築くことをめざす。<br>(2) 市民は、主権者として自治の一部を議会及び市長に信託する。<br>(3) 議会は、市政の意思決定機関として市民の信託に応える。<br>(4) 執行機関は、市民の信託に応え、公正かつ適切に市政を運営する。<br>(5) 市民等及び執行機関は、自治の推進に必要な情報を相互に共有するとともに、参加と協働のまちづくりを進める。</div>
+<div class="jorei-chapter">第2章 市民等</div>
+<div class="jorei-section">第1節 市民等の権利</div>
+<div class="jorei-article"><span class="article-title">（行政サービスを受ける権利）</span><br>第4条 市民等は、法令、条例、規則等の定めるところにより、行政サービスを受けることができる。</div>
+<div class="jorei-article"><span class="article-title">（情報を知る権利）</span><br>第5条 市民等は、市政に関する情報を知ることができる。</div>
+<div class="jorei-article"><span class="article-title">（参加する権利）</span><br>第6条 市民は、市政に参加することができる。<br>2 市民等(市民を除く。)は、市民に準じ、市政に参加することができる。</div>
+<div class="jorei-article"><span class="article-title">（まちづくりの自由）</span><br>第7条 市民等は、自由にまちづくりを行うことができる。</div>
+<div class="jorei-section">第2節 市民等の責務</div>
+<div class="jorei-article"><span class="article-title">（市民等の責務）</span><br>第8条 選挙権又は市民投票権を有する市民は、当該権利を行使するよう努めるものとする。<br>2 市民等は、法令等の定めるところにより、行政サービスに要する費用を税、使用料、手数料等により負担するものとする。<br>3 市民等は、自らがまちづくりの主体であることを認識するとともに、参加と協働のまちづくりにあたっては、互いの意見及び行動を尊重するものとする。<br>4 市民等は、地域社会との調和、環境への配慮その他の社会的責務を認識し、その責務を果たすよう努めるものとする。</div>
+<div class="jorei-chapter">第3章 議会</div>
+<div class="jorei-article"><span class="article-title">（議会の役割及び権限）</span><br>第9条 議会は、市民から選ばれた議員で構成される市政の意思決定機関として市民の信託に応えるものとする。<br>2 議会は、市政運営の監視及び政策立案の機能を有し、市民の視点に立った権限の行使に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（議会の運営）</span><br>第10条 議会は、市民等の意見を十分反映し、市民等に分かりやすく、市民等から信頼される、開かれた議会の実現に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（議員の責務）</span><br>第11条 議員は、自らの責任を自覚し、自己研鑽、多様な市民等の意見の把握及び議会活動に関する情報の提供に努め、常に市民等の福祉の向上を行動の指針として、その職務を誠実に行うものとする。</div>
+<div class="jorei-chapter">第4章 市長等</div>
+<div class="jorei-article"><span class="article-title">（市長の責務）</span><br>第12条 市長は、市民の信託を受けて市民を代表する公職についたことを強く認識し、公正かつ誠実に市政を運営するものとする。<br>2 市長は、市政の運営にあたっては、自らの考えを市民等に明らかにするとともに、多様な市民等の意見を十分に把握するものとする。<br>3 市長は、市職員に対して、この条例の遵守を求めるとともに、市職員が自治の実現のために必要な能力を向上させ、政策形成を行えるよう、適切に環境を整備するものとする。</div>
+<div class="jorei-article"><span class="article-title">（市長を除く執行機関の責務）</span><br>第13条 市長を除く執行機関は、設置の目的に応じた責務を負い、この条例を遵守し、互いに協力して市政を運営するものとする。</div>
+<div class="jorei-article"><span class="article-title">（市職員の責務）</span><br>第14条 市職員は、市民等の視点に立って、全体の奉仕者として公正かつ誠実に職務を遂行するとともに、まちづくりにおいて市民等が連携を図れるよう努めるものとする。<br>2 市職員は、常に、職務の遂行に必要な知識の習得及び能力の向上に取り組むものとする。</div>
+<div class="jorei-chapter">第5章 市政運営</div>
+<div class="jorei-article"><span class="article-title">（市政運営の基本方針）</span><br>第15条 執行機関は、市民等の福祉の向上のため、市民等の視点に立ち、合意形成を図りながら公正かつ効率的に市政を運営するものとする。<br>2 執行機関は、計画、財政、評価等の制度を相互に連携させ、総合的かつ計画的に市政を運営するものとする。</div>
+<div class="jorei-article"><span class="article-title">（総合計画）</span><br>第16条 市長は、議会の議決を経て、市政運営の指針となる基本構想を定めるとともに、基本構想、基本計画及び実施計画で構成される総合計画に基づき、総合的かつ計画的に市政を運営するものとする。<br>2 市長は、総合計画の策定にあたっては、行政評価の結果を反映させるものとする。</div>
+<div class="jorei-article"><span class="article-title">（行政改革）</span><br>第17条 執行機関は、行政改革に関する計画を策定し、常に市政運営の質の向上を図るものとする。</div>
+<div class="jorei-article"><span class="article-title">（行政評価）</span><br>第18条 執行機関は、総合計画に基づく政策の成果を明らかにし、効率的かつ効果的に市政を運営するため、行政評価を実施し、当該行政評価に関する情報を市民等及び議会に分かりやすく公表するものとする。<br>2 執行機関は、行政評価にあたっては、市民等が参加できるよう努めるものとする。<br>3 執行機関は、行政評価を常に最もふさわしい手法で行えるよう検討し、その改善に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（政策法務）</span><br>第19条 執行機関は、政策法務能力の向上に努め、法令等の解釈及び運用を適正に行うとともに、必要な条例、規則等の制定及び改廃を適切に行うものとする。</div>
+<div class="jorei-article"><span class="article-title">（行政手続）</span><br>第20条 執行機関は、市民等の権利及び利益の保護を図るため、処分、行政指導及び届出に関する手続に関し、市政運営における公正性の確保及び透明性の向上を図るものとする。</div>
+<div class="jorei-article"><span class="article-title">（説明責任）</span><br>第21条 執行機関は、政策過程において、政策の内容、効果、必要性、妥当性等について、市民等及び議会に分かりやすく説明するものとする。</div>
+<div class="jorei-article"><span class="article-title">（応答責任）</span><br>第22条 執行機関は、市民等からの市政に関する意見等を十分に検討し、公正かつ適切に対応し、市政に活用するものとする。</div>
+<div class="jorei-article"><span class="article-title">（法令遵守及び公益通報）</span><br>第23条 執行機関は、市職員の職務に係る法令等の遵守及び倫理の徹底を図り、公正な職務の遂行を確保するものとする。<br>2 市職員は、市政運営に違法又は不当な事実があった場合には、これを放置し、又は隠してはならず、事態を是正するため、公益通報等の適切な行動をとるものとする。</div>
+<div class="jorei-article"><span class="article-title">（組織及び人事）</span><br>第24条 市長は、社会情勢の変化又は複数の分野にまたがる課題に柔軟に対応するため、効率的かつ効果的な内部組織の編成に常に努めるものとする。<br>2 市長は、政策形成にあたり創造性を発揮できるよう、優秀な人材の確保、職員研修の充実、評価重視の人事等に取り組むものとする。</div>
+<div class="jorei-article"><span class="article-title">（危機管理）</span><br>第25条 執行機関は、地震、火災、水害その他の不測の事態から、市民等の身体、生命及び財産を守るため、緊急時の対応計画を策定するとともに、これを担う体制を整備するものとする。<br>2 執行機関は、災害等の復旧に関する計画を策定するとともに、これを担う体制を整備するものとする。</div>
+<div class="jorei-article"><span class="article-title">（財政運営）</span><br>第26条 市長は、計画的に市政を運営するため、必要な財源を確保するとともに、最少の経費で最大の効果をあげるよう、健全な財政運営及び合理的な予算執行に努めるものとする。<br>2 市長は、予算の編成及び執行にあたっては、総合計画及びその評価を踏まえて行うものとする。<br>3 市長は、財政状況、予算の内容及び編成過程、予算執行並びに決算について、市民等及び議会への分かりやすい情報提供に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（財産管理）</span><br>第27条 市長は、市有財産の保有状況を明らかにし、財産の適正な管理及び効率的な活用に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（監査）</span><br>第28条 監査委員は、合理的かつ能率的な市政運営の確保のため、事務事業の適法性、妥当性、経済性等の評価を踏まえて監査を行うものとする。</div>
+<div class="jorei-chapter">第6章 参加と協働</div>
+<div class="jorei-section">第1節 情報の共有</div>
+<div class="jorei-article"><span class="article-title">（情報の共有）</span><br>第29条 議会及び執行機関は、参加と協働のまちづくりを推進するため、市政に関する情報が市民等との共有財産であることを認識し、適切な情報の提供及び情報公開を推進するものとする。<br>2 市民等、議会及び執行機関は、まちづくりに関する情報を互いに共有するよう努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（情報の提供）</span><br>第30条 議会及び執行機関は、広聴及び広報の充実を図ることにより、市民等が必要とする情報を把握するとともに、当該情報を積極的かつ効果的に提供するよう努めるものとする。<br>2 議会及び執行機関は、情報の提供にあたっては、広報、ホームページ等を積極的に活用し、市政情報を分かりやすく、かつ、入手しやすい複数の方法で市民等に提供するものとする。</div>
+<div class="jorei-article"><span class="article-title">（情報公開）</span><br>第31条 議会及び執行機関は、保有する情報について公開請求を受けたときは、正当な理由がない限り、適切かつ迅速に公開するものとする。</div>
+<div class="jorei-article"><span class="article-title">（個人情報保護）</span><br>第32条 議会及び執行機関は、個人の権利及び利益の保護並びに適切な市政運営に資するため、保有する個人情報を適切に取り扱うものとする。</div>
+<div class="jorei-section">第2節 参加</div>
+<div class="jorei-article"><span class="article-title">（参加する権利の保障）</span><br>第33条 執行機関は、政策過程において、市政運営の効率性の確保に配慮しつつ、市民等の参加する権利を保障するとともに、そのための制度の充実に努めるものとする。<br>2 市民等の市政への参加は、政策過程の質の向上を目的とするものであり、市政を運営するにあたり、執行機関が負うべき責任及び義務を軽減するものと解してはならない。</div>
+<div class="jorei-article"><span class="article-title">（参加の対象）</span><br>第34条 執行機関は、次に掲げる政策を定める場合は、参加の機会を保障するものとする。<br>(1) 基本構想、基本計画又は個別分野における政策の基本的事項を定める計画<br>(2) 市民等に義務を課し、又は権利を制限する条例<br>(3) 市民生活に大きな影響を及ぼす政策又は制度<br>2 前項各号に掲げるもののうち、次に掲げるものは、参加の対象外とすることができる。<br>(1) 内容の軽微なもの<br>(2) 緊急を要するもの<br>(3) 法令によって定められるもの<br>(4) 税及び納付すべき金銭に関するもの</div>
+<div class="jorei-article"><span class="article-title">（参加の方法）</span><br>第35条 執行機関は、市民等の参加の機会を保障するため、公聴会、説明会、懇話会等の開催、審議会等の公募委員募集、提案書の提出等目的に応じた適切な方法を用いるものとする。<br>2 執行機関は、前項に規定するほか、多様な市民等の参加の方法を積極的に検討し、継続して改善に努めるものとする。<br>3 市民等及び執行機関は、市民等の参加にあたり、互いの意見を十分に尊重しながら、合意形成に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（会議の公開）</span><br>第36条 執行機関は、法令等で定めのあるものを除き、会議及びその会議録を公開しなければならない。ただし、当該会議に諮り、全部又は一部を非公開とすることができる。この場合において、執行機関は、非公開とする理由を公表するものとする。</div>
+<div class="jorei-article"><span class="article-title">（参加における配慮）</span><br>第37条 執行機関は、市民等が参加できるよう、会議の時間、場所その他開催方法等に配慮するものとする。</div>
+<div class="jorei-article"><span class="article-title">（政策過程の透明化）</span><br>第38条 執行機関は、市民等の参加を促進するため、参加の場において、政策の内容、効果、必要性、妥当性等について、積極的かつ効果的な情報提供を行い、政策過程の透明化を図るものとする。</div>
+<div class="jorei-article"><span class="article-title">（意見の取扱）</span><br>第39条 執行機関は、市民等から示された意見及び意見に対する考え方を適切な時期及び方法で公表するものとする。<br>2 執行機関は、市民等から示された意見を踏まえ、合意点を見極め、市政へ適切に反映させるよう努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（パブリック・コメント手続）</span><br>第40条 執行機関は、市政の重要な政策の決定にあたり、事前にその案を公表し、市民等が意見を述べる機会を設け、当該意見に対する考え方を公表するものとする。</div>
+<div class="jorei-article"><span class="article-title">（学習・調査研究の支援）</span><br>第41条 執行機関は、市民等が参加し、十分な効果をあげられるよう、市民等が市政や地域社会の課題について学習し、及び調査研究するための支援に努めるものとする。</div>
+<div class="jorei-section">第3節 協働</div>
+<div class="jorei-article"><span class="article-title">（協働の基本原則）</span><br>第42条 市民等及び執行機関は、地域課題の解決に向けて協働することができる。<br>2 協働にあたっては、互いに十分な協議を行い、協働の意義、目的及び役割分担について合意を図るものとする。</div>
+<div class="jorei-article"><span class="article-title">（協働推進の基盤整備）</span><br>第43条 執行機関は、市民等が協働の意義及び目的を共有し、共に活動できるよう支援するため、協働を推進する総合的な政策を行うものとする。<br>2 執行機関は、市民等による協働を支援するため、活動の機会、場所の提供、人材の育成、情報の収集及び提供等を行うものとする。<br>3 執行機関は、市民等からの協働についての提案等、多様な協働の試みが展開されるよう、相談体制の充実等に努めるものとする。</div>
+<div class="jorei-chapter">第7章 コミュニティ</div>
+<div class="jorei-article"><span class="article-title">（コミュニティの尊重）</span><br>第44条 市民等は、暮らしやすい地域社会を築くために、自主的かつ自立した地域の基盤となる町会、自治会その他の地縁的な団体及び目的を共有する組織又は集団（以下「コミュニティ」という。）を形成することができる。<br>2 市民等及び執行機関は、地域の共通課題について共に考え、当該課題の解決にあたるためのコミュニティの役割を認識し、コミュニティの活動を守り育てるよう努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（コミュニティの連携）</span><br>第45条 各コミュニティは、地域の様々な課題及び互いの活動が深く関連していることを認識し、連携を図るよう努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（コミュニティ活動の支援）</span><br>第46条 執行機関は、コミュニティ活動を支援するため、活動の拠点となる施設整備、情報提供、人材育成、コミュニティ相互の連携促進等に必要な政策を推進するものとする。この場合において、執行機関は、コミュニティの自主性及び自立性を尊重するものとする。</div>
+<div class="jorei-chapter">第8章 市民投票</div>
+<div class="jorei-article"><span class="article-title">（市民投票制度の設置）</span><br>第47条 市長は、市民又は執行機関の発議に基づき、市政に関わる重要事項について、直接、市民の意思を確認するため、市民投票を実施することができる。</div>
+<div class="jorei-article"><span class="article-title">（市民投票に関する情報提供）</span><br>第48条 市長は、市民投票の実施にあたり、市民が適切な判断ができるよう、あらかじめ十分な情報提供を行うものとする。</div>
+<div class="jorei-article"><span class="article-title">（結果の尊重）</span><br>第49条 議会及び執行機関は、市民投票の結果を尊重するものとする。</div>
+<div class="jorei-article"><span class="article-title">（委任）</span><br>第50条 市民投票の実施に関し、必要な事項は、別に条例で定める。</div>
+<div class="jorei-chapter">第9章 国、埼玉県、他の地方自治体等との連携</div>
+<div class="jorei-article"><span class="article-title">（国及び埼玉県との関係）</span><br>第51条 基礎自治体としての三郷市は、市民等にもっとも身近な政府として、国及び埼玉県に対して対等な立場に立ち、協力及び役割分担を行うものとする。</div>
+<div class="jorei-article"><span class="article-title">（他の地方自治体との関係）</span><br>第52条 三郷市は、共通するまちづくりの課題を解決するため、他の地方自治体と相互に交流し、連携を図り、協力するよう努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（国際的な関係）</span><br>第53条 三郷市は、環境問題等の国際的な課題が地域社会における課題と深く関わっていることを認識し、国際的な連携協力を促進し、国際社会の一員として当該課題の解決のため必要な取組みを行うものとする。</div>
+<div class="jorei-chapter">第10章 条例の位置付け及び見直し等</div>
+<div class="jorei-article"><span class="article-title">（条例の位置付け）</span><br>第54条 個別の条例、規則、計画等の制定若しくは策定又は解釈においては、この条例の趣旨を最大限尊重するものとする。<br>2 市民等、議会、執行機関及び市職員は、この条例を尊重し、及び遵守するものとする。<br>3 この条例の施行前に既に施行されている条例、規則等は、この条例との整合を図るため、適宜見直しを行うものとする。</div>
+<div class="jorei-article"><span class="article-title">（条例の検証及び見直し）</span><br>第55条 市長は、この条例の施行状況を検証し、必要に応じて見直しを行うものとする。</div>
+<div class="jorei-article"><span class="article-title">（条例の基本理念の普及）</span><br>第56条 市長は、市民等がこの条例の内容を深く理解し、積極的に市民等の権利を行使できるよう、普及及び啓発を継続して行うものとする。</div>
+<div class="jorei-supplementary">附則<br>この条例は、平成21年10月1日から施行する。</div>` },
     { id: 15, title: '三郷市公告式条例', category: '総規・基本', keywords: ['公告', '告示', '公布'], summary: '条例等の公布方法を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000013.html' },
     { id: 16, title: '三郷市表彰条例', category: '総規・基本', keywords: ['表彰', '功績', '栄誉'], summary: '市の表彰に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000014.html' },
 
     // ===== 第2編 議会 =====
-    { id: 17, title: '三郷市議会基本条例', category: '議会', keywords: ['議会', '基本条例', '議員', '民主主義'], summary: '議会運営の基本理念と議員の責務を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000965.html' },
+    { id: 17, title: '三郷市議会基本条例', category: '議会', keywords: ['議会', '基本条例', '議員', '民主主義'], summary: '議会運営の基本理念と議員の責務を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000965.html',
+        fullText: `<div class="jorei-header">○三郷市議会基本条例<br>平成24年9月27日 条例第24号</div>
+<div class="jorei-toc">目次<br>前文<br>第1章 総則(第1条―第4条)<br>第2章 市民と議会との関係(第5条―第8条)<br>第3章 議会と市長等との関係(第9条―第11条)<br>第4章 議会の機能の充実(第12条―第17条)<br>第5章 その他(第18条)<br>附則</div>
+<div class="jorei-preamble">地方分権が進む中で、地方公共団体の自己決定・自己責任の範囲が一層拡大しており、市民から選ばれた代表で構成される意思決定機関としての議会は、これまで以上に責任ある活動が求められている。<br>また、議会は、市長その他の執行機関（以下「市長等」という。）と対等な関係を構築し、議会自体の活性化を図る必要があり、議員は、地域の課題のみならず、様々な市政の課題を的確に把握し、市民全体の福祉の向上を目指して行動しなければならない。さらに、議員は自らの能力を高め、その能力を十分に発揮し、市政発展に向けた取組を積極的に推進することが求められている。<br>三郷市議会は、このような時代の要請に応えるべく、三郷市自治基本条例（平成21年条例第16号）第3章に規定された「議会の役割」等を忠実に履行し、信頼される議会を目指すための基本理念として、この条例を制定する。</div>
+<div class="jorei-chapter">第1章 総則</div>
+<div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、議会及び議員の活動の活性化と充実のために必要な議会運営の基本事項を定めることにより、市民の負託に的確に応え、公正で民主的な市政の発展と市民福祉の向上に寄与することを目的とする。</div>
+<div class="jorei-article"><span class="article-title">（議会の活動原則）</span><br>第2条 議会は、市民を代表する公選の議員をもって構成される市政の意思決定機関として、市民の多様な意見を的確に把握して市政に反映させるとともに、議会運営における透明性を確保し、公平、公正かつ民主的な議会の活動に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（議会運営の基本）</span><br>第3条 議会は、市の基本的な政策決定、市長等の事務執行の監視及び評価、政策立案並びに提言を行う機能が十分発揮できるよう、円滑かつ効率的な運営を図るとともに、市政の課題、議案等の審議の充実に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（議員の活動原則）</span><br>第4条 議員は、次に掲げる原則に従って活動するものとする。<br>(1) 高い倫理性を保持し、公正かつ清廉を基本姿勢とすること。<br>(2) 市民全体の福祉の向上を目指すこと。<br>(3) 不断の研さんに努め、自己の資質を高めること。<br>(4) 議会が合議制の機関であることを十分に認識し、議員相互の自由な討議を重んずること。<br>2 議員は、議会活動を行うため、政策を中心とした同一の理念を共有する議員で会派を結成することができる。</div>
+<div class="jorei-chapter">第2章 市民と議会との関係</div>
+<div class="jorei-article"><span class="article-title">（会議の公開）</span><br>第5条 議会は、公開する本会議等の傍聴を広く市民に促すものとする。</div>
+<div class="jorei-article"><span class="article-title">（資料の公開）</span><br>第6条 議会は、本会議等において使用した資料を、他の条例に特別の定めがある場合を除き、市民が閲覧できるようにするものとする。</div>
+<div class="jorei-article"><span class="article-title">（議案に対する賛否の公表）</span><br>第7条 議会は、議案に対する賛否の表明を、市民に公表するものとする。</div>
+<div class="jorei-article"><span class="article-title">（情報交換）</span><br>第8条 議会は、議会の活動を市民に伝えるとともに、市民と議員とが意見及び情報を交換し、知り得た情報を、議会の活動に反映させるものとする。</div>
+<div class="jorei-chapter">第3章 議会と市長等との関係</div>
+<div class="jorei-article"><span class="article-title">（市長等との関係の基本原則）</span><br>第9条 議会は、市民の意思を代表する合議制の機関として、市長等との緊張関係を保ち、積極的な政策提言等を通じて市政発展に取り組むものとする。</div>
+<div class="jorei-article"><span class="article-title">（事務執行の監視及び評価）</span><br>第10条 議会は、市長等の有する権限を尊重しつつ、その権限に属する事務が公正に、かつ、効率的に執行されているか監視するとともに、その事務の効果及び成果について評価し、必要があると認めるときは、適切な措置を講ずるよう促すものとする。</div>
+<div class="jorei-article"><span class="article-title">（議会及び議員による資料要求）</span><br>第11条 議会及び議員は、本会議等における討議に資するため、市長等に対し、その執行する事務に関する資料の提供を求めることができる。</div>
+<div class="jorei-chapter">第4章 議会の機能の充実</div>
+<div class="jorei-article"><span class="article-title">（議員相互の討議）</span><br>第12条 議員は、本会議等において、議員相互の討議を積極的に行うものとする。</div>
+<div class="jorei-article"><span class="article-title">（政務活動費の執行）</span><br>第13条 会派及び議員は、政務活動費の執行に当たっては、関係法令を遵守し、有効に活用するものとする。<br>2 会派及び議員は、政務活動費の使途を明らかにし、市民に対し説明責任を負うものとする。</div>
+<div class="jorei-article"><span class="article-title">（議員研修の充実）</span><br>第14条 議会は、議員が政策の立案及び提言をするために必要な能力の向上を図るため、議員に対する研修を充実させるものとする。</div>
+<div class="jorei-article"><span class="article-title">（議会事務局の体制整備）</span><br>第15条 議会は、議会が円滑に運営され、かつ、議員による政策の立案及び提言に関する活動が活発に行われるようにするため、議会事務局の体制整備と充実に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（議会広報の充実）</span><br>第16条 議会は、議案の審議状況や議会活動を議会広報紙で公表するなど、市民に対する情報の提供に努めるものとする。<br>2 議会は、情報技術の発達を踏まえた多様な広報手段を活用することにより、多くの市民が議会と市政に関心を持つよう広報活動の充実に努めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（議会図書室の充実）</span><br>第17条 議会は、議員が行う市政の調査研究や政策の立案及び提言に資するため、議会図書室の適正な管理・運営及び充実に努めるものとする。</div>
+<div class="jorei-chapter">第5章 その他</div>
+<div class="jorei-article"><span class="article-title">（検証）</span><br>第18条 議会は、この条例の施行後、社会情勢の変化等を勘案して、この条例の目的が達成されているかどうかについて検証を行い、必要があると認めるときは、所要の措置を講ずるものとする。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
     { id: 18, title: '三郷市議会の議員の定数を定める条例', category: '議会', keywords: ['議員定数', '定数', '議会'], summary: '議会議員の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000017.html' },
     { id: 19, title: '三郷市議会定例会条例', category: '議会', keywords: ['定例会', '議会', '会議'], summary: '議会定例会の回数等を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000018.html' },
     { id: 20, title: '三郷市議会委員会条例', category: '議会', keywords: ['委員会', '常任委員会', '議会'], summary: '議会の委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000020.html' },

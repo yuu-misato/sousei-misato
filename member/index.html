@@ -848,6 +848,58 @@
             line-height: 2;
             color: var(--text);
         }
+        .ordinance-content .jorei-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--navy);
+        }
+        .ordinance-content .jorei-toc {
+            background: var(--gray-lighter);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-preamble {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-left: 4px solid var(--green);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 2rem;
+            font-style: italic;
+            line-height: 1.9;
+        }
+        .ordinance-content .jorei-section {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 1.5rem 0 1rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--green);
+        }
+        .ordinance-content .jorei-article {
+            margin: 1.2rem 0;
+            padding: 0.8rem 1rem;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--gray-light);
+        }
+        .ordinance-content .jorei-article .article-title {
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .ordinance-content .jorei-supplementary {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--gray-light);
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
         .ordinance-content .jorei-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -871,9 +923,6 @@
             padding: 0.5rem 0;
             border-bottom: 1px solid var(--gray-light);
         }
-        .ordinance-content .jorei-article {
-            margin: 1.5rem 0;
-        }
         .ordinance-content .jorei-article-title {
             font-weight: 700;
             color: var(--navy);
@@ -892,11 +941,6 @@
         .ordinance-content .jorei-subitem {
             margin: 0.2rem 0 0.2rem 2.5rem;
             font-size: 0.85rem;
-        }
-        .ordinance-content .jorei-supplementary {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--gray-light);
         }
         .ordinance-content .jorei-supplementary-title {
             font-weight: 700;
@@ -3410,7 +3454,7 @@ function renderOrdinances() {
     }
 }
 
-// Modal functions - 条例全文を動的に取得して表示
+// Modal functions - 条例全文を表示
 function openOrdinanceModal(ordId) {
     const ord = allOrdinanceData.find(o => o.id === ordId);
     if (!ord) return;
@@ -3420,17 +3464,26 @@ function openOrdinanceModal(ordId) {
         <span>${ord.category}</span>
     `;
 
-    // 目次は非表示（動的取得のため）
+    // 目次は非表示
     document.getElementById('modalToc').style.display = 'none';
 
-    // ローディング表示
-    document.getElementById('modalContent').innerHTML = `
-        <div style="text-align:center;padding:3rem;">
-            <div style="display:inline-block;width:40px;height:40px;border:3px solid var(--gray-light);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite;"></div>
-            <p style="margin-top:1rem;color:var(--gray);">条例全文を読み込んでいます...</p>
-        </div>
-        <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
-    `;
+    // fullTextがあれば表示、なければ外部リンク案内
+    if (ord.fullText) {
+        document.getElementById('modalContent').innerHTML = ord.fullText;
+    } else {
+        document.getElementById('modalContent').innerHTML = `
+            <div style="text-align:center;padding:3rem;">
+                <svg style="width:60px;height:60px;color:var(--gray-light);margin-bottom:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                <p style="color:var(--gray);margin-bottom:1rem;">この条例の全文はまだ登録されていません。</p>
+                <a href="${ord.url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--navy);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                    三郷市例規集で見る
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+            </div>
+        `;
+    }
 
     document.getElementById('modalFooterInfo').textContent = '';
     document.getElementById('modalExternalLink').href = ord.url;
@@ -3438,17 +3491,6 @@ function openOrdinanceModal(ordId) {
     document.getElementById('ordinanceModalOverlay').classList.add('open');
     document.getElementById('ordinanceModal').classList.add('open');
     document.body.style.overflow = 'hidden';
-
-    // iframeで条例全文を表示
-    setTimeout(() => {
-        document.getElementById('modalContent').innerHTML = `
-            <iframe
-                src="${ord.url}"
-                style="width:100%;height:70vh;border:none;background:#fff;"
-                title="${ord.title}"
-            ></iframe>
-        `;
-    }, 100);
 }
 
 function closeOrdinanceModal() {
