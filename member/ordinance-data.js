@@ -324,7 +324,33 @@ const allOrdinanceData = [
     { id: 61, title: '職員団体の登録に関する条例', category: '人事', keywords: ['職員団体', '労働組合', '登録'], summary: '職員団体の登録に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000167.html' },
 
     // ===== 第5編 給与 =====
-    { id: 62, title: '議会の議員の議員報酬及び費用弁償等に関する条例', category: '給与', keywords: ['議員報酬', '報酬', '議会'], summary: '議員の報酬に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000171.html' },
+    { id: 62, title: '議会の議員の議員報酬及び費用弁償等に関する条例', category: '給与', keywords: ['議員報酬', '報酬', '議会', '給与', '議員'], summary: '議員の報酬に関する条例。議長月額49万円、副議長月額45万円、議員月額43万円。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000138.html',
+        fullText: `<div class="jorei-header">○議会の議員の議員報酬及び費用弁償等に関する条例<br>昭和44年3月31日 条例第3号</div>
+<div class="jorei-body">
+<p class="jorei-article"><span class="article-num">（目的）</span><br>
+<span class="article-num">第1条</span>　この条例は、地方自治法（昭和22年法律第67号）第203条の規定に基づき、議会の議長、副議長、常任委員長、議会運営委員長及び議員（以下「議長等」という。）の議員報酬及び費用弁償等に関する事項を定めることを目的とする。</p>
+
+<p class="jorei-article"><span class="article-num">（議員報酬）</span><br>
+<span class="article-num">第2条</span>　議長等の議員報酬は、次のとおりとする。<br>
+（1）議長　月額　<strong>490,000円</strong><br>
+（2）副議長　月額　<strong>450,000円</strong><br>
+（3）常任委員長及び議会運営委員長　月額　430,000円<br>
+（4）議員　月額　<strong>430,000円</strong></p>
+
+<p class="jorei-article"><span class="article-num">第3条</span>　議長及び副議長には選挙されたその日から、常任委員長、議会運営委員長及び議員には職に就いたその日からそれぞれ議員報酬を支給する。<br>
+２　議長等がその職を離れたときはその日まで、死亡したときはその日の属する月まで議員報酬を支給する。<br>
+３　前2項の規定により議員報酬を支給する場合であって、月の初日から支給するとき以外のとき、又は月の末日まで支給するとき以外のときは、その議員報酬の額はその月の現日数を基礎として日割によって計算する。</p>
+
+<p class="jorei-article"><span class="article-num">第4条</span>　議員報酬の支給日は、毎月その末日（その日が日曜日、土曜日又は国民の祝日に関する法律に規定する休日に当たるときは、その日前において、その日に最も近い日曜日、土曜日又は休日でない日）とする。ただし、12月については、市長が別に定める日とする。</p>
+
+<p class="jorei-article"><span class="article-num">（期末手当）</span><br>
+<span class="article-num">第5条</span>　議長等で、6月1日及び12月1日（以下これらの日を「基準日」という。）に在職する者に、期末手当を支給する。<br>
+２　期末手当の額は、それぞれの基準日現在において議長等が受けるべき議員報酬の月額及びその月額に100分の20を乗じて得た額の合計額に、6月に支給する場合においては100分の225、12月に支給する場合においては100分の225を乗じて得た額とする。</p>
+
+<p class="jorei-article"><span class="article-num">（費用弁償）</span><br>
+<span class="article-num">第6条</span>　議長等が招集に応じ、若しくは委員会に出席するため旅行したとき、又は公務のため旅行したときは、費用弁償として旅費を支給する。<br>
+２　旅費の額は、別表第1及び別表第2のとおりとする。</p>
+</div>` },
     { id: 63, title: '特別職の職員で非常勤のものの報酬及び費用弁償に関する条例', category: '給与', keywords: ['報酬', '非常勤', '特別職'], summary: '非常勤特別職の報酬に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000172.html' },
     { id: 64, title: '三郷市会計年度任用職員の報酬等に関する条例', category: '給与', keywords: ['会計年度任用職員', '報酬', '非正規'], summary: '会計年度任用職員の報酬に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000174.html' },
     { id: 65, title: '証人等の実費弁償に関する条例', category: '給与', keywords: ['証人', '実費弁償', '費用'], summary: '証人等の実費弁償に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000176.html' },
