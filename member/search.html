@@ -1772,7 +1772,53 @@ ${o.fullText ? '本文: ' + o.fullText.replace(/<[^>]*>/g, '').substring(0, 2000
 }
 
 function findRelevantOrdinances(question) {
-    const keywords = question.toLowerCase().split(/[\s、。？！]+/).filter(w => w.length > 1);
+    // 類義語・関連語マッピング
+    const synonymMap = {
+        '報酬': ['給与', '給料', '手当', '賃金', '俸給', 'いくら', '金額'],
+        '給与': ['報酬', '給料', '手当', '賃金', '俸給'],
+        '議員': ['議会', '市議', '市議会議員'],
+        '議会': ['議員', '市議会'],
+        '情報公開': ['公開', '開示', '閲覧', '請求'],
+        '個人情報': ['プライバシー', '保護'],
+        '休日': ['休み', '祝日', '閉庁'],
+        '職員': ['公務員', '市役所', '従業員', '定数'],
+        '税': ['税金', '課税', '納税'],
+        '子育て': ['育児', '子ども', '児童', '保育'],
+        '福祉': ['介護', '障害', '高齢者', 'サービス'],
+        '環境': ['ごみ', '廃棄物', '公害', '自然'],
+        '建築': ['建物', '建設', '工事'],
+        '道路': ['通行', '交通', '道'],
+        '水道': ['上水道', '下水道', '水'],
+        '副市長': ['助役', '定数'],
+        '政務活動費': ['政活費', '活動費'],
+        '倫理': ['政治倫理', '行動規範'],
+        '契約': ['入札', '発注', '請負'],
+        '財産': ['資産', '所有', '処分'],
+        '審議会': ['委員会', '審査会', '協議会'],
+        '手数料': ['料金', '費用', '使用料'],
+        '基本条例': ['自治基本', '議会基本'],
+        '市長': ['首長', 'トップ'],
+        '何人': ['定数', '人数', '何名'],
+    };
+
+    // キーワード抽出と拡張
+    let keywords = question.toLowerCase().split(/[\s、。？！\?]+/).filter(w => w.length > 1);
+
+    // 類義語を追加
+    const expandedKeywords = [...keywords];
+    keywords.forEach(kw => {
+        Object.entries(synonymMap).forEach(([key, synonyms]) => {
+            if (kw.includes(key) || key.includes(kw)) {
+                expandedKeywords.push(key, ...synonyms);
+            }
+            if (synonyms.some(s => kw.includes(s) || s.includes(kw))) {
+                expandedKeywords.push(key, ...synonyms);
+            }
+        });
+    });
+
+    // 重複除去
+    const uniqueKeywords = [...new Set(expandedKeywords)];
 
     // Score each ordinance based on relevance
     const scored = allOrdinanceData.map(ord => {
@@ -1780,25 +1826,49 @@ function findRelevantOrdinances(question) {
         const titleLower = ord.title.toLowerCase();
         const summaryLower = ord.summary.toLowerCase();
         const fullTextLower = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+        const keywordsLower = ord.keywords.map(k => k.toLowerCase());
+        const categoryLower = ord.category.toLowerCase();
 
-        keywords.forEach(kw => {
-            if (titleLower.includes(kw)) score += 10;
-            if (ord.keywords.some(k => k.toLowerCase().includes(kw))) score += 8;
+        uniqueKeywords.forEach(kw => {
+            // タイトルマッチは高得点
+            if (titleLower.includes(kw)) score += 15;
+            // カテゴリマッチ
+            if (categoryLower.includes(kw)) score += 10;
+            // キーワードマッチ
+            if (keywordsLower.some(k => k.includes(kw) || kw.includes(k))) score += 8;
+            // 概要マッチ
             if (summaryLower.includes(kw)) score += 5;
+            // 本文マッチ
             if (fullTextLower.includes(kw)) score += 3;
         });
 
-        // Boost ordinances with fullText
-        if (ord.fullText) score += 2;
+        // fullTextがある条例を優先
+        if (ord.fullText) score += 5;
 
         return { ...ord, score };
     });
 
-    // Return top 10 most relevant
-    return scored
+    // Return top 10 most relevant (スコア0でも基本条例は含める)
+    const relevant = scored
         .filter(o => o.score > 0)
         .sort((a, b) => b.score - a.score)
         .slice(0, 10);
+
+    // 関連条例が少ない場合、基本条例を追加
+    if (relevant.length < 3) {
+        const basicOrdinances = allOrdinanceData.filter(o =>
+            o.title.includes('自治基本') ||
+            o.title.includes('議会基本') ||
+            o.title.includes('議員報酬')
+        );
+        basicOrdinances.forEach(bo => {
+            if (!relevant.find(r => r.id === bo.id)) {
+                relevant.push({ ...bo, score: 1 });
+            }
+        });
+    }
+
+    return relevant.slice(0, 10);
 }
 
 function formatAiResponse(text) {
