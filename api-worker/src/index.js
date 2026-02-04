@@ -58,7 +58,7 @@ ${ordinanceContext || '条例データが提供されていません'}
 - 法律の専門家ではないことを明記し、重要な判断は専門家への相談を推奨してください`;
 
       const geminiResponse = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
