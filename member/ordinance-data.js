@@ -225,15 +225,53 @@ const allOrdinanceData = [
 <div class="jorei-article"><span class="article-title">（傍聴人の定員）</span><br>第5条 傍聴人の定員は、60人とする。</div>
 <div class="jorei-article"><span class="article-title">（傍聴人の責務）</span><br>第8条 傍聴人は、傍聴席へ入場し退場するまで、次の事項を守らなければならない。<br>（1）議場における言論に対して、拍手その他の方法により公然と可否を表明しないこと。<br>（2）騒ぎ立てるなど、議場への迷惑となるような行為をしないこと。<br>（3）みだりに立ち上がるなど、威圧的な行為をしないこと。<br>（4）他の傍聴人の妨げとなる行為をしないこと。<br>（5）電子機器類（補聴器を除く。）を携帯して入場する場合は、その電源を切ること。<br>（6）飲食又は喫煙をしないこと。<br>（7）前各号に定めるもののほか、議場の秩序を乱し、又は会議の妨害となるような行為をしないこと。</div>
 <div class="jorei-supplementary">附則<br>この規則は、公布の日から施行する。</div>` },
-    { id: 23, title: '三郷市議会議員政治倫理条例', category: '議会', keywords: ['政治倫理', '議員', '倫理'], summary: '議員の政治倫理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001214.html' },
-    { id: 24, title: '三郷市議会政務活動費の交付に関する条例', category: '議会', keywords: ['政務活動費', '議員', '交付'], summary: '政務活動費の交付に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000639.html' },
-    { id: 25, title: '三郷市議会議員の請負の状況の公表に関する条例', category: '議会', keywords: ['請負', '公表', '透明性'], summary: '議員の請負状況の公表に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001227.html' },
-    { id: 26, title: '三郷市議会事務局設置条例', category: '議会', keywords: ['事務局', '議会', '組織'], summary: '議会事務局の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000024.html' },
+    { id: 23, title: '三郷市議会議員政治倫理条例', category: '議会', keywords: ['政治倫理', '議員', '倫理'], summary: '議員の政治倫理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001214.html',
+        fullText: `<div class="jorei-header">○三郷市議会議員政治倫理条例<br>令和7年3月21日 条例第13号</div>
+<div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、議員が保持すべき政治倫理の規準を定め、議員の資質向上及び誠実な職務の遂行に資することにより、市民から信頼される公正で開かれた民主的な市政の発展に寄与することを目的とする。</div>
+<div class="jorei-article"><span class="article-title">（議員の責務）</span><br>第2条 議員は、市民の代表として高い政治倫理を保持することに努めなければならない。<br>2 議員は、市民から疑念を持たれた場合には、自らこれを解明し、責任を明らかにしなければならない。</div>
+<div class="jorei-article"><span class="article-title">（政治倫理規準）</span><br>第3条 議員は、次に掲げる事項を遵守しなければならない。<br>（1）三郷市議会の名誉を重んじ、良識と責任感をもって議員の品位を損なう行為を慎むこと。<br>（2）市の職員等の権限を不正に行使するよう働きかけないこと。<br>（3）市の職員等が公正かつ適正に職務を執行することを妨げないこと。<br>（4）市の事務事業に関する契約又は人事に関し、不当に影響力を行使しないこと。<br>（5）市の職員等に対し、特定の者に有利又は不利な取扱いをするよう働きかけないこと。<br>（6）その地位を利用して不当に金品を授受しないこと。<br>（7）政治資金規正法（昭和23年法律第194号）に定めるものを除くほか、寄附の受領についてこれを強要し、又は受けないこと。<br>（8）ハラスメント行為その他人権を侵害する行為をしないこと。<br>（9）公人としての自覚及び責任をもって情報の発信に努め、他者の名誉を毀損し、又は人格を損傷する行為をしないこと。</div>
+<div class="jorei-article"><span class="article-title">（審査の請求）</span><br>第4条 市民は、議員に第3条に規定する政治倫理規準に違反する疑いがあると認めるときは、これを証する書類を添え、三郷市議会議員の定数の8分の1以上の連署をもって、議長に対し審査を請求することができる。</div>
+<div class="jorei-article"><span class="article-title">（審査会）</span><br>第5条 前条の規定による審査の請求があったときは、議会に三郷市議会議員政治倫理審査会（以下「審査会」という。）を設置する。<br>2 審査会は、審査の請求の適否及び政治倫理規準に違反する事実の有無について審査を行う。</div>
+<div class="jorei-article"><span class="article-title">（宣誓）</span><br>第12条 議員は、政治倫理を保持することを宣誓しなければならない。</div>
+<div class="jorei-supplementary">附則<br>この条例は、令和7年4月1日から施行する。</div>` },
+    { id: 24, title: '三郷市議会政務活動費の交付に関する条例', category: '議会', keywords: ['政務活動費', '議員', '交付'], summary: '政務活動費の交付に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000639.html',
+        fullText: `<div class="jorei-header">○三郷市議会政務活動費の交付に関する条例<br>平成13年3月23日 条例第3号</div>
+<div class="jorei-article"><span class="article-title">（趣旨）</span><br>第1条 この条例は、地方自治法（昭和22年法律第67号）第100条第14項から第16項までの規定に基づき、三郷市議会の議員の調査研究その他の活動に資するため必要な経費の一部として、会派又は議員に対し交付する政務活動費に関し、必要な事項を定めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（交付対象）</span><br>第2条 政務活動費は、三郷市議会における会派（所属議員が1人の場合を含む。以下同じ。）又は議員（いずれの会派にも属さない議員に限る。以下同じ。）に対し交付する。</div>
+<div class="jorei-article"><span class="article-title">（交付の方法）</span><br>第3条 政務活動費の交付は、前期（4月から8月まで）及び後期（9月から翌年3月まで）に区分し、それぞれ4月30日及び9月30日までに行う。</div>
+<div class="jorei-article"><span class="article-title">（会派に対する政務活動費の額）</span><br>第4条 会派に対して交付する政務活動費の額は、各月の1日における当該会派に所属する議員の数に月額3万円以内で当該会派の代表者が申し出る額を乗じて得た額の総額とする。</div>
+<div class="jorei-article"><span class="article-title">（議員に対する政務活動費の額）</span><br>第4条の2 議員に対して交付する政務活動費の額は、各月につき月額3万円から議員に係る会派に対する政務活動費の月額を控除した額の総額とする。</div>
+<div class="jorei-article"><span class="article-title">（政務活動費を充てることができる経費の範囲）</span><br>第5条 政務活動費は、次に掲げる経費に充てることができる。<br>（1）研究研修費（会派又は議員が行う市政に関する調査研究及び調査委託並びに研修会の開催又は他の団体が開催する研修会に参加するために要する経費）<br>（2）調査旅費（会派又は議員が行う市政及び他の自治体に関する調査並びに研修会への参加のために要する旅費）<br>（3）資料作成費（会派又は議員が行う議会活動に必要な資料の作成に要する経費）<br>（4）資料購入費（会派又は議員が行う議会活動に必要な図書、資料等の購入に要する経費）<br>（5）広報費（会派又は議員が行う議会活動及び市政について市民に報告するために要する経費）<br>（6）広聴費（会派又は議員が行う市民からの市政に関する要望又は意見を吸収するために要する経費）<br>（7）事務費（会派又は議員が行う議会活動のために必要な事務に要する経費）</div>
+<div class="jorei-article"><span class="article-title">（収支報告書の提出）</span><br>第7条 会派の代表者又は議員は、政務活動費に係る収入及び支出の収支報告書を議長に提出しなければならない。<br>2 収支報告書には、領収書の写し等を添付しなければならない。</div>
+<div class="jorei-article"><span class="article-title">（政務活動費の返還）</span><br>第8条 会派又は議員は、交付を受けた政務活動費の総額から、当該会計年度において実際に支出した額を控除して残余がある場合は、その残余の額を返還しなければならない。</div>
+<div class="jorei-supplementary">附則<br>この条例は、平成13年4月1日から施行する。</div>` },
+    { id: 25, title: '三郷市議会議員の請負の状況の公表に関する条例', category: '議会', keywords: ['請負', '公表', '透明性'], summary: '議員の請負状況の公表に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001227.html',
+        fullText: `<div class="jorei-header">○三郷市議会議員の請負の状況の公表に関する条例<br>令和7年6月17日 条例第21号</div>
+<div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、議員が市に対する請負の状況を公表することにより、請負の状況の透明性を確保し、もって議会の運営の公正及び事務の執行の適正を図ることを目的とする。</div>
+<div class="jorei-article"><span class="article-title">（報告）</span><br>第2条 議員は、毎年6月1日から同月30日までの間に、前会計年度において、次の各号のいずれかに該当する場合は、議長に対し、当該各号に掲げる事項を報告しなければならない。<br>（1）市に対する請負をした者（法人その他の団体にあっては、その役員（業務を執行する社員、取締役、執行役又はこれらに準ずる者をいう。以下同じ。）を含む。）であるとき　役務の内容、契約締結の日、契約金額及び支払を受けた額の総額<br>（2）市に対する請負をする法人の役員又は支配人であるとき　法人の名称及び主たる事務所の所在地、役務の内容、契約締結の日、契約金額並びに当該法人が支払を受けた額の総額<br>2 前項の報告をした議員は、当該報告の内容に訂正の必要が生じたときは、速やかに、議長に届け出なければならない。</div>
+<div class="jorei-article"><span class="article-title">（報告の一覧の作成及び公表）</span><br>第3条 議長は、前条の報告の内容の一覧を作成し、公表しなければならない。</div>
+<div class="jorei-article"><span class="article-title">（報告等の保存及び閲覧等）</span><br>第4条 議長は、第2条の報告を5年間保存しなければならない。<br>2 何人も、議長に対し、前項の規定により保存されている報告の閲覧又は写しの交付を請求することができる。</div>
+<div class="jorei-article"><span class="article-title">（委任）</span><br>第5条 この条例の施行に関し必要な事項は、議長が定める。</div>
+<div class="jorei-supplementary">附則<br>1 この条例は、公布の日から施行する。<br>2 この条例の規定は、令和7年4月1日に始まる会計年度以後の会計年度に係る請負について適用する。</div>` },
+    { id: 26, title: '三郷市議会事務局設置条例', category: '議会', keywords: ['事務局', '議会', '組織'], summary: '議会事務局の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000024.html',
+        fullText: `<div class="jorei-header">○三郷市議会事務局設置条例<br>昭和35年6月29日 条例第3号</div>
+<div class="jorei-article">地方自治法（昭和22年法律第67号）第138条第2項の規定に基づき、三郷市議会に事務局を置く。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
     { id: 27, title: '三郷市議会の個人情報の保護に関する条例', category: '議会', keywords: ['個人情報', '保護', 'プライバシー'], summary: '議会における個人情報保護に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001184.html' },
 
     // ===== 第3編 執行機関 =====
-    { id: 28, title: '三郷市行政組織条例', category: '執行機関', keywords: ['行政組織', '部', '課', '組織'], summary: '市の行政組織を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000027.html' },
-    { id: 29, title: '三郷市役所出張所設置条例', category: '執行機関', keywords: ['出張所', '窓口', 'サービス'], summary: '市役所出張所の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000031.html' },
+    { id: 28, title: '三郷市行政組織条例', category: '執行機関', keywords: ['行政組織', '部', '課', '組織'], summary: '市の行政組織を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000027.html',
+        fullText: `<div class="jorei-header">○三郷市行政組織条例<br>昭和58年3月23日 条例第3号</div>
+<div class="jorei-article"><span class="article-title">（設置）</span><br>第1条 地方自治法（昭和22年法律第67号）第158条第1項の規定に基づき、市長の権限に属する事務を分掌させるため、次の部及び課を置く。<br>企画政策部、総務部、危機管理防災課、財務部、市民生活部、地域振興部、いきいき健康部、福祉部、こども未来部、建設部、まちづくり推進部</div>
+<div class="jorei-article"><span class="article-title">（事務分掌）</span><br>第2条 前条に規定する各部及び課の事務分掌は、次のとおりとする。<br><br><strong>企画政策部</strong><br>（1）政策の総合企画・調整・調査研究に関する事項<br>（2）行政組織・事務管理・行政改革に関する事項<br>（3）情報化に関する事項<br>（4）秘書に関する事項<br>（5）広報・広聴に関する事項<br><br><strong>総務部</strong><br>（1）議会・一般行政に関する事項<br>（2）条例・規則に関する事項<br>（3）職員人事・給与・研修・福利厚生に関する事項<br>（4）契約・工事検査に関する事項<br><br><strong>危機管理防災課</strong><br>防災及び危機管理に関する事項<br><br><strong>財務部</strong><br>（1）財政に関する事項<br>（2）市有財産に関する事項<br>（3）市税徴収に関する事項<br><br><strong>市民生活部</strong><br>（1）戸籍・住民基本台帳に関する事項<br>（2）交通安全・防犯に関する事項<br>（3）環境保全・清掃に関する事項<br><br><strong>地域振興部</strong><br>（1）自治振興・文化振興に関する事項<br>（2）商業・工業・観光に関する事項<br>（3）農業に関する事項<br>（4）スポーツ振興に関する事項<br><br><strong>いきいき健康部</strong><br>（1）健康推進・地域医療に関する事項<br>（2）国民健康保険・高齢者医療・国民年金に関する事項<br>（3）高齢者福祉・介護保険に関する事項<br><br><strong>福祉部</strong><br>社会福祉（児童福祉及び高齢者福祉を除く。）に関する事項<br><br><strong>こども未来部</strong><br>児童福祉・母子保健に関する事項<br><br><strong>建設部</strong><br>道路・河川・治水・下水道に関する事項<br><br><strong>まちづくり推進部</strong><br>都市計画・住宅政策・建築・公園・土地区画整理に関する事項</div>
+<div class="jorei-article"><span class="article-title">（委任）</span><br>第3条 この条例の施行に関し必要な事項は、規則で定める。</div>
+<div class="jorei-supplementary">附則<br>この条例は、昭和58年4月1日から施行する。</div>` },
+    { id: 29, title: '三郷市役所出張所設置条例', category: '執行機関', keywords: ['出張所', '窓口', 'サービス'], summary: '市役所出張所の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000030.html',
+        fullText: `<div class="jorei-header">○三郷市役所出張所設置条例<br>昭和49年9月28日 条例第42号</div>
+<div class="jorei-article"><span class="article-title">（設置）</span><br>第1条 地方自治法（昭和22年法律第67号）第155条の規定により、市長の権限に属する事務を分掌させるため、出張所を設置する。</div>
+<div class="jorei-article"><span class="article-title">（名称、位置及び所管区域）</span><br>第2条 出張所の名称、位置及び所管区域は、次のとおりとする。<br><br>名称：三郷市立希望の郷交流センター出張所<br>位置：三郷市彦成三丁目7番19号<br>所管区域：市内全域</div>
+<div class="jorei-article"><span class="article-title">（委任）</span><br>第3条 この条例の施行に関し必要な事項は、規則で定める。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。<br><br>附則（令和4年3月17日条例第7号）<br>この条例は、規則で定める日から施行する。（令和5年2月13日施行）</div>` },
     { id: 30, title: '三郷市行政改革推進委員会条例', category: '執行機関', keywords: ['行政改革', '推進', '効率化'], summary: '行政改革推進委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000035.html' },
     { id: 31, title: '三郷市まちづくり委員会条例', category: '執行機関', keywords: ['まちづくり', '委員会', '市民参加'], summary: 'まちづくり委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000041.html' },
     { id: 32, title: '三郷市情報公開条例', category: '執行機関', keywords: ['情報公開', '公文書', '透明性', '市民の知る権利'], summary: '市の情報公開に関する条例。市民の知る権利を保障。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000050.html' },
@@ -254,7 +292,10 @@ const allOrdinanceData = [
     { id: 47, title: '三郷市附属機関に関する条例', category: '執行機関', keywords: ['附属機関', '審議会', '委員会'], summary: '市の附属機関に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000104.html' },
 
     // ===== 第4編 人事 =====
-    { id: 48, title: '三郷市副市長の定数を定める条例', category: '人事', keywords: ['副市長', '定数', '特別職'], summary: '副市長の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000106.html' },
+    { id: 48, title: '三郷市副市長の定数を定める条例', category: '人事', keywords: ['副市長', '定数', '特別職'], summary: '副市長の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000106.html',
+        fullText: `<div class="jorei-header">○三郷市副市長の定数を定める条例<br>昭和31年10月1日 条例第1号</div>
+<div class="jorei-article">地方自治法（昭和22年法律第67号）第161条第2項の規定により、副市長の定数は1人とする。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
     { id: 49, title: '三郷市職員定数条例', category: '人事', keywords: ['職員', '定数', '組織'], summary: '職員の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000107.html' },
     { id: 50, title: '一般職の任期付職員の採用等に関する条例', category: '人事', keywords: ['任期付', '採用', '職員'], summary: '任期付職員の採用に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000110.html' },
     { id: 51, title: '職員の分限に関する手続及び効果に関する条例', category: '人事', keywords: ['分限', '処分', '職員'], summary: '職員の分限処分に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000113.html' },
