@@ -1062,11 +1062,19 @@
 
             <div class="ordinance-categories">
                 <button class="ordinance-cat-btn active" data-cat="all">すべて</button>
-                <button class="ordinance-cat-btn" data-cat="子育て・福祉">子育て・福祉</button>
-                <button class="ordinance-cat-btn" data-cat="まちづくり・開発">まちづくり・開発</button>
-                <button class="ordinance-cat-btn" data-cat="環境・安全">環境・安全</button>
-                <button class="ordinance-cat-btn" data-cat="行政・財務">行政・財務</button>
+                <button class="ordinance-cat-btn" data-cat="総規・基本">総規・基本</button>
+                <button class="ordinance-cat-btn" data-cat="議会">議会</button>
+                <button class="ordinance-cat-btn" data-cat="執行機関">執行機関</button>
+                <button class="ordinance-cat-btn" data-cat="人事">人事</button>
+                <button class="ordinance-cat-btn" data-cat="給与">給与</button>
+                <button class="ordinance-cat-btn" data-cat="財務">財務</button>
                 <button class="ordinance-cat-btn" data-cat="教育・文化">教育・文化</button>
+                <button class="ordinance-cat-btn" data-cat="民生・福祉">民生・福祉</button>
+                <button class="ordinance-cat-btn" data-cat="産業経済">産業経済</button>
+                <button class="ordinance-cat-btn" data-cat="建設">建設</button>
+                <button class="ordinance-cat-btn" data-cat="水道">水道</button>
+                <button class="ordinance-cat-btn" data-cat="消防">消防</button>
+                <button class="ordinance-cat-btn" data-cat="その他">その他</button>
             </div>
 
             <div class="ordinance-results" id="ordinanceResults">
@@ -1559,6 +1567,9 @@
     </div>
 </div>
 
+<!-- 条例データを外部ファイルから読み込み -->
+<script src="ordinance-data.js"></script>
+
 <script>
 const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
 
@@ -1615,8 +1626,9 @@ menuPanel.querySelectorAll('.menu-nav a').forEach(link => {
     link.addEventListener('click', closeMenu);
 });
 
-// Ordinance Search Data and Functions (with full text)
-const ordinanceData = [
+// Ordinance data is now loaded from external file: ordinance-data.js
+// Legacy data below is kept for reference but not used
+const _legacyOrdinanceData = [
     // 子育て・福祉
     {
         id: 1,
@@ -2213,8 +2225,8 @@ const ordinanceData = [
     }
 ];
 
-// Additional ordinances with full text
-const ordinanceDataAdditional = [
+// Legacy additional ordinances (not used - data loaded from ordinance-data.js)
+const _legacyOrdinanceDataAdditional = [
     {
         id: 7,
         title: '三郷市保育の実施に関する条例',
@@ -3311,8 +3323,7 @@ const ordinanceDataAdditional = [
     }
 ];
 
-// Combine all ordinance data
-const allOrdinanceData = [...ordinanceData, ...ordinanceDataAdditional];
+// allOrdinanceData is now loaded from ordinance-data.js
 
 let currentCategory = 'all';
 let currentSearchTerm = '';
