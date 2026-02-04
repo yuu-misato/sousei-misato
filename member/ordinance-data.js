@@ -296,14 +296,27 @@ const allOrdinanceData = [
         fullText: `<div class="jorei-header">○三郷市副市長の定数を定める条例<br>昭和31年10月1日 条例第1号</div>
 <div class="jorei-article">地方自治法（昭和22年法律第67号）第161条第2項の規定により、副市長の定数は1人とする。</div>
 <div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
-    { id: 49, title: '三郷市職員定数条例', category: '人事', keywords: ['職員', '定数', '組織'], summary: '職員の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000107.html' },
+    { id: 49, title: '三郷市職員定数条例', category: '人事', keywords: ['職員', '定数', '組織'], summary: '職員の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000107.html',
+        fullText: `<div class="jorei-header">○三郷市職員定数条例<br>昭和47年4月27日 条例第21号</div>
+<div class="jorei-article"><span class="article-title">（職員の定数）</span><br>第1条 地方自治法（昭和22年法律第67号）第172条第3項の規定に基づく三郷市の職員の定数は、次のとおりとする。<br>（1）市長の事務部局の職員 710人<br>（2）議会の事務局の職員 7人<br>（3）選挙管理委員会の事務局の職員 市長の事務部局の職員が兼ねるものとする。<br>（4）監査委員の事務局の職員 市長の事務部局の職員が兼ねるものとする。<br>（5）農業委員会の事務局の職員 市長の事務部局の職員が兼ねるものとする。<br>（6）教育委員会の事務局及びその所管に属する学校その他の教育機関の職員 258人<br>（7）消防長及び消防職員 202人</div>
+<div class="jorei-article"><span class="article-title">（定数の適用除外）</span><br>第2条 次に掲げる職員は、前条の職員の定数の外に置くことができる。<br>（1）臨時の職に関する職員及び非常勤の職員<br>（2）地方公務員法（昭和25年法律第261号）第22条の3第4項に規定する臨時的任用職員</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
     { id: 50, title: '一般職の任期付職員の採用等に関する条例', category: '人事', keywords: ['任期付', '採用', '職員'], summary: '任期付職員の採用に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000110.html' },
     { id: 51, title: '職員の分限に関する手続及び効果に関する条例', category: '人事', keywords: ['分限', '処分', '職員'], summary: '職員の分限処分に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000113.html' },
     { id: 52, title: '三郷市職員の定年等に関する条例', category: '人事', keywords: ['定年', '退職', '職員'], summary: '職員の定年に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000115.html' },
     { id: 53, title: '公益的法人等への職員の派遣等に関する条例', category: '人事', keywords: ['派遣', '公益法人', '職員'], summary: '公益法人等への職員派遣に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000120.html' },
     { id: 54, title: '職員の懲戒の手続及び効果に関する条例', category: '人事', keywords: ['懲戒', '処分', '職員'], summary: '職員の懲戒処分に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000124.html' },
-    { id: 55, title: '職員の服務の宣誓に関する条例', category: '人事', keywords: ['服務', '宣誓', '職員'], summary: '職員の服務宣誓に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000126.html' },
-    { id: 56, title: '職務に専念する義務の特例に関する条例', category: '人事', keywords: ['職務専念義務', '特例', '職員'], summary: '職務専念義務の特例に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000127.html' },
+    { id: 55, title: '職員の服務の宣誓に関する条例', category: '人事', keywords: ['服務', '宣誓', '職員'], summary: '職員の服務宣誓に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000126.html',
+        fullText: `<div class="jorei-header">○職員の服務の宣誓に関する条例<br>昭和31年10月30日 条例第9号</div>
+<div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、地方公務員法（昭和25年法律第261号）第31条の規定に基づき、職員の服務の宣誓について定めることを目的とする。</div>
+<div class="jorei-article"><span class="article-title">（職員の服務の宣誓）</span><br>第2条 新たに職員となった者は、任命権者又は任命権者の定める上級の公務員の面前において、別記様式による宣誓書に署名してからでなければ、その職務を行ってはならない。</div>
+<div class="jorei-article"><span class="article-title">（委任）</span><br>第3条 この条例に定めるもののほか、職員の服務の宣誓に関し必要な事項は、任命権者が定める。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
+    { id: 56, title: '職務に専念する義務の特例に関する条例', category: '人事', keywords: ['職務専念義務', '特例', '職員'], summary: '職務専念義務の特例に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000127.html',
+        fullText: `<div class="jorei-header">○職務に専念する義務の特例に関する条例<br>昭和31年10月30日 条例第10号</div>
+<div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、地方公務員法（昭和25年法律第261号）第35条の規定に基づき、職員が職務に専念する義務の特例について定めることを目的とする。</div>
+<div class="jorei-article"><span class="article-title">（職務に専念する義務の免除）</span><br>第2条 職員は、次の各号のいずれかに該当する場合においては、あらかじめ任命権者の承認を得て、その職務に専念する義務を免除されることができる。<br>（1）研修を受ける場合<br>（2）厚生に関する計画の実施に参加する場合<br>（3）前2号に掲げる場合を除くほか、市長が定める場合</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
     { id: 57, title: '職員の勤務時間、休日及び休暇に関する条例', category: '人事', keywords: ['勤務時間', '休日', '休暇', '働き方'], summary: '職員の勤務条件に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000130.html' },
     { id: 58, title: '職員の育児休業等に関する条例', category: '人事', keywords: ['育児休業', '育休', 'ワークライフバランス'], summary: '職員の育児休業に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000136.html' },
     { id: 59, title: '議会の議員その他非常勤の職員の公務災害補償等に関する条例', category: '人事', keywords: ['公務災害', '補償', '非常勤'], summary: '非常勤職員の公務災害補償に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000150.html' },
@@ -324,7 +337,12 @@ const allOrdinanceData = [
     { id: 72, title: '職員等の旅費に関する条例', category: '給与', keywords: ['旅費', '出張', '職員'], summary: '職員の旅費に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000206.html' },
 
     // ===== 第6編 財務 =====
-    { id: 73, title: '議会の議決に付すべき契約及び財産の取得又は処分に関する条例', category: '財務', keywords: ['契約', '財産', '議会議決'], summary: '議会議決が必要な契約等に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000208.html' },
+    { id: 73, title: '議会の議決に付すべき契約及び財産の取得又は処分に関する条例', category: '財務', keywords: ['契約', '財産', '議会議決'], summary: '議会議決が必要な契約等に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000208.html',
+        fullText: `<div class="jorei-header">○議会の議決に付すべき契約及び財産の取得又は処分に関する条例<br>昭和39年3月31日 条例第17号</div>
+<div class="jorei-article"><span class="article-title">（趣旨）</span><br>第1条 この条例は、地方自治法（昭和22年法律第67号）第96条第1項第5号及び第8号の規定に基づき、議会の議決に付すべき契約及び財産の取得又は処分について定めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（契約）</span><br>第2条 議会の議決に付さなければならない契約は、予定価格1億5,000万円以上の工事又は製造の請負とする。</div>
+<div class="jorei-article"><span class="article-title">（財産の取得又は処分）</span><br>第3条 議会の議決に付さなければならない財産の取得又は処分は、予定価格2,000万円以上の不動産若しくは動産の買入れ若しくは売払い（土地については、1件5,000平方メートル以上のものに係るものに限る。）とする。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
     { id: 74, title: '三郷市補助金等交付規則', category: '財務', keywords: ['補助金', '交付', '助成'], summary: '補助金の交付に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000210.html' },
     { id: 75, title: '財政事情の作成及び公表に関する条例', category: '財務', keywords: ['財政', '公表', '透明性'], summary: '財政状況の公表に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000211.html' },
     { id: 76, title: '三郷市税条例', category: '財務', keywords: ['市税', '住民税', '固定資産税', '税金'], summary: '市税に関する総合的な条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000214.html' },
