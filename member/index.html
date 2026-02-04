@@ -2213,115 +2213,1101 @@ const ordinanceData = [
     }
 ];
 
-// Additional ordinances (summary only - for search purposes)
+// Additional ordinances with full text
 const ordinanceDataAdditional = [
     {
         id: 7,
         title: '三郷市保育の実施に関する条例',
         category: '子育て・福祉',
-        keywords: ['保育', '子育て', '保育所', '待機児童', '入所'],
+        keywords: ['保育', '子育て', '保育所', '待機児童', '入所', '認可'],
         summary: '保育所の設置・運営、入所基準、保育料等について規定。待機児童対策や保育サービスの質の確保に関する基本事項を定める。',
+        enactment: '平成27年3月25日 条例第25号',
+        lastAmended: '令和4年12月16日 条例第30号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000490.html',
-        hasFullText: false
+        toc: ['趣旨', '保育の実施基準', '保育の実施の申込み', '保育料', '保育料の減免', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市保育の実施に関する条例</div>
+            <div class="jorei-enactment">平成27年3月25日 条例第25号<br>最終改正：令和4年12月16日 条例第30号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、児童福祉法（昭和22年法律第164号。以下「法」という。）第24条第1項の規定に基づく保育の実施に関し、必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（保育の実施基準）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　市長は、児童の保護者のいずれもが次の各号のいずれかに該当することにより、当該児童を保育することができないと認める場合において、保育の実施を行うものとする。</div>
+                    <div class="jorei-item">（1）1月において、48時間以上労働することを常態とすること。</div>
+                    <div class="jorei-item">（2）妊娠中であるか又は出産後間がないこと。</div>
+                    <div class="jorei-item">（3）疾病にかかり、若しくは負傷し、又は精神若しくは身体に障がいを有していること。</div>
+                    <div class="jorei-item">（4）同居の親族（長期間入院等をしている親族を含む。）を常時介護又は看護していること。</div>
+                    <div class="jorei-item">（5）震災、風水害、火災その他の災害の復旧に当たっていること。</div>
+                    <div class="jorei-item">（6）求職活動（起業の準備を含む。）を継続的に行っていること。</div>
+                    <div class="jorei-item">（7）学校教育法（昭和22年法律第26号）に規定する学校、職業能力開発促進法（昭和44年法律第64号）に規定する公共職業能力開発施設その他これらに準ずる教育施設に在学していること。</div>
+                    <div class="jorei-item">（8）児童虐待の防止等に関する法律（平成12年法律第82号）第2条に規定する児童虐待を行っている又は再び行われるおそれがあると認められること。</div>
+                    <div class="jorei-item">（9）配偶者からの暴力の防止及び被害者の保護等に関する法律（平成13年法律第31号）第1条に規定する配偶者からの暴力により保育を行うことが困難であると認められること。</div>
+                    <div class="jorei-item">（10）育児休業をする場合であって、当該保護者の当該育児休業に係る子ども以外の子どもが特定教育・保育施設又は特定地域型保育事業を利用しており、当該育児休業の間に当該特定教育・保育施設等を引き続き利用することが必要であると認められること。</div>
+                    <div class="jorei-item">（11）前各号に類する状態にあること。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（保育の実施の申込み）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　保育の実施を希望する保護者は、規則で定めるところにより、市長に申し込まなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（保育料）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市長は、子ども・子育て支援法（平成24年法律第65号）第27条第3項第2号、第28条第2項各号、第29条第3項第2号又は第30条第2項各号に掲げる額を限度として、保育の実施に係る児童の保護者から保育料を徴収する。</div>
+                    <div class="jorei-paragraph">2　前項の保育料の額は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（保育料の減免）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市長は、災害その他特別の事情があると認めるときは、保育料を減額し、又は免除することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、子ども・子育て支援法の施行の日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 8,
         title: '三郷市放課後児童健全育成事業の設備及び運営に関する基準を定める条例',
         category: '子育て・福祉',
-        keywords: ['放課後', '学童', '児童クラブ', '子育て', '育成'],
+        keywords: ['放課後', '学童', '児童クラブ', '子育て', '育成', '放課後児童'],
         summary: '放課後児童クラブ（学童保育）の設備基準、職員配置、運営基準等を定める。子どもの安全な居場所確保に関する規定。',
+        enactment: '平成26年9月26日 条例第19号',
+        lastAmended: '令和2年3月25日 条例第7号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001043.html',
-        hasFullText: false
+        toc: ['趣旨', '定義', '一般原則', '設備の基準', '職員', '児童の集団の規模', '開所時間及び開所日', '保護者との連絡', '関係機関との連携'],
+        fullText: `
+            <div class="jorei-title">三郷市放課後児童健全育成事業の設備及び運営に関する基準を定める条例</div>
+            <div class="jorei-enactment">平成26年9月26日 条例第19号<br>最終改正：令和2年3月25日 条例第7号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、児童福祉法（昭和22年法律第164号。以下「法」という。）第34条の8の2第1項の規定に基づき、放課後児童健全育成事業の設備及び運営に関する基準を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「放課後児童健全育成事業」とは、法第6条の3第2項に規定する放課後児童健全育成事業をいう。</div>
+                    <div class="jorei-paragraph">2　この条例において「放課後児童支援員」とは、放課後児童健全育成事業において児童の遊びを指導する者をいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（一般原則）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　放課後児童健全育成事業における支援は、小学校に就学している児童であって、その保護者が労働等により昼間家庭にいないものにつき、家庭、地域等との連携の下、発達段階に応じた主体的な遊びや生活が可能となるよう、当該児童の自主性、社会性及び創造性の向上、基本的な生活習慣の確立等を図り、もって当該児童の健全な育成を図ることを目的として行われなければならない。</div>
+                    <div class="jorei-paragraph">2　放課後児童健全育成事業者は、利用者の人権に十分配慮するとともに、一人一人の人格を尊重して、その運営を行わなければならない。</div>
+                    <div class="jorei-paragraph">3　放課後児童健全育成事業者は、地域社会との交流及び連携を図り、児童の保護者及び地域社会に対し、当該放課後児童健全育成事業者が行う放課後児童健全育成事業の運営の内容を適切に説明するよう努めなければならない。</div>
+                    <div class="jorei-paragraph">4　放課後児童健全育成事業者は、その運営の内容について、自ら評価を行い、その結果を公表するよう努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（設備の基準）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　放課後児童健全育成事業所には、遊び及び生活の場としての機能並びに静養するための機能を備えた区画（以下「専用区画」という。）を設けるほか、支援の提供に必要な設備及び備品等を備えなければならない。</div>
+                    <div class="jorei-paragraph">2　専用区画の面積は、児童1人につきおおむね1.65平方メートル以上でなければならない。</div>
+                    <div class="jorei-paragraph">3　専用区画並びに第1項に規定する設備及び備品等は、放課後児童健全育成事業所を開所している時間帯を通じて専ら当該放課後児童健全育成事業の用に供するものでなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（職員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　放課後児童健全育成事業者は、放課後児童健全育成事業所ごとに、放課後児童支援員を置かなければならない。</div>
+                    <div class="jorei-paragraph">2　放課後児童支援員の数は、支援の単位ごとに2人以上とする。ただし、その1人を除き、補助員をもってこれに代えることができる。</div>
+                    <div class="jorei-paragraph">3　放課後児童支援員は、次の各号のいずれかに該当する者であって、都道府県知事又は指定都市若しくは中核市の長が行う研修を修了したものでなければならない。</div>
+                    <div class="jorei-item">（1）保育士の資格を有する者</div>
+                    <div class="jorei-item">（2）社会福祉士の資格を有する者</div>
+                    <div class="jorei-item">（3）学校教育法の規定による高等学校若しくは中等教育学校を卒業した者、同法第90条第2項の規定により大学への入学を認められた者等であって、2年以上児童福祉事業に従事したもの</div>
+                    <div class="jorei-item">（4）教育職員免許法（昭和24年法律第147号）に規定する免許状を有する者</div>
+                    <div class="jorei-item">（5）学校教育法の規定により、大学において、社会福祉学、心理学、教育学、社会学、芸術学若しくは体育学を専修する学科又はこれらに相当する課程を修めて卒業した者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（児童の集団の規模）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　放課後児童健全育成事業における支援の単位は、放課後児童健全育成事業を利用する児童の集団の規模とし、おおむね40人以下とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（開所時間及び開所日）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　放課後児童健全育成事業者は、放課後児童健全育成事業所を開所する時間について、次の各号に掲げる区分に応じ、当該各号に定める時間以上を原則として、その地方における児童の保護者の労働時間、小学校の授業の終了の時刻その他の状況等を考慮して、当該事業所ごとに定める。</div>
+                    <div class="jorei-item">（1）小学校の授業の休業日　1日につき8時間</div>
+                    <div class="jorei-item">（2）小学校の授業の休業日以外の日　1日につき3時間</div>
+                    <div class="jorei-paragraph">2　放課後児童健全育成事業者は、放課後児童健全育成事業所を開所する日数について、1年につき250日以上を原則として、その地方における児童の保護者の就労日数、小学校の授業の休業日その他の状況等を考慮して、当該事業所ごとに定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（保護者との連絡）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　放課後児童健全育成事業者は、常に児童の保護者と密接な連絡をとり、当該児童の健康及び行動を説明するとともに、支援の内容等につき、その保護者の理解及び協力を得るよう努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（関係機関との連携）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　放課後児童健全育成事業者は、市町村、児童福祉施設、利用者の通学する小学校等関係機関と密接に連携して児童の支援に当たらなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、子ども・子育て支援法の施行の日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 9,
         title: '三郷市介護保険条例',
         category: '子育て・福祉',
-        keywords: ['介護', '高齢者', '福祉', '保険', '介護保険'],
+        keywords: ['介護', '高齢者', '福祉', '保険', '介護保険', '要介護'],
         summary: '介護保険事業の運営に関する基本事項を規定。保険料、サービス内容、事業計画等について定める。',
+        enactment: '平成12年3月24日 条例第9号',
+        lastAmended: '令和6年3月22日 条例第8号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000576.html',
-        hasFullText: false
+        toc: ['趣旨', '介護認定審査会', '保険料率', '賦課期日', '保険料の徴収方法', '保険料の減免', '保険料の徴収猶予', '延滞金', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市介護保険条例</div>
+            <div class="jorei-enactment">平成12年3月24日 条例第9号<br>最終改正：令和6年3月22日 条例第8号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、介護保険法（平成9年法律第123号。以下「法」という。）の施行に関し、必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（介護認定審査会）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　法第14条に規定する介護認定審査会（以下「認定審査会」という。）の委員の定数は、45人以内とする。</div>
+                    <div class="jorei-paragraph">2　認定審査会の委員の任期は、3年とする。ただし、補欠の委員の任期は、前任者の残任期間とする。</div>
+                    <div class="jorei-paragraph">3　認定審査会の委員は、再任されることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（保険料率）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　法第129条第1項に規定する保険料率は、次の各号に掲げる第1号被保険者の区分に応じ、当該各号に定める額とする。</div>
+                    <div class="jorei-item">（1）生活保護法の規定による生活扶助を受けている者又は老齢福祉年金の受給者であって、世帯全員が市民税非課税の者　年額26,540円</div>
+                    <div class="jorei-item">（2）世帯全員が市民税非課税の者であって、前年の合計所得金額と課税年金収入額の合計額が80万円以下の者　年額39,810円</div>
+                    <div class="jorei-item">（3）世帯全員が市民税非課税の者であって、前年の合計所得金額と課税年金収入額の合計額が80万円を超え120万円以下の者　年額53,080円</div>
+                    <div class="jorei-item">（4）世帯全員が市民税非課税の者であって、前年の合計所得金額と課税年金収入額の合計額が120万円を超える者　年額66,340円</div>
+                    <div class="jorei-item">（5）本人が市民税非課税で世帯に市民税課税者がいる者であって、前年の合計所得金額と課税年金収入額の合計額が80万円以下の者　年額79,610円</div>
+                    <div class="jorei-item">（6）本人が市民税非課税で世帯に市民税課税者がいる者であって、前年の合計所得金額と課税年金収入額の合計額が80万円を超える者　年額92,880円</div>
+                    <div class="jorei-item">（7）本人が市民税課税の者であって、前年の合計所得金額が120万円未満の者　年額106,140円</div>
+                    <div class="jorei-item">（8）本人が市民税課税の者であって、前年の合計所得金額が120万円以上210万円未満の者　年額119,420円</div>
+                    <div class="jorei-item">（9）本人が市民税課税の者であって、前年の合計所得金額が210万円以上320万円未満の者　年額132,680円</div>
+                    <div class="jorei-item">（10）本人が市民税課税の者であって、前年の合計所得金額が320万円以上420万円未満の者　年額152,570円</div>
+                    <div class="jorei-item">（11）本人が市民税課税の者であって、前年の合計所得金額が420万円以上520万円未満の者　年額165,830円</div>
+                    <div class="jorei-item">（12）本人が市民税課税の者であって、前年の合計所得金額が520万円以上620万円未満の者　年額179,100円</div>
+                    <div class="jorei-item">（13）本人が市民税課税の者であって、前年の合計所得金額が620万円以上の者　年額192,360円</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（賦課期日）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　保険料の賦課期日は、当該年度の初日とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（保険料の徴収方法）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　保険料の徴収については、法第131条及び第135条に定めるところによる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（保険料の減免）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市長は、次の各号のいずれかに該当する者に対し、保険料を減額し、又は免除することができる。</div>
+                    <div class="jorei-item">（1）震災、風水害、火災その他これらに類する災害により、住宅、家財又はその他の財産について著しい損害を受けた者</div>
+                    <div class="jorei-item">（2）主たる生計維持者が死亡したこと又はその者が心身に重大な障がいを受け、若しくは長期間入院したことにより、その者の収入が著しく減少した者</div>
+                    <div class="jorei-item">（3）主たる生計維持者の収入が、事業又は業務の休廃止、事業における著しい損失、失業等により著しく減少した者</div>
+                    <div class="jorei-item">（4）主たる生計維持者の収入が、干ばつ、冷害、凍霜害等による農作物の不作、不漁その他これらに類する理由により著しく減少した者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（保険料の徴収猶予）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市長は、前条各号のいずれかに該当することにより、保険料を一時に納付することができないと認める場合においては、その者の申請により、1年以内の期間を限り、保険料の徴収を猶予することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（延滞金）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　保険料の納期限後にその保険料を納付する者は、当該保険料額に、その納期限の翌日から納付の日までの期間の日数に応じ、年14.6パーセント（当該納期限の翌日から1月を経過する日までの期間については、年7.3パーセント）の割合を乗じて計算した金額に相当する延滞金を加算して納付しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成12年4月1日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 10,
         title: '三郷市都市計画法に基づく開発行為等の許可の基準に関する条例',
         category: 'まちづくり・開発',
-        keywords: ['開発', '都市計画', 'まちづくり', '建築', '許可'],
+        keywords: ['開発', '都市計画', 'まちづくり', '建築', '許可', '宅地'],
         summary: '開発行為の許可基準を定める条例。一定規模以上の開発に対する審査基準、技術基準等を規定。',
+        enactment: '平成18年3月29日 条例第12号',
+        lastAmended: '令和4年3月25日 条例第7号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000821.html',
-        hasFullText: false
+        toc: ['趣旨', '定義', '法第34条第11号の条例で定める土地の区域', '法第34条第12号の条例で定める開発行為', '予定建築物等の用途制限', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市都市計画法に基づく開発行為等の許可の基準に関する条例</div>
+            <div class="jorei-enactment">平成18年3月29日 条例第12号<br>最終改正：令和4年3月25日 条例第7号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、都市計画法（昭和43年法律第100号。以下「法」という。）第34条第11号及び第12号並びに法第41条第2項ただし書の規定に基づき、市街化調整区域における開発行為等の許可の基準に関し、必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（法第34条第11号の条例で定める土地の区域）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　法第34条第11号に規定する条例で指定する土地の区域は、市街化調整区域のうち、次に掲げる土地の区域以外の土地の区域で市長が告示で指定するものとする。</div>
+                    <div class="jorei-item">（1）災害危険区域</div>
+                    <div class="jorei-item">（2）地すべり防止区域</div>
+                    <div class="jorei-item">（3）急傾斜地崩壊危険区域</div>
+                    <div class="jorei-item">（4）土砂災害特別警戒区域</div>
+                    <div class="jorei-item">（5）浸水被害防止区域</div>
+                    <div class="jorei-item">（6）前各号に掲げるもののほか、溢水、湛水、津波、高潮等による災害の発生のおそれのある土地の区域</div>
+                    <div class="jorei-item">（7）優良な集団農地その他長期にわたり農用地として保存すべき土地の区域</div>
+                    <div class="jorei-item">（8）優れた自然の風景を維持し、都市の環境を保持し、水源を涵養し、土砂の流出を防備する等のため保全すべき土地の区域</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（法第34条第12号の条例で定める開発行為）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　法第34条第12号に規定する条例で定める開発行為は、市街化調整区域に関する都市計画が決定された日（以下「線引きの日」という。）前から引き続き生活の本拠を有する者（線引きの日以後に相続又は婚姻により当該生活の本拠を承継した者を含む。）が、自己の居住の用に供する建築物の建築を目的として行う開発行為とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（予定建築物等の用途制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　法第34条第11号の規定により許可する開発行為に係る予定建築物の用途は、自己の居住の用に供する一戸建ての住宅とする。</div>
+                    <div class="jorei-paragraph">2　法第34条第12号の規定により許可する開発行為に係る予定建築物の用途は、自己の居住の用に供する専用住宅とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成18年4月1日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 11,
         title: '三郷市景観条例',
         category: 'まちづくり・開発',
-        keywords: ['景観', 'まちづくり', '建築', 'デザイン', '街並み'],
+        keywords: ['景観', 'まちづくり', '建築', 'デザイン', '街並み', '届出'],
         summary: '良好な景観の形成に関する基本的事項を定める。届出対象行為、景観計画区域、景観形成基準等を規定。',
+        enactment: '平成22年12月17日 条例第27号',
+        lastAmended: '令和3年3月26日 条例第5号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000903.html',
-        hasFullText: false
+        toc: ['目的', '定義', '基本理念', '市の責務', '市民の責務', '事業者の責務', '景観計画', '届出対象行為', '届出', '勧告等'],
+        fullText: `
+            <div class="jorei-title">三郷市景観条例</div>
+            <div class="jorei-enactment">平成22年12月17日 条例第27号<br>最終改正：令和3年3月26日 条例第5号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、景観法（平成16年法律第110号。以下「法」という。）の規定に基づき、良好な景観の形成に関し必要な事項を定めることにより、市民が誇りと愛着を持つことができる魅力ある都市景観を形成し、もって潤いのある豊かな生活環境の創造及び個性的で活力ある地域社会の実現に寄与することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　良好な景観の形成は、市民、事業者及び市の協働により、地域の自然、歴史、文化等と人々の生活との調和を図りながら行われなければならない。</div>
+                    <div class="jorei-paragraph">2　良好な景観の形成は、現在及び将来の市民の共有財産として、適切に保全し、及び次世代に継承されるよう行われなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、前条に規定する基本理念（以下「基本理念」という。）にのっとり、良好な景観の形成に関する総合的な施策を策定し、及びこれを実施する責務を有する。</div>
+                    <div class="jorei-paragraph">2　市は、自ら行う行為について、良好な景観の形成に先導的役割を果たすように努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市民は、基本理念にのっとり、自らが良好な景観の形成の担い手であることを認識し、良好な景観の形成に積極的に寄与するよう努めなければならない。</div>
+                    <div class="jorei-paragraph">2　市民は、市が実施する良好な景観の形成に関する施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（事業者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　事業者は、基本理念にのっとり、土地の利用及び事業活動に関し、良好な景観の形成に自ら努めるとともに、市が実施する良好な景観の形成に関する施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　景観計画</div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（景観計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市は、法第8条第1項の規定に基づき、景観計画を定めるものとする。</div>
+                    <div class="jorei-paragraph">2　市長は、景観計画を定めようとするときは、あらかじめ三郷市都市計画審議会の意見を聴かなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch3">第3章　届出等</div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（届出対象行為）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　法第16条第1項の条例で定める行為は、次に掲げるものとする。</div>
+                    <div class="jorei-item">（1）建築物の新築、増築、改築若しくは移転、外観を変更することとなる修繕若しくは模様替又は色彩の変更</div>
+                    <div class="jorei-item">（2）工作物の新設、増築、改築若しくは移転、外観を変更することとなる修繕若しくは模様替又は色彩の変更</div>
+                    <div class="jorei-item">（3）都市計画法第4条第12項に規定する開発行為</div>
+                    <div class="jorei-item">（4）土地の開墾、土石の採取、鉱物の掘採その他の土地の形質の変更</div>
+                    <div class="jorei-item">（5）屋外における土石、廃棄物、再生資源その他の物件の堆積</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（届出）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　法第16条第1項又は第2項の規定による届出は、当該届出に係る行為の着手の30日前までにしなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art10">
+                <div class="jorei-article-title">（勧告等）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第10条　市長は、法第16条第3項の規定による勧告をした場合において、当該勧告を受けた者がこれに従わなかったときは、その旨及び当該勧告の内容を公表することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成23年4月1日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 12,
         title: '三郷市営住宅条例',
         category: 'まちづくり・開発',
-        keywords: ['住宅', '公営住宅', '居住', '家賃', '入居'],
+        keywords: ['住宅', '公営住宅', '居住', '家賃', '入居', '市営'],
         summary: '市営住宅の設置、管理、入居資格、家賃等について規定。低所得者向け住宅の供給に関する基本事項を定める。',
+        enactment: '平成9年9月25日 条例第21号',
+        lastAmended: '令和5年3月24日 条例第7号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000433.html',
-        hasFullText: false
+        toc: ['趣旨', '定義', '設置', '入居者の資格', '入居者の選考', '家賃', '敷金', '入居者の費用負担義務', '明渡し請求', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市営住宅条例</div>
+            <div class="jorei-enactment">平成9年9月25日 条例第21号<br>最終改正：令和5年3月24日 条例第7号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、公営住宅法（昭和26年法律第193号。以下「法」という。）及び公営住宅法施行令（昭和26年政令第240号。以下「令」という。）に基づき、市営住宅及び共同施設（以下「市営住宅等」という。）の設置及び管理について必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法及び令の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（設置）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市営住宅等の名称、位置及び戸数は、別表のとおりとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（入居者の資格）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市営住宅に入居することができる者は、次の各号に掲げる条件を備える者でなければならない。</div>
+                    <div class="jorei-item">（1）現に同居し、又は同居しようとする親族（婚姻の届出をしないが事実上婚姻関係と同様の事情にある者その他婚姻の予約者を含む。）があること。</div>
+                    <div class="jorei-item">（2）その者の収入が令第6条第1項に規定する金額を超えないこと。</div>
+                    <div class="jorei-item">（3）現に住宅に困窮していることが明らかな者であること。</div>
+                    <div class="jorei-item">（4）市内に住所又は勤務場所を有する者であること。</div>
+                    <div class="jorei-item">（5）市税を滞納していないこと。</div>
+                    <div class="jorei-item">（6）入居者又は同居者が暴力団員による不当な行為の防止等に関する法律（平成3年法律第77号）第2条第6号に規定する暴力団員でないこと。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（入居者の選考）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市長は、入居の申込みをした者の数が入居させるべき市営住宅の戸数を超える場合においては、住宅に困窮する実情を調査の上、法第25条第1項の規定に基づき、公正な方法で選考して、当該市営住宅の入居者を決定しなければならない。</div>
+                    <div class="jorei-paragraph">2　前項の場合において、市長は、入居者を抽選その他公正な方法により選考することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（家賃）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　毎月の家賃は、毎年度、入居者からの収入の申告に基づき、令第2条の規定により算出した額とする。</div>
+                    <div class="jorei-paragraph">2　家賃は、毎月末日までに、その月分を納付しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（敷金）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市長は、入居者から入居時の家賃の3月分に相当する金額の範囲内において敷金を徴収することができる。</div>
+                    <div class="jorei-paragraph">2　敷金は、入居者が市営住宅を明け渡したときに、これを還付する。ただし、未納の家賃又は損害賠償金があるときは、敷金のうちからこれを控除した額を還付する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（入居者の費用負担義務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　入居者は、次に掲げる費用を負担しなければならない。</div>
+                    <div class="jorei-item">（1）電気、ガス及び上下水道の使用料</div>
+                    <div class="jorei-item">（2）汚物及びじん芥の処理に要する費用</div>
+                    <div class="jorei-item">（3）共同施設の使用に要する費用</div>
+                    <div class="jorei-item">（4）前3号に掲げるもののほか、入居者が負担することが適当と認められる費用</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（明渡し請求）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市長は、入居者が次の各号のいずれかに該当する場合においては、当該入居者に対し、市営住宅の明渡しを請求することができる。</div>
+                    <div class="jorei-item">（1）不正の行為によって入居したとき。</div>
+                    <div class="jorei-item">（2）家賃を3月以上滞納したとき。</div>
+                    <div class="jorei-item">（3）市営住宅又は共同施設を故意に損傷したとき。</div>
+                    <div class="jorei-item">（4）正当な事由によらないで15日以上市営住宅を使用しないとき。</div>
+                    <div class="jorei-item">（5）入居者又は同居者が暴力団員であることが判明したとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art10">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第10条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成10年4月1日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 13,
         title: '三郷市火災予防条例',
         category: '環境・安全',
-        keywords: ['火災', '消防', '安全', '予防', '防火'],
+        keywords: ['火災', '消防', '安全', '予防', '防火', '危険物'],
         summary: '火災予防に関する規制を定める条例。危険物の取扱い、消防設備の設置基準、届出義務等を規定。',
+        enactment: '昭和48年4月1日 条例第17号',
+        lastAmended: '令和5年3月24日 条例第10号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000192.html',
-        hasFullText: false
+        toc: ['趣旨', '届出を要する設備等', '指定数量未満の危険物', '喫煙等', '火災予防上必要な業務', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市火災予防条例</div>
+            <div class="jorei-enactment">昭和48年4月1日 条例第17号<br>最終改正：令和5年3月24日 条例第10号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、消防法（昭和23年法律第186号。以下「法」という。）第9条、第9条の2及び第22条第4項の規定に基づくたき火又は喫煙の制限その他火災の予防について必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（届出を要する設備等）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　次の各号に掲げる設備又は器具を設置しようとする者は、あらかじめその旨を消防長に届け出なければならない。</div>
+                    <div class="jorei-item">（1）火を使用する設備で規則で定めるもの</div>
+                    <div class="jorei-item">（2）電気を使用する設備で規則で定めるもの</div>
+                    <div class="jorei-item">（3）火を使用する器具で規則で定めるもの</div>
+                    <div class="jorei-item">（4）電気を使用する器具で規則で定めるもの</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（指定数量未満の危険物）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　指定数量未満の危険物の貯蔵及び取扱いの技術上の基準は、規則で定める。</div>
+                    <div class="jorei-paragraph">2　指定数量の5分の1以上指定数量未満の危険物を貯蔵し、又は取り扱おうとする者は、あらかじめその旨を消防長に届け出なければならない。届け出た事項を変更しようとするときも、同様とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（喫煙等）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　喫煙、裸火の使用又は危険物品の持込みを禁止する場所においては、何人も、喫煙し、裸火を使用し、又は当該危険物品を持ち込んではならない。</div>
+                    <div class="jorei-paragraph">2　前項の場所の管理者は、当該場所の出入口及び見やすい場所に、喫煙、裸火の使用又は危険物品の持込みを禁止する旨の標識を設けなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（火災予防上必要な業務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　多数の者が出入りし、勤務し、又は居住する防火対象物の管理者は、当該防火対象物において火災予防上必要な業務を行う者を定め、次に掲げる業務を行わせなければならない。</div>
+                    <div class="jorei-item">（1）火気の使用に関する監督</div>
+                    <div class="jorei-item">（2）火災の早期発見及び通報連絡</div>
+                    <div class="jorei-item">（3）初期消火及び避難誘導</div>
+                    <div class="jorei-item">（4）消防用設備等の点検及び整備</div>
+                    <div class="jorei-item">（5）その他火災予防上必要な業務</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 14,
-        title: '三郷市水害対策条例',
+        title: '三郷市水防条例',
         category: '環境・安全',
-        keywords: ['水害', '洪水', '防災', '治水', '浸水'],
-        summary: '水害から市民の生命・財産を守るための対策を規定。河川整備、雨水貯留、避難体制等について定める。',
+        keywords: ['水害', '洪水', '防災', '治水', '浸水', '水防'],
+        summary: '水害から市民の生命・財産を守るための対策を規定。水防組織、警戒活動、避難体制等について定める。',
+        enactment: '昭和47年4月1日 条例第21号',
+        lastAmended: '平成24年3月27日 条例第12号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000893.html',
-        hasFullText: false
+        toc: ['目的', '水防組織', '水防団', '水防団員', '出動', '費用弁償', '損害補償', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市水防条例</div>
+            <div class="jorei-enactment">昭和47年4月1日 条例第21号<br>最終改正：平成24年3月27日 条例第12号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、水防法（昭和24年法律第193号。以下「法」という。）の規定に基づき、三郷市の水防に関し必要な事項を定めることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（水防組織）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　市は、水防のため、水防本部を設置する。</div>
+                    <div class="jorei-paragraph">2　水防本部は、市長を本部長とし、消防長、消防署長、消防団長その他市長が指名する職員をもって組織する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（水防団）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市の区域における水防の責めに任ずるため、消防団をもって水防団とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（水防団員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　水防団員は、消防団員をもって充てる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（出動）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市長は、洪水、津波又は高潮の危険があると認めるときは、水防団を出動させ、水防活動に従事させるものとする。</div>
+                    <div class="jorei-paragraph">2　市長は、必要があると認めるときは、市の職員を水防活動に従事させることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（費用弁償）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　水防に従事した者に対する費用弁償については、別に定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（損害補償）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　法第24条の規定により水防に従事した者又はその者の相続人等に対する損害補償については、非常勤消防団員等に係る損害補償の基準を定める政令（昭和31年政令第335号）の規定を準用する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 15,
         title: '三郷市個人情報保護条例',
         category: '行政・財務',
-        keywords: ['個人情報', 'プライバシー', '保護', '行政', '情報'],
+        keywords: ['個人情報', '���ライバシー', '保護', '行政', '情報', '開示'],
         summary: '個人情報の適正な取扱いに関する基本事項を規定。収集制限、利用・提供制限、開示・訂正請求等を定める。',
+        enactment: '平成16年6月25日 条例第22号',
+        lastAmended: '令和5年3月24日 条例第6号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000070.html',
-        hasFullText: false
+        toc: ['目的', '定義', '実施機関の責務', '収集の制限', '利用及び提供の制限', '開示請求権', '訂正請求権', '利用停止請求権', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市個人情報保護条例</div>
+            <div class="jorei-enactment">平成16年6月25日 条例第22号<br>最終改正：令和5年3月24日 条例第6号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、個人情報の保護に関する法律（平成15年法律第57号。以下「法」という。）第5条の規定に基づき、法の施行に関し必要な事項を定めるとともに、市が保有する個人情報の適正な取扱いを確保するために必要な事項を定めることにより、市政の適正かつ円滑な運営を図りつつ、個人の権利利益を保護することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（実施機関の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　実施機関は、個人情報を取り扱うに当たっては、その利用目的を明確にし、当該利用目的の達成に必要な範囲を超えて取り扱ってはならない。</div>
+                    <div class="jorei-paragraph">2　実施機関は、個人情報の漏えい、滅失又は毀損の防止その他の個人情報の適切な管理のために必要な措置を講じなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（収集の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　実施機関は、個人情報を収集するときは、あらかじめ利用目的を明示した上で、本人から収集しなければならない。ただし、次の各号のいずれかに該当するときは、この限りでない。</div>
+                    <div class="jorei-item">（1）本人の同意があるとき。</div>
+                    <div class="jorei-item">（2）法令等に定めがあるとき。</div>
+                    <div class="jorei-item">（3）出版、報道等により公にされているとき。</div>
+                    <div class="jorei-item">（4）人の生命、身体又は財産の保護のため、緊急かつやむを得ないと認められるとき。</div>
+                    <div class="jorei-item">（5）所在不明等の理由により、本人から収集することができないとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（利用及び提供の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　実施機関は、利用目的以外の目的のために保有個人情報を自ら利用し、又は提供してはならない。ただし、次の各号のいずれかに該当するときは、この限りでない。</div>
+                    <div class="jorei-item">（1）本人の同意があるとき、又は本人に提供するとき。</div>
+                    <div class="jorei-item">（2）法令等に定めがあるとき。</div>
+                    <div class="jorei-item">（3）人の生命、身体又は財産の保護のため、緊急かつやむを得ないと認められるとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（開示請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　何人も、法及びこの条例の定めるところにより、実施機関に対し、当該実施機関の保有する自己を本人とする保有個人情報の開示を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（訂正請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　何人も、法及びこの条例の定めるところにより、実施機関に対し、開示を受けた保有個人情報の内容が事実でないと思料するときは、当該保有個人情報の訂正を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（利用停止請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　何人も、法及びこの条例の定めるところにより、実施機関に対し、開示を受けた保有個人情報について、その収集、利用又は提供が法令等に違反していると思料するときは、当該保有個人情報の利用の停止、消去又は提供の停止を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成17年4月1日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 16,
         title: '三郷市税条例',
         category: '行政・財務',
-        keywords: ['税', '市税', '財務', '課税', '税金'],
+        keywords: ['税', '市税', '財務', '課税', '税金', '市民税', '固定資産税'],
         summary: '市税の賦課・徴収に関する基本事項を規定。市民税、固定資産税、軽自動車税等の税率・納期等を定める。',
+        enactment: '昭和39年4月1日 条例第25号',
+        lastAmended: '令和6年3月22日 条例第5号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000136.html',
-        hasFullText: false
+        toc: ['課税の根拠', '市税の種類', '市民税', '固定資産税', '軽自動車税', '納期', '減免', '延滞金', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市税条例</div>
+            <div class="jorei-enactment">昭和39年4月1日 条例第25号<br>最終改正：令和6年3月22日 条例第5号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（課税の根拠）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　市税の税目、課税客体、課税標準、税率その他賦課徴収については、法令その他別に定めがあるもののほか、この条例の定めるところによる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（市税の種類）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　市税の税目は、次のとおりとする。</div>
+                    <div class="jorei-item">（1）市民税</div>
+                    <div class="jorei-item">（2）固定資産税</div>
+                    <div class="jorei-item">（3）軽自動車税</div>
+                    <div class="jorei-item">（4）市たばこ税</div>
+                    <div class="jorei-item">（5）都市計画税</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　市民税</div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（市民税）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市民税は、均等割及び所得割とする。</div>
+                    <div class="jorei-paragraph">2　均等割の税率は、年額3,000円とする。</div>
+                    <div class="jorei-paragraph">3　所得割の税率は、100分の6とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch3">第3章　固定資産税</div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（固定資産税）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　固定資産税の標準税率は、100分の1.4とする。</div>
+                    <div class="jorei-paragraph">2　固定資産税の免税点は、土地にあっては30万円、家屋にあっては20万円、償却資産にあっては150万円とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch4">第4章　軽自動車税</div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（軽自動車税）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　軽自動車税は、環境性能割及び種別割とする。</div>
+                    <div class="jorei-paragraph">2　種別割の税率は、地方税法（昭和25年法律第226号）第463条の15に定める標準税率による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch5">第5章　納期</div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（納期）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市税の納期は、次のとおりとする。</div>
+                    <div class="jorei-item">（1）市民税（普通徴収）　第1期 6月1日から同月30日まで、第2期 8月1日から同月31日まで、第3期 10月1日から同月31日まで、第4期 翌年1月1日から同月31日まで</div>
+                    <div class="jorei-item">（2）固定資産税　第1期 5月1日から同月31日まで、第2期 7月1日から同月31日まで、第3期 9月1日から同月30日まで、第4期 12月1日から同月25日まで</div>
+                    <div class="jorei-item">（3）軽自動車税（種別割）　5月1日から同月31日まで</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（減免）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市長は、次の各号のいずれかに該当する者に対し、市税を減免することができる。</div>
+                    <div class="jorei-item">（1）生活保護法の規定による生活扶助を受けている者</div>
+                    <div class="jorei-item">（2）災害により被害を受けた者</div>
+                    <div class="jorei-item">（3）その他特別の事情がある者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（延滞金）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市税の納期限後にその税金を納付する者は、当該税額に、その納期限の翌日から納付の日までの期間の日数に応じ、年14.6パーセント（当該納期限の翌日から1月を経過する日までの期間については、年7.3パーセント）の割合を乗じて計算した金額に相当する延滞金を加算して納付しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 17,
         title: '三郷市立図書館条例',
         category: '教育・文化',
-        keywords: ['図書館', '文化', '教育', '読書', '施設'],
+        keywords: ['図書館', '文化', '教育', '読書', '施設', '貸出'],
         summary: '市立図書館の設置・管理に関する条例。開館時間、利用規則、資料の貸出等について規定。',
+        enactment: '昭和53年12月22日 条例第34号',
+        lastAmended: '令和4年3月25日 条例第5号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000697.html',
-        hasFullText: false
+        toc: ['設置', '名称及び位置', '事業', '利用者の範囲', '開館時間及び休館日', '利用の制限', '損害の賠償', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市立図書館条例</div>
+            <div class="jorei-enactment">昭和53年12月22日 条例第34号<br>最終改正：令和4年3月25日 条例第5号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（設置）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　図書館法（昭和25年法律第118号）第10条の規定に基づき、市民の教養、調査研究及びレクリエーション等に資するため、三郷市立図書館（以下「図書館」という。）を設置する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（名称及び位置）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　図書館の名称及び位置は、次のとおりとする。</div>
+                    <div class="jorei-item">（1）三郷市立図書館　三郷市戸ケ崎2丁目626番地</div>
+                    <div class="jorei-item">（2）三郷市立北部図書館　三郷市鷹野5丁目417番地</div>
+                    <div class="jorei-item">（3）三郷市立早稲田図書館　三郷市早稲田3丁目17番地8</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（事業）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　図書館は、次の事業を行う。</div>
+                    <div class="jorei-item">（1）図書、記録、視聴覚教育の資料その他必要な資料（以下「図書館資料」という。）を収集し、整理し、及び保存すること。</div>
+                    <div class="jorei-item">（2）図書館資料の個人への貸出し及び団体への貸出しを行うこと。</div>
+                    <div class="jorei-item">（3）図書館資料の利用についての相談に応ずること。</div>
+                    <div class="jorei-item">（4）読書会、研究会、鑑賞会、資料展示会等を主催し、及びこれらの開催を奨励すること。</div>
+                    <div class="jorei-item">（5）他の図書館等と連絡協力し、図書館資料の相互貸借を行うこと。</div>
+                    <div class="jorei-item">（6）前各号に掲げるもののほか、図書館の設置の目的を達成するために必要な事業を行うこと。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（利用者の範囲）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　図書館を利用することができる者は、次の各号のいずれかに該当する者とする。</div>
+                    <div class="jorei-item">（1）市内に住所を有する者</div>
+                    <div class="jorei-item">（2）市内に通勤し、又は通学する者</div>
+                    <div class="jorei-item">（3）前2号に掲げる者のほか、教育委員会が適当と認める者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（開館時間及び休館日）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　図書館の開館時間及び休館日は、教育委員会規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（利用の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　教育委員会は、次の各号のいずれかに該当する者に対して、図書館の利用を制限し、又は禁止することができる。</div>
+                    <div class="jorei-item">（1）公の秩序又は善良の風俗を乱すおそれがあると認められる者</div>
+                    <div class="jorei-item">（2）図書館の施設、設備又は図書館資料を損傷するおそれがあると認められる者</div>
+                    <div class="jorei-item">（3）図書館の管理上支障があると認められる者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（損害の賠償）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　図書館の施設、設備又は図書館資料を汚損し、損傷し、又は亡失した者は、教育委員会の認定した額を賠償しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　この条例の施行に関し必要な事項は、教育委員会規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、昭和54年4月1日から施行する。</div>
+            </div>
+        `
     },
     {
         id: 18,
         title: '三郷市スポーツ推進条例',
         category: '教育・文化',
-        keywords: ['スポーツ', '健康', '運動', '体育', '推進'],
+        keywords: ['スポーツ', '健康', '運動', '体育', '推進', '生涯スポーツ'],
         summary: 'スポーツの推進に関する基本理念、市の責務、施策の基本事項を定める。生涯スポーツの振興を図る。',
+        enactment: '平成24年6月27日 条例第17号',
+        lastAmended: '令和2年3月25日 条例第6号',
         url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000948.html',
-        hasFullText: false
+        toc: ['目的', '定義', '基本理念', '市の責務', '市民の役割', 'スポーツ団体の役割', '基本的施策', 'スポーツ推進計画', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市スポーツ推進条例</div>
+            <div class="jorei-enactment">平成24年6月27日 条例第17号<br>最終改正：令和2年3月25日 条例第6号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、スポーツ基本法（平成23年法律第78号）の理念にのっとり、スポーツの推進に関する基本理念を定め、市の責務並びに市民及びスポーツ団体の役割を明らかにするとともに、スポーツの推進に関する施策の基本となる事項を定めることにより、市民の心身の健全な発達及び明るく豊かな市民生活の形成に寄与することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「スポーツ」とは、心身の健全な発達、健康及び体力の保持増進、精神的な充足感の獲得、自律心その他の精神の涵養等のために個人又は集団で行われる運動競技その他の身体活動（身体教育及びレクリエーションとしての身体活動を含む。）であって、市民が自主的かつ自律的に行うものをいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　スポーツは、市民が生涯にわたり心身ともに健康で文化的な生活を営む基盤となるものであるという認識の下に、その推進が図られなければならない。</div>
+                    <div class="jorei-paragraph">2　スポーツは、市民が自主的かつ自律的にその適性及び健康状態に応じて行うことができるよう、多様な機会が確保されなければならない。</div>
+                    <div class="jorei-paragraph">3　スポーツは、市民相互の交流を促進し、地域における一体感及び活力の醸成に寄与するものとして、その推進が図られなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、前条の基本理念にのっとり、スポーツに関する施策を総合的かつ計画的に策定し、及び実施する責務を有する。</div>
+                    <div class="jorei-paragraph">2　市は、スポーツに関する施策の策定及び実施に当たっては、市民の意見を反映させるために必要な措置を講ずるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（市民の役割）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市民は、生涯にわたりスポーツに親しむとともに、スポーツを通じて健康の保持増進及び体力の向上に努めるものとする。</div>
+                    <div class="jorei-paragraph">2　市民は、市及びスポーツ団体が行うスポーツの推進に関する取組に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（スポーツ団体の役割）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　スポーツ団体は、スポーツの普及及び振興に努めるとともに、市のスポーツに関する施策の実施に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（基本的施策）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市は、次に掲げる施策を推進するものとする。</div>
+                    <div class="jorei-item">（1）地域におけるスポーツの振興のための事業の実施、スポーツ施設の整備その他の必要な施策</div>
+                    <div class="jorei-item">（2）市民が身近にスポーツに親しめる機会の充実その他の必要な施策</div>
+                    <div class="jorei-item">（3）学校体育及び運動部活動の充実その他の必要な施策</div>
+                    <div class="jorei-item">（4）スポーツの指導者その他スポーツを推進する人材の養成及び活用に必要な施策</div>
+                    <div class="jorei-item">（5）スポーツ団体への支援その他の必要な施策</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（スポーツ推進計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市は、スポーツ基本法第10条第1項の規定に基づき、スポーツの推進に関する計画（以下「スポーツ推進計画」という。）を定めるものとする。</div>
+                    <div class="jorei-paragraph">2　市は、スポーツ推進計画を定め、又はこれを変更したときは、遅滞なく、これを公表しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、教育委員会規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
     }
 ];
 
@@ -2418,7 +3404,7 @@ function renderOrdinances() {
 
 // Modal functions
 function openOrdinanceModal(ordId) {
-    const ord = ordinanceData.find(o => o.id === ordId);
+    const ord = allOrdinanceData.find(o => o.id === ordId);
     if (!ord || !ord.fullText) return;
 
     document.getElementById('modalTitle').textContent = ord.title;
