@@ -217,9 +217,246 @@
         .tab-btn.law-tab.active {
             background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
         }
+        .tab-btn.ai-tab.active {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
         .tab-btn svg {
             width: 20px;
             height: 20px;
+        }
+
+        /* ===== AI Assistant ===== */
+        .ai-chat-container {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .ai-chat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: var(--white);
+        }
+        .ai-chat-header-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-chat-header-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--white);
+        }
+        .ai-chat-header-text h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .ai-chat-header-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        .ai-chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: var(--gray-lighter);
+        }
+        .ai-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        .ai-message.user {
+            flex-direction: row-reverse;
+        }
+        .ai-message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ai-message.assistant .ai-message-avatar {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        .ai-message.user .ai-message-avatar {
+            background: var(--navy);
+        }
+        .ai-message-avatar svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--white);
+        }
+        .ai-message-content {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 12px;
+            line-height: 1.7;
+        }
+        .ai-message.assistant .ai-message-content {
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+        }
+        .ai-message.user .ai-message-content {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .ai-message-content p {
+            margin-bottom: 0.5rem;
+        }
+        .ai-message-content p:last-child {
+            margin-bottom: 0;
+        }
+        .ai-message-content .ordinance-ref {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .ai-message-content .ordinance-ref:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+        .ai-chat-input-area {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            background: var(--white);
+        }
+        .ai-chat-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .ai-chat-input {
+            flex: 1;
+            padding: 0.85rem 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .ai-chat-input:focus {
+            border-color: #6366f1;
+        }
+        .ai-chat-send-btn {
+            padding: 0 1.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s;
+        }
+        .ai-chat-send-btn:hover {
+            opacity: 0.9;
+        }
+        .ai-chat-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .ai-chat-send-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        .ai-typing {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        .ai-typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        .ai-typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: #6366f1;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .ai-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .ai-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        .ai-api-key-setup {
+            padding: 2rem;
+            text-align: center;
+        }
+        .ai-api-key-setup p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+        .ai-api-key-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.85rem 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-bottom: 1rem;
+        }
+        .ai-api-key-btn {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .ai-example-questions {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            background: var(--gray-lighter);
+        }
+        .ai-example-questions-title {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+        }
+        .ai-example-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text);
+            cursor: pointer;
+            margin: 0.25rem;
+            transition: all 0.2s;
+        }
+        .ai-example-btn:hover {
+            border-color: #6366f1;
+            color: #6366f1;
         }
 
         /* ===== Search Section ===== */
@@ -807,6 +1044,14 @@
                 </svg>
                 国の法律検索
             </button>
+            <button class="tab-btn ai-tab" data-tab="ai">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                    <circle cx="7.5" cy="14.5" r="1.5"/>
+                    <circle cx="16.5" cy="14.5" r="1.5"/>
+                </svg>
+                AIに質問
+            </button>
         </div>
 
         <!-- Ordinance Search Section -->
@@ -937,6 +1182,74 @@
                 </div>
             </div>
         </div>
+
+        <!-- AI Assistant Section -->
+        <div class="search-section" id="aiSection">
+            <div class="ai-chat-container">
+                <div class="ai-chat-header">
+                    <div class="ai-chat-header-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                            <circle cx="7.5" cy="14.5" r="1.5"/>
+                            <circle cx="16.5" cy="14.5" r="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="ai-chat-header-text">
+                        <h2>AI条例アシスタント</h2>
+                        <p>三郷市の条例について何でも質問してください</p>
+                    </div>
+                </div>
+
+                <!-- API Key Setup (initially shown if no key) -->
+                <div class="ai-api-key-setup" id="aiApiKeySetup">
+                    <p>Gemini APIキーを設定してください<br><small>（キーはブラウザに保存され、サーバーには送信されません）</small></p>
+                    <input type="password" class="ai-api-key-input" id="geminiApiKeyInput" placeholder="Gemini APIキーを入力...">
+                    <br>
+                    <button class="ai-api-key-btn" onclick="saveApiKey()">設定を保存</button>
+                    <p style="margin-top:1rem;font-size:0.8rem;"><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Gemini APIキーを取得する →</a></p>
+                </div>
+
+                <!-- Chat Interface (shown after key is set) -->
+                <div id="aiChatInterface" style="display:none;">
+                    <div class="ai-chat-messages" id="aiChatMessages">
+                        <div class="ai-message assistant">
+                            <div class="ai-message-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                                    <circle cx="7.5" cy="14.5" r="1.5"/>
+                                    <circle cx="16.5" cy="14.5" r="1.5"/>
+                                </svg>
+                            </div>
+                            <div class="ai-message-content">
+                                <p>こんにちは！三郷市の条例についてお答えします。</p>
+                                <p>例えば「議員報酬はいくらですか？」「情報公開の手続きは？」など、何でも聞いてください。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-example-questions">
+                        <div class="ai-example-questions-title">質問例:</div>
+                        <button class="ai-example-btn" onclick="askExample(this)">議員の政務活動費はいくらですか？</button>
+                        <button class="ai-example-btn" onclick="askExample(this)">市の休日はいつですか？</button>
+                        <button class="ai-example-btn" onclick="askExample(this)">情報公開請求の方法は？</button>
+                        <button class="ai-example-btn" onclick="askExample(this)">副市長は何人ですか？</button>
+                    </div>
+
+                    <div class="ai-chat-input-area">
+                        <div class="ai-chat-input-wrapper">
+                            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="条例について質問してください...">
+                            <button class="ai-chat-send-btn" id="aiSendBtn" onclick="sendAiMessage()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                                送信
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 
@@ -1022,7 +1335,14 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
         const tab = btn.dataset.tab;
         document.querySelectorAll('.search-section').forEach(s => s.classList.remove('active'));
-        document.getElementById(tab === 'ordinance' ? 'ordinanceSection' : 'lawSection').classList.add('active');
+
+        if (tab === 'ordinance') {
+            document.getElementById('ordinanceSection').classList.add('active');
+        } else if (tab === 'law') {
+            document.getElementById('lawSection').classList.add('active');
+        } else if (tab === 'ai') {
+            document.getElementById('aiSection').classList.add('active');
+        }
     });
 });
 
@@ -1329,6 +1649,225 @@ document.getElementById('modalOverlay').addEventListener('click', closeModal);
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
 });
+
+// ===== AI Assistant =====
+const GEMINI_API_KEY_STORAGE = 'misato_gemini_api_key';
+let geminiApiKey = localStorage.getItem(GEMINI_API_KEY_STORAGE);
+
+function initAiAssistant() {
+    if (geminiApiKey) {
+        document.getElementById('aiApiKeySetup').style.display = 'none';
+        document.getElementById('aiChatInterface').style.display = 'block';
+    }
+}
+
+function saveApiKey() {
+    const key = document.getElementById('geminiApiKeyInput').value.trim();
+    if (key) {
+        geminiApiKey = key;
+        localStorage.setItem(GEMINI_API_KEY_STORAGE, key);
+        document.getElementById('aiApiKeySetup').style.display = 'none';
+        document.getElementById('aiChatInterface').style.display = 'block';
+    }
+}
+
+function askExample(btn) {
+    const question = btn.textContent;
+    document.getElementById('aiChatInput').value = question;
+    sendAiMessage();
+}
+
+async function sendAiMessage() {
+    const input = document.getElementById('aiChatInput');
+    const question = input.value.trim();
+    if (!question) return;
+
+    const messagesEl = document.getElementById('aiChatMessages');
+    const sendBtn = document.getElementById('aiSendBtn');
+
+    // Add user message
+    messagesEl.innerHTML += `
+        <div class="ai-message user">
+            <div class="ai-message-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            </div>
+            <div class="ai-message-content">
+                <p>${escapeHtml(question)}</p>
+            </div>
+        </div>
+    `;
+
+    // Add typing indicator
+    const typingId = 'typing-' + Date.now();
+    messagesEl.innerHTML += `
+        <div class="ai-typing" id="${typingId}">
+            <div class="ai-typing-dots">
+                <span></span><span></span><span></span>
+            </div>
+            考え中...
+        </div>
+    `;
+
+    input.value = '';
+    sendBtn.disabled = true;
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+
+    try {
+        const response = await askGemini(question);
+
+        // Remove typing indicator
+        document.getElementById(typingId)?.remove();
+
+        // Add AI response
+        messagesEl.innerHTML += `
+            <div class="ai-message assistant">
+                <div class="ai-message-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                        <circle cx="7.5" cy="14.5" r="1.5"/>
+                        <circle cx="16.5" cy="14.5" r="1.5"/>
+                    </svg>
+                </div>
+                <div class="ai-message-content">
+                    ${formatAiResponse(response)}
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        document.getElementById(typingId)?.remove();
+        messagesEl.innerHTML += `
+            <div class="ai-message assistant">
+                <div class="ai-message-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                        <circle cx="7.5" cy="14.5" r="1.5"/>
+                        <circle cx="16.5" cy="14.5" r="1.5"/>
+                    </svg>
+                </div>
+                <div class="ai-message-content">
+                    <p style="color:#dc2626;">エラーが発生しました: ${escapeHtml(error.message)}</p>
+                    <p>APIキーを確認してください。</p>
+                </div>
+            </div>
+        `;
+    }
+
+    sendBtn.disabled = false;
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function askGemini(question) {
+    // Build context from ordinance data
+    const relevantOrdinances = findRelevantOrdinances(question);
+
+    const systemPrompt = `あなたは三郷市の条例に詳しいアシスタントです。
+ユーザーの質問に対して、以下の三郷市の条例データを参照して正確に回答してください。
+条例に基づいて回答し、条例名を明示してください。
+わからない場合は「該当する条例が見つかりませんでした」と答えてください。
+回答は簡潔にしてください。
+
+【参照する条例データ】
+${relevantOrdinances.map(o => `
+条例名: ${o.title}
+カテゴリ: ${o.category}
+概要: ${o.summary}
+${o.fullText ? '本文: ' + o.fullText.replace(/<[^>]*>/g, '').substring(0, 2000) : ''}
+---`).join('\n')}
+`;
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            contents: [{
+                parts: [{
+                    text: systemPrompt + '\n\nユーザーの質問: ' + question
+                }]
+            }],
+            generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 1024,
+            }
+        })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error?.message || 'API呼び出しに失敗しました');
+    }
+
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || '回答を生成できませんでした。';
+}
+
+function findRelevantOrdinances(question) {
+    const keywords = question.toLowerCase().split(/[\s、。？！]+/).filter(w => w.length > 1);
+
+    // Score each ordinance based on relevance
+    const scored = allOrdinanceData.map(ord => {
+        let score = 0;
+        const titleLower = ord.title.toLowerCase();
+        const summaryLower = ord.summary.toLowerCase();
+        const fullTextLower = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+
+        keywords.forEach(kw => {
+            if (titleLower.includes(kw)) score += 10;
+            if (ord.keywords.some(k => k.toLowerCase().includes(kw))) score += 8;
+            if (summaryLower.includes(kw)) score += 5;
+            if (fullTextLower.includes(kw)) score += 3;
+        });
+
+        // Boost ordinances with fullText
+        if (ord.fullText) score += 2;
+
+        return { ...ord, score };
+    });
+
+    // Return top 10 most relevant
+    return scored
+        .filter(o => o.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+}
+
+function formatAiResponse(text) {
+    // Convert markdown-like formatting to HTML
+    let html = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>')
+        .replace(/「(.*?)」/g, '「<span class="ordinance-ref" onclick="searchOrdinanceByName(\'$1\')">$1</span>」');
+
+    return `<p>${html}</p>`;
+}
+
+function searchOrdinanceByName(name) {
+    // Switch to ordinance tab and search
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.tab-btn[data-tab="ordinance"]').classList.add('active');
+    document.querySelectorAll('.search-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('ordinanceSection').classList.add('active');
+
+    document.getElementById('ordinanceSearchInput').value = name;
+    searchOrdinances();
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Initialize AI assistant on load
+document.getElementById('aiChatInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendAiMessage();
+});
+
+initAiAssistant();
 </script>
 
 </body>
