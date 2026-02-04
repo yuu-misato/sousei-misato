@@ -479,6 +479,243 @@
             min-height: 200px;
         }
 
+        /* ===== Ordinance Search ===== */
+        .ordinance-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--gray-light);
+        }
+        .ordinance-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .ordinance-header-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ordinance-header-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+        }
+        .ordinance-header-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.2rem;
+        }
+        .ordinance-header-text p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .ordinance-search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .ordinance-search-input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 3rem;
+            background: var(--gray-lighter);
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .ordinance-search-input:focus {
+            border-color: var(--green);
+            background: var(--white);
+        }
+        .ordinance-search-input::placeholder {
+            color: var(--gray);
+        }
+        .ordinance-search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+        .ordinance-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .ordinance-cat-btn {
+            padding: 0.4rem 0.9rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ordinance-cat-btn:hover {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+        .ordinance-cat-btn.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+        .ordinance-results {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .ordinance-results.open {
+            max-height: 2000px;
+        }
+        .ordinance-results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 0.75rem;
+        }
+        .ordinance-results-count {
+            font-size: 0.82rem;
+            color: var(--gray);
+        }
+        .ordinance-results-count strong {
+            color: var(--navy);
+        }
+        .ordinance-ext-link {
+            font-size: 0.75rem;
+            color: var(--green-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .ordinance-ext-link:hover {
+            text-decoration: underline;
+        }
+        .ordinance-ext-link svg {
+            width: 14px;
+            height: 14px;
+        }
+        .ordinance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .ordinance-item {
+            background: var(--bg);
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            padding: 0.9rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ordinance-item:hover {
+            background: var(--white);
+            border-color: var(--green);
+            box-shadow: 0 2px 8px rgba(124,179,66,0.15);
+        }
+        .ordinance-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+        .ordinance-item-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--navy);
+            flex: 1;
+        }
+        .ordinance-item-cat {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            background: var(--gray-lighter);
+            border-radius: 4px;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+        .ordinance-item-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+        }
+        .ordinance-keyword {
+            font-size: 0.68rem;
+            padding: 0.1rem 0.4rem;
+            background: rgba(124,179,66,0.1);
+            color: var(--green-dark);
+            border-radius: 3px;
+        }
+        .ordinance-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .ordinance-item.expanded .ordinance-item-content {
+            max-height: 2000px;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px dashed var(--gray-light);
+        }
+        .ordinance-item-summary {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+        .ordinance-item-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: var(--green-dark);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            background: rgba(124,179,66,0.1);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .ordinance-item-link:hover {
+            background: rgba(124,179,66,0.2);
+        }
+        .ordinance-item-link svg {
+            width: 14px;
+            height: 14px;
+        }
+        .ordinance-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        .ordinance-empty svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--gray-light);
+            margin-bottom: 0.75rem;
+        }
+
         @media (max-width: 600px) {
             .guide-hero { padding: 2rem 1rem 1.5rem; }
             .guide-hero h1 { font-size: 1.2rem; }
@@ -538,6 +775,7 @@
         </div>
         <nav class="menu-nav">
             <div class="menu-nav-label">このページ</div>
+            <a href="#ordinanceSearch">条例検索</a>
             <a href="#sec1">理念</a>
             <a href="#sec2">会派ルール</a>
             <a href="#sec3">議場の所作</a>
@@ -565,6 +803,7 @@
         <h1>メンバーガイドライン</h1>
         <p>会派メンバーが知っておくべきルール・所作・考え方</p>
         <nav class="guide-nav">
+            <a href="#ordinanceSearch">条例検索</a>
             <a href="#sec1">理念</a>
             <a href="#sec2">会派ルール</a>
             <a href="#sec3">議場の所作</a>
@@ -577,6 +816,59 @@
     </div>
 
     <main class="guide-body">
+
+        <!-- Ordinance Search Section -->
+        <div class="ordinance-section" id="ordinanceSearch">
+            <div class="ordinance-header">
+                <div class="ordinance-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                </div>
+                <div class="ordinance-header-text">
+                    <h3>三郷市 条例検索</h3>
+                    <p>キーワードで条例を検索し、内容を確認できます</p>
+                </div>
+            </div>
+
+            <div class="ordinance-search-box">
+                <svg class="ordinance-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" class="ordinance-search-input" id="ordinanceSearchInput" placeholder="例：防災、子育て、環境...">
+            </div>
+
+            <div class="ordinance-categories">
+                <button class="ordinance-cat-btn active" data-cat="all">すべて</button>
+                <button class="ordinance-cat-btn" data-cat="子育て・福祉">子育て・福祉</button>
+                <button class="ordinance-cat-btn" data-cat="まちづくり・開発">まちづくり・開発</button>
+                <button class="ordinance-cat-btn" data-cat="環境・安全">環境・安全</button>
+                <button class="ordinance-cat-btn" data-cat="行政・財務">行政・財務</button>
+                <button class="ordinance-cat-btn" data-cat="教育・文化">教育・文化</button>
+            </div>
+
+            <div class="ordinance-results" id="ordinanceResults">
+                <div class="ordinance-results-header">
+                    <span class="ordinance-results-count" id="ordinanceCount">検索結果: <strong>0</strong>件</span>
+                    <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener" class="ordinance-ext-link">
+                        三郷市例規集を開く
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="ordinance-list" id="ordinanceList">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
 
         <!-- Section 1 -->
         <div class="section" id="sec1">
@@ -1069,6 +1361,299 @@ menuCloseBtn.addEventListener('click', closeMenu);
 menuOverlay.addEventListener('click', closeMenu);
 menuPanel.querySelectorAll('.menu-nav a').forEach(link => {
     link.addEventListener('click', closeMenu);
+});
+
+// Ordinance Search Data and Functions
+const ordinanceData = [
+    // 子育て・福祉
+    {
+        id: 1,
+        title: '三郷市子ども医療費支給に関する条例',
+        category: '子育て・福祉',
+        keywords: ['子育て', '医療費', '子ども', '福祉', '助成'],
+        summary: '子どもの医療費を助成し、子育て家庭の経済的負担を軽減することを目的とした条例。対象年齢、支給範囲、申請手続きなどを規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000609.html'
+    },
+    {
+        id: 2,
+        title: '三郷市保育の実施に関する条例',
+        category: '子育て・福祉',
+        keywords: ['保育', '子育て', '保育所', '待機児童', '入所'],
+        summary: '保育所の設置・運営、入所基準、保育料等について規定。待機児童対策や保育サービスの質の確保に関する基本事項を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000490.html'
+    },
+    {
+        id: 3,
+        title: '三郷市放課後児童健全育成事業の設備及び運営に関する基準を定める条例',
+        category: '子育て・福祉',
+        keywords: ['放課後', '学童', '児童クラブ', '子育て', '育成'],
+        summary: '放課後児童クラブ（学童保育）の設備基準、職員配置、運営基準等を定める。子どもの安全な居場所確保に関する規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001043.html'
+    },
+    {
+        id: 4,
+        title: '三郷市介護保険条例',
+        category: '子育て・福祉',
+        keywords: ['介護', '高齢者', '福祉', '保険', '介護保険'],
+        summary: '介護保険事業の運営に関する基本事項を規定。保険料、サービス内容、事業計画等について定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000576.html'
+    },
+    {
+        id: 5,
+        title: '三郷市障害者の日常生活及び社会生活を総合的に支援するための法律施行条例',
+        category: '子育て・福祉',
+        keywords: ['障害', '福祉', 'バリアフリー', '支援', '障害者'],
+        summary: '障害者総合支援法に基づく市の事業実施に関する条例。障害福祉サービス、相談支援等について規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000970.html'
+    },
+    // まちづくり・開発
+    {
+        id: 6,
+        title: '三郷市都市計画法に基づく開発行為等の許可の基準に関する条例',
+        category: 'まちづくり・開発',
+        keywords: ['開発', '都市計画', 'まちづくり', '建築', '許可'],
+        summary: '開発行為の許可基準を定める条例。一定規模以上の開発に対する審査基準、技術基準等を規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000821.html'
+    },
+    {
+        id: 7,
+        title: '三郷市景観条例',
+        category: 'まちづくり・開発',
+        keywords: ['景観', 'まちづくり', '建築', 'デザイン', '街並み'],
+        summary: '良好な景観の形成に関する基本的事項を定める。届出対象行為、景観計画区域、景観形成基準等を規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000903.html'
+    },
+    {
+        id: 8,
+        title: '三郷市道路占用料等徴収条例',
+        category: 'まちづくり・開発',
+        keywords: ['道路', '占用', 'インフラ', '公共', '使用料'],
+        summary: '道路の占用に関する料金等を定める条例。電柱、看板、工事用足場等の占用料率を規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000371.html'
+    },
+    {
+        id: 9,
+        title: '三郷市営住宅条例',
+        category: 'まちづくり・開発',
+        keywords: ['住宅', '公営住宅', '居住', '家賃', '入居'],
+        summary: '市営住宅の設置、管理、入居資格、家賃等について規定。低所得者向け住宅の供給に関する基本事項を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000433.html'
+    },
+    // 環境・安全
+    {
+        id: 10,
+        title: '三郷市地域防災計画に関する条例',
+        category: '環境・安全',
+        keywords: ['防災', '災害', '避難', '地震', '安全', '防災計画'],
+        summary: '地域防災計画の策定・実施に関する基本事項を規定。災害予防、応急対策、復旧計画等について定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000194.html'
+    },
+    {
+        id: 11,
+        title: '三郷市火災予防条例',
+        category: '環境・安全',
+        keywords: ['火災', '消防', '安全', '予防', '防火'],
+        summary: '火災予防に関する規制を定める条例。危険物の取扱い、消防設備の設置基準、届出義務等を規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000192.html'
+    },
+    {
+        id: 12,
+        title: '三郷市環境基本条例',
+        category: '環境・安全',
+        keywords: ['環境', 'エコ', '公害', '保全', '自然'],
+        summary: '環境の保全に関する基本理念、市・事業者・市民の責務、施策の基本事項を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000554.html'
+    },
+    {
+        id: 13,
+        title: '三郷市廃棄物の処理及び清掃に関する条例',
+        category: '環境・安全',
+        keywords: ['ごみ', '廃棄物', '清掃', 'リサイクル', '環境'],
+        summary: '一般廃棄物の処理、ごみの分別収集、手数料等について規定。循環型社会の形成に向けた基本事項を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000381.html'
+    },
+    {
+        id: 14,
+        title: '三郷市生活環境保全条例',
+        category: '環境・安全',
+        keywords: ['環境', '騒音', '公害', '生活', '保全'],
+        summary: '生活環境の保全に関する規制を定める。騒音、振動、悪臭等の規制基準、事業者の責務等を規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000387.html'
+    },
+    {
+        id: 15,
+        title: '三郷市水害対策条例',
+        category: '環境・安全',
+        keywords: ['水害', '洪水', '防災', '治水', '浸水'],
+        summary: '水害から市民の生命・財産を守るための対策を規定。河川整備、雨水貯留、避難体制等について定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000893.html'
+    },
+    // 行政・財務
+    {
+        id: 16,
+        title: '三郷市情報公開条例',
+        category: '行政・財務',
+        keywords: ['情報公開', '透明性', '公文書', '開示', '行政'],
+        summary: '市の保有する情報の公開に関する基本事項を規定。開示請求の手続き、非開示情報の範囲等を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000067.html'
+    },
+    {
+        id: 17,
+        title: '三郷市個人情報保護条例',
+        category: '行政・財務',
+        keywords: ['個人情報', 'プライバシー', '保護', '行政', '情報'],
+        summary: '個人情報の適正な取扱いに関する基本事項を規定。収集制限、利用・提供制限、開示・訂正請求等を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000070.html'
+    },
+    {
+        id: 18,
+        title: '三郷市税条例',
+        category: '行政・財務',
+        keywords: ['税', '市税', '財務', '課税', '税金'],
+        summary: '市税の賦課・徴収に関する基本事項を規定。市民税、固定資産税、軽自動車税等の税率・納期等を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000136.html'
+    },
+    {
+        id: 19,
+        title: '三郷市行政手続条例',
+        category: '行政・財務',
+        keywords: ['行政手続', '申請', '処分', '行政', '手続き'],
+        summary: '行政処分、行政指導、届出に関する手続きの共通事項を規定。行政の公正性・透明性の確保を図る。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000548.html'
+    },
+    // 教育・文化
+    {
+        id: 20,
+        title: '三郷市立小中学校の通学区域に関する規則',
+        category: '教育・文化',
+        keywords: ['学校', '通学', '教育', '小学校', '中学校'],
+        summary: '市立小中学校の通学区域を定める規則。学区の範囲、指定変更の手続き等について規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000680.html'
+    },
+    {
+        id: 21,
+        title: '三郷市立図書館条例',
+        category: '教育・文化',
+        keywords: ['図書館', '文化', '教育', '読書', '施設'],
+        summary: '市立図書館の設置・管理に関する条例。開館時間、利用規則、資料の貸出等について規定。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000697.html'
+    },
+    {
+        id: 22,
+        title: '三郷市文化会館条例',
+        category: '教育・文化',
+        keywords: ['文化', '会館', 'ホール', '施設', 'イベント'],
+        summary: '文化会館の設置・管理に関する条例。利用料金、利用手続き、減免規定等について定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000708.html'
+    },
+    {
+        id: 23,
+        title: '三郷市スポーツ推進条例',
+        category: '教育・文化',
+        keywords: ['スポーツ', '健康', '運動', '体育', '推進'],
+        summary: 'スポーツの推進に関する基本理念、市の責務、施策の基本事項を定める。生涯スポーツの振興を図る。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000948.html'
+    },
+    {
+        id: 24,
+        title: '三郷市いじめ防止対策推進条例',
+        category: '教育・文化',
+        keywords: ['いじめ', '学校', '教育', '防止', '児童'],
+        summary: 'いじめの防止、早期発見、対処に関する基本事項を規定。学校、保護者、市民の責務等を定める。',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001023.html'
+    }
+];
+
+let currentCategory = 'all';
+let currentSearchTerm = '';
+
+function searchOrdinances() {
+    const searchTerm = document.getElementById('ordinanceSearchInput').value.toLowerCase();
+    currentSearchTerm = searchTerm;
+    renderOrdinances();
+}
+
+function filterByCategory(category) {
+    currentCategory = category;
+    document.querySelectorAll('.ordinance-cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === category);
+    });
+    renderOrdinances();
+}
+
+function renderOrdinances() {
+    const results = ordinanceData.filter(ord => {
+        const matchesCategory = currentCategory === 'all' || ord.category === currentCategory;
+        const matchesSearch = currentSearchTerm === '' ||
+            ord.title.toLowerCase().includes(currentSearchTerm) ||
+            ord.keywords.some(kw => kw.toLowerCase().includes(currentSearchTerm)) ||
+            ord.summary.toLowerCase().includes(currentSearchTerm);
+        return matchesCategory && matchesSearch;
+    });
+
+    const listEl = document.getElementById('ordinanceList');
+    const countEl = document.getElementById('ordinanceCount');
+    const resultsEl = document.getElementById('ordinanceResults');
+
+    countEl.innerHTML = `検索結果: <strong>${results.length}</strong>件`;
+
+    if (results.length === 0) {
+        listEl.innerHTML = `
+            <div class="ordinance-empty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <p>該当する条例が見つかりません</p>
+            </div>
+        `;
+    } else {
+        listEl.innerHTML = results.map(ord => `
+            <div class="ordinance-item" data-id="${ord.id}">
+                <div class="ordinance-item-header">
+                    <div class="ordinance-item-title">${ord.title}</div>
+                    <span class="ordinance-item-cat">${ord.category}</span>
+                </div>
+                <div class="ordinance-item-keywords">
+                    ${ord.keywords.map(kw => `<span class="ordinance-keyword">${kw}</span>`).join('')}
+                </div>
+                <div class="ordinance-item-content">
+                    <p class="ordinance-item-summary">${ord.summary}</p>
+                    <a href="${ord.url}" target="_blank" rel="noopener" class="ordinance-item-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        三郷市例規集で全文を見る
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Show results if there's a search or category filter
+    if (currentSearchTerm || currentCategory !== 'all') {
+        resultsEl.classList.add('open');
+    }
+}
+
+// Event listeners for ordinance search
+document.getElementById('ordinanceSearchInput').addEventListener('input', searchOrdinances);
+document.getElementById('ordinanceSearchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchOrdinances();
+});
+
+document.querySelectorAll('.ordinance-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterByCategory(btn.dataset.cat));
+});
+
+// Toggle ordinance item expansion
+document.getElementById('ordinanceList').addEventListener('click', e => {
+    const item = e.target.closest('.ordinance-item');
+    if (item && !e.target.closest('.ordinance-item-link')) {
+        item.classList.toggle('expanded');
+    }
 });
 
 // Comment toggle and Giscus loading
