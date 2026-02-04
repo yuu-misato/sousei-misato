@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条例改善提案 | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --bg: #fafbfc;
+            --bg-warm: #f8f9fa;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --text-light: #6b7280;
+            --orange: #f59e0b;
+            --red: #ef4444;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .header-logo-icon { width: 40px; height: 40px; }
+        .header-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .header-logo-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .header-badge {
+            font-size: 0.68rem;
+            font-weight: 600;
+            background: var(--orange);
+            color: var(--white);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 6rem 2rem 3rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .hero-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        .hero-link:hover { background: rgba(255,255,255,0.25); }
+        .hero-link svg { width: 16px; height: 16px; }
+
+        /* ===== Main ===== */
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* ===== Category ===== */
+        .category {
+            margin-bottom: 2.5rem;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+        .category-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--navy);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .category-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #fff;
+        }
+        .category h2 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        /* ===== Ordinance Card ===== */
+        .ordinance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .ordinance-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--gray-light);
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        .ordinance-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: var(--green);
+        }
+        .ordinance-title {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .ordinance-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .ordinance-name:hover { color: var(--green-dark); }
+        .ordinance-badges {
+            display: flex;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+        .badge {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+        }
+        .badge-proposal { background: var(--orange); color: #fff; }
+        .badge-review { background: var(--navy); color: #fff; }
+        .badge-new { background: var(--green); color: #fff; }
+
+        .ordinance-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        .ordinance-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .ordinance-meta svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .ordinance-summary {
+            margin-top: 0.6rem;
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .ordinance-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .ordinance-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .ordinance-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+        .btn-primary {
+            background: var(--green);
+            color: #fff;
+        }
+        .btn-primary:hover { background: var(--green-dark); }
+        .btn-secondary {
+            background: var(--gray-lighter);
+            color: var(--gray);
+            border: 1px solid var(--gray-light);
+        }
+        .btn-secondary:hover {
+            background: var(--white);
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        /* ===== Proposal Section ===== */
+        .proposal-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .proposal-section h3 {
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .proposal-section h3 svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--orange);
+        }
+        .proposal-section p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .proposal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--orange);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .proposal-btn:hover { background: #d97706; }
+        .proposal-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--gray-light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-light);
+            color: var(--text-light);
+            padding: 2rem;
+            text-align: center;
+        }
+        .footer-copy {
+            font-size: 0.75rem;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .footer-links a:hover { color: var(--green-dark); }
+
+        @media (max-width: 600px) {
+            .hero { padding: 5rem 1rem 2rem; }
+            .hero h1 { font-size: 1.4rem; }
+            .main { padding: 1.5rem 1rem 3rem; }
+            .header { padding: 0.8rem 1rem; }
+            .ordinance-title { flex-direction: column; gap: 0.5rem; }
+            .ordinance-badges { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="https://souseimisato.com" class="header-logo">
+            <div class="header-logo-icon">
+                <img src="../../logo.png" alt="創政MISATO">
+            </div>
+            <span class="header-logo-text">創政MISATO</span>
+        </a>
+        <span class="header-badge">条例改善</span>
+    </div>
+</header>
+
+<div class="hero">
+    <h1>条例改善提案</h1>
+    <p>三郷市の条例を見直し、より良い市政を目指すための議論・提案の場です。現行条例の問題点を洗い出し、改善案を会派で検討します。</p>
+    <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener" class="hero-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        三郷市例規集を見る
+    </a>
+</div>
+
+<main class="main">
+
+    <!-- Proposal CTA -->
+    <div class="proposal-section">
+        <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            新しい改善提案を追加する
+        </h3>
+        <p>現行条例に問題や改善の余地を見つけたら、提案を追加してください。会派で議論し、一般質問や条例改正案に反映させます。</p>
+        <a href="https://github.com/yuu-misato/sousei-misato/issues/new?title=[条例改善提案]%20&labels=ordinance-proposal" target="_blank" rel="noopener" class="proposal-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            提案を追加
+        </a>
+    </div>
+
+    <!-- Category: 子育て・福祉 -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h2>子育て・福祉</h2>
+        </div>
+        <div class="ordinance-list">
+            <div class="ordinance-card">
+                <div class="ordinance-title">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000289.html" target="_blank" class="ordinance-name">
+                        三郷市子ども医療費支給に関する条例
+                    </a>
+                    <div class="ordinance-badges">
+                        <span class="badge badge-review">検討中</span>
+                    </div>
+                </div>
+                <div class="ordinance-meta">
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        平成5年条例第12号
+                    </span>
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        2件のコメント
+                    </span>
+                </div>
+                <p class="ordinance-summary">
+                    対象年齢の拡大や所得制限の見直しについて議論中。近隣市との比較データを収集しています。
+                </p>
+                <div class="ordinance-actions">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000289.html" target="_blank" class="ordinance-btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        条例原文
+                    </a>
+                    <a href="#" class="ordinance-btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        議論に参加
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category: まちづくり・開発 -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h2>まちづくり・開発</h2>
+        </div>
+        <div class="ordinance-list">
+            <div class="ordinance-card">
+                <div class="ordinance-title">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000628.html" target="_blank" class="ordinance-name">
+                        三郷市地区計画区域内における建築物等の制限に関する条例
+                    </a>
+                    <div class="ordinance-badges">
+                        <span class="badge badge-proposal">要改善</span>
+                    </div>
+                </div>
+                <div class="ordinance-meta">
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        平成10年条例第16号
+                    </span>
+                </div>
+                <p class="ordinance-summary">
+                    三郷中央地区の開発規制について。高さ制限の緩和・強化両面での見直し提案あり。
+                </p>
+                <div class="ordinance-actions">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000628.html" target="_blank" class="ordinance-btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        条例原文
+                    </a>
+                    <a href="#" class="ordinance-btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        議論に参加
+                    </a>
+                </div>
+            </div>
+
+            <div class="ordinance-card">
+                <div class="ordinance-title">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000930.html" target="_blank" class="ordinance-name">
+                        三郷市開発事業等の手続等に関する条例
+                    </a>
+                    <div class="ordinance-badges">
+                    </div>
+                </div>
+                <div class="ordinance-meta">
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        平成21年条例第34号
+                    </span>
+                </div>
+                <p class="ordinance-summary">
+                    開発事業の手続きを定めた条例。現状把握のため一覧に追加。
+                </p>
+                <div class="ordinance-actions">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000930.html" target="_blank" class="ordinance-btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        条例原文
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category: 環境・安全 -->
+    <div class="category">
+        <div class="category-header">
+            <div class="category-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h2>環境・安全</h2>
+        </div>
+        <div class="ordinance-list">
+            <div class="ordinance-card">
+                <div class="ordinance-title">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000596.html" target="_blank" class="ordinance-name">
+                        三郷市火災予防条例
+                    </a>
+                    <div class="ordinance-badges">
+                    </div>
+                </div>
+                <div class="ordinance-meta">
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        昭和36年条例第19号
+                    </span>
+                </div>
+                <p class="ordinance-summary">
+                    火災予防に関する基本条例。現状把握のため一覧に追加。
+                </p>
+                <div class="ordinance-actions">
+                    <a href="https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000596.html" target="_blank" class="ordinance-btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        条例原文
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Box -->
+    <div style="background: var(--gray-lighter); border-radius: 10px; padding: 1.25rem; margin-top: 2rem;">
+        <h4 style="font-size: 0.9rem; color: var(--navy); margin-bottom: 0.5rem;">条例の追加方法</h4>
+        <p style="font-size: 0.8rem; color: var(--text-light); line-height: 1.7;">
+            このページはメンバーで管理しています。新しい条例を追加したい場合は、会派代表に連絡するか、<a href="https://github.com/yuu-misato/sousei-misato/issues/new?title=[条例追加]%20&labels=ordinance-add" target="_blank" style="color: var(--green-dark);">GitHubで追加リクエスト</a>を送ってください。
+        </p>
+    </div>
+
+</main>
+
+<footer class="footer">
+    <div class="footer-links">
+        <a href="../">メンバーガイドライン</a>
+        <a href="https://souseimisato.com">トップページ</a>
+        <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank">三郷市例規集</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
+</footer>
+
+</body>
+</html>
