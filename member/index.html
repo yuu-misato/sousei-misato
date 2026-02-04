@@ -716,6 +716,223 @@
             margin-bottom: 0.75rem;
         }
 
+        /* ===== Ordinance Modal ===== */
+        .ordinance-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .ordinance-modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .ordinance-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: min(900px, 95vw);
+            max-height: 90vh;
+            background: var(--white);
+            border-radius: 16px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        .ordinance-modal-overlay.open + .ordinance-modal,
+        .ordinance-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .ordinance-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.5rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--gray-light);
+            flex-shrink: 0;
+        }
+        .ordinance-modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.5;
+        }
+        .ordinance-modal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .ordinance-modal-meta span {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--gray-lighter);
+            border-radius: 4px;
+            color: var(--gray);
+        }
+        .ordinance-modal-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-lighter);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        .ordinance-modal-close:hover {
+            background: var(--gray-light);
+        }
+        .ordinance-modal-close svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+        .ordinance-modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        .ordinance-modal-toc {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .ordinance-modal-toc-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+        .ordinance-modal-toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .ordinance-modal-toc li a {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .ordinance-modal-toc li a:hover {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+        }
+        .ordinance-content {
+            font-size: 0.88rem;
+            line-height: 2;
+            color: var(--text);
+        }
+        .ordinance-content .jorei-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--navy);
+        }
+        .ordinance-content .jorei-enactment {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .ordinance-content .jorei-chapter {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 2rem 0 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .ordinance-content .jorei-article {
+            margin: 1.5rem 0;
+        }
+        .ordinance-content .jorei-article-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .ordinance-content .jorei-article-body {
+            padding-left: 1rem;
+        }
+        .ordinance-content .jorei-paragraph {
+            margin: 0.5rem 0;
+            text-indent: 1em;
+        }
+        .ordinance-content .jorei-item {
+            margin: 0.3rem 0 0.3rem 1.5rem;
+        }
+        .ordinance-content .jorei-subitem {
+            margin: 0.2rem 0 0.2rem 2.5rem;
+            font-size: 0.85rem;
+        }
+        .ordinance-content .jorei-supplementary {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--gray-light);
+        }
+        .ordinance-content .jorei-supplementary-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .ordinance-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            background: var(--bg);
+            border-radius: 0 0 16px 16px;
+        }
+        .ordinance-modal-footer-info {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .ordinance-modal-footer-link {
+            font-size: 0.78rem;
+            color: var(--green-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .ordinance-modal-footer-link:hover {
+            text-decoration: underline;
+        }
+        .ordinance-modal-footer-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
         @media (max-width: 600px) {
             .guide-hero { padding: 2rem 1rem 1.5rem; }
             .guide-hero h1 { font-size: 1.2rem; }
@@ -1307,6 +1524,41 @@
     </footer>
 </div>
 
+<!-- Ordinance Modal -->
+<div class="ordinance-modal-overlay" id="ordinanceModalOverlay"></div>
+<div class="ordinance-modal" id="ordinanceModal">
+    <div class="ordinance-modal-header">
+        <div>
+            <div class="ordinance-modal-title" id="modalTitle">条例名</div>
+            <div class="ordinance-modal-meta" id="modalMeta"></div>
+        </div>
+        <button class="ordinance-modal-close" id="modalCloseBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+    <div class="ordinance-modal-body">
+        <div class="ordinance-modal-toc" id="modalToc">
+            <div class="ordinance-modal-toc-title">目次</div>
+            <ul id="modalTocList"></ul>
+        </div>
+        <div class="ordinance-content" id="modalContent"></div>
+    </div>
+    <div class="ordinance-modal-footer">
+        <span class="ordinance-modal-footer-info" id="modalFooterInfo"></span>
+        <a href="#" target="_blank" rel="noopener" class="ordinance-modal-footer-link" id="modalExternalLink">
+            三郷市例規集で確認
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
 <script>
 const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
 
@@ -1363,7 +1615,7 @@ menuPanel.querySelectorAll('.menu-nav a').forEach(link => {
     link.addEventListener('click', closeMenu);
 });
 
-// Ordinance Search Data and Functions
+// Ordinance Search Data and Functions (with full text)
 const ordinanceData = [
     // 子育て・福祉
     {
@@ -1371,198 +1623,710 @@ const ordinanceData = [
         title: '三郷市子ども医療費支給に関する条例',
         category: '子育て・福祉',
         keywords: ['子育て', '医療費', '子ども', '福祉', '助成'],
-        summary: '子どもの医療費を助成し、子育て家庭の経済的負担を軽減することを目的とした条例。対象年齢、支給範囲、申請手続きなどを規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000609.html'
+        summary: '子どもの医療費を助成し、子育て家庭の経済的負担を軽減することを目的とした条例。',
+        enactment: '平成5年3月26日 条例第6号',
+        lastAmended: '令和4年12月16日 条例第29号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000609.html',
+        toc: ['目的', '定義', '支給対象', '医療費の範囲', '支給の制限', '届出', '受給資格の喪失届', '届出義務', '受給資格証', '支給の方法', '不正利得の返還', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市子ども医療費支給に関する条例</div>
+            <div class="jorei-enactment">平成5年3月26日 条例第6号<br>最終改正：令和4年12月16日 条例第29号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、子どもに係る医療費の一部を支給することにより、子どもの保健の向上と福祉の増進を図ることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「子ども」とは、市内に住所を有する者であって、出生の日から18歳に達する日以後の最初の3月31日までの間にある者をいう。</div>
+                    <div class="jorei-paragraph">2　この条例において「保護者」とは、子どもの親権を行う者、未成年後見人その他の者で、子どもを現に監護する者をいう。</div>
+                    <div class="jorei-paragraph">3　この条例において「医療保険各法」とは、次に掲げる法律をいう。</div>
+                    <div class="jorei-item">（1）健康保険法（大正11年法律第70号）</div>
+                    <div class="jorei-item">（2）船員保険法（昭和14年法律第73号）</div>
+                    <div class="jorei-item">（3）国民健康保険法（昭和33年法律第192号）</div>
+                    <div class="jorei-item">（4）国家公務員共済組合法（昭和33年法律第128号）</div>
+                    <div class="jorei-item">（5）地方公務員等共済組合法（昭和37年法律第152号）</div>
+                    <div class="jorei-item">（6）私立学校教職員共済法（昭和28年法律第245号）</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（支給対象）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　医療費の支給を受けることができる者（以下「支給対象者」という。）は、子どもを監護し、かつ、子どもと生計を同じくしている保護者とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（医療費の範囲）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　この条例において「医療費」とは、医療保険各法の規定による被保険者若しくは被扶養者又は組合員若しくはその被扶養者の資格を有する子どもが、医療機関等において、疾病又は負傷につき診療を受けた場合に、医療保険各法の規定により当該子ども又は保護者が負担すべき額とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（支給の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　次の各号のいずれかに該当するときは、医療費は、支給しない。</div>
+                    <div class="jorei-item">（1）子どもが生活保護法（昭和25年法律第144号）の規定による保護を受けているとき。</div>
+                    <div class="jorei-item">（2）子どもが児童福祉法（昭和22年法律第164号）の規定による小規模住居型児童養育事業を行う者又は里親に委託されているとき。</div>
+                    <div class="jorei-item">（3）子どもが児童福祉法に規定する乳児院、児童養護施設、障害児入所施設、児童心理治療施設又は児童自立支援施設に入所しているとき。</div>
+                    <div class="jorei-item">（4）子どもに係る医療費について、他の法令等の規定により国又は地方公共団体の負担による医療に関する給付が行われたとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（届出）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　支給対象者は、規則で定めるところにより、あらかじめ市長に届け出なければならない。届出事項に変更があったときも、同様とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（受給資格の喪失届）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　支給対象者は、受給資格を喪失したときは、速やかに市長に届け出なければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（届出義務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　支給対象者は、市長から届出事項について報告を求められたときは、速やかに届け出なければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（受給資格証）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市長は、第6条の届出をした支給対象者に対し、子ども医療費受給資格証（以下「受給資格証」という。）を交付するものとする。</div>
+                    <div class="jorei-paragraph">2　支給対象者は、医療機関等に受診する際に、受給資格証を提示しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art10">
+                <div class="jorei-article-title">（支給の方法）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第10条　医療費の支給は、規則で定めるところにより行う。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art11">
+                <div class="jorei-article-title">（不正利得の返還）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第11条　市長は、偽りその他不正の手段により医療費の支給を受けた者があるときは、その者から当該支給を受けた額の全部又は一部を返還させることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art12">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第12条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成5年4月1日から施行する。</div>
+                <div class="jorei-paragraph">（以下、改正附則省略）</div>
+            </div>
+        `
     },
     {
         id: 2,
+        title: '三郷市環境基本条例',
+        category: '環境・安全',
+        keywords: ['環境', 'エコ', '公害', '保全', '自然', '持続可能'],
+        summary: '環境の保全に関する基本理念を定め、市・事業者・市民の責務を明確にし、施策の基本事項を定める。',
+        enactment: '平成11年3月30日 条例第1号',
+        lastAmended: '令和2年3月25日 条例第5号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000554.html',
+        toc: ['目的', '定義', '基本理念', '市の責務', '事業者の責務', '市民の責務', '施策の基本方針', '環境基本計画', '年次報告'],
+        fullText: `
+            <div class="jorei-title">三郷市環境基本条例</div>
+            <div class="jorei-enactment">平成11年3月30日 条例第1号<br>最終改正：令和2年3月25日 条例第5号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、環境の保全について、基本理念を定め、並びに市、事業者及び市民の責務を明らかにするとともに、環境の保全に関する施策の基本となる事項を定めることにより、環境の保全に関する施策を総合的かつ計画的に推進し、もって現在及び将来の市民の健康で文化的な生活の確保に寄与することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「環境への負荷」とは、人の活動により環境に加えられる影響であって、環境の保全上の支障の原因となるおそれのあるものをいう。</div>
+                    <div class="jorei-paragraph">2　この条例において「地球環境保全」とは、人の活動による地球全体の温暖化又はオゾン層の破壊の進行、海洋の汚染、野生生物の種の減少その他の地球の全体又はその広範な部分の環境に影響を及ぼす事態に係る環境の保全であって、人類の福祉に貢献するとともに市民の健康で文化的な生活の確保に寄与するものをいう。</div>
+                    <div class="jorei-paragraph">3　この条例において「公害」とは、環境の保全上の支障のうち、事業活動その他の人の活動に伴って生ずる相当範囲にわたる大気の汚染、水質の汚濁、土壌の汚染、騒音、振動、地盤の沈下及び悪臭によって、人の健康又は生活環境に係る被害が生ずることをいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　環境の保全は、市民が健康で文化的な生活を営むうえで必要な良好な環境を確保し、これを将来の世代に継承していくことを目的として行われなければならない。</div>
+                    <div class="jorei-paragraph">2　環境の保全は、環境への負荷の少ない持続的発展が可能な社会が構築されることを目的として、すべての者の公平な役割分担の下に、自主的かつ積極的に行われなければならない。</div>
+                    <div class="jorei-paragraph">3　地球環境保全は、地域の環境が地球全体の環境と深くかかわっていることにかんがみ、すべての者が自らの問題として認識し、それぞれの事業活動及び日常生活において積極的に推進されなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、前条に定める基本理念（以下「基本理念」という。）にのっとり、環境の保全に関する基本的かつ総合的な施策を策定し、及び実施する責務を有する。</div>
+                    <div class="jorei-paragraph">2　市は、自らの事務及び事業に関し、率先して環境への負荷の低減に努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（事業者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　事業者は、基本理念にのっとり、その事業活動を行うに当たっては、これに伴って生ずる公害を防止し、又は自然環境を適正に保全するために必要な措置を講ずる責務を有する。</div>
+                    <div class="jorei-paragraph">2　事業者は、基本理念にのっとり、環境の保全上の支障を防止するため、物の製造、加工又は販売その他の事業活動を行うに当たって、その事業活動に係る製品その他の物が廃棄物となった場合にその適正な処理が図られることとなるように必要な措置を講ずる責務を有する。</div>
+                    <div class="jorei-paragraph">3　事業者は、基本理念にのっとり、環境の保全上の支障を防止するため、物の製造、加工又は販売その他の事業活動を行うに当たって、その事業活動に係る製品その他の物が使用され又は廃棄されることによる環境への負荷の低減に資するように努めるとともに、その事業活動において、再生資源その他の環境への負荷の低減に資する原材料、役務等を利用するように努めなければならない。</div>
+                    <div class="jorei-paragraph">4　前3項に定めるもののほか、事業者は、基本理念にのっとり、その事業活動に関し、これに伴う環境への負荷の低減その他環境の保全に自ら努めるとともに、市が実施する環境の保全に関する施策に協力する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市民は、基本理念にのっとり、環境の保全上の支障を防止するため、その日常生活に伴う環境への負荷の低減に努めなければならない。</div>
+                    <div class="jorei-paragraph">2　前項に定めるもののほか、市民は、基本理念にのっとり、環境の保全に自ら努めるとともに、市が実施する環境の保全に関する施策に協力する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　環境の保全に関する基本的施策</div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（施策の基本方針）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市は、基本理念にのっとり、次に掲げる事項を基本として環境の保全に関する施策を策定し、及び実施するものとする。</div>
+                    <div class="jorei-item">（1）人の健康が保護され、及び生活環境が保全されるよう、大気、水、土壌等の環境の自然的構成要素が良好な状態に保持されること。</div>
+                    <div class="jorei-item">（2）生態系の多様性の確保、野生生物の種の保存その他の生物の多様性の確保が図られるとともに、森林、農地、水辺地等における多様な自然環境が地域の自然的社会的条件に応じて体系的に保全されること。</div>
+                    <div class="jorei-item">（3）人と自然との豊かな触れ合いが保たれること。</div>
+                    <div class="jorei-item">（4）資源の循環的な利用、エネルギーの有効利用及び廃棄物の減量が促進されること。</div>
+                    <div class="jorei-item">（5）市、事業者及び市民の環境の保全に関する意識の高揚が図られること。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（環境基本計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市長は、環境の保全に関する施策を総合的かつ計画的に推進するため、環境の保全に関する基本的な計画（以下「環境基本計画」という。）を定めなければならない。</div>
+                    <div class="jorei-paragraph">2　環境基本計画は、次に掲げる事項について定めるものとする。</div>
+                    <div class="jorei-item">（1）環境の保全に関する総合的かつ長期的な施策の大綱</div>
+                    <div class="jorei-item">（2）前号に掲げるもののほか、環境の保全に関する施策を総合的かつ計画的に推進するために必要な事項</div>
+                    <div class="jorei-paragraph">3　市長は、環境基本計画を定めるに当たっては、あらかじめ市民の意見を反映することができるように必要な措置を講ずるものとする。</div>
+                    <div class="jorei-paragraph">4　市長は、環境基本計画を定めたときは、これを公表しなければならない。</div>
+                    <div class="jorei-paragraph">5　前2項の規定は、環境基本計画の変更について準用する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（年次報告）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市長は、毎年、環境の状況並びに環境の保全に関して講じた施策及び講じようとする施策に関する報告書を作成し、これを公表するものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成11年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 3,
+        title: '三郷市防災会議条例',
+        category: '環境・安全',
+        keywords: ['防災', '災害', '避難', '地震', '安全', '防災計画', '地域防災'],
+        summary: '市の防災会議の組織と運営について定め、地域防災計画の策定・実施に関する基本事項を規定する。',
+        enactment: '昭和38年6月25日 条例第9号',
+        lastAmended: '令和3年3月26日 条例第2号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000194.html',
+        toc: ['所掌事務', '会長', '委員', '専門委員', '議事', '庶務', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市防災会議条例</div>
+            <div class="jorei-enactment">昭和38年6月25日 条例第9号<br>最終改正：令和3年3月26日 条例第2号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（所掌事務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　三郷市防災会議（以下「防災会議」という。）は、災害対策基本法（昭和36年法律第223号）第16条第6項の規定に基づき、三郷市地域防災計画を作成し、及びその実施を推進する。</div>
+                    <div class="jorei-paragraph">2　防災会議は、前項に規定する事務のほか、市長の諮問に応じて市の地域に係る防災に関する重要事項を審議する。</div>
+                    <div class="jorei-paragraph">3　防災会議は、前項の重要事項に関し、市長に意見を述べることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（会長）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　防災会議に会長を置き、市長をもって充てる。</div>
+                    <div class="jorei-paragraph">2　会長は、会務を総理する。</div>
+                    <div class="jorei-paragraph">3　会長に事故があるときは、あらかじめ会長の指名する委員がその職務を代理する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（委員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　防災会議の委員の定数は、40人以内とし、次に掲げる者をもって充てる。</div>
+                    <div class="jorei-item">（1）指定地方行政機関の職員のうちから市長が任命する者</div>
+                    <div class="jorei-item">（2）埼玉県の知事の部内の職員のうちから市長が任命する者</div>
+                    <div class="jorei-item">（3）埼玉県警察の警察官のうちから市長が任命する者</div>
+                    <div class="jorei-item">（4）市長がその部内の職員のうちから指名する者</div>
+                    <div class="jorei-item">（5）教育長</div>
+                    <div class="jorei-item">（6）消防長及び消防団長</div>
+                    <div class="jorei-item">（7）指定公共機関又は指定地方公共機関の職員のうちから市長が任命する者</div>
+                    <div class="jorei-item">（8）自主防災組織を構成する者又は学識経験のある者のうちから市長が任命する者</div>
+                    <div class="jorei-paragraph">2　前項第1号、第2号、第3号、第7号及び第8号の委員の任期は、2年とする。ただし、補欠の委員の任期は、その前任者の残任期間とする。</div>
+                    <div class="jorei-paragraph">3　前項の委員は、再任されることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（専門委員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　防災会議に専門の事項を調査させるため、専門委員を置くことができる。</div>
+                    <div class="jorei-paragraph">2　専門委員は、関係地方行政機関の職員、埼玉県の職員、市の職員、関係指定公共機関の職員、関係指定地方公共機関の職員及び学識経験のある者のうちから市長が任命する。</div>
+                    <div class="jorei-paragraph">3　専門委員は、当該専門の事項に関する調査が終了したときは、解任されるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（議事）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　防災会議は、委員の2分の1以上が出席しなければ、会議を開くことができない。</div>
+                    <div class="jorei-paragraph">2　防災会議の議事は、出席した委員の過半数をもって決し、可否同数のときは、会長の決するところによる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（庶務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　防災会議の庶務は、危機管理防災課において処理する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　この条例に定めるもののほか、防災会議の運営に関し必要な事項は、会長が防災会議に諮って定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 4,
+        title: '三郷市情報公開条例',
+        category: '行政・財務',
+        keywords: ['情報公開', '透明性', '公文書', '開示', '行政', '請求'],
+        summary: '市の保有する情報の公開に関する基本事項を規定し、市民の知る権利を保障し、行政の透明性を確保する。',
+        enactment: '平成12年3月24日 条例第6号',
+        lastAmended: '令和4年3月25日 条例第10号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000067.html',
+        toc: ['目的', '定義', '実施機関の責務', '開示請求権', '開示請求の手続', '公文書の開示義務', '部分開示', '公文書の存否に関する情報', '開示請求に対する決定等'],
+        fullText: `
+            <div class="jorei-title">三郷市情報公開条例</div>
+            <div class="jorei-enactment">平成12年3月24日 条例第6号<br>最終改正：令和4年3月25日 条例第10号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、市民の知る権利を尊重し、公文書の開示を請求する権利を明らかにするとともに、情報公開の総合的な推進に関し必要な事項を定めることにより、市政に関する市民の理解と信頼を深め、市民参加による公正で開かれた市政の推進に資することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</div>
+                    <div class="jorei-item">（1）実施機関　市長、教育委員会、選挙管理委員会、監査委員、農業委員会、固定資産評価審査委員会及び議会をいう。</div>
+                    <div class="jorei-item">（2）公文書　実施機関の職員が職務上作成し、又は取得した文書、図画、写真、フィルム及び電磁的記録（電子的方式、磁気的方式その他人の知覚によっては認識することができない方式で作られた記録をいう。以下同じ。）であって、当該実施機関の職員が組織的に用いるものとして、当該実施機関が保有しているものをいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（実施機関の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　実施機関は、この条例の解釈及び運用に当たっては、市民の知る権利を尊重するとともに、個人に関する情報がみだりに公にされることのないよう最大限の配慮をしなければならない。</div>
+                    <div class="jorei-paragraph">2　実施機関は、情報公開の総合的な推進を図るため、公文書の適正な管理、情報の公表及び提供の充実に努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　公文書の開示</div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（開示請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　何人も、この条例の定めるところにより、実施機関に対し、公文書の開示を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（開示請求の手続）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　公文書の開示を請求しようとする者は、次に掲げる事項を記載した請求書（以下「開示請求書」という。）を実施機関に提出しなければならない。</div>
+                    <div class="jorei-item">（1）氏名又は名称及び住所又は事務所若しくは事業所の所在地並びに法人その他の団体にあっては代表者の氏名</div>
+                    <div class="jorei-item">（2）開示を請求しようとする公文書を特定するために必要な事項</div>
+                    <div class="jorei-paragraph">2　実施機関は、開示請求書に形式上の不備があると認めるときは、開示請求をした者（以下「開示請求者」という。）に対し、相当の期間を定めて、その補正を求めることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（公文書の開示義務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　実施機関は、開示請求があったときは、開示請求に係る公文書に次の各号に掲げる情報（以下「非開示情報」という。）のいずれかが記録されている場合を除き、開示請求者に対し、当該公文書を開示しなければならない。</div>
+                    <div class="jorei-item">（1）法令又は条例の規定により公にすることができないとされている情報</div>
+                    <div class="jorei-item">（2）個人に関する情報（事業を営む個人の当該事業に関する情報を除く。）であって、当該情報に含まれる氏名、生年月日その他の記述等により特定の個人を識別することができるもの（他の情報と照合することにより、特定の個人を識別することができることとなるものを含む。）又は特定の個人を識別することはできないが、公にすることにより、なお個人の権利利益を害するおそれがあるもの</div>
+                    <div class="jorei-item">（3）法人その他の団体（国、独立行政法人等、地方公共団体及び地方独立行政法人を除く。以下「法人等」という。）に関する情報又は事業を営む個人の当該事業に関する情報であって、公にすることにより、当該法人等又は当該個人の競争上の地位その他正当な利益を害するおそれがあるもの</div>
+                    <div class="jorei-item">（4）公にすることにより、犯罪の予防、鎮圧又は捜査、公訴の維持、刑の執行その他の公共の安全と秩序の維持に支障を及ぼすおそれがあると実施機関が認めることにつき相当の理由がある情報</div>
+                    <div class="jorei-item">（5）市の機関、国、独立行政法人等、他の地方公共団体又は地方独立行政法人の内部又は相互間における審議、検討又は協議に関する情報であって、公にすることにより、率直な意見の交換若しくは意思決定の中立性が不当に損なわれるおそれ、不当に市民の間に混乱を生じさせるおそれ又は特定の者に不当に利益を与え若しくは不利益を及ぼすおそれがあるもの</div>
+                    <div class="jorei-item">（6）市の機関又は国、独立行政法人等、他の地方公共団体若しくは地方独立行政法人が行う事務又は事業に関する情報であって、公にすることにより、当該事務又は事業の適正な遂行に支障を及ぼすおそれがあるもの</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（部分開示）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　実施機関は、開示請求に係る公文書の一部に非開示情報が記録されている場合において、非開示情報が記録されている部分を容易に区分して除くことができるときは、開示請求者に対し、当該部分を除いた部分につき開示しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成12年10月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 5,
+        title: '三郷市いじめ防止対策推進条例',
+        category: '教育・文化',
+        keywords: ['いじめ', '学校', '教育', '防止', '児童', '生徒', '対策'],
+        summary: 'いじめの防止、早期発見、対処に関する基本理念と施策を定め、学校・保護者・市民の責務を明確にする。',
+        enactment: '平成26年3月26日 条例第4号',
+        lastAmended: '令和2年3月25日 条例第8号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001023.html',
+        toc: ['目的', '定義', '基本理念', '市の責務', '学校の責務', '保護者の責務', '市民の責務', 'いじめ防止基本方針', 'いじめ防止対策委員会'],
+        fullText: `
+            <div class="jorei-title">三郷市いじめ防止対策推進条例</div>
+            <div class="jorei-enactment">平成26年3月26日 条例第4号<br>最終改正：令和2年3月25日 条例第8号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、いじめ防止対策推進法（平成25年法律第71号。以下「法」という。）の趣旨にのっとり、いじめの防止等のための対策に関し、基本理念を定め、市、学校、保護者及び市民の責務を明らかにするとともに、いじめの防止等のための対策に関する基本的な事項を定めることにより、児童等の尊厳を保持するため、市、学校、家庭、地域住民その他の関係者の連携の下、いじめの問題の克服に向けた取組を推進し、もって児童等が安心して生活し、学ぶことができる環境をつくることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</div>
+                    <div class="jorei-item">（1）いじめ　法第2条第1項に規定するいじめをいう。</div>
+                    <div class="jorei-item">（2）学校　法第2条第2項に規定する学校（三郷市立の小学校及び中学校に限る。）をいう。</div>
+                    <div class="jorei-item">（3）児童等　法第2条第3項に規定する児童等をいう。</div>
+                    <div class="jorei-item">（4）保護者　法第2条第4項に規定する保護者をいう。</div>
+                    <div class="jorei-item">（5）いじめの防止等　法第1条に規定するいじめの防止、いじめの早期発見及びいじめへの対処をいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　いじめの防止等のための対策は、全ての児童等がいじめを行わず、いじめを認識しながらこれを放置することがないよう、いじめが児童等の心身に及ぼす影響その他のいじめの問題に関する児童等の理解を深めることを旨として行われなければならない。</div>
+                    <div class="jorei-paragraph">2　いじめの防止等のための対策は、いじめを受けた児童等の生命及び心身を保護することが特に重要であることを認識しつつ、市、学校、家庭、地域住民その他の関係者の連携の下、いじめの問題を克服することを目指して行われなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、基本理念にのっとり、いじめの防止等のための対策を総合的に策定し、及び実施する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（学校の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　学校は、基本理念にのっとり、当該学校に在籍する児童等の保護者、地域住民その他の関係者との連携を図りつつ、学校全体でいじめの防止及び早期発見に取り組むとともに、当該学校に在籍する児童等がいじめを受けていると思われるときは、適切かつ迅速にこれに対処する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（保護者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　保護者は、その保護する児童等がいじめを行うことのないよう、当該児童等に対し、規範意識を養うための指導その他必要な指導を行うよう努めるものとする。</div>
+                    <div class="jorei-paragraph">2　保護者は、その保護する児童等がいじめを受けた場合には、適切に当該児童等をいじめから保護するものとする。</div>
+                    <div class="jorei-paragraph">3　保護者は、市及び学校が講ずるいじめの防止等のための対策に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市民は、いじめが児童等の心身に及ぼす影響その他のいじめの問題に関する理解を深めるとともに、児童等が安心して生活し、学ぶことができる環境をつくるため、市及び学校が実施するいじめの防止等のための対策に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（いじめ防止基本方針）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市は、法第12条の規定に基づき、いじめの防止等のための対策を総合的かつ効果的に推進するための基本的な方針（以下「いじめ防止基本方針」という。）を定めるものとする。</div>
+                    <div class="jorei-paragraph">2　いじめ防止基本方針は、次に掲げる事項について定めるものとする。</div>
+                    <div class="jorei-item">（1）いじめの防止等のための対策の基本的な方向に関する事項</div>
+                    <div class="jorei-item">（2）いじめの防止等のための対策の内容に関する事項</div>
+                    <div class="jorei-item">（3）前2号に掲げるもののほか、いじめの防止等のための対策に関する重要事項</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（いじめ防止対策委員会）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　法第14条第3項の規定に基づき、いじめの防止等に関係する機関及び団体の連携を図るため、三郷市いじめ防止対策委員会（以下「対策委員会」という。）を置く。</div>
+                    <div class="jorei-paragraph">2　対策委員会は、次に掲げる事務を行う。</div>
+                    <div class="jorei-item">（1）いじめ防止基本方針に関すること。</div>
+                    <div class="jorei-item">（2）いじめの防止等のための対策の推進に関すること。</div>
+                    <div class="jorei-item">（3）いじめの防止等に関係する機関及び団体との連携に関すること。</div>
+                    <div class="jorei-item">（4）前3号に掲げるもののほか、いじめの防止等に関し必要なこと。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成26年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 6,
+        title: '三郷市廃棄物の処理及び清掃に関する条例',
+        category: '環境・安全',
+        keywords: ['ごみ', '廃棄物', '清掃', 'リサイクル', '環境', '分別', '収集'],
+        summary: '一般廃棄物の処理、ごみの分別収集、手数料等について規定し、循環型社会の形成に向けた基本事項を定める。',
+        enactment: '昭和47年10月1日 条例第17号',
+        lastAmended: '令和5年3月24日 条例第8号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000381.html',
+        toc: ['目的', '定義', '市の責務', '市民の責務', '事業者の責務', '一般廃棄物処理計画', '分別収集', '手数料', '減量・再利用の推進'],
+        fullText: `
+            <div class="jorei-title">三郷市廃棄物の処理及び清掃に関する条例</div>
+            <div class="jorei-enactment">昭和47年10月1日 条例第17号<br>最終改正：令和5年3月24日 条例第8号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、廃棄物の処理及び清掃に関する法律（昭和45年法律第137号。以下「法」という。）に基づき、廃棄物の排出を抑制し、及び廃棄物の適正な分別、保管、収集、運搬、再生、処分等の処理をし、並びに生活環境を清潔にすることにより、生活環境の保全及び公衆衛生の向上を図ることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市は、その区域内における一般廃棄物の減量に関し市民及び事業者の自主的な活動の促進を図り、及び一般廃棄物の適正な処理に必要な措置を講ずるよう努めるとともに、一般廃棄物の処理に関する事業の実施に当たっては、職員の資質の向上、施設の整備及び作業方法の改善を図る等その能率的な運営に努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市民は、廃棄物の排出を抑制し、再生品の使用等により廃棄物の再生利用を図り、廃棄物を分別して排出し、その生じた廃棄物をなるべく自ら処分すること等により、廃棄物の減量に努めなければならない。</div>
+                    <div class="jorei-paragraph">2　市民は、廃棄物の減量及び適正な処理に関する市の施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（事業者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　事業者は、その事業活動に伴って生じた廃棄物を自らの責任において適正に処理しなければならない。</div>
+                    <div class="jorei-paragraph">2　事業者は、その事業活動に伴って生じた廃棄物の再生利用等を行うことにより、その減量に努めなければならない。</div>
+                    <div class="jorei-paragraph">3　事業者は、物の製造、加工、販売等に際して、その製品、容器等が廃棄物となった場合における処理の困難性についてあらかじめ自ら評価し、適正な処理が困難にならないような製品、容器等の開発を行うこと、その製品、容器等に係る廃棄物の適正な処理の方法についての情報を提供すること等により、その製品、容器等が廃棄物となった場合においてその適正な処理が困難になることのないようにしなければならない。</div>
+                    <div class="jorei-paragraph">4　事業者は、廃棄物の減量及び適正な処理の確保等に関する市の施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　一般廃棄物の処理</div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（一般廃棄物処理計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市長は、法第6条第1項の規定により、一般廃棄物処理計画を定めなければならない。</div>
+                    <div class="jorei-paragraph">2　市長は、前項の一般廃棄物処理計画を定め、又は変更したときは、これを告示しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（分別収集）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市民は、一般廃棄物を排出するときは、市長が定める分別の区分に従って排出しなければならない。</div>
+                    <div class="jorei-paragraph">2　市長は、一般廃棄物処理計画に従い、一般廃棄物を分別して収集するものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（手数料）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市長は、一般廃棄物の処理に関し、別表に定める手数料を徴収する。</div>
+                    <div class="jorei-paragraph">2　前項の手数料は、市長が定める指定袋の代金に含めて徴収することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch3">第3章　減量及び再利用の推進</div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（減量・再利用の推進）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市は、一般廃棄物の減量を推進するため、市民及び事業者に対し、必要な指導及び助言を行うことができる。</div>
+                    <div class="jorei-paragraph">2　市は、再生資源の回収を促進するため、集団回収活動その他の市民の自主的な活���を支援するものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    }
+];
+
+// Additional ordinances (summary only - for search purposes)
+const ordinanceDataAdditional = [
+    {
+        id: 7,
         title: '三郷市保育の実施に関する条例',
         category: '子育て・福祉',
         keywords: ['保育', '子育て', '保育所', '待機児童', '入所'],
         summary: '保育所の設置・運営、入所基準、保育料等について規定。待機児童対策や保育サービスの質の確保に関する基本事項を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000490.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000490.html',
+        hasFullText: false
     },
     {
-        id: 3,
+        id: 8,
         title: '三郷市放課後児童健全育成事業の設備及び運営に関する基準を定める条例',
         category: '子育て・福祉',
         keywords: ['放課後', '学童', '児童クラブ', '子育て', '育成'],
         summary: '放課後児童クラブ（学童保育）の設備基準、職員配置、運営基準等を定める。子どもの安全な居場所確保に関する規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001043.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001043.html',
+        hasFullText: false
     },
     {
-        id: 4,
+        id: 9,
         title: '三郷市介護保険条例',
         category: '子育て・福祉',
         keywords: ['介護', '高齢者', '福祉', '保険', '介護保険'],
         summary: '介護保険事業の運営に関する基本事項を規定。保険料、サービス内容、事業計画等について定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000576.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000576.html',
+        hasFullText: false
     },
     {
-        id: 5,
-        title: '三郷市障害者の日常生活及び社会生活を総合的に支援するための法律施行条例',
-        category: '子育て・福祉',
-        keywords: ['障害', '福祉', 'バリアフリー', '支援', '障害者'],
-        summary: '障害者総合支援法に基づく市の事業実施に関する条例。障害福祉サービス、相談支援等について規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000970.html'
-    },
-    // まちづくり・開発
-    {
-        id: 6,
+        id: 10,
         title: '三郷市都市計画法に基づく開発行為等の許可の基準に関する条例',
         category: 'まちづくり・開発',
         keywords: ['開発', '都市計画', 'まちづくり', '建築', '許可'],
         summary: '開発行為の許可基準を定める条例。一定規模以上の開発に対する審査基準、技術基準等を規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000821.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000821.html',
+        hasFullText: false
     },
     {
-        id: 7,
+        id: 11,
         title: '三郷市景観条例',
         category: 'まちづくり・開発',
         keywords: ['景観', 'まちづくり', '建築', 'デザイン', '街並み'],
         summary: '良好な景観の形成に関する基本的事項を定める。届出対象行為、景観計画区域、景観形成基準等を規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000903.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000903.html',
+        hasFullText: false
     },
     {
-        id: 8,
-        title: '三郷市道路占用料等徴収条例',
-        category: 'まちづくり・開発',
-        keywords: ['道路', '占用', 'インフラ', '公共', '使用料'],
-        summary: '道路の占用に関する料金等を定める条例。電柱、看板、工事用足場等の占用料率を規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000371.html'
-    },
-    {
-        id: 9,
+        id: 12,
         title: '三郷市営住宅条例',
         category: 'まちづくり・開発',
         keywords: ['住宅', '公営住宅', '居住', '家賃', '入居'],
         summary: '市営住宅の設置、管理、入居資格、家賃等について規定。低所得者向け住宅の供給に関する基本事項を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000433.html'
-    },
-    // 環境・安全
-    {
-        id: 10,
-        title: '三郷市地域防災計画に関する条例',
-        category: '環境・安全',
-        keywords: ['防災', '災害', '避難', '地震', '安全', '防災計画'],
-        summary: '地域防災計画の策定・実施に関する基本事項を規定。災害予防、応急対策、復旧計画等について定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000194.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000433.html',
+        hasFullText: false
     },
     {
-        id: 11,
+        id: 13,
         title: '三郷市火災予防条例',
         category: '環境・安全',
         keywords: ['火災', '消防', '安全', '予防', '防火'],
         summary: '火災予防に関する規制を定める条例。危険物の取扱い、消防設備の設置基準、届出義務等を規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000192.html'
-    },
-    {
-        id: 12,
-        title: '三郷市環境基本条例',
-        category: '環境・安全',
-        keywords: ['環境', 'エコ', '公害', '保全', '自然'],
-        summary: '環境の保全に関する基本理念、市・事業者・市民の責務、施策の基本事項を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000554.html'
-    },
-    {
-        id: 13,
-        title: '三郷市廃棄物の処理及び清掃に関する条例',
-        category: '環境・安全',
-        keywords: ['ごみ', '廃棄物', '清掃', 'リサイクル', '環境'],
-        summary: '一般廃棄物の処理、ごみの分別収集、手数料等について規定。循環型社会の形成に向けた基本事項を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000381.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000192.html',
+        hasFullText: false
     },
     {
         id: 14,
-        title: '三郷市生活環境保全条例',
-        category: '環境・安全',
-        keywords: ['環境', '騒音', '公害', '生活', '保全'],
-        summary: '生活環境の保全に関する規制を定める。騒音、振動、悪臭等の規制基準、事業者の責務等を規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000387.html'
-    },
-    {
-        id: 15,
         title: '三郷市水害対策条例',
         category: '環境・安全',
         keywords: ['水害', '洪水', '防災', '治水', '浸水'],
         summary: '水害から市民の生命・財産を守るための対策を規定。河川整備、雨水貯留、避難体制等について定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000893.html'
-    },
-    // 行政・財務
-    {
-        id: 16,
-        title: '三郷市情報公開条例',
-        category: '行政・財務',
-        keywords: ['情報公開', '透明性', '公文書', '開示', '行政'],
-        summary: '市の保有する情報の公開に関する基本事項を規定。開示請求の手続き、非開示情報の範囲等を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000067.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000893.html',
+        hasFullText: false
     },
     {
-        id: 17,
+        id: 15,
         title: '三郷市個人情報保護条例',
         category: '行政・財務',
         keywords: ['個人情報', 'プライバシー', '保護', '行政', '情報'],
         summary: '個人情報の適正な取扱いに関する基本事項を規定。収集制限、利用・提供制限、開示・訂正請求等を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000070.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000070.html',
+        hasFullText: false
     },
     {
-        id: 18,
+        id: 16,
         title: '三郷市税条例',
         category: '行政・財務',
         keywords: ['税', '市税', '財務', '課税', '税金'],
         summary: '市税の賦課・徴収に関する基本事項を規定。市民税、固定資産税、軽自動車税等の税率・納期等を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000136.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000136.html',
+        hasFullText: false
     },
     {
-        id: 19,
-        title: '三郷市行政手続条例',
-        category: '行政・財務',
-        keywords: ['行政手続', '申請', '処分', '行政', '手続き'],
-        summary: '行政処分、行政指導、届出に関する手続きの共通事項を規定。行政の公正性・透明性の確保を図る。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000548.html'
-    },
-    // 教育・文化
-    {
-        id: 20,
-        title: '三郷市立小中学校の通学区域に関する規則',
-        category: '教育・文化',
-        keywords: ['学校', '通学', '教育', '小学校', '中学校'],
-        summary: '市立小中学校の通学区域を定める規則。学区の範囲、指定変更の手続き等について規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000680.html'
-    },
-    {
-        id: 21,
+        id: 17,
         title: '三郷市立図書館条例',
         category: '教育・文化',
         keywords: ['図書館', '文化', '教育', '読書', '施設'],
         summary: '市立図書館の設置・管理に関する条例。開館時間、利用規則、資料の貸出等について規定。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000697.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000697.html',
+        hasFullText: false
     },
     {
-        id: 22,
-        title: '三郷市文化会館条例',
-        category: '教育・文化',
-        keywords: ['文化', '会館', 'ホール', '施設', 'イベント'],
-        summary: '文化会館の設置・管理に関する条例。利用料金、利用手続き、減免規定等について定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000708.html'
-    },
-    {
-        id: 23,
+        id: 18,
         title: '三郷市スポーツ推進条例',
         category: '教育・文化',
         keywords: ['スポーツ', '健康', '運動', '体育', '推進'],
         summary: 'スポーツの推進に関する基本理念、市の責務、施策の基本事項を定める。生涯スポーツの振興を図る。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000948.html'
-    },
-    {
-        id: 24,
-        title: '三郷市いじめ防止対策推進条例',
-        category: '教育・文化',
-        keywords: ['いじめ', '学校', '教育', '防止', '児童'],
-        summary: 'いじめの防止、早期発見、対処に関する基本事項を規定。学校、保護者、市民の責務等を定める。',
-        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001023.html'
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000948.html',
+        hasFullText: false
     }
 ];
+
+// Combine all ordinance data
+const allOrdinanceData = [...ordinanceData, ...ordinanceDataAdditional];
 
 let currentCategory = 'all';
 let currentSearchTerm = '';
@@ -1582,7 +2346,7 @@ function filterByCategory(category) {
 }
 
 function renderOrdinances() {
-    const results = ordinanceData.filter(ord => {
+    const results = allOrdinanceData.filter(ord => {
         const matchesCategory = currentCategory === 'all' || ord.category === currentCategory;
         const matchesSearch = currentSearchTerm === '' ||
             ord.title.toLowerCase().includes(currentSearchTerm) ||
@@ -1608,34 +2372,85 @@ function renderOrdinances() {
             </div>
         `;
     } else {
-        listEl.innerHTML = results.map(ord => `
-            <div class="ordinance-item" data-id="${ord.id}">
+        listEl.innerHTML = results.map(ord => {
+            const hasFullText = ord.fullText !== undefined;
+            return `
+            <div class="ordinance-item ${hasFullText ? 'has-fulltext' : ''}" data-id="${ord.id}">
                 <div class="ordinance-item-header">
                     <div class="ordinance-item-title">${ord.title}</div>
                     <span class="ordinance-item-cat">${ord.category}</span>
                 </div>
                 <div class="ordinance-item-keywords">
                     ${ord.keywords.map(kw => `<span class="ordinance-keyword">${kw}</span>`).join('')}
+                    ${hasFullText ? '<span class="ordinance-keyword" style="background:rgba(44,74,110,0.1);color:var(--navy);">全文閲覧可</span>' : ''}
                 </div>
                 <div class="ordinance-item-content">
                     <p class="ordinance-item-summary">${ord.summary}</p>
-                    <a href="${ord.url}" target="_blank" rel="noopener" class="ordinance-item-link">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <polyline points="15 3 21 3 21 9"/>
-                            <line x1="10" y1="14" x2="21" y2="3"/>
-                        </svg>
-                        三郷市例規集で全文を見る
-                    </a>
+                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                        ${hasFullText ? `
+                        <button class="ordinance-item-link view-fulltext-btn" data-id="${ord.id}" style="border:none;cursor:pointer;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            全文を表示
+                        </button>
+                        ` : ''}
+                        <a href="${ord.url}" target="_blank" rel="noopener" class="ordinance-item-link" style="background:var(--gray-lighter);color:var(--gray);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                            三郷市例規集
+                        </a>
+                    </div>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     // Show results if there's a search or category filter
     if (currentSearchTerm || currentCategory !== 'all') {
         resultsEl.classList.add('open');
     }
+}
+
+// Modal functions
+function openOrdinanceModal(ordId) {
+    const ord = ordinanceData.find(o => o.id === ordId);
+    if (!ord || !ord.fullText) return;
+
+    document.getElementById('modalTitle').textContent = ord.title;
+    document.getElementById('modalMeta').innerHTML = `
+        <span>${ord.category}</span>
+        <span>${ord.enactment || ''}</span>
+        ${ord.lastAmended ? `<span>最終改正: ${ord.lastAmended}</span>` : ''}
+    `;
+
+    // Build TOC
+    if (ord.toc && ord.toc.length > 0) {
+        document.getElementById('modalToc').style.display = 'block';
+        document.getElementById('modalTocList').innerHTML = ord.toc.map((item, i) =>
+            `<li><a href="#art${i+1}" onclick="event.preventDefault();document.getElementById('art${i+1}')?.scrollIntoView({behavior:'smooth'})">${item}</a></li>`
+        ).join('');
+    } else {
+        document.getElementById('modalToc').style.display = 'none';
+    }
+
+    document.getElementById('modalContent').innerHTML = ord.fullText;
+    document.getElementById('modalFooterInfo').textContent = ord.enactment || '';
+    document.getElementById('modalExternalLink').href = ord.url;
+
+    document.getElementById('ordinanceModalOverlay').classList.add('open');
+    document.getElementById('ordinanceModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeOrdinanceModal() {
+    document.getElementById('ordinanceModalOverlay').classList.remove('open');
+    document.getElementById('ordinanceModal').classList.remove('open');
+    document.body.style.overflow = '';
 }
 
 // Event listeners for ordinance search
@@ -1648,12 +2463,35 @@ document.querySelectorAll('.ordinance-cat-btn').forEach(btn => {
     btn.addEventListener('click', () => filterByCategory(btn.dataset.cat));
 });
 
-// Toggle ordinance item expansion
+// Toggle ordinance item expansion and open modal
 document.getElementById('ordinanceList').addEventListener('click', e => {
+    // Handle fulltext button click
+    const fulltextBtn = e.target.closest('.view-fulltext-btn');
+    if (fulltextBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const ordId = parseInt(fulltextBtn.dataset.id);
+        openOrdinanceModal(ordId);
+        return;
+    }
+
+    // Handle external link click
+    if (e.target.closest('a.ordinance-item-link')) {
+        return; // Let it navigate normally
+    }
+
+    // Toggle expansion
     const item = e.target.closest('.ordinance-item');
-    if (item && !e.target.closest('.ordinance-item-link')) {
+    if (item) {
         item.classList.toggle('expanded');
     }
+});
+
+// Modal close handlers
+document.getElementById('modalCloseBtn').addEventListener('click', closeOrdinanceModal);
+document.getElementById('ordinanceModalOverlay').addEventListener('click', closeOrdinanceModal);
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeOrdinanceModal();
 });
 
 // Comment toggle and Giscus loading
