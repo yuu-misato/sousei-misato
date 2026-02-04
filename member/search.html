@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条例・法律検索 | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --law-green: #1a472a;
+            --law-green-light: #2d5a3f;
+            --bg: #fafbfc;
+            --bg-warm: #f8f9fa;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+
+        /* ===== Header ===== */
+        #mainContent { display: none; }
+
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .header-logo-icon { width: 40px; height: 40px; }
+        .header-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .header-logo-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .header-nav a {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .header-nav a:hover {
+            background: var(--gray-lighter);
+            color: var(--text);
+        }
+        .header-nav a.active {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        /* ===== Main Content ===== */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 2rem 3rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ===== Tab Navigation ===== */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--white);
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .tab-btn:hover {
+            background: var(--gray-lighter);
+        }
+        .tab-btn.active {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .tab-btn.law-tab.active {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .tab-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== Search Section ===== */
+        .search-section {
+            display: none;
+        }
+        .search-section.active {
+            display: block;
+        }
+
+        .search-box {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .search-header-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+        }
+        .search-header-icon.law {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .search-header-icon svg {
+            width: 26px;
+            height: 26px;
+            stroke: var(--white);
+        }
+        .search-header-text h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+        .search-header-text p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .search-input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--navy);
+        }
+        .search-input.law:focus {
+            border-color: var(--law-green);
+        }
+
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .cat-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-light);
+            background: var(--white);
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-family: inherit;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cat-btn:hover {
+            background: var(--gray-lighter);
+        }
+        .cat-btn.active {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+        .cat-btn.law.active {
+            background: var(--law-green);
+            border-color: var(--law-green);
+        }
+
+        /* ===== Results Section ===== */
+        .results-section {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+            background: var(--gray-lighter);
+        }
+        .results-count {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        .results-count strong {
+            color: var(--navy);
+            font-weight: 700;
+        }
+        .results-count.law strong {
+            color: var(--law-green);
+        }
+        .ext-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: opacity 0.2s;
+        }
+        .ext-link:hover {
+            opacity: 0.9;
+        }
+        .ext-link.law {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .ext-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .results-list {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .result-item:hover {
+            background: var(--gray-lighter);
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .result-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .result-item-cat {
+            flex-shrink: 0;
+            padding: 0.25rem 0.75rem;
+            background: rgba(44, 74, 110, 0.1);
+            color: var(--navy);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+        .result-item-cat.law {
+            background: rgba(26, 71, 42, 0.1);
+            color: var(--law-green);
+        }
+
+        .result-item-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .keyword {
+            padding: 0.2rem 0.6rem;
+            background: var(--gray-lighter);
+            color: var(--gray);
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+        .keyword.fulltext {
+            background: rgba(44, 74, 110, 0.1);
+            color: var(--navy);
+        }
+
+        .result-item-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .result-item.expanded .result-item-content {
+            display: block;
+        }
+
+        .result-item-summary {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .result-item-meta {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .result-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+        .action-btn.secondary {
+            background: var(--gray-lighter);
+            color: var(--gray);
+        }
+        .action-btn.law {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .action-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+        }
+        .empty-state svg {
+            width: 60px;
+            height: 60px;
+            stroke: var(--gray-light);
+            margin-bottom: 1rem;
+        }
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        /* ===== e-Gov Additional Results ===== */
+        .egov-results {
+            margin-top: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--gray-lighter);
+            border-top: 1px solid var(--gray-light);
+        }
+        .egov-results-title {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .egov-results-title svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            background: var(--white);
+            border-radius: 16px;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .modal-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .modal-meta span {
+            padding: 0.25rem 0.75rem;
+            background: rgba(44, 74, 110, 0.1);
+            color: var(--navy);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-lighter);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        .modal-close:hover {
+            background: var(--gray-light);
+        }
+        .modal-close svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            background: var(--gray-lighter);
+        }
+        .modal-footer-info {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .modal-footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+        .modal-footer-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ===== Ordinance Content Styles ===== */
+        .ordinance-content .jorei-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--navy);
+        }
+        .ordinance-content .jorei-toc {
+            background: var(--gray-lighter);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-preamble {
+            background: rgba(44, 74, 110, 0.05);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-chapter {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .ordinance-content .jorei-section {
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 1rem 0 0.75rem;
+        }
+        .ordinance-content .jorei-article {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--white);
+            border-left: 3px solid var(--gray-light);
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-article .article-title {
+            font-weight: 600;
+            color: var(--navy);
+        }
+        .ordinance-content .jorei-supplementary {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--gray-light);
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            .header-nav {
+                display: none;
+            }
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+            .page-title h1 {
+                font-size: 1.5rem;
+            }
+            .search-box {
+                padding: 1.25rem;
+            }
+            .search-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .results-header {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: flex-start;
+            }
+            .result-item-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .modal {
+                width: 100%;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-logo">創政MISATO</div>
+        <div class="login-sub">条例・法律検索システム</div>
+        <div class="login-error" id="loginError">パスワードが違います</div>
+        <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力">
+        <button class="login-btn" onclick="tryLogin()">ログイン</button>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div id="mainContent">
+    <header class="header">
+        <div class="header-inner">
+            <a href="../index.html" class="header-logo">
+                <div class="header-logo-icon">
+                    <img src="../assets/images/sousei-icon.svg" alt="">
+                </div>
+                <span class="header-logo-text">創政MISATO</span>
+            </a>
+            <nav class="header-nav">
+                <a href="index.html">メンバーガイド</a>
+                <a href="search.html" class="active">条例・法律検索</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="page-title">
+            <h1>条例・法律検索</h1>
+            <p>三郷市の条例と国の法律を検索できます</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="ordinance">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                三郷市 条例検索
+            </button>
+            <button class="tab-btn law-tab" data-tab="law">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                国の法律検索
+            </button>
+        </div>
+
+        <!-- Ordinance Search Section -->
+        <div class="search-section active" id="ordinanceSection">
+            <div class="search-box">
+                <div class="search-header">
+                    <div class="search-header-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="search-header-text">
+                        <h2>三郷市 条例検索</h2>
+                        <p>キーワードで条例を検索し、内容を確認できます</p>
+                    </div>
+                </div>
+
+                <div class="search-input-wrapper">
+                    <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" class="search-input" id="ordinanceSearchInput" placeholder="例：防災、子育て、環境...">
+                </div>
+
+                <div class="category-buttons" id="ordinanceCategories">
+                    <button class="cat-btn active" data-cat="all">すべて</button>
+                    <button class="cat-btn" data-cat="総規・基本">総規・基本</button>
+                    <button class="cat-btn" data-cat="議会">議会</button>
+                    <button class="cat-btn" data-cat="執行機関">執行機関</button>
+                    <button class="cat-btn" data-cat="人事">人事</button>
+                    <button class="cat-btn" data-cat="給与">給与</button>
+                    <button class="cat-btn" data-cat="財務">財務</button>
+                    <button class="cat-btn" data-cat="教育・文化">教育・文化</button>
+                    <button class="cat-btn" data-cat="民生・福祉">民生・福祉</button>
+                    <button class="cat-btn" data-cat="産業経済">産業経済</button>
+                    <button class="cat-btn" data-cat="建設">建設</button>
+                    <button class="cat-btn" data-cat="水道">水道</button>
+                    <button class="cat-btn" data-cat="消防">消防</button>
+                    <button class="cat-btn" data-cat="その他">その他</button>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="results-header">
+                    <span class="results-count" id="ordinanceCount">検索結果: <strong>0</strong>件</span>
+                    <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener" class="ext-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        三郷市例規集
+                    </a>
+                </div>
+                <div class="results-list" id="ordinanceList">
+                    <!-- Results populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Law Search Section -->
+        <div class="search-section" id="lawSection">
+            <div class="search-box">
+                <div class="search-header">
+                    <div class="search-header-icon law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <div class="search-header-text">
+                        <h2>国の法律検索</h2>
+                        <p>地方自治法等の主要法律を検索できます（e-Gov法令検索連携）</p>
+                    </div>
+                </div>
+
+                <div class="search-input-wrapper">
+                    <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" class="search-input law" id="lawSearchInput" placeholder="例：地方自治、介護保険、都市計画...">
+                </div>
+
+                <div class="category-buttons" id="lawCategories">
+                    <button class="cat-btn law active" data-cat="all">すべて</button>
+                    <button class="cat-btn law" data-cat="地方自治">地方自治</button>
+                    <button class="cat-btn law" data-cat="税・財務">税・財務</button>
+                    <button class="cat-btn law" data-cat="福祉">福祉</button>
+                    <button class="cat-btn law" data-cat="都市計画">都市計画</button>
+                    <button class="cat-btn law" data-cat="環境">環境</button>
+                    <button class="cat-btn law" data-cat="行政手続">行政手続</button>
+                    <button class="cat-btn law" data-cat="選挙">選挙</button>
+                    <button class="cat-btn law" data-cat="教育">教育</button>
+                    <button class="cat-btn law" data-cat="消防・防災">消防・防災</button>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="results-header">
+                    <span class="results-count law" id="lawCount">主要法律: <strong>0</strong>件</span>
+                    <a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener" class="ext-link law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        e-Gov法令検索
+                    </a>
+                </div>
+                <div class="results-list" id="lawList">
+                    <!-- Results populated by JavaScript -->
+                </div>
+                <div class="egov-results" id="egovResults" style="display:none;">
+                    <div class="egov-results-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        e-Gov法令検索から追加で見つかった法令:
+                    </div>
+                    <div id="egovList"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal for Ordinance Full Text -->
+<div class="modal-overlay" id="modalOverlay"></div>
+<div class="modal" id="modal">
+    <div class="modal-header">
+        <div>
+            <div class="modal-title" id="modalTitle">条例名</div>
+            <div class="modal-meta" id="modalMeta"></div>
+        </div>
+        <button class="modal-close" id="modalCloseBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ordinance-content" id="modalContent"></div>
+    </div>
+    <div class="modal-footer">
+        <span class="modal-footer-info" id="modalFooterInfo"></span>
+        <a href="#" target="_blank" rel="noopener" class="modal-footer-link" id="modalExternalLink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            三郷市例規集で見る
+        </a>
+    </div>
+</div>
+
+<!-- Data files -->
+<script src="ordinance-data.js"></script>
+<script src="law-data.js"></script>
+
+<script>
+const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
+
+async function sha256(text) {
+    const data = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function tryLogin() {
+    const pw = document.getElementById('passwordInput').value;
+    const hash = await sha256(pw);
+    if (hash === HASH) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        sessionStorage.setItem('member_auth', '1');
+        renderOrdinances();
+        renderLaws();
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+    }
+}
+
+document.getElementById('passwordInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') tryLogin();
+});
+
+if (sessionStorage.getItem('member_auth') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    // Initialize after DOM is ready
+    setTimeout(() => {
+        renderOrdinances();
+        renderLaws();
+    }, 0);
+}
+
+// ===== Tab Navigation =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.search-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(tab === 'ordinance' ? 'ordinanceSection' : 'lawSection').classList.add('active');
+    });
+});
+
+// ===== Ordinance Search =====
+let currentOrdinanceCategory = 'all';
+let currentOrdinanceSearch = '';
+
+function searchOrdinances() {
+    currentOrdinanceSearch = document.getElementById('ordinanceSearchInput').value.toLowerCase();
+    renderOrdinances();
+}
+
+function filterOrdinanceCategory(cat) {
+    currentOrdinanceCategory = cat;
+    document.querySelectorAll('#ordinanceCategories .cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === cat);
+    });
+    renderOrdinances();
+}
+
+function renderOrdinances() {
+    const results = allOrdinanceData.filter(ord => {
+        const matchesCategory = currentOrdinanceCategory === 'all' || ord.category === currentOrdinanceCategory;
+        const fullTextContent = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+        const matchesSearch = currentOrdinanceSearch === '' ||
+            ord.title.toLowerCase().includes(currentOrdinanceSearch) ||
+            ord.keywords.some(kw => kw.toLowerCase().includes(currentOrdinanceSearch)) ||
+            ord.summary.toLowerCase().includes(currentOrdinanceSearch) ||
+            fullTextContent.includes(currentOrdinanceSearch);
+        return matchesCategory && matchesSearch;
+    });
+
+    const listEl = document.getElementById('ordinanceList');
+    const countEl = document.getElementById('ordinanceCount');
+
+    countEl.innerHTML = `検索結果: <strong>${results.length}</strong>件`;
+
+    if (results.length === 0) {
+        listEl.innerHTML = `
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <p>該当する条例が見つかりません</p>
+            </div>`;
+        return;
+    }
+
+    listEl.innerHTML = results.map(ord => `
+        <div class="result-item ${ord.fullText ? 'has-fulltext' : ''}" data-id="${ord.id}" data-type="ordinance">
+            <div class="result-item-header">
+                <div class="result-item-title">${ord.title}</div>
+                <span class="result-item-cat">${ord.category}</span>
+            </div>
+            <div class="result-item-keywords">
+                ${ord.keywords.map(kw => `<span class="keyword">${kw}</span>`).join('')}
+                ${ord.fullText ? '<span class="keyword fulltext">全文閲覧可</span>' : ''}
+            </div>
+            <div class="result-item-content">
+                <p class="result-item-summary">${ord.summary}</p>
+                <div class="result-item-actions">
+                    ${ord.fullText ? `
+                        <button class="action-btn view-fulltext-btn" data-id="${ord.id}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            全文を表示
+                        </button>
+                    ` : ''}
+                    <a href="${ord.url}" target="_blank" rel="noopener" class="action-btn secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        三郷市例規集
+                    </a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== Law Search =====
+let currentLawCategory = 'all';
+let currentLawSearch = '';
+let egovSearchTimeout = null;
+
+function searchLaws() {
+    currentLawSearch = document.getElementById('lawSearchInput').value.toLowerCase();
+    renderLaws();
+
+    // e-Gov API検索
+    if (currentLawSearch.length >= 2) {
+        clearTimeout(egovSearchTimeout);
+        egovSearchTimeout = setTimeout(() => searchFromEgov(currentLawSearch), 500);
+    } else {
+        document.getElementById('egovResults').style.display = 'none';
+    }
+}
+
+function filterLawCategory(cat) {
+    currentLawCategory = cat;
+    document.querySelectorAll('#lawCategories .cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === cat);
+    });
+    renderLaws();
+}
+
+function renderLaws() {
+    const results = majorLawData.filter(law => {
+        const matchesCategory = currentLawCategory === 'all' || law.category === currentLawCategory;
+        const matchesSearch = currentLawSearch === '' ||
+            law.title.toLowerCase().includes(currentLawSearch) ||
+            law.keywords.some(kw => kw.toLowerCase().includes(currentLawSearch)) ||
+            law.summary.toLowerCase().includes(currentLawSearch);
+        return matchesCategory && matchesSearch;
+    });
+
+    const listEl = document.getElementById('lawList');
+    const countEl = document.getElementById('lawCount');
+
+    countEl.innerHTML = `主要法律: <strong>${results.length}</strong>件`;
+
+    if (results.length === 0) {
+        listEl.innerHTML = `
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                </svg>
+                <p>該当する法律が見つかりません</p>
+            </div>`;
+        return;
+    }
+
+    listEl.innerHTML = results.map(law => `
+        <div class="result-item law-item" data-id="${law.id}" data-type="law">
+            <div class="result-item-header">
+                <div class="result-item-title">${law.title}</div>
+                <span class="result-item-cat law">${law.category}</span>
+            </div>
+            <div class="result-item-keywords">
+                ${law.keywords.slice(0, 5).map(kw => `<span class="keyword">${kw}</span>`).join('')}
+            </div>
+            <div class="result-item-content">
+                <p class="result-item-summary">${law.summary}</p>
+                <p class="result-item-meta">${law.lawNum}</p>
+                <div class="result-item-actions">
+                    <a href="${law.egov_url}" target="_blank" rel="noopener" class="action-btn law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        e-Govで全文を見る
+                    </a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// e-Gov API検索
+async function searchFromEgov(keyword) {
+    const resultsDiv = document.getElementById('egovResults');
+    const listEl = document.getElementById('egovList');
+
+    resultsDiv.style.display = 'block';
+    listEl.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gray);">e-Gov法令検索中...</div>';
+
+    try {
+        const results = await searchLawsFromEgov(keyword);
+        const majorIds = majorLawData.map(l => l.lawId);
+        const filteredResults = results.filter(r => !majorIds.includes(r.lawId));
+
+        if (filteredResults.length === 0) {
+            resultsDiv.style.display = 'none';
+            return;
+        }
+
+        listEl.innerHTML = filteredResults.slice(0, 10).map(law => `
+            <div class="result-item law-item egov-result" style="padding:1rem;border-bottom:1px solid var(--gray-light);">
+                <div class="result-item-header">
+                    <div class="result-item-title">${law.title}</div>
+                    <span class="result-item-cat law" style="font-size:10px;">e-Gov検索結果</span>
+                </div>
+                <div class="result-item-content" style="display:block;margin-top:0.5rem;">
+                    <p class="result-item-meta">${law.lawNum || ''}</p>
+                    <a href="${law.egov_url}" target="_blank" rel="noopener" class="action-btn law" style="margin-top:0.5rem;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        e-Govで見る
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('e-Gov検索エラー:', error);
+        listEl.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gray);">e-Gov検索に失敗しました。直接<a href="https://laws.e-gov.go.jp/" target="_blank">e-Gov法令検索</a>をご利用ください。</div>';
+    }
+}
+
+// ===== Event Listeners =====
+document.getElementById('ordinanceSearchInput').addEventListener('input', searchOrdinances);
+document.getElementById('ordinanceSearchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchOrdinances();
+});
+
+document.querySelectorAll('#ordinanceCategories .cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterOrdinanceCategory(btn.dataset.cat));
+});
+
+document.getElementById('lawSearchInput').addEventListener('input', searchLaws);
+document.getElementById('lawSearchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchLaws();
+});
+
+document.querySelectorAll('#lawCategories .cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterLawCategory(btn.dataset.cat));
+});
+
+// Result item click handlers
+document.getElementById('ordinanceList').addEventListener('click', e => {
+    const fulltextBtn = e.target.closest('.view-fulltext-btn');
+    if (fulltextBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const ordId = parseInt(fulltextBtn.dataset.id);
+        openModal(ordId);
+        return;
+    }
+
+    if (e.target.closest('a.action-btn')) return;
+
+    const item = e.target.closest('.result-item');
+    if (item) {
+        if (e.target.closest('.result-item-header')) {
+            const ordId = parseInt(item.dataset.id);
+            const ord = allOrdinanceData.find(o => o.id === ordId);
+            if (ord && ord.fullText) {
+                openModal(ordId);
+            } else {
+                item.classList.toggle('expanded');
+            }
+        } else {
+            item.classList.toggle('expanded');
+        }
+    }
+});
+
+document.getElementById('lawList').addEventListener('click', e => {
+    if (e.target.closest('a.action-btn')) return;
+    const item = e.target.closest('.result-item');
+    if (item) {
+        item.classList.toggle('expanded');
+    }
+});
+
+// ===== Modal =====
+function openModal(ordId) {
+    const ord = allOrdinanceData.find(o => o.id === ordId);
+    if (!ord) return;
+
+    document.getElementById('modalTitle').textContent = ord.title;
+    document.getElementById('modalMeta').innerHTML = `<span>${ord.category}</span>`;
+
+    if (ord.fullText) {
+        document.getElementById('modalContent').innerHTML = ord.fullText;
+    } else {
+        document.getElementById('modalContent').innerHTML = `
+            <div style="text-align:center;padding:3rem;">
+                <svg style="width:60px;height:60px;color:var(--gray-light);margin-bottom:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                <p style="color:var(--gray);margin-bottom:1rem;">この条例の全文はまだ登録されていません。</p>
+                <a href="${ord.url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--navy);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                    三郷市例規集で見る
+                </a>
+            </div>
+        `;
+    }
+
+    document.getElementById('modalFooterInfo').textContent = '';
+    document.getElementById('modalExternalLink').href = ord.url;
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', closeModal);
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>

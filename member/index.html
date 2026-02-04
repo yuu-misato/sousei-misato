@@ -479,6 +479,100 @@
             min-height: 200px;
         }
 
+        /* ===== Search Link Card ===== */
+        .search-link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--white) 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid var(--gray-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .search-link-card:hover {
+            border-color: var(--navy);
+            box-shadow: 0 8px 30px rgba(44, 74, 110, 0.15);
+            transform: translateY(-2px);
+        }
+        .search-link-content {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        .search-link-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .search-link-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .search-link-icon.ordinance {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+        }
+        .search-link-icon.law {
+            background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%);
+        }
+        .search-link-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--white);
+        }
+        .search-link-text h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        .search-link-text p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        .search-link-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .search-link-card:hover .search-link-arrow {
+            background: var(--navy);
+        }
+        .search-link-arrow svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+            transition: stroke 0.3s ease;
+        }
+        .search-link-card:hover .search-link-arrow svg {
+            stroke: var(--white);
+        }
+
+        @media (max-width: 640px) {
+            .search-link-card {
+                padding: 1.25rem;
+            }
+            .search-link-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .search-link-text h3 {
+                font-size: 1.1rem;
+            }
+        }
+
         /* ===== Ordinance Search ===== */
         .ordinance-section {
             background: var(--white);
@@ -1035,9 +1129,10 @@
             </button>
         </div>
         <nav class="menu-nav">
+            <div class="menu-nav-label">メンバーツール</div>
+            <a href="search.html">条例・法律検索</a>
+            <div class="menu-divider"></div>
             <div class="menu-nav-label">このページ</div>
-            <a href="#ordinanceSearch">条例検索</a>
-            <a href="#lawSearch">法律検索</a>
             <a href="#sec1">理念</a>
             <a href="#sec2">会派ルール</a>
             <a href="#sec3">議場の所作</a>
@@ -1065,8 +1160,7 @@
         <h1>メンバーガイドライン</h1>
         <p>会派メンバーが知っておくべきルール・所作・考え方</p>
         <nav class="guide-nav">
-            <a href="#ordinanceSearch">条例検索</a>
-            <a href="#lawSearch">法律検索</a>
+            <a href="search.html">条例・法律検索</a>
             <a href="#sec1">理念</a>
             <a href="#sec2">会派ルール</a>
             <a href="#sec3">議場の所作</a>
@@ -1080,132 +1174,36 @@
 
     <main class="guide-body">
 
-        <!-- Ordinance Search Section -->
-        <div class="ordinance-section" id="ordinanceSearch">
-            <div class="ordinance-header">
-                <div class="ordinance-header-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                        <polyline points="10 9 9 9 8 9"/>
-                    </svg>
-                </div>
-                <div class="ordinance-header-text">
-                    <h3>三郷市 条例検索</h3>
-                    <p>キーワードで条例を検索し、内容を確認できます</p>
-                </div>
-            </div>
-
-            <div class="ordinance-search-box">
-                <svg class="ordinance-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <input type="text" class="ordinance-search-input" id="ordinanceSearchInput" placeholder="例：防災、子育て、環境...">
-            </div>
-
-            <div class="ordinance-categories">
-                <button class="ordinance-cat-btn active" data-cat="all">すべて</button>
-                <button class="ordinance-cat-btn" data-cat="総規・基本">総規・基本</button>
-                <button class="ordinance-cat-btn" data-cat="議会">議会</button>
-                <button class="ordinance-cat-btn" data-cat="執行機関">執行機関</button>
-                <button class="ordinance-cat-btn" data-cat="人事">人事</button>
-                <button class="ordinance-cat-btn" data-cat="給与">給与</button>
-                <button class="ordinance-cat-btn" data-cat="財務">財務</button>
-                <button class="ordinance-cat-btn" data-cat="教育・文化">教育・文化</button>
-                <button class="ordinance-cat-btn" data-cat="民生・福祉">民生・福祉</button>
-                <button class="ordinance-cat-btn" data-cat="産業経済">産業経済</button>
-                <button class="ordinance-cat-btn" data-cat="建設">建設</button>
-                <button class="ordinance-cat-btn" data-cat="水道">水道</button>
-                <button class="ordinance-cat-btn" data-cat="消防">消防</button>
-                <button class="ordinance-cat-btn" data-cat="その他">その他</button>
-            </div>
-
-            <div class="ordinance-results" id="ordinanceResults">
-                <div class="ordinance-results-header">
-                    <span class="ordinance-results-count" id="ordinanceCount">検索結果: <strong>0</strong>件</span>
-                    <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener" class="ordinance-ext-link">
-                        三郷市例規集を開く
+        <!-- Quick Link to Search Page -->
+        <a href="search.html" class="search-link-card">
+            <div class="search-link-content">
+                <div class="search-link-icons">
+                    <div class="search-link-icon ordinance">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <polyline points="15 3 21 3 21 9"/>
-                            <line x1="10" y1="14" x2="21" y2="3"/>
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
                         </svg>
-                    </a>
-                </div>
-                <div class="ordinance-list" id="ordinanceList">
-                    <!-- Results will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Law Search Section (国の法律検索) -->
-        <div class="ordinance-section" id="lawSearch" style="margin-top: 32px;">
-            <div class="ordinance-header">
-                <div class="ordinance-header-icon" style="background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                        <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                </div>
-                <div class="ordinance-header-text">
-                    <h3>国の法律検索</h3>
-                    <p>地方自治法等の主要法律を検索できます（e-Gov法令検索連携）</p>
-                </div>
-            </div>
-
-            <div class="ordinance-search-box">
-                <svg class="ordinance-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <input type="text" class="ordinance-search-input" id="lawSearchInput" placeholder="例：地方自治、介護保険、都市計画...">
-            </div>
-
-            <div class="ordinance-categories" id="lawCategories">
-                <button class="ordinance-cat-btn active" data-cat="all">すべて</button>
-                <button class="ordinance-cat-btn" data-cat="地方自治">地方自治</button>
-                <button class="ordinance-cat-btn" data-cat="税・財務">税・財務</button>
-                <button class="ordinance-cat-btn" data-cat="福祉">福祉</button>
-                <button class="ordinance-cat-btn" data-cat="都市計画">都市計画</button>
-                <button class="ordinance-cat-btn" data-cat="環境">環境</button>
-                <button class="ordinance-cat-btn" data-cat="行政手続">行政手続</button>
-                <button class="ordinance-cat-btn" data-cat="選挙">選挙</button>
-                <button class="ordinance-cat-btn" data-cat="教育">教育</button>
-                <button class="ordinance-cat-btn" data-cat="消防・防災">消防・防災</button>
-            </div>
-
-            <div class="ordinance-results open" id="lawResults">
-                <div class="ordinance-results-header">
-                    <span class="ordinance-results-count" id="lawCount">主要法律: <strong>0</strong>件</span>
-                    <a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener" class="ordinance-ext-link" style="background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%);">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <polyline points="15 3 21 3 21 9"/>
-                            <line x1="10" y1="14" x2="21" y2="3"/>
-                        </svg>
-                        e-Gov法令検索
-                    </a>
-                </div>
-                <div class="ordinance-list" id="lawList">
-                    <!-- Results will be populated by JavaScript -->
-                </div>
-                <!-- e-Gov API検索結果（主要法律以外） -->
-                <div id="egovSearchResults" style="display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--gray-light);">
-                    <div style="font-size:14px; color:var(--gray); margin-bottom:12px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:4px;">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="16" x2="12" y2="12"/>
-                            <line x1="12" y1="8" x2="12.01" y2="8"/>
-                        </svg>
-                        e-Gov法令検索から追加で見つかった法令:
                     </div>
-                    <div class="ordinance-list" id="egovList"></div>
+                    <div class="search-link-icon law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="search-link-text">
+                    <h3>条例・法律検索</h3>
+                    <p>三郷市の条例と国の法律を検索できます</p>
                 </div>
             </div>
-        </div>
+            <div class="search-link-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </div>
+        </a>
 
         <!-- Section 1 -->
         <div class="section" id="sec1">
@@ -1681,8 +1679,6 @@
 
 <!-- 条例データを外部ファイルから読み込み -->
 <script src="ordinance-data.js"></script>
-<!-- 法律データ（主要法律 + e-Gov API連携） -->
-<script src="law-data.js"></script>
 
 <script>
 const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
@@ -3618,153 +3614,6 @@ document.getElementById('ordinanceModalOverlay').addEventListener('click', close
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeOrdinanceModal();
 });
-
-// ========== 法律検索機能 ==========
-let currentLawCategory = 'all';
-let currentLawSearchTerm = '';
-let egovSearchTimeout = null;
-
-function searchLaws() {
-    currentLawSearchTerm = document.getElementById('lawSearchInput').value.toLowerCase();
-    renderLaws();
-
-    // e-Gov API検索（検索語が2文字以上の場合、遅延実行）
-    if (currentLawSearchTerm.length >= 2) {
-        clearTimeout(egovSearchTimeout);
-        egovSearchTimeout = setTimeout(() => searchFromEgov(currentLawSearchTerm), 500);
-    } else {
-        document.getElementById('egovSearchResults').style.display = 'none';
-    }
-}
-
-function filterLawsByCategory(cat) {
-    currentLawCategory = cat;
-    document.querySelectorAll('#lawCategories .ordinance-cat-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.cat === cat);
-    });
-    renderLaws();
-}
-
-function renderLaws() {
-    const results = majorLawData.filter(law => {
-        const matchesCategory = currentLawCategory === 'all' || law.category === currentLawCategory;
-        const matchesSearch = currentLawSearchTerm === '' ||
-            law.title.toLowerCase().includes(currentLawSearchTerm) ||
-            law.keywords.some(kw => kw.toLowerCase().includes(currentLawSearchTerm)) ||
-            law.summary.toLowerCase().includes(currentLawSearchTerm);
-        return matchesCategory && matchesSearch;
-    });
-
-    const listEl = document.getElementById('lawList');
-    const countEl = document.getElementById('lawCount');
-
-    countEl.innerHTML = `主要法律: <strong>${results.length}</strong>件`;
-
-    if (results.length === 0) {
-        listEl.innerHTML = `
-            <div class="ordinance-empty">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                </svg>
-                <p>該当する法律が見つかりません</p>
-            </div>`;
-        return;
-    }
-
-    listEl.innerHTML = results.map(law => `
-        <div class="ordinance-item law-item" data-id="${law.id}">
-            <div class="ordinance-item-header">
-                <div class="ordinance-item-title">${law.title}</div>
-                <span class="ordinance-item-cat" style="background:rgba(26,71,42,0.1);color:#1a472a;">${law.category}</span>
-            </div>
-            <div class="ordinance-item-keywords">
-                ${law.keywords.slice(0, 5).map(kw => `<span class="ordinance-keyword">${kw}</span>`).join('')}
-            </div>
-            <div class="ordinance-item-content">
-                <p class="ordinance-item-summary">${law.summary}</p>
-                <p style="font-size:12px;color:var(--gray);margin-bottom:8px;">${law.lawNum}</p>
-                <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-                    <a href="${law.egov_url}" target="_blank" rel="noopener" class="ordinance-item-link" style="background:linear-gradient(135deg,#1a472a 0%,#2d5a3f 100%);">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <polyline points="15 3 21 3 21 9"/>
-                            <line x1="10" y1="14" x2="21" y2="3"/>
-                        </svg>
-                        e-Govで全文を見る
-                    </a>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// e-Gov API検索
-async function searchFromEgov(keyword) {
-    const resultsDiv = document.getElementById('egovSearchResults');
-    const listEl = document.getElementById('egovList');
-
-    // 検索中表示
-    resultsDiv.style.display = 'block';
-    listEl.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gray);"><span>e-Gov法令検索中...</span></div>';
-
-    try {
-        const results = await searchLawsFromEgov(keyword);
-
-        // 主要法律と重複するものを除外
-        const majorIds = majorLawData.map(l => l.lawId);
-        const filteredResults = results.filter(r => !majorIds.includes(r.lawId));
-
-        if (filteredResults.length === 0) {
-            resultsDiv.style.display = 'none';
-            return;
-        }
-
-        listEl.innerHTML = filteredResults.slice(0, 10).map(law => `
-            <div class="ordinance-item law-item egov-result">
-                <div class="ordinance-item-header">
-                    <div class="ordinance-item-title">${law.title}</div>
-                    <span class="ordinance-item-cat" style="background:rgba(26,71,42,0.05);color:#2d5a3f;font-size:10px;">e-Gov検索結果</span>
-                </div>
-                <div class="ordinance-item-content" style="display:block;">
-                    <p style="font-size:12px;color:var(--gray);margin-bottom:8px;">${law.lawNum || ''}</p>
-                    <a href="${law.egov_url}" target="_blank" rel="noopener" class="ordinance-item-link" style="background:linear-gradient(135deg,#1a472a 0%,#2d5a3f 100%);">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <polyline points="15 3 21 3 21 9"/>
-                            <line x1="10" y1="14" x2="21" y2="3"/>
-                        </svg>
-                        e-Govで見る
-                    </a>
-                </div>
-            </div>
-        `).join('');
-    } catch (error) {
-        console.error('e-Gov検索エラー:', error);
-        listEl.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gray);">e-Gov検索に失敗しました。直接<a href="https://laws.e-gov.go.jp/" target="_blank">e-Gov法令検索</a>をご利用ください。</div>';
-    }
-}
-
-// 法律検索イベントリスナー
-document.getElementById('lawSearchInput').addEventListener('input', searchLaws);
-document.getElementById('lawSearchInput').addEventListener('keypress', e => {
-    if (e.key === 'Enter') searchLaws();
-});
-
-document.querySelectorAll('#lawCategories .ordinance-cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => filterLawsByCategory(btn.dataset.cat));
-});
-
-// 法律アイテムのクリックで展開
-document.getElementById('lawList').addEventListener('click', e => {
-    if (e.target.closest('a.ordinance-item-link')) return;
-    const item = e.target.closest('.ordinance-item');
-    if (item) {
-        item.classList.toggle('expanded');
-    }
-});
-
-// 初期表示
-renderLaws();
 
 // Comment toggle and Giscus loading
 document.querySelectorAll('.comment-toggle').forEach(btn => {
