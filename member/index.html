@@ -3370,21 +3370,19 @@ function renderOrdinances() {
         `;
     } else {
         listEl.innerHTML = results.map(ord => {
-            const hasFullText = ord.fullText !== undefined;
             return `
-            <div class="ordinance-item ${hasFullText ? 'has-fulltext' : ''}" data-id="${ord.id}">
+            <div class="ordinance-item has-fulltext" data-id="${ord.id}">
                 <div class="ordinance-item-header">
                     <div class="ordinance-item-title">${ord.title}</div>
                     <span class="ordinance-item-cat">${ord.category}</span>
                 </div>
                 <div class="ordinance-item-keywords">
                     ${ord.keywords.map(kw => `<span class="ordinance-keyword">${kw}</span>`).join('')}
-                    ${hasFullText ? '<span class="ordinance-keyword" style="background:rgba(44,74,110,0.1);color:var(--navy);">全文閲覧可</span>' : ''}
+                    <span class="ordinance-keyword" style="background:rgba(44,74,110,0.1);color:var(--navy);">全文閲覧可</span>
                 </div>
                 <div class="ordinance-item-content">
                     <p class="ordinance-item-summary">${ord.summary}</p>
                     <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-                        ${hasFullText ? `
                         <button class="ordinance-item-link view-fulltext-btn" data-id="${ord.id}" style="border:none;cursor:pointer;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -3392,14 +3390,13 @@ function renderOrdinances() {
                             </svg>
                             全文を表示
                         </button>
-                        ` : ''}
                         <a href="${ord.url}" target="_blank" rel="noopener" class="ordinance-item-link" style="background:var(--gray-lighter);color:var(--gray);">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                                 <polyline points="15 3 21 3 21 9"/>
                                 <line x1="10" y1="14" x2="21" y2="3"/>
                             </svg>
-                            三郷市例規集
+                            三郷市例規集で開く
                         </a>
                     </div>
                 </div>
@@ -3413,35 +3410,45 @@ function renderOrdinances() {
     }
 }
 
-// Modal functions
+// Modal functions - 条例全文を動的に取得して表示
 function openOrdinanceModal(ordId) {
     const ord = allOrdinanceData.find(o => o.id === ordId);
-    if (!ord || !ord.fullText) return;
+    if (!ord) return;
 
     document.getElementById('modalTitle').textContent = ord.title;
     document.getElementById('modalMeta').innerHTML = `
         <span>${ord.category}</span>
-        <span>${ord.enactment || ''}</span>
-        ${ord.lastAmended ? `<span>最終改正: ${ord.lastAmended}</span>` : ''}
     `;
 
-    // Build TOC
-    if (ord.toc && ord.toc.length > 0) {
-        document.getElementById('modalToc').style.display = 'block';
-        document.getElementById('modalTocList').innerHTML = ord.toc.map((item, i) =>
-            `<li><a href="#art${i+1}" onclick="event.preventDefault();document.getElementById('art${i+1}')?.scrollIntoView({behavior:'smooth'})">${item}</a></li>`
-        ).join('');
-    } else {
-        document.getElementById('modalToc').style.display = 'none';
-    }
+    // 目次は非表示（動的取得のため）
+    document.getElementById('modalToc').style.display = 'none';
 
-    document.getElementById('modalContent').innerHTML = ord.fullText;
-    document.getElementById('modalFooterInfo').textContent = ord.enactment || '';
+    // ローディング表示
+    document.getElementById('modalContent').innerHTML = `
+        <div style="text-align:center;padding:3rem;">
+            <div style="display:inline-block;width:40px;height:40px;border:3px solid var(--gray-light);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite;"></div>
+            <p style="margin-top:1rem;color:var(--gray);">条例全文を読み込んでいます...</p>
+        </div>
+        <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    `;
+
+    document.getElementById('modalFooterInfo').textContent = '';
     document.getElementById('modalExternalLink').href = ord.url;
 
     document.getElementById('ordinanceModalOverlay').classList.add('open');
     document.getElementById('ordinanceModal').classList.add('open');
     document.body.style.overflow = 'hidden';
+
+    // iframeで条例全文を表示
+    setTimeout(() => {
+        document.getElementById('modalContent').innerHTML = `
+            <iframe
+                src="${ord.url}"
+                style="width:100%;height:70vh;border:none;background:#fff;"
+                title="${ord.title}"
+            ></iframe>
+        `;
+    }, 100);
 }
 
 function closeOrdinanceModal() {
@@ -3477,10 +3484,16 @@ document.getElementById('ordinanceList').addEventListener('click', e => {
         return; // Let it navigate normally
     }
 
-    // Toggle expansion
+    // Toggle expansion or open modal on title click
     const item = e.target.closest('.ordinance-item');
     if (item) {
-        item.classList.toggle('expanded');
+        const ordId = parseInt(item.dataset.id);
+        // タイトルをクリックしたら全文表示
+        if (e.target.closest('.ordinance-item-header')) {
+            openOrdinanceModal(ordId);
+        } else {
+            item.classList.toggle('expanded');
+        }
     }
 });
 
