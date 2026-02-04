@@ -187,11 +187,44 @@ const allOrdinanceData = [
 <div class="jorei-chapter">第5章 その他</div>
 <div class="jorei-article"><span class="article-title">（検証）</span><br>第18条 議会は、この条例の施行後、社会情勢の変化等を勘案して、この条例の目的が達成されているかどうかについて検証を行い、必要があると認めるときは、所要の措置を講ずるものとする。</div>
 <div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
-    { id: 18, title: '三郷市議会の議員の定数を定める条例', category: '議会', keywords: ['議員定数', '定数', '議会'], summary: '議会議員の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000017.html' },
-    { id: 19, title: '三郷市議会定例会条例', category: '議会', keywords: ['定例会', '議会', '会議'], summary: '議会定例会の回数等を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000018.html' },
-    { id: 20, title: '三郷市議会委員会条例', category: '議会', keywords: ['委員会', '常任委員会', '議会'], summary: '議会の委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000020.html' },
-    { id: 21, title: '三郷市議会会議規則', category: '議会', keywords: ['会議規則', '議事', '議会運営'], summary: '議会の会議運営に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000021.html' },
-    { id: 22, title: '三郷市議会傍聴規則', category: '議会', keywords: ['傍聴', '公開', '市民参加'], summary: '議会傍聴に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000022.html' },
+    { id: 18, title: '三郷市議会の議員の定数を定める条例', category: '議会', keywords: ['議員定数', '定数', '議会'], summary: '議会議員の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000017.html',
+        fullText: `<div class="jorei-header">○三郷市議会の議員の定数を定める条例<br>平成12年3月24日 条例第32号</div>
+<div class="jorei-article">地方自治法（昭和22年法律第67号）第91条第1項の規定に基づき、三郷市議会の議員の定数は、24人とする。</div>
+<div class="jorei-supplementary">附則<br>（施行期日等）<br>1 この条例は、平成15年1月1日から施行し、この条例の施行の日以後初めてその期日を告示される一般選挙から適用する。<br>（三郷市議会の議員の定数を減少する条例の廃止）<br>2 三郷市議会の議員の定数を減少する条例（昭和52年条例第12号）は、廃止する。<br>（経過措置）<br>3 前項の規定による廃止前の三郷市議会の議員の定数を減少する条例に基づく議会の議員の定数については、附則第1項の一般選挙までの間は、なお従前の例による。<br><br>附則（平成16年12月20日条例第29号）<br>この条例は、この条例の公布の日以後初めてその期日を告示される一般選挙から施行する。<br><br>附則（平成23年6月20日条例第9号）<br>この条例は、この条例の公布の日以後初めてその期日を告示される一般選挙から施行する。</div>` },
+    { id: 19, title: '三郷市議会定例会条例', category: '議会', keywords: ['定例会', '議会', '会議'], summary: '議会定例会の回数等を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000018.html',
+        fullText: `<div class="jorei-header">○三郷市議会定例会条例<br>昭和31年9月30日 条例第2号</div>
+<div class="jorei-article">地方自治法（昭和22年法律第67号）第102条第2項の規定による三郷市議会の定例会の回数は、毎年4回とする。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。</div>` },
+    { id: 20, title: '三郷市議会委員会条例', category: '議会', keywords: ['委員会', '常任委員会', '議会'], summary: '議会の委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000020.html',
+        fullText: `<div class="jorei-header">○三郷市議会委員会条例<br>平成3年8月12日 条例第20号</div>
+<div class="jorei-article"><span class="article-title">（常任委員会の設置）</span><br>第1条 議会に常任委員会を置く。</div>
+<div class="jorei-article"><span class="article-title">（常任委員の所属、常任委員会の名称、委員定数及びその所管）</span><br>第2条 議員は、少なくとも一の常任委員となるものとする。<br>2 常任委員会の名称、委員の定数及び所管は、次のとおりとする。<br>（1）総務常任委員会　6人<br>　一般会計の歳入に関する事項、企画政策部、総務部、危機管理防災課、財務部、会計課、議会事務局、監査委員、選挙管理委員会、公平委員会、固定資産評価審査委員会、農業委員会及び消防本部の所管に関する事項並びに他の常任委員会の所管に属しない事項<br>（2）健康福祉常任委員会　6人<br>　いきいき健康部、福祉部及びこども未来部の所管に関する事項<br>（3）文教経済常任委員会　6人<br>　教育委員会、市民生活部及び地域振興部の所管に関する事項<br>（4）建設水道常任委員会　6人<br>　建設部、まちづくり推進部及び水道部の所管に関する事項</div>
+<div class="jorei-article"><span class="article-title">（常任委員の任期）</span><br>第3条 常任委員の任期は、2年とする。ただし、後任者が選任されるまで在任する。</div>
+<div class="jorei-article"><span class="article-title">（議会運営委員会の設置）</span><br>第4条 議会に議会運営委員会を置く。<br>2 議会運営委員会の委員の定数は、10人以内とする。</div>
+<div class="jorei-article"><span class="article-title">（特別委員会の設置等）</span><br>第6条 特別委員会は、必要がある場合において議会の議決で置く。</div>
+<div class="jorei-article"><span class="article-title">（委員の選任）</span><br>第7条 常任委員、議会運営委員及び特別委員の選任は、議長の指名による。</div>
+<div class="jorei-article"><span class="article-title">（委員長及び副委員長）</span><br>第8条 常任委員会、議会運営委員会及び特別委員会に委員長及び副委員長1人を置く。<br>2 委員長及び副委員長は、委員会において互選する。</div>
+<div class="jorei-supplementary">附則<br>この条例は、公布の日から施行する。<br>（以下、多数の附則省略）</div>` },
+    { id: 21, title: '三郷市議会会議規則', category: '議会', keywords: ['会議規則', '議事', '議会運営'], summary: '議会の会議運営に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000021.html',
+        fullText: `<div class="jorei-header">○三郷市議会会議規則<br>昭和47年6月29日 議会規則第1号</div>
+<div class="jorei-toc">目次<br>第1章 会議（第1条―第89条）<br>第2章 委員会（第90条―第138条）<br>第3章 請願（第139条―第145条）<br>第4章 辞職及び資格の決定（第146条―第150条）<br>第5章 規律（第151条―第159条）<br>第6章 懲罰（第160条―第165条）<br>第7章 議員の派遣（第166条）<br>第8章 補則（第167条）<br>附則</div>
+<div class="jorei-chapter">第1章 会議</div>
+<div class="jorei-section">第1節 総則</div>
+<div class="jorei-article"><span class="article-title">（参集）</span><br>第1条 議員は、招集の当日開議定刻前に議場に参集し、その旨を議長に通告しなければならない。</div>
+<div class="jorei-article"><span class="article-title">（会期）</span><br>第5条 会期は、毎会期の初めに議会の議決で定める。</div>
+<div class="jorei-article"><span class="article-title">（会議時間）</span><br>第9条 会議時間は、午前10時から午後5時までとする。</div>
+<div class="jorei-article"><span class="article-title">（一般質問）</span><br>第62条 議員は、市の一般事務について、議長の許可を得て質問することができる。</div>
+<div class="jorei-chapter">第3章 請願</div>
+<div class="jorei-article"><span class="article-title">（請願書の記載事項等）</span><br>第139条 請願書には、邦文を用いて、請願の趣旨、提出年月日及び請願者の住所を記載し、請願者が署名又は記名押印をしなければならない。</div>
+<div class="jorei-supplementary">附則<br>1 この規則は、昭和47年7月1日から施行する。<br>（以下、多数の附則省略）</div>` },
+    { id: 22, title: '三郷市議会傍聴規則', category: '議会', keywords: ['傍聴', '公開', '市民参加'], summary: '議会傍聴に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000022.html',
+        fullText: `<div class="jorei-header">○三郷市議会傍聴規則<br>平成5年6月1日 議会規則第1号</div>
+<div class="jorei-article"><span class="article-title">（趣旨）</span><br>第1条 この規則は、地方自治法第130条第3項の規定に基づき、三郷市議会の会議の傍聴に関し必要な事項を定めるものとする。</div>
+<div class="jorei-article"><span class="article-title">（傍聴席の区分）</span><br>第2条 傍聴席は、一般席及び報道関係者席に分ける。</div>
+<div class="jorei-article"><span class="article-title">（傍聴の手続）</span><br>第3条 会議を傍聴しようとする者は、議会事務局に申し出て、所定の場所で自己の住所及び氏名を傍聴人受付簿に記入しなければならない。</div>
+<div class="jorei-article"><span class="article-title">（傍聴人の定員）</span><br>第5条 傍聴人の定員は、60人とする。</div>
+<div class="jorei-article"><span class="article-title">（傍聴人の責務）</span><br>第8条 傍聴人は、傍聴席へ入場し退場するまで、次の事項を守らなければならない。<br>（1）議場における言論に対して、拍手その他の方法により公然と可否を表明しないこと。<br>（2）騒ぎ立てるなど、議場への迷惑となるような行為をしないこと。<br>（3）みだりに立ち上がるなど、威圧的な行為をしないこと。<br>（4）他の傍聴人の妨げとなる行為をしないこと。<br>（5）電子機器類（補聴器を除く。）を携帯して入場する場合は、その電源を切ること。<br>（6）飲食又は喫煙をしないこと。<br>（7）前各号に定めるもののほか、議場の秩序を乱し、又は会議の妨害となるような行為をしないこと。</div>
+<div class="jorei-supplementary">附則<br>この規則は、公布の日から施行する。</div>` },
     { id: 23, title: '三郷市議会議員政治倫理条例', category: '議会', keywords: ['政治倫理', '議員', '倫理'], summary: '議員の政治倫理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001214.html' },
     { id: 24, title: '三郷市議会政務活動費の交付に関する条例', category: '議会', keywords: ['政務活動費', '議員', '交付'], summary: '政務活動費の交付に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000639.html' },
     { id: 25, title: '三郷市議会議員の請負の状況の公表に関する条例', category: '議会', keywords: ['請負', '公表', '透明性'], summary: '議員の請負状況の公表に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001227.html' },
