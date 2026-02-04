@@ -427,34 +427,56 @@
             padding-top: 1.5rem; border-top: 1px solid var(--gray-light);
         }
 
-        /* ===== Comment Button ===== */
-        .section-header {
-            position: relative;
+        /* ===== Comment Section ===== */
+        .comment-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--gray-light);
         }
-        .comment-btn {
+        .comment-toggle {
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            padding: 0.35rem 0.7rem;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
             background: var(--gray-lighter);
             border: 1px solid var(--gray-light);
-            border-radius: 6px;
+            border-radius: 8px;
             color: var(--gray);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
-            text-decoration: none;
-            margin-left: auto;
         }
-        .comment-btn:hover {
+        .comment-toggle:hover {
             background: var(--green);
             border-color: var(--green);
             color: var(--white);
         }
-        .comment-btn svg {
-            width: 14px;
-            height: 14px;
+        .comment-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+        .comment-toggle.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+        .comment-area {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--gray-light);
+        }
+        .comment-area.open {
+            display: block;
+        }
+        .giscus {
+            margin-top: 0.5rem;
+        }
+        .giscus-frame {
+            min-height: 200px;
         }
 
         @media (max-width: 600px) {
@@ -558,10 +580,6 @@
             <div class="section-header">
                 <span class="section-num">1</span>
                 <h2>創政MISATOの理念と方針</h2>
-                <a href="#" class="comment-btn" data-section="1" data-title="理念と方針">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card important">
@@ -590,6 +608,16 @@
                     <li>市民に説明できない判断はしない</li>
                 </ul>
             </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-1">
+                    <div class="giscus" data-term="1-理念と方針"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Section 2 -->
@@ -597,10 +625,6 @@
             <div class="section-header">
                 <span class="section-num">2</span>
                 <h2>会派のルール</h2>
-                <a href="#" class="comment-btn" data-section="2" data-title="会派のルール">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card rule">
@@ -643,6 +667,16 @@
                     <tr><td>意見書</td><td>会派で協議</td><td>自由投票可</td></tr>
                 </table>
             </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-2">
+                    <div class="giscus" data-term="2-会派のルール"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Section 3 -->
@@ -650,10 +684,6 @@
             <div class="section-header">
                 <span class="section-num">3</span>
                 <h2>議場での所作・マナー</h2>
-                <a href="#" class="comment-btn" data-section="3" data-title="議場での所作・マナー">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card rule">
@@ -688,6 +718,16 @@
                     <li>議場の入退場時は議長席に一礼する</li>
                 </ul>
             </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-3">
+                    <div class="giscus" data-term="3-議場での所作・マナー"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Section 4 -->
@@ -695,10 +735,6 @@
             <div class="section-header">
                 <span class="section-num">4</span>
                 <h2>一般質問の手順</h2>
-                <a href="#" class="comment-btn" data-section="4" data-title="一般質問の手順">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card rule">
@@ -752,6 +788,16 @@
                     <li>答弁内容を事前にSNSなどで漏らす</li>
                 </ul>
             </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-4">
+                    <div class="giscus" data-term="4-一般質問の手順"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Section 5 -->
@@ -759,10 +805,6 @@
             <div class="section-header">
                 <span class="section-num">5</span>
                 <h2>情報管理・SNSルール</h2>
-                <a href="#" class="comment-btn" data-section="5" data-title="情報管理・SNSルール">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card warn">
@@ -795,6 +837,16 @@
                     <li>市民からのコメントには丁寧に対応する</li>
                 </ul>
             </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-5">
+                    <div class="giscus" data-term="5-情報管理・SNSルール"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Section 6 -->
@@ -802,10 +854,6 @@
             <div class="section-header">
                 <span class="section-num">6</span>
                 <h2>会派内コミュニケーション</h2>
-                <a href="#" class="comment-btn" data-section="6" data-title="会派内コミュニケーション">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card rule">
@@ -838,6 +886,16 @@
                     <li>決まったことには全員で責任を持つ</li>
                 </ul>
             </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="6">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-6">
+                    <div class="giscus" data-term="6-会派内コミュニケーション"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Section 7 -->
@@ -845,10 +903,6 @@
             <div class="section-header">
                 <span class="section-num">7</span>
                 <h2>行政視察・研修</h2>
-                <a href="#" class="comment-btn" data-section="7" data-title="行政視察・研修">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card rule">
@@ -873,6 +927,16 @@
                     <li><strong>今後のアクション</strong>：具体的な次のステップ</li>
                 </ol>
             </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="7">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-7">
+                    <div class="giscus" data-term="7-行政視察・研修"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Section 8 -->
@@ -880,10 +944,6 @@
             <div class="section-header">
                 <span class="section-num">8</span>
                 <h2>新人議員向けFAQ</h2>
-                <a href="#" class="comment-btn" data-section="8" data-title="新人議員向けFAQ">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    意見を送る
-                </a>
             </div>
 
             <div class="card">
@@ -910,6 +970,16 @@
                 <div class="faq-item">
                     <div class="faq-q">Q. 「検討します」という答弁をもらったら？</div>
                     <div class="faq-a">議事録に残っているので、次の定例会でフォローアップ質問をしましょう。「前回○月の質問で検討するとのことでしたが、進捗をお聞かせください」が効果的です。gian.souseimisato.comの整合性チェック機能が役立ちます。</div>
+                </div>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="8">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-8">
+                    <div class="giscus" data-term="8-新人議員向けFAQ"></div>
                 </div>
             </div>
         </div>
@@ -998,16 +1068,37 @@ menuPanel.querySelectorAll('.menu-nav a').forEach(link => {
     link.addEventListener('click', closeMenu);
 });
 
-// Comment buttons - GitHub Issue creation
-document.querySelectorAll('.comment-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
+// Comment toggle and Giscus loading
+document.querySelectorAll('.comment-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
         const section = btn.dataset.section;
-        const title = btn.dataset.title;
-        const issueTitle = encodeURIComponent(`[ガイドライン意見] ${section}. ${title}`);
-        const issueBody = encodeURIComponent(`## セクション\n${section}. ${title}\n\n## 意見・提案\n\n<!-- ここに意見を記入してください -->\n\n## 理由・背景\n\n<!-- なぜそう思うか、背景があれば記入してください -->\n`);
-        const url = `https://github.com/yuu-misato/sousei-misato/issues/new?title=${issueTitle}&body=${issueBody}&labels=guideline-feedback`;
-        window.open(url, '_blank');
+        const commentArea = document.getElementById(`comments-${section}`);
+        const isOpen = commentArea.classList.toggle('open');
+        btn.classList.toggle('active', isOpen);
+
+        // Load Giscus only once when opened
+        const giscusDiv = commentArea.querySelector('.giscus');
+        if (isOpen && !giscusDiv.querySelector('iframe')) {
+            const term = giscusDiv.dataset.term;
+            const script = document.createElement('script');
+            script.src = 'https://giscus.app/client.js';
+            script.setAttribute('data-repo', 'yuu-misato/sousei-misato');
+            script.setAttribute('data-repo-id', 'R_kgDORCL3KA');
+            script.setAttribute('data-category', 'Ideas');
+            script.setAttribute('data-category-id', 'DIC_kwDORCL3KM4C13h4');
+            script.setAttribute('data-mapping', 'specific');
+            script.setAttribute('data-term', term);
+            script.setAttribute('data-strict', '0');
+            script.setAttribute('data-reactions-enabled', '1');
+            script.setAttribute('data-emit-metadata', '0');
+            script.setAttribute('data-input-position', 'top');
+            script.setAttribute('data-theme', 'light');
+            script.setAttribute('data-lang', 'ja');
+            script.setAttribute('data-loading', 'lazy');
+            script.crossOrigin = 'anonymous';
+            script.async = true;
+            giscusDiv.appendChild(script);
+        }
     });
 });
 </script>
