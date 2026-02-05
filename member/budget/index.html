@@ -1235,9 +1235,11 @@
                         <div class="deposit-form">
                             <input type="date" id="depositDate">
                             <select id="depositDepositor" style="width:120px;">
-                                <option value="">入金者</option>
-                                <option value="鈴木">鈴木</option>
-                                <option value="菊名">菊名</option>
+                                <option value="">メンバー</option>
+                                <option value="佐藤裕之">佐藤裕之</option>
+                                <option value="高橋誠一">高橋誠一</option>
+                                <option value="日高ちほ">日高ちほ</option>
+                                <option value="鈴木優作">鈴木優作</option>
                             </select>
                             <input type="number" id="depositAmount" placeholder="金額（例: 10000）" style="width:120px;">
                             <input type="text" id="depositNote" placeholder="メモ（任意）" style="flex:1;min-width:100px;">
@@ -1487,8 +1489,10 @@
                     <div class="member-select">
                         <label>メンバー選択:</label>
                         <select id="personalMember" onchange="switchPersonalMember()">
-                            <option value="鈴木">鈴木</option>
-                            <option value="菊名">菊名</option>
+                            <option value="佐藤裕之">佐藤裕之</option>
+                            <option value="高橋誠一">高橋誠一</option>
+                            <option value="日高ちほ">日高ちほ</option>
+                            <option value="鈴木優作">鈴木優作</option>
                         </select>
                     </div>
                 </div>
@@ -1725,7 +1729,7 @@
         // Personal budget state
         let personalBudgetConfig = {};
         let personalExpenses = [];
-        let currentPersonalMember = '鈴木';
+        let currentPersonalMember = '佐藤裕之';
 
         // ===== Authentication =====
         async function hashPassword(password) {
