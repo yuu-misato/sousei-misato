@@ -894,6 +894,51 @@
             font-family: inherit;
             background: var(--white);
         }
+        .deposit-form select {
+            padding: 0.6rem 1rem;
+            border: 1px solid #fcd34d;
+            border-radius: 6px;
+            font-family: inherit;
+            background: var(--white);
+        }
+
+        /* ===== Personal Budget ===== */
+        .personal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .personal-header .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0;
+        }
+        .member-select {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .member-select label {
+            font-weight: 500;
+            color: var(--gray);
+        }
+        .member-select select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #6366f1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            color: #6366f1;
+            background: var(--white);
+            cursor: pointer;
+        }
 
         /* ===== Footer ===== */
         .footer {
@@ -1109,6 +1154,13 @@
                         <line x1="3" y1="18" x2="3.01" y2="18"/>
                     </svg>
                     経費一覧
+                </button>
+                <button class="tab-btn" onclick="switchTab('personal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    個人政活費
                 </button>
                 <button class="tab-btn" onclick="switchTab('settings')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1421,6 +1473,133 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Personal Budget Tab -->
+            <div id="tab-personal" class="tab-content">
+                <div class="personal-header">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px;">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        個人政務活動費
+                    </h2>
+                    <div class="member-select">
+                        <label>メンバー選択:</label>
+                        <select id="personalMember" onchange="switchPersonalMember()">
+                            <option value="鈴木">鈴木</option>
+                            <option value="菊名">菊名</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Personal Stats -->
+                <div class="stats-grid" style="margin-bottom:1.5rem;">
+                    <div class="stat-card total" style="background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                        <div class="stat-label">年間予算</div>
+                        <div class="stat-value" id="personalTotal">¥408,000</div>
+                        <div class="stat-sub">令和7年度</div>
+                    </div>
+                    <div class="stat-card used">
+                        <div class="stat-label">使用済み</div>
+                        <div class="stat-value" id="personalUsed">¥0</div>
+                        <div class="stat-sub" id="personalUsedPercent">0%</div>
+                    </div>
+                    <div class="stat-card remaining">
+                        <div class="stat-label">残り予算</div>
+                        <div class="stat-value" id="personalRemaining">¥408,000</div>
+                        <div class="stat-sub" id="personalRemainingPercent">100%</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" style="margin-bottom:2rem;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="personalProgressFill" style="width:0%;background:linear-gradient(90deg, #6366f1, #8b5cf6);"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>使用率</span>
+                        <span id="personalProgressPercent">0%</span>
+                    </div>
+                </div>
+
+                <!-- Personal Expense Input -->
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                        経費を追加
+                    </div>
+                    <form id="personalExpenseForm" onsubmit="submitPersonalExpense(event)">
+                        <div class="form-row">
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">日付</label>
+                                <input type="date" class="form-input" id="personalExpenseDate" required>
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">カテゴリ</label>
+                                <select class="form-select" id="personalExpenseCategory" required>
+                                    <option value="research">調査研究費</option>
+                                    <option value="training">研修費</option>
+                                    <option value="pr">広報費</option>
+                                    <option value="materials">資料購入費</option>
+                                    <option value="other">その他</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">金額</label>
+                                <input type="number" class="form-input" id="personalExpenseAmount" placeholder="例: 5000" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" style="flex:2;">
+                                <label class="form-label">摘要</label>
+                                <input type="text" class="form-input" id="personalExpenseDescription" placeholder="例: 書籍購入" required>
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">備考</label>
+                                <input type="text" class="form-input" id="personalExpenseNote" placeholder="任意">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="background:linear-gradient(135deg, #6366f1, #8b5cf6);">追加</button>
+                    </form>
+                </div>
+
+                <!-- Personal Expense Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+                            <line x1="8" y1="6" x2="21" y2="6"/>
+                            <line x1="8" y1="12" x2="21" y2="12"/>
+                            <line x1="8" y1="18" x2="21" y2="18"/>
+                            <line x1="3" y1="6" x2="3.01" y2="6"/>
+                            <line x1="3" y1="12" x2="3.01" y2="12"/>
+                            <line x1="3" y1="18" x2="3.01" y2="18"/>
+                        </svg>
+                        経費一覧
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>日付</th>
+                                    <th>カテゴリ</th>
+                                    <th>摘要</th>
+                                    <th>金額</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="personalExpenseTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <span>合計: <strong id="personalFilteredTotal">¥0</strong></span>
+                        <button class="btn btn-secondary btn-sm" onclick="exportPersonalCSV()">CSV出力</button>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer class="footer">
@@ -1543,6 +1722,11 @@
         let monthlyChart = null;
         let currentReceiptImageData = null; // Store current receipt image for upload
 
+        // Personal budget state
+        let personalBudgetConfig = {};
+        let personalExpenses = [];
+        let currentPersonalMember = '鈴木';
+
         // ===== Authentication =====
         async function hashPassword(password) {
             const encoder = new TextEncoder();
@@ -1574,12 +1758,16 @@
         // ===== Initialization =====
         async function initApp() {
             await loadData();
+            await loadPersonalData();
             renderDashboard();
             renderExpenseTable();
             renderSettings();
             setDefaultDate();
             populateMonthFilter();
             setupDragDrop();
+            setPersonalDefaultDate();
+            renderPersonalDashboard();
+            renderPersonalExpenseTable();
         }
 
         async function loadData() {
@@ -2557,6 +2745,205 @@
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
+        }
+
+        // ===== Personal Budget Functions =====
+        async function loadPersonalData() {
+            try {
+                // Load personal budget config
+                const { data: configData, error: configError } = await supabaseClient
+                    .from('personal_budget_config')
+                    .select('*')
+                    .eq('fiscal_year', budgetConfig.fiscalYear);
+
+                if (configData && !configError) {
+                    configData.forEach(c => {
+                        personalBudgetConfig[c.member_name] = c.budget;
+                    });
+                }
+
+                // Load personal expenses
+                const { data: expensesData, error: expensesError } = await supabaseClient
+                    .from('personal_expenses')
+                    .select('*')
+                    .order('date', { ascending: false });
+
+                if (expensesData && !expensesError) {
+                    personalExpenses = expensesData.map(e => ({
+                        id: e.id,
+                        memberName: e.member_name,
+                        date: e.date,
+                        category: e.category,
+                        amount: e.amount,
+                        description: e.description || '',
+                        note: e.note || '',
+                        receiptImageUrl: e.receipt_image_url || null,
+                        createdAt: e.created_at
+                    }));
+                }
+            } catch (error) {
+                console.error('Error loading personal data:', error);
+            }
+        }
+
+        function switchPersonalMember() {
+            currentPersonalMember = document.getElementById('personalMember').value;
+            renderPersonalDashboard();
+            renderPersonalExpenseTable();
+        }
+
+        function setPersonalDefaultDate() {
+            document.getElementById('personalExpenseDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function renderPersonalDashboard() {
+            const budget = personalBudgetConfig[currentPersonalMember] || 408000;
+            const memberExpenses = personalExpenses.filter(e => e.memberName === currentPersonalMember);
+            const used = memberExpenses.reduce((sum, e) => sum + e.amount, 0);
+            const remaining = budget - used;
+            const percent = budget > 0 ? (used / budget * 100) : 0;
+
+            document.getElementById('personalTotal').textContent = formatCurrency(budget);
+            document.getElementById('personalUsed').textContent = formatCurrency(used);
+            document.getElementById('personalUsedPercent').textContent = percent.toFixed(1) + '%';
+            document.getElementById('personalRemaining').textContent = formatCurrency(remaining);
+            document.getElementById('personalRemainingPercent').textContent = (100 - percent).toFixed(1) + '%';
+            document.getElementById('personalProgressPercent').textContent = percent.toFixed(1) + '%';
+
+            const progressFill = document.getElementById('personalProgressFill');
+            progressFill.style.width = Math.min(percent, 100) + '%';
+            if (percent > 90) {
+                progressFill.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+            } else if (percent > 70) {
+                progressFill.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
+            } else {
+                progressFill.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6)';
+            }
+        }
+
+        function renderPersonalExpenseTable() {
+            const memberExpenses = personalExpenses.filter(e => e.memberName === currentPersonalMember);
+            const tbody = document.getElementById('personalExpenseTableBody');
+
+            if (memberExpenses.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="no-data">経費データがありません</td>
+                    </tr>
+                `;
+            } else {
+                tbody.innerHTML = memberExpenses.map(exp => `
+                    <tr>
+                        <td>${formatDate(exp.date)}</td>
+                        <td><span class="category-badge ${exp.category}">${getCategoryName(exp.category)}</span></td>
+                        <td>${escapeHtml(exp.description)}${exp.note ? `<br><small style="color:var(--gray)">${escapeHtml(exp.note)}</small>` : ''}</td>
+                        <td class="amount">${formatCurrency(exp.amount)}</td>
+                        <td class="actions">
+                            <button class="delete" onclick="deletePersonalExpense('${exp.id}')" title="削除">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            const total = memberExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+            document.getElementById('personalFilteredTotal').textContent = formatCurrency(total);
+        }
+
+        async function submitPersonalExpense(event) {
+            event.preventDefault();
+
+            const expense = {
+                memberName: currentPersonalMember,
+                date: document.getElementById('personalExpenseDate').value,
+                category: document.getElementById('personalExpenseCategory').value,
+                amount: parseInt(document.getElementById('personalExpenseAmount').value),
+                description: document.getElementById('personalExpenseDescription').value,
+                note: document.getElementById('personalExpenseNote').value
+            };
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('personal_expenses')
+                    .insert({
+                        member_name: expense.memberName,
+                        date: expense.date,
+                        category: expense.category,
+                        amount: expense.amount,
+                        description: expense.description,
+                        note: expense.note
+                    })
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                personalExpenses.unshift({
+                    id: data.id,
+                    memberName: data.member_name,
+                    date: data.date,
+                    category: data.category,
+                    amount: data.amount,
+                    description: data.description || '',
+                    note: data.note || '',
+                    createdAt: data.created_at
+                });
+
+                document.getElementById('personalExpenseForm').reset();
+                setPersonalDefaultDate();
+                renderPersonalDashboard();
+                renderPersonalExpenseTable();
+                showToast('経費を追加しました', 'success');
+            } catch (error) {
+                console.error('Error saving personal expense:', error);
+                showToast('経費の保存に失敗しました', 'error');
+            }
+        }
+
+        async function deletePersonalExpense(id) {
+            if (!confirm('この経費を削除しますか？')) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('personal_expenses')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                personalExpenses = personalExpenses.filter(e => e.id !== id);
+                renderPersonalDashboard();
+                renderPersonalExpenseTable();
+                showToast('経費を削除しました');
+            } catch (error) {
+                console.error('Error deleting personal expense:', error);
+                showToast('経費の削除に失敗しました', 'error');
+            }
+        }
+
+        function exportPersonalCSV() {
+            const memberExpenses = personalExpenses.filter(e => e.memberName === currentPersonalMember);
+            if (memberExpenses.length === 0) {
+                showToast('出力するデータがありません', 'error');
+                return;
+            }
+
+            const headers = ['日付', 'カテゴリ', '摘要', '金額', '備考'];
+            const rows = memberExpenses.map(exp => [
+                exp.date,
+                getCategoryName(exp.category),
+                exp.description,
+                exp.amount,
+                exp.note || ''
+            ]);
+
+            let csv = '\uFEFF';
+            csv += headers.join(',') + '\n';
+            rows.forEach(row => {
+                csv += row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+
+            downloadFile(csv, `個人政務活動費_${currentPersonalMember}_${budgetConfig.fiscalYear}.csv`, 'text/csv;charset=utf-8');
+            showToast('CSVファイルを出力しました', 'success');
         }
 
         // ===== Auto Login Check =====
