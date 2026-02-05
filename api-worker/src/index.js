@@ -59,6 +59,11 @@ export default {
         return await handleSubsidySearch(userGoal, apiKey, corsHeaders);
       }
 
+      // 予算分析モード
+      if (body.isBudgetAnalysis && body.budgetData) {
+        return await handleBudgetAnalysis(body.budgetData, apiKey, corsHeaders);
+      }
+
       // 障壁条例検索モード
       if (isBarrierSearch && userGoal) {
         return await handleBarrierSearch(userGoal, ordinances, apiKey, corsHeaders);
@@ -918,6 +923,99 @@ confidence（確度）の判定基準：
     return new Response(JSON.stringify({
       error: '補助金検索中にエラーが発生しました: ' + error.message,
       subsidies: []
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+/**
+ * 予算書AIレビュー
+ * 予算データを分析し、概要・前年比較・財政指標・質問ポイントを提供
+ */
+async function handleBudgetAnalysis(budgetData, apiKey, corsHeaders) {
+  const budgetPrompt = `あなたは自治体財政の専門家です。以下の予算データを分析し、議員が予算審議で活用できる情報を提供してください。
+
+【予算データ】
+${budgetData}
+
+以下の4つのセクションに分けて、Markdown形式で回答してください：
+
+## 1. 概要サマリー
+- 予算規模と前年度比
+- 歳入・歳出の特徴
+- 注目すべき重点項目（3-5点）
+- 財政状況の総合評価
+
+## 2. 前年度比較分析
+以下の項目について表形式で整理：
+- 歳入項目別の増減（金額と率）
+- 歳出項目別の増減（金額と率）
+- 特に大きな変動がある項目の解説
+
+## 3. 財政指標分析
+- 経常収支比率の評価（健全性）
+- 実質公債費比率の評価
+- 将来負担比率の評価
+- 財政力指数の評価
+- 類似団体との比較コメント
+- 改善が必要な点
+
+## 4. 予算質問のポイント
+議会での予算質問に使える具体的な質問案を5-7個提案：
+- 新規事業の妥当性に関する質問
+- 前年度比で大きく増減した項目への質問
+- 財政健全性に関する質問
+- 市民生活への影響に関する質問
+
+各質問には、質問の意図・背景も簡潔に記載してください。`;
+
+  try {
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: budgetPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 4096,
+          },
+        }),
+      }
+    );
+
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Budget analysis API error:', errorText);
+      return new Response(JSON.stringify({
+        error: '予算分析に失敗しました',
+        result: null
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const data = await geminiResponse.json();
+    const result = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+    return new Response(JSON.stringify({ result }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('Budget analysis error:', error);
+    return new Response(JSON.stringify({
+      error: '予算分析中にエラーが発生しました: ' + error.message,
+      result: null
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
