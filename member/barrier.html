@@ -8,7 +8,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
+        if (sessionStorage.getItem('member_auth') === '1' || sessionStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
     <style>
+        /* 認証済みの場合はログイン画面を即座に非表示 */
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
