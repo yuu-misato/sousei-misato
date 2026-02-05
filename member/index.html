@@ -317,8 +317,11 @@
         const CORRECT_PASSWORD = 'sousei2026';
 
         function checkAuth() {
-            const isLoggedIn = sessionStorage.getItem('memberLoggedIn') === 'true';
+            // 両方のキーをチェック（互換性のため）
+            const isLoggedIn = sessionStorage.getItem('member_auth') === '1' || sessionStorage.getItem('memberLoggedIn') === 'true';
             if (isLoggedIn) {
+                // 新しいキーに統一
+                sessionStorage.setItem('member_auth', '1');
                 showDashboard();
             }
         }
@@ -328,7 +331,7 @@
             const password = document.getElementById('passwordInput').value;
 
             if (password === CORRECT_PASSWORD) {
-                sessionStorage.setItem('memberLoggedIn', 'true');
+                sessionStorage.setItem('member_auth', '1');
                 showDashboard();
             } else {
                 document.getElementById('loginError').style.display = 'block';
@@ -341,6 +344,7 @@
         }
 
         function handleLogout() {
+            sessionStorage.removeItem('member_auth');
             sessionStorage.removeItem('memberLoggedIn');
             location.reload();
         }
