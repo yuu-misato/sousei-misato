@@ -1431,6 +1431,42 @@
                         <button class="btn btn-primary btn-sm" onclick="saveBudgetSettings()" style="margin-top:0.5rem;">保存</button>
                     </div>
 
+                    <div class="settings-card" style="border-left:4px solid #6366f1;">
+                        <div class="settings-title" style="color:#6366f1;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            個人政務活動費 予算設定
+                        </div>
+                        <p style="font-size:0.85rem;color:var(--gray);margin-bottom:1rem;">
+                            各メンバーの年間予算を設定できます（月額34,000円×12ヶ月=408,000円が基準）
+                        </p>
+                        <div class="personal-budget-settings">
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">佐藤裕之</label>
+                                <input type="number" class="form-input" id="personalBudget_佐藤裕之" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">高橋誠一</label>
+                                <input type="number" class="form-input" id="personalBudget_高橋誠一" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">日高ちほ</label>
+                                <input type="number" class="form-input" id="personalBudget_日高ちほ" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">鈴木優作</label>
+                                <input type="number" class="form-input" id="personalBudget_鈴木優作" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="savePersonalBudgetSettings()" style="margin-top:0.5rem;background:linear-gradient(135deg, #6366f1, #8b5cf6);">個人予算を保存</button>
+                    </div>
+
                     <div class="settings-card">
                         <div class="settings-title">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2585,6 +2621,15 @@
             document.getElementById('settingYear').value = budgetConfig.fiscalYear;
             document.getElementById('settingSeimuBudget').value = budgetConfig.seimuBudget;
             document.getElementById('settingTsumitateInitial').value = budgetConfig.tsumitateInitial || 0;
+
+            // Render personal budget settings
+            const members = ['佐藤裕之', '高橋誠一', '日高ちほ', '鈴木優作'];
+            members.forEach(member => {
+                const input = document.getElementById(`personalBudget_${member}`);
+                if (input) {
+                    input.value = personalBudgetConfig[member] || 408000;
+                }
+            });
         }
 
         async function updateFiscalYear() {
@@ -2608,6 +2653,63 @@
             await saveConfig();
             renderDashboard();
             showToast('設定を保存しました', 'success');
+        }
+
+        async function savePersonalBudgetSettings() {
+            const members = ['佐藤裕之', '高橋誠一', '日高ちほ', '鈴木優作'];
+
+            try {
+                for (const member of members) {
+                    const input = document.getElementById(`personalBudget_${member}`);
+                    const budget = parseInt(input.value) || 408000;
+
+                    // Update local state
+                    personalBudgetConfig[member] = budget;
+
+                    // Upsert to Supabase
+                    const { error } = await supabaseClient
+                        .from('personal_budget_config')
+                        .upsert({
+                            member_name: member,
+                            fiscal_year: budgetConfig.fiscalYear,
+                            budget: budget,
+                            updated_at: new Date().toISOString()
+                        }, {
+                            onConflict: 'member_name,fiscal_year'
+                        });
+
+                    if (error) {
+                        // If upsert fails, try update then insert
+                        const { data: existing } = await supabaseClient
+                            .from('personal_budget_config')
+                            .select('id')
+                            .eq('member_name', member)
+                            .eq('fiscal_year', budgetConfig.fiscalYear)
+                            .single();
+
+                        if (existing) {
+                            await supabaseClient
+                                .from('personal_budget_config')
+                                .update({ budget: budget, updated_at: new Date().toISOString() })
+                                .eq('id', existing.id);
+                        } else {
+                            await supabaseClient
+                                .from('personal_budget_config')
+                                .insert({
+                                    member_name: member,
+                                    fiscal_year: budgetConfig.fiscalYear,
+                                    budget: budget
+                                });
+                        }
+                    }
+                }
+
+                renderPersonalDashboard();
+                showToast('個人予算を保存しました', 'success');
+            } catch (error) {
+                console.error('Error saving personal budget:', error);
+                showToast('個人予算の保存に失敗しました', 'error');
+            }
         }
 
         // ===== Data Export/Import =====
