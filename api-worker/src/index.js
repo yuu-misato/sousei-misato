@@ -29,7 +29,7 @@ export default {
 
     try {
       const body = await request.json();
-      const { question, ordinanceContext, lawContext, receiptImage, isReceiptAnalysis, isOrdinanceReview, ordinances, analysisCategories, isBarrierSearch, userGoal } = body;
+      const { question, ordinanceContext, lawContext, receiptImage, isReceiptAnalysis, isOrdinanceReview, ordinances, analysisCategories, isBarrierSearch, userGoal, isKeywordExtraction } = body;
 
       const apiKey = env.GEMINI_API_KEY;
       if (!apiKey) {
@@ -47,6 +47,11 @@ export default {
       // 条例レビューモード
       if (isOrdinanceReview && ordinances) {
         return await handleOrdinanceReview(ordinances, analysisCategories, apiKey, corsHeaders);
+      }
+
+      // キーワード抽出モード（障壁検索の前段階）
+      if (isKeywordExtraction && userGoal) {
+        return await handleKeywordExtraction(userGoal, apiKey, corsHeaders);
       }
 
       // 障壁条例検索モード
@@ -536,6 +541,21 @@ ${o.text}
 async function handleBarrierSearch(userGoal, ordinances, apiKey, corsHeaders) {
   const barrierPrompt = `あなたは三郷市の条例に詳しい専門家です。
 
+【重要: 関連性フィルタリング】
+提供される条例データには、関連性が低いものが含まれている可能性があります。
+**ユーザーの目標と実質的に関連する条例のみを応答してください。**
+
+関連性が高い条例（応答に含める）:
+- ユーザーの活動に直接的な規制・制限を加える条例
+- 許可・届出・申請手続きを定める条例
+- 禁止事項に該当する可能性がある条例
+
+関連性が低い条例（除外すべき）:
+- キーワードは含まれるが、規制内容が無関係
+- 行政内部の組織・人事に関するもの
+- 他分野の専門的な技術基準のみ
+- ユーザーの活動と直接関係しない分野の条例
+
 【ユーザーの目標】
 ${userGoal}
 
@@ -551,7 +571,8 @@ ${o.text}
 `).join('\n')}
 
 【分析タスク】
-この目標を達成するにあたり、障壁となる可能性のある条例を特定してください。
+この目標を達成するにあたり、**直接的に**障壁となる可能性のある条例のみを特定してください。
+関連性の低い条例は絶対に含めないでください。
 
 【判定基準】
 - 許可・申請が必要な規定
@@ -567,7 +588,8 @@ ${o.text}
 
 【出力形式】
 障壁が見つかった場合のみ、以下のJSON配列形式で出力してください。
-障壁がない場合は空の配列 [] を返してください。
+関連性の高い障壁がない場合は空の配列 [] を返してください。
+関連性の低い条例は絶対に含めないでください。
 
 [
   {
@@ -641,6 +663,99 @@ ${o.text}
     return new Response(JSON.stringify({
       error: '障壁検索中にエラーが発生しました: ' + error.message,
       barriers: []
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+/**
+ * ユーザーの目標から関連キーワードを抽出（障壁検索の前段階）
+ */
+async function handleKeywordExtraction(userGoal, apiKey, corsHeaders) {
+  const extractionPrompt = `あなたは自治体の条例に詳しい専門家です。
+
+【ユーザーの目標】
+${userGoal}
+
+【タスク】
+この目標を達成する上で、自治体の条例に規制される可能性がある分野を特定してください。
+
+【重要な指示】
+- ユーザーの目標に直接関係するキーワードのみを抽出してください
+- 関係のない分野のキーワードは含めないでください
+- 具体的で検索に役立つキーワードを選んでください
+
+【出力形式】
+以下のJSON配列形式でキーワードを5〜10個出力してください。
+説明文は不要です。JSON配列のみを出力してください。
+
+["キーワード1", "キーワード2", "キーワード3", ...]
+
+【キーワード例】
+交通, 道路, 建築, 消防, 環境, 騒音, 廃棄物, 福祉, 保育, 営業, 許可, 届出,
+公園, 施設, 安全, 衛生, 広告, 景観, 土地, 用途, 開発, 住宅, 店舗, 飲食,
+イベント, 催物, 集会, 占用, 駐車, 車両, 運行, 動物, ペット など`;
+
+  try {
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: extractionPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.2,
+            maxOutputTokens: 256,
+          },
+        }),
+      }
+    );
+
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Keyword extraction API error:', errorText);
+      return new Response(JSON.stringify({
+        error: 'キーワード抽出に失敗しました',
+        keywords: []
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const data = await geminiResponse.json();
+    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+
+    // JSONを抽出
+    const jsonMatch = responseText.match(/\[[\s\S]*?\]/);
+    let keywords = [];
+
+    if (jsonMatch) {
+      try {
+        keywords = JSON.parse(jsonMatch[0]);
+      } catch (e) {
+        console.error('JSON parse error in keyword extraction:', e);
+        keywords = [];
+      }
+    }
+
+    return new Response(JSON.stringify({ keywords }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('Keyword extraction error:', error);
+    return new Response(JSON.stringify({
+      error: 'キーワード抽出中にエラーが発生しました: ' + error.message,
+      keywords: []
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

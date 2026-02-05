@@ -628,7 +628,7 @@
             document.getElementById('goalInput').value = btn.textContent;
         }
 
-        // Search
+        // Search - 2段階処理
         async function searchBarriers() {
             const goal = document.getElementById('goalInput').value.trim();
             if (!goal) {
@@ -638,6 +638,7 @@
 
             const searchBtn = document.getElementById('searchBtn');
             const loadingSection = document.getElementById('loadingSection');
+            const loadingText = document.querySelector('.loading-text');
             const resultsSection = document.getElementById('resultsSection');
 
             searchBtn.disabled = true;
@@ -645,10 +646,25 @@
             resultsSection.classList.remove('active');
 
             try {
-                // Find relevant ordinances based on keywords
-                const relevantOrdinances = findRelevantOrdinances(goal);
+                // Step 1: AIにキーワードを抽出させる
+                loadingText.textContent = 'キーワードを分析中...';
+                const aiKeywords = await extractKeywordsFromAI(goal);
+                console.log('AI抽出キーワード:', aiKeywords);
 
-                // Send to API
+                // Step 2: AIキーワード + フォールバックで条例を検索
+                loadingText.textContent = '関連条例を検索中...';
+                const relevantOrdinances = findRelevantOrdinancesByKeywords(goal, aiKeywords);
+                console.log('関連条例:', relevantOrdinances.length, '件');
+
+                if (relevantOrdinances.length === 0) {
+                    displayResults([]);
+                    searchBtn.disabled = false;
+                    loadingSection.classList.remove('active');
+                    return;
+                }
+
+                // Step 3: AIで障壁を分析
+                loadingText.textContent = '障壁を分析中...';
                 const response = await fetch(AI_API_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -680,17 +696,42 @@
             loadingSection.classList.remove('active');
         }
 
-        // Find relevant ordinances (reuse logic from search.html)
-        function findRelevantOrdinances(query) {
+        // Step 1: AIからキーワードを抽出
+        async function extractKeywordsFromAI(userGoal) {
+            try {
+                const response = await fetch(AI_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        isKeywordExtraction: true,
+                        userGoal: userGoal
+                    })
+                });
+
+                if (!response.ok) {
+                    console.warn('キーワード抽出API失敗、フォールバックを使用');
+                    return [];
+                }
+
+                const data = await response.json();
+                return data.keywords || [];
+            } catch (error) {
+                console.warn('キーワード抽出エラー、フォールバックを使用:', error);
+                return [];
+            }
+        }
+
+        // Step 2: キーワードで条例を検索（改善版）
+        function findRelevantOrdinancesByKeywords(query, aiKeywords) {
             const q = query.toLowerCase();
 
-            // Keywords that might indicate regulatory relevance
+            // 規制系キーワード（重み付け強化）
             const regulatoryKeywords = [
                 '許可', '申請', '届出', '禁止', '制限', '基準', '規制',
                 '条件', '義務', '要件', '承認', '認可', '免許', '登録'
             ];
 
-            // Synonym map for common activities
+            // フォールバック用シノニムマップ（大幅拡張）
             const activityMap = {
                 '公園': ['公園', '緑地', '広場', 'イベント', '催物'],
                 'キッチンカー': ['露店', '営業', '屋台', '販売', '食品', '衛生'],
@@ -701,26 +742,55 @@
                 '道路': ['道路', '占用', '使用', '通行'],
                 '募金': ['道路', '寄付', '慈善', '占用'],
                 '花火': ['火災', '消防', '危険物', '騒音', '公園'],
-                'ドローン': ['航空', '飛行', '公園', '施設'],
+                'ドローン': ['航空', '飛行', '公園', '施設', '安全'],
                 '看板': ['屋外広告', '広告物', '景観', '道路'],
                 '建物': ['建築', '建物', '用途', '消防', '防火'],
                 '飲食': ['食品', '衛生', '営業', '許可'],
                 '騒音': ['騒音', '公害', '環境', '生活'],
+                // 追加
+                '交通': ['交通', '道路', '車両', '自動車', '通行', '運行', '安全'],
+                'バス': ['バス', '交通', '運行', '旅客', '運送', '公共交通', '道路'],
+                '自動運転': ['自動運転', '自動車', '交通', '道路', '車両', '安全', '運行'],
+                '車': ['車両', '自動車', '駐車', '交通', '道路'],
+                '工事': ['工事', '道路', '占用', '建設', '施工'],
+                '集会': ['集会', 'デモ', '行進', '道路', '広場'],
+                '広告': ['広告', '屋外広告', '看板', '景観'],
+                '廃棄物': ['廃棄物', 'ごみ', '清掃', '環境'],
+                '福祉': ['福祉', '介護', '障害', '高齢者'],
+                '保育': ['保育', '児童', '子ども', '幼稚園'],
+                'ペット': ['動物', 'ペット', '犬', '猫', '衛生', '愛護'],
+                '農地': ['農地', '農業', '土地', '開発', '転用'],
+                'ソーラー': ['太陽光', 'エネルギー', '建築', '景観', '土地'],
             };
 
-            // Extract keywords from query
+            // キーワードを収集（AIキーワード優先、フォールバック併用）
             let searchTerms = new Set();
-            searchTerms.add(q);
 
+            // AIから抽出したキーワードを追加
+            aiKeywords.forEach(kw => searchTerms.add(kw.toLowerCase()));
+
+            // フォールバック: activityMapからシノニムを追加
             Object.entries(activityMap).forEach(([key, synonyms]) => {
                 if (q.includes(key)) {
-                    synonyms.forEach(s => searchTerms.add(s));
+                    synonyms.forEach(s => searchTerms.add(s.toLowerCase()));
                 }
             });
 
-            // Score ordinances
+            // 元のクエリも追加（分割して）
+            q.split(/[をにでがはのと]/).forEach(part => {
+                if (part.length >= 2) searchTerms.add(part);
+            });
+
+            console.log('検索キーワード:', Array.from(searchTerms));
+
+            // 除外すべきカテゴリ（検索語に関連がない場合）
+            const unrelatedCategories = {
+                '水道': ['水道', '下水道', '給水', '上水'],
+            };
+
+            // スコアリング（改善版）
             const scored = allOrdinanceData
-                .filter(o => o.fullText) // Only those with full text
+                .filter(o => o.fullText)
                 .map(ord => {
                     let score = 0;
                     const title = ord.title.toLowerCase();
@@ -728,26 +798,46 @@
                     const summary = ord.summary.toLowerCase();
                     const fullText = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
 
-                    // Check for search term matches
+                    // 検索語とのマッチ
                     searchTerms.forEach(term => {
-                        if (title.includes(term)) score += 15;
-                        if (keywords.some(k => k.includes(term))) score += 10;
-                        if (summary.includes(term)) score += 5;
-                        if (fullText.includes(term)) score += 3;
+                        if (title.includes(term)) score += 20;  // タイトル重視
+                        if (keywords.some(k => k.includes(term))) score += 12;
+                        if (summary.includes(term)) score += 6;
+                        if (fullText.includes(term)) score += 4;
                     });
 
-                    // Bonus for regulatory keywords in fullText
+                    // 規制キーワードのボーナス（強化）
+                    let regulatoryCount = 0;
                     regulatoryKeywords.forEach(rk => {
-                        if (fullText.includes(rk)) score += 2;
+                        if (fullText.includes(rk)) {
+                            score += 5;  // 2→5に増加
+                            regulatoryCount++;
+                        }
                     });
+                    if (regulatoryCount >= 3) score += 15;  // 複数ボーナス
 
                     return { ...ord, score };
                 })
-                .filter(o => o.score > 0)
-                .sort((a, b) => b.score - a.score)
-                .slice(0, 20); // Top 20
+                .filter(o => o.score >= 15)  // 最低スコア閾値
+                .sort((a, b) => b.score - a.score);
 
-            return scored;
+            // 無関係カテゴリの除外
+            const hasWaterKeywords = Array.from(searchTerms).some(t =>
+                ['水道', '下水', '給水', '上水', '排水'].includes(t)
+            );
+
+            const filtered = scored.filter(ord => {
+                // 水道系条例で、水道関連キーワードがなければ除外
+                const isWaterRelated = unrelatedCategories['水道'].some(w =>
+                    ord.title.includes(w)
+                );
+                if (isWaterRelated && !hasWaterKeywords) {
+                    return false;
+                }
+                return true;
+            });
+
+            return filtered.slice(0, 15);  // Top 15に絞る
         }
 
         // Display results
