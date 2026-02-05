@@ -389,6 +389,142 @@
             font-size: 0.75rem; background: var(--gray-lighter);
             padding: 0.2rem 0.5rem; border-radius: 4px;
         }
+
+        /* ===== iPhone SE / Small Mobile (375px) ===== */
+        @media (max-width: 375px) {
+            .main-container {
+                padding: 70px 0.75rem 1.5rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+                border-radius: 12px;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.2rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .hero p {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
+            .search-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .search-bar input {
+                font-size: 16px; /* Prevent iOS zoom */
+                padding: 0.8rem;
+            }
+
+            .search-bar button {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            /* Sections */
+            .section {
+                margin-bottom: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            /* Topic cards */
+            .topic-card {
+                padding: 1rem;
+            }
+
+            .topic-badge {
+                font-size: 0.7rem;
+            }
+
+            .topic-title {
+                font-size: 0.9rem;
+            }
+
+            .topic-desc {
+                font-size: 0.8rem;
+            }
+
+            .topic-meta {
+                font-size: 0.75rem;
+            }
+
+            /* Stance cards */
+            .stance-card {
+                padding: 0.75rem;
+            }
+
+            .stance-header {
+                flex-wrap: wrap;
+                gap: 0.4rem;
+            }
+
+            .stance-icon {
+                font-size: 1rem;
+            }
+
+            .stance-title {
+                font-size: 0.85rem;
+            }
+
+            .stance-badge {
+                font-size: 0.65rem;
+                padding: 0.15rem 0.4rem;
+            }
+
+            .stance-body {
+                font-size: 0.8rem;
+            }
+
+            .stance-fact {
+                font-size: 0.7rem;
+            }
+
+            /* Result section */
+            .result-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .result-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .result-actions button {
+                flex: 1;
+                min-width: calc(50% - 0.25rem);
+                justify-content: center;
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+
+            /* Research result content */
+            .research-result {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            /* Mobile header */
+            .mobile-header h1 {
+                font-size: 1rem;
+            }
+
+            /* Loading state */
+            .loading-indicator {
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>

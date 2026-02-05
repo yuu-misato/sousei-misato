@@ -510,6 +510,162 @@
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
+
+        /* ===== iPhone SE / Small Mobile (375px) ===== */
+        @media (max-width: 375px) {
+            .main-container {
+                padding: 70px 0.75rem 1.5rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .drive-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.7rem;
+                font-size: 0.85rem;
+            }
+
+            .category-tabs {
+                gap: 0.25rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .category-tab {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .asset-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .asset-card {
+                padding: 1rem;
+            }
+
+            .asset-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .asset-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1.1rem;
+            }
+
+            .asset-title {
+                font-size: 0.95rem;
+            }
+
+            .asset-category {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .asset-desc {
+                font-size: 0.82rem;
+            }
+
+            .asset-meta {
+                font-size: 0.75rem;
+            }
+
+            .asset-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .asset-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.6rem;
+                font-size: 0.82rem;
+            }
+
+            /* Template Section */
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .template-card {
+                padding: 1rem;
+            }
+
+            /* Modal adjustments */
+            .modal-content {
+                margin: 0.5rem;
+                max-height: 95vh;
+            }
+
+            .modal-header {
+                padding: 1rem;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.85rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px; /* Prevent iOS zoom */
+                padding: 0.7rem;
+            }
+
+            .modal-footer {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modal-footer .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Toast */
+            .toast {
+                width: calc(100% - 1.5rem);
+                left: 0.75rem;
+                transform: translateY(20px);
+                font-size: 0.85rem;
+            }
+
+            .toast.show {
+                transform: translateY(0);
+            }
+
+            /* Mobile header */
+            .mobile-header h1 {
+                font-size: 1rem;
+            }
+
+            /* Sidebar footer */
+            .sidebar-footer {
+                padding: 0.75rem;
+            }
+
+            .sidebar-external-link {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
