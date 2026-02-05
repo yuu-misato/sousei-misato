@@ -1478,12 +1478,13 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
         // ===== Supabase Setup =====
         const SUPABASE_URL = 'https://rfbhmdsonengrgumpacx.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmYmhtZHNvbmVuZ3JndW1wYWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzAyOTEsImV4cCI6MjA4NTgwNjI5MX0.Z0rE8CYxHSEyz-A0eXx2r7Zgg87hqkLqrl6KEfG01jk';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ===== Constants =====
         const GEMINI_API_URL = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
@@ -1559,7 +1560,7 @@
         async function loadData() {
             try {
                 // Load budget config
-                const { data: configData, error: configError } = await supabase
+                const { data: configData, error: configError } = await supabaseClient
                     .from('budget_config')
                     .select('*')
                     .order('id', { ascending: false })
@@ -1575,7 +1576,7 @@
                 }
 
                 // Load expenses
-                const { data: expensesData, error: expensesError } = await supabase
+                const { data: expensesData, error: expensesError } = await supabaseClient
                     .from('expenses')
                     .select('*')
                     .order('date', { ascending: false });
@@ -1594,7 +1595,7 @@
                 }
 
                 // Load deposits
-                const { data: depositsData, error: depositsError } = await supabase
+                const { data: depositsData, error: depositsError } = await supabaseClient
                     .from('deposits')
                     .select('*')
                     .order('date', { ascending: false });
@@ -1618,7 +1619,7 @@
 
         async function saveConfig() {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('budget_config')
                     .upsert({
                         id: 1,
@@ -1637,7 +1638,7 @@
 
         async function saveExpense(expense) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('expenses')
                     .insert({
                         date: expense.date,
@@ -1661,7 +1662,7 @@
 
         async function updateExpense(expense) {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('expenses')
                     .update({
                         date: expense.date,
@@ -1682,7 +1683,7 @@
 
         async function deleteExpenseFromDB(id) {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('expenses')
                     .delete()
                     .eq('id', id);
@@ -1696,7 +1697,7 @@
 
         async function saveDeposit(deposit) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('deposits')
                     .insert({
                         date: deposit.date,
