@@ -54,6 +54,11 @@ export default {
         return await handleKeywordExtraction(userGoal, apiKey, corsHeaders);
       }
 
+      // 補助金検索モード
+      if (body.isSubsidySearch && userGoal) {
+        return await handleSubsidySearch(userGoal, apiKey, corsHeaders);
+      }
+
       // 障壁条例検索モード
       if (isBarrierSearch && userGoal) {
         return await handleBarrierSearch(userGoal, ordinances, apiKey, corsHeaders);
@@ -537,9 +542,10 @@ ${o.text}
 
 /**
  * ユーザーの目標に対する障壁となる条例を検索
+ * 障壁だけでなく、条例改正案も提示する
  */
 async function handleBarrierSearch(userGoal, ordinances, apiKey, corsHeaders) {
-  const barrierPrompt = `あなたは三郷市の条例に詳しい専門家です。
+  const barrierPrompt = `あなたは三郷市の条例に詳しい専門家であり、条例改正のアドバイザーです。
 
 【重要: 関連性フィルタリング】
 提供される条例データには、関連性が低いものが含まれている可能性があります。
@@ -571,8 +577,8 @@ ${o.text}
 `).join('\n')}
 
 【分析タスク】
-この目標を達成するにあたり、**直接的に**障壁となる可能性のある条例のみを特定してください。
-関連性の低い条例は絶対に含めないでください。
+この目標を達成するにあたり、**直接的に**障壁となる可能性のある条例を特定し、
+さらに**その条例をどのように改正すれば目標が実現できるか**を具体的に提案してください。
 
 【判定基準】
 - 許可・申請が必要な規定
@@ -586,23 +592,53 @@ ${o.text}
 - medium: 条件付きで可能、または届出・確認が必要
 - low: 注意事項として把握しておくべき
 
+【条例改正提案のルール】★重要★
+各障壁に対して、以下の観点から具体的な改正案を提示してください：
+1. 障壁となっている条文の原文を引用
+2. 現行の条文のどこが問題か
+3. どのように改正すれば目標が実現可能になるか
+4. 改正案の具体的な文言（〇〇を△△に改める、第◯条に□□を追加する等）
+5. 改正による効果と影響
+
+【新規条例の提案】★重要★
+既存の条例改正だけでは不十分な場合、または関連する条例が存在しない場合は、
+新たに制定すべき条例についても提案してください。
+
 【出力形式】
-障壁が見つかった場合のみ、以下のJSON配列形式で出力してください。
-関連性の高い障壁がない場合は空の配列 [] を返してください。
-関連性の低い条例は絶対に含めないでください。
+以下のJSON形式で出力してください。
 
-[
-  {
-    "ordinanceId": 条例ID（数値）,
-    "title": "条例名",
-    "priority": "high" または "medium" または "low",
-    "relevantArticle": "該当条項（第○条など）",
-    "barrier": "障壁の内容（どのような制限があるか）",
-    "requirement": "必要な手続き（許可申請、届出、相談など）",
-    "suggestion": "対応策・アドバイス"
-  }
-]
+{
+  "barriers": [
+    {
+      "ordinanceId": 条例ID（数値）,
+      "title": "条例名",
+      "priority": "high" または "medium" または "low",
+      "relevantArticle": "該当条項（第○条など）",
+      "originalText": "障壁となっている条文の原文（該当部分を引用）",
+      "barrier": "障壁の内容（どのような制限があるか）",
+      "requirement": "必要な手続き（許可申請、届出、相談など）",
+      "suggestion": "現行制度での対応策",
+      "amendmentProposal": {
+        "currentIssue": "現行条文の問題点（なぜ障壁になっているか）",
+        "proposedChange": "改正案の要旨（例：第12条第2項の金額上限を撤廃）",
+        "specificWording": "具体的な改正文言（例：「50万円以下」を「100万円以下」に改める）",
+        "expectedEffect": "改正による効果（例：より大規模な事業が可能になる）",
+        "considerations": "改正にあたっての留意点・懸念事項"
+      }
+    }
+  ],
+  "newOrdinanceProposals": [
+    {
+      "title": "提案する新条例の名称（例：三郷市○○推進条例）",
+      "purpose": "条例制定の目的（なぜこの条例が必要か）",
+      "keyProvisions": "主要な条文案（第1条 目的、第2条 定義 など概要）",
+      "expectedEffect": "制定による効果",
+      "reference": "参考となる他自治体の条例（あれば）"
+    }
+  ]
+}
 
+関連性の高い障壁がない場合は barriers: [] とし、新規条例が不要な場合は newOrdinanceProposals: [] としてください。
 必ずJSON形式のみで出力してください。説明文は不要です。`;
 
   try {
@@ -638,22 +674,33 @@ ${o.text}
     }
 
     const data = await geminiResponse.json();
-    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
 
-    // JSONを抽出
-    const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+    // JSONを抽出（オブジェクト形式または配列形式に対応）
     let barriers = [];
+    let newOrdinanceProposals = [];
 
-    if (jsonMatch) {
+    // まずオブジェクト形式を試す
+    const objectMatch = responseText.match(/\{[\s\S]*\}/);
+    if (objectMatch) {
       try {
-        barriers = JSON.parse(jsonMatch[0]);
+        const parsed = JSON.parse(objectMatch[0]);
+        barriers = parsed.barriers || [];
+        newOrdinanceProposals = parsed.newOrdinanceProposals || [];
       } catch (e) {
-        console.error('JSON parse error in barrier search:', e);
-        barriers = [];
+        // オブジェクトパースに失敗した場合、配列形式を試す
+        const arrayMatch = responseText.match(/\[[\s\S]*\]/);
+        if (arrayMatch) {
+          try {
+            barriers = JSON.parse(arrayMatch[0]);
+          } catch (e2) {
+            console.error('JSON parse error in barrier search:', e2);
+          }
+        }
       }
     }
 
-    return new Response(JSON.stringify({ barriers }), {
+    return new Response(JSON.stringify({ barriers, newOrdinanceProposals }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -756,6 +803,121 @@ ${userGoal}
     return new Response(JSON.stringify({
       error: 'キーワード抽出中にエラーが発生しました: ' + error.message,
       keywords: []
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+/**
+ * ユーザーの目標に対して活用可能な補助金を検索
+ */
+async function handleSubsidySearch(userGoal, apiKey, corsHeaders) {
+  const subsidyPrompt = `あなたは日本の国・都道府県・市区町村の補助金・助成金に詳しい専門家です。
+
+【ユーザーの目標】
+${userGoal}
+
+【タスク】
+この目標を達成するために活用できる可能性のある補助金・助成金を、以下の範囲から探してください：
+
+1. **国の補助金**（経済産業省、国土交通省、環境省、総務省、厚生労働省など）
+2. **埼玉県の補助金**
+3. **一般的に市区町村で実施されている補助金**（三郷市で実施されている可能性があるもの）
+
+【重要な注意事項】
+- 実際に存在する、または存在した補助金制度をベースに回答してください
+- 架空の補助金を作成しないでください
+- 補助金名は正式名称に近いものを使用してください
+- 2024年度・2025年度で利用可能な可能性のある制度を優先してください
+- 補助金が終了している可能性がある場合は、その旨を明記してください
+
+【出力形式】
+以下のJSON配列形式で出力してください。
+該当する補助金がない場合は空の配列 [] を返してください。
+
+[
+  {
+    "name": "補助金・助成金の正式名称",
+    "level": "national" | "prefecture" | "city",
+    "ministry": "所管省庁・担当部署（国:省庁名、県:担当課、市:担当課）",
+    "targetAudience": "対象者（事業者、自治体、個人、NPO等）",
+    "maxAmount": "補助上限額（例：最大500万円、補助率1/2等）",
+    "purpose": "補助金の目的・概要（50字程度）",
+    "relevance": "ユーザーの目標との関連性（どのように活用できるか）",
+    "applicationPeriod": "申請期間の目安（通年、年1回等）",
+    "url": "参考URL（わかる場合のみ、不明な場合は空文字）",
+    "note": "注意事項（終了の可能性、要件の厳しさ等）",
+    "confidence": "high" | "medium" | "low"
+  }
+]
+
+confidence（確度）の判定基準：
+- high: 実在が確実で、目標との関連性が高い
+- medium: 実在の可能性が高いが、詳細確認が必要
+- low: 類似の制度が存在する可能性がある程度
+
+必ずJSON形式のみで出力してください。説明文は不要です。`;
+
+  try {
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: subsidyPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 4096,
+          },
+        }),
+      }
+    );
+
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Subsidy search API error:', errorText);
+      return new Response(JSON.stringify({
+        error: '補助金検索に失敗しました',
+        subsidies: []
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const data = await geminiResponse.json();
+    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+
+    // JSONを抽出
+    const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+    let subsidies = [];
+
+    if (jsonMatch) {
+      try {
+        subsidies = JSON.parse(jsonMatch[0]);
+      } catch (e) {
+        console.error('JSON parse error in subsidy search:', e);
+        subsidies = [];
+      }
+    }
+
+    return new Response(JSON.stringify({ subsidies }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('Subsidy search error:', error);
+    return new Response(JSON.stringify({
+      error: '補助金検索中にエラーが発生しました: ' + error.message,
+      subsidies: []
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

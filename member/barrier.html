@@ -526,6 +526,340 @@
             margin-top: 0.75rem;
         }
 
+        /* ===== Subsidy Section (補助金) ===== */
+        .subsidy-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .subsidy-section.active {
+            display: block;
+        }
+
+        .subsidy-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #10b981;
+        }
+
+        .subsidy-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #047857;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subsidy-header h2 svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .subsidy-count {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .subsidy-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #10b981;
+            position: relative;
+        }
+
+        .subsidy-item.national {
+            border-left-color: #3b82f6;
+        }
+
+        .subsidy-item.prefecture {
+            border-left-color: #8b5cf6;
+        }
+
+        .subsidy-item.city {
+            border-left-color: #10b981;
+        }
+
+        .subsidy-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subsidy-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .subsidy-item-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .subsidy-item-badge.national {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .subsidy-item-badge.prefecture {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .subsidy-item-badge.city {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .subsidy-item-ministry {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .subsidy-item-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #047857;
+            background: #ecfdf5;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .subsidy-item-purpose {
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background: var(--gray-lighter);
+            border-radius: 6px;
+        }
+
+        .subsidy-item-relevance {
+            font-size: 0.85rem;
+            color: var(--text);
+            background: #fef3c7;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border-left: 3px solid #f59e0b;
+            margin-bottom: 0.5rem;
+        }
+
+        .subsidy-item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        .subsidy-item-meta span {
+            background: var(--gray-lighter);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .subsidy-item-note {
+            font-size: 0.8rem;
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 0.4rem 0.6rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .subsidy-item-confidence {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        .subsidy-item-confidence.high {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .subsidy-item-confidence.medium {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .subsidy-item-confidence.low {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .subsidy-item-actions {
+            margin-top: 0.75rem;
+        }
+
+        .subsidy-item-actions a {
+            font-size: 0.8rem;
+            color: #047857;
+            text-decoration: none;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid #10b981;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .subsidy-item-actions a:hover {
+            background: #10b981;
+            color: var(--white);
+        }
+
+        .subsidy-disclaimer {
+            background: #f3f4f6;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* ===== Original Text (条文表示) ===== */
+        .original-text-box {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .original-text-box::before {
+            content: '📜 現行条文';
+            display: block;
+            font-weight: 700;
+            color: #b45309;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .original-text-content {
+            color: #78350f;
+            font-family: 'Noto Sans JP', serif;
+        }
+
+        /* ===== New Ordinance Section (新規条例提案) ===== */
+        .new-ordinance-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .new-ordinance-section.active {
+            display: block;
+        }
+
+        .new-ordinance-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f59e0b;
+        }
+
+        .new-ordinance-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .new-ordinance-item {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .new-ordinance-item::before {
+            content: '✨ 新規条例の提案';
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            background: #f59e0b;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .new-ordinance-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #b45309;
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .new-ordinance-purpose {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .new-ordinance-provisions {
+            background: white;
+            border: 1px dashed #f59e0b;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            font-family: 'Noto Sans JP', serif;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .new-ordinance-effect {
+            background: #dcfce7;
+            border-left: 3px solid var(--green);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: var(--green-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .new-ordinance-reference {
+            font-size: 0.8rem;
+            color: var(--gray);
+            background: var(--gray-lighter);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+        }
+
         .result-item-actions a {
             font-size: 0.8rem;
             color: var(--navy);
@@ -661,11 +995,43 @@
 
             <div class="results-section" id="resultsSection">
                 <div class="results-header">
-                    <h2>分析結果</h2>
+                    <h2>🚫 障壁となる条例</h2>
                     <span class="results-count" id="resultsCount">0件の障壁</span>
                 </div>
                 <div id="resultsList">
                     <!-- Results will be populated here -->
+                </div>
+            </div>
+
+            <div class="new-ordinance-section" id="newOrdinanceSection">
+                <div class="new-ordinance-header">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        新規条例の提案
+                    </h2>
+                </div>
+                <div id="newOrdinanceList">
+                    <!-- New ordinance proposals will be populated here -->
+                </div>
+            </div>
+
+            <div class="subsidy-section" id="subsidySection">
+                <div class="subsidy-header">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        活用可能な補助金・助成金
+                    </h2>
+                    <span class="subsidy-count" id="subsidyCount">0件</span>
+                </div>
+                <div id="subsidyList">
+                    <!-- Subsidies will be populated here -->
+                </div>
+                <div class="subsidy-disclaimer">
+                    ※ AIによる参考情報です。最新の募集状況・詳細要件は各省庁・自治体の公式サイトでご確認ください。
                 </div>
             </div>
         </main>
@@ -708,7 +1074,7 @@
             document.getElementById('goalInput').value = btn.textContent;
         }
 
-        // Search - 2段階処理
+        // Search - 2段階処理 + 補助金検索
         async function searchBarriers() {
             const goal = document.getElementById('goalInput').value.trim();
             if (!goal) {
@@ -720,10 +1086,15 @@
             const loadingSection = document.getElementById('loadingSection');
             const loadingText = document.querySelector('.loading-text');
             const resultsSection = document.getElementById('resultsSection');
+            const subsidySection = document.getElementById('subsidySection');
+
+            const newOrdinanceSection = document.getElementById('newOrdinanceSection');
 
             searchBtn.disabled = true;
             loadingSection.classList.add('active');
             resultsSection.classList.remove('active');
+            subsidySection.classList.remove('active');
+            newOrdinanceSection.classList.remove('active');
 
             try {
                 // Step 1: AIにキーワードを抽出させる
@@ -736,40 +1107,53 @@
                 const relevantOrdinances = findRelevantOrdinancesByKeywords(goal, aiKeywords);
                 console.log('関連条例:', relevantOrdinances.length, '件');
 
-                if (relevantOrdinances.length === 0) {
-                    displayResults([]);
-                    searchBtn.disabled = false;
-                    loadingSection.classList.remove('active');
-                    return;
-                }
+                // Step 3: 障壁分析と補助金検索を並列実行
+                loadingText.textContent = '障壁・改正案・新規条例・補助金を分析中...';
 
-                // Step 3: AIで障壁を分析 + 改正案を生成
-                loadingText.textContent = '障壁と改正案を分析中...';
-                const response = await fetch(AI_API_ENDPOINT, {
+                // 障壁分析のPromise（条例がある場合のみ）
+                const barrierPromise = relevantOrdinances.length > 0
+                    ? fetch(AI_API_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            isBarrierSearch: true,
+                            userGoal: goal,
+                            ordinances: relevantOrdinances.map(o => ({
+                                id: o.id,
+                                title: o.title,
+                                category: o.category,
+                                text: o.fullText ? o.fullText.replace(/<[^>]*>/g, '').substring(0, 3000) : o.summary
+                            }))
+                        })
+                    }).then(r => r.json())
+                    : Promise.resolve({ barriers: [], newOrdinanceProposals: [] });
+
+                // 補助金検索のPromise
+                const subsidyPromise = fetch(AI_API_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        isBarrierSearch: true,
-                        userGoal: goal,
-                        ordinances: relevantOrdinances.map(o => ({
-                            id: o.id,
-                            title: o.title,
-                            category: o.category,
-                            text: o.fullText ? o.fullText.replace(/<[^>]*>/g, '').substring(0, 3000) : o.summary
-                        }))
+                        isSubsidySearch: true,
+                        userGoal: goal
                     })
+                }).then(r => r.json()).catch(e => {
+                    console.error('Subsidy search error:', e);
+                    return { subsidies: [] };
                 });
 
-                if (!response.ok) {
-                    throw new Error('API error');
-                }
+                // 並列実行
+                const [barrierData, subsidyData] = await Promise.all([barrierPromise, subsidyPromise]);
 
-                const data = await response.json();
-                displayResults(data.barriers || []);
+                // 結果表示
+                displayResults(barrierData.barriers || []);
+                displayNewOrdinances(barrierData.newOrdinanceProposals || []);
+                displaySubsidies(subsidyData.subsidies || []);
 
             } catch (error) {
                 console.error('Search error:', error);
                 displayResults([]);
+                displayNewOrdinances([]);
+                displaySubsidies([]);
             }
 
             searchBtn.disabled = false;
@@ -1001,6 +1385,11 @@
                         ${result.relevantArticle ? `
                             <div class="result-item-article">${result.relevantArticle}</div>
                         ` : ''}
+                        ${result.originalText ? `
+                            <div class="original-text-box">
+                                <div class="original-text-content">${result.originalText}</div>
+                            </div>
+                        ` : ''}
                         <div class="result-item-barrier">
                             <strong>🚫 障壁:</strong> ${result.barrier}
                         </div>
@@ -1030,6 +1419,124 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        // Display new ordinance proposals
+        function displayNewOrdinances(proposals) {
+            const section = document.getElementById('newOrdinanceSection');
+            const list = document.getElementById('newOrdinanceList');
+
+            if (!proposals || proposals.length === 0) {
+                section.classList.remove('active');
+                return;
+            }
+
+            section.classList.add('active');
+            list.innerHTML = proposals.map(proposal => `
+                <div class="new-ordinance-item">
+                    <div class="new-ordinance-title">📋 ${proposal.title}</div>
+                    <div class="new-ordinance-purpose">
+                        <strong>制定の目的:</strong> ${proposal.purpose}
+                    </div>
+                    ${proposal.keyProvisions ? `
+                        <div class="new-ordinance-provisions">${proposal.keyProvisions}</div>
+                    ` : ''}
+                    ${proposal.expectedEffect ? `
+                        <div class="new-ordinance-effect">
+                            <strong>期待される効果:</strong> ${proposal.expectedEffect}
+                        </div>
+                    ` : ''}
+                    ${proposal.reference ? `
+                        <div class="new-ordinance-reference">
+                            📚 参考: ${proposal.reference}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Display subsidies
+        function displaySubsidies(subsidies) {
+            const subsidySection = document.getElementById('subsidySection');
+            const subsidyList = document.getElementById('subsidyList');
+            const subsidyCount = document.getElementById('subsidyCount');
+
+            subsidySection.classList.add('active');
+            subsidyCount.textContent = `${subsidies.length}件`;
+
+            if (subsidies.length === 0) {
+                subsidyList.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>活用可能な補助金は見つかりませんでした</p>
+                        <small>新規事業や革新的な取り組みには、独自の予算確保が必要になる場合があります。</small>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by confidence (high first) then by level (national > prefecture > city)
+            const levelOrder = { national: 0, prefecture: 1, city: 2 };
+            const confidenceOrder = { high: 0, medium: 1, low: 2 };
+            subsidies.sort((a, b) => {
+                if (confidenceOrder[a.confidence] !== confidenceOrder[b.confidence]) {
+                    return confidenceOrder[a.confidence] - confidenceOrder[b.confidence];
+                }
+                return levelOrder[a.level] - levelOrder[b.level];
+            });
+
+            const levelLabels = {
+                national: '国',
+                prefecture: '県',
+                city: '市'
+            };
+
+            const confidenceLabels = {
+                high: '確度高',
+                medium: '要確認',
+                low: '参考'
+            };
+
+            subsidyList.innerHTML = subsidies.map(subsidy => `
+                <div class="subsidy-item ${subsidy.level}">
+                    <span class="subsidy-item-confidence ${subsidy.confidence}">${confidenceLabels[subsidy.confidence] || '参考'}</span>
+                    <div class="subsidy-item-header">
+                        <div class="subsidy-item-title">${subsidy.name}</div>
+                        <span class="subsidy-item-badge ${subsidy.level}">${levelLabels[subsidy.level] || ''}の補助金</span>
+                    </div>
+                    <div class="subsidy-item-ministry">📍 ${subsidy.ministry}</div>
+                    ${subsidy.maxAmount ? `
+                        <div class="subsidy-item-amount">💰 ${subsidy.maxAmount}</div>
+                    ` : ''}
+                    <div class="subsidy-item-purpose">
+                        <strong>目的:</strong> ${subsidy.purpose}
+                    </div>
+                    <div class="subsidy-item-relevance">
+                        <strong>活用方法:</strong> ${subsidy.relevance}
+                    </div>
+                    <div class="subsidy-item-meta">
+                        ${subsidy.targetAudience ? `<span>👥 ${subsidy.targetAudience}</span>` : ''}
+                        ${subsidy.applicationPeriod ? `<span>📅 ${subsidy.applicationPeriod}</span>` : ''}
+                    </div>
+                    ${subsidy.note ? `
+                        <div class="subsidy-item-note">⚠️ ${subsidy.note}</div>
+                    ` : ''}
+                    ${subsidy.url ? `
+                        <div class="subsidy-item-actions">
+                            <a href="${subsidy.url}" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" y1="14" x2="21" y2="3"/>
+                                </svg>
+                                詳細を確認
+                            </a>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
         }
 
         // Enter key handler
