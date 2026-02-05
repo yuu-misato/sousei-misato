@@ -1215,7 +1215,7 @@
                         </div>
                     </div>
 
-                    <form id="expenseForm" onsubmit="saveExpense(event)">
+                    <form id="expenseForm" onsubmit="submitExpense(event)">
                         <input type="hidden" id="editExpenseId">
 
                         <!-- Account Toggle -->
@@ -1432,7 +1432,7 @@
                 <div class="modal-title">経費を編集</div>
                 <button class="modal-close" onclick="closeEditModal()">&times;</button>
             </div>
-            <form onsubmit="updateExpense(event)">
+            <form onsubmit="updateExpenseModal(event)">
                 <input type="hidden" id="modalExpenseId">
                 <div class="form-group">
                     <label class="form-label">会計区分</label>
@@ -1478,11 +1478,14 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // ===== Supabase Setup =====
+        const SUPABASE_URL = 'https://rfbhmdsonengrgumpacx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmYmhtZHNvbmVuZ3JndW1wYWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzAyOTEsImV4cCI6MjA4NTgwNjI5MX0.Z0rE8CYxHSEyz-A0eXx2r7Zgg87hqkLqrl6KEfG01jk';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // ===== Constants =====
-        const STORAGE_KEY_CONFIG = 'budget_config_v2';
-        const STORAGE_KEY_EXPENSES = 'expense_records_v2';
-        const STORAGE_KEY_DEPOSITS = 'deposit_records';
         const GEMINI_API_URL = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
 
         const DEFAULT_CATEGORIES = [
@@ -1543,8 +1546,8 @@
         });
 
         // ===== Initialization =====
-        function initApp() {
-            loadData();
+        async function initApp() {
+            await loadData();
             renderDashboard();
             renderExpenseTable();
             renderSettings();
@@ -1553,35 +1556,172 @@
             setupDragDrop();
         }
 
-        function loadData() {
-            const savedConfig = localStorage.getItem(STORAGE_KEY_CONFIG);
-            if (savedConfig) {
-                budgetConfig = JSON.parse(savedConfig);
-            }
+        async function loadData() {
+            try {
+                // Load budget config
+                const { data: configData, error: configError } = await supabase
+                    .from('budget_config')
+                    .select('*')
+                    .order('id', { ascending: false })
+                    .limit(1)
+                    .single();
 
-            const savedExpenses = localStorage.getItem(STORAGE_KEY_EXPENSES);
-            if (savedExpenses) {
-                expenses = JSON.parse(savedExpenses);
-            }
+                if (configData && !configError) {
+                    budgetConfig = {
+                        fiscalYear: configData.fiscal_year,
+                        seimuBudget: configData.seimu_budget,
+                        tsumitateInitial: configData.tsumitate_budget
+                    };
+                }
 
-            const savedDeposits = localStorage.getItem(STORAGE_KEY_DEPOSITS);
-            if (savedDeposits) {
-                deposits = JSON.parse(savedDeposits);
-            }
+                // Load expenses
+                const { data: expensesData, error: expensesError } = await supabase
+                    .from('expenses')
+                    .select('*')
+                    .order('date', { ascending: false });
 
-            updateFiscalYearDisplay();
+                if (expensesData && !expensesError) {
+                    expenses = expensesData.map(e => ({
+                        id: e.id,
+                        date: e.date,
+                        category: e.category,
+                        amount: e.amount,
+                        description: e.description || '',
+                        note: e.note || '',
+                        account: e.account_type || 'seimu',
+                        createdAt: e.created_at
+                    }));
+                }
+
+                // Load deposits
+                const { data: depositsData, error: depositsError } = await supabase
+                    .from('deposits')
+                    .select('*')
+                    .order('date', { ascending: false });
+
+                if (depositsData && !depositsError) {
+                    deposits = depositsData.map(d => ({
+                        id: d.id,
+                        date: d.date,
+                        amount: d.amount,
+                        note: d.note || '',
+                        createdAt: d.created_at
+                    }));
+                }
+
+                updateFiscalYearDisplay();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showToast('データの読み込みに失敗しました', 'error');
+            }
         }
 
-        function saveConfig() {
-            localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(budgetConfig));
+        async function saveConfig() {
+            try {
+                const { error } = await supabase
+                    .from('budget_config')
+                    .upsert({
+                        id: 1,
+                        fiscal_year: budgetConfig.fiscalYear,
+                        seimu_budget: budgetConfig.seimuBudget,
+                        tsumitate_budget: budgetConfig.tsumitateInitial,
+                        updated_at: new Date().toISOString()
+                    });
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Error saving config:', error);
+                showToast('設定の保存に失敗しました', 'error');
+            }
         }
 
+        async function saveExpense(expense) {
+            try {
+                const { data, error } = await supabase
+                    .from('expenses')
+                    .insert({
+                        date: expense.date,
+                        category: expense.category,
+                        amount: expense.amount,
+                        description: expense.description,
+                        note: expense.note,
+                        account_type: expense.account
+                    })
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                return data;
+            } catch (error) {
+                console.error('Error saving expense:', error);
+                showToast('経費の保存に失敗しました', 'error');
+                return null;
+            }
+        }
+
+        async function updateExpense(expense) {
+            try {
+                const { error } = await supabase
+                    .from('expenses')
+                    .update({
+                        date: expense.date,
+                        category: expense.category,
+                        amount: expense.amount,
+                        description: expense.description,
+                        note: expense.note,
+                        account_type: expense.account
+                    })
+                    .eq('id', expense.id);
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Error updating expense:', error);
+                showToast('経費の更新に失敗しました', 'error');
+            }
+        }
+
+        async function deleteExpenseFromDB(id) {
+            try {
+                const { error } = await supabase
+                    .from('expenses')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Error deleting expense:', error);
+                showToast('経費の削除に失敗しました', 'error');
+            }
+        }
+
+        async function saveDeposit(deposit) {
+            try {
+                const { data, error } = await supabase
+                    .from('deposits')
+                    .insert({
+                        date: deposit.date,
+                        amount: deposit.amount,
+                        note: deposit.note
+                    })
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                return data;
+            } catch (error) {
+                console.error('Error saving deposit:', error);
+                showToast('積立金の保存に失敗しました', 'error');
+                return null;
+            }
+        }
+
+        // Legacy functions for compatibility
         function saveExpenses() {
-            localStorage.setItem(STORAGE_KEY_EXPENSES, JSON.stringify(expenses));
+            // Now handled by individual save functions
         }
 
         function saveDeposits() {
-            localStorage.setItem(STORAGE_KEY_DEPOSITS, JSON.stringify(deposits));
+            // Now handled by individual save functions
         }
 
         // ===== Account Switching =====
@@ -1666,7 +1806,7 @@
             renderMonthlyChart();
         }
 
-        function addDeposit() {
+        async function addDeposit() {
             const date = document.getElementById('depositDate').value;
             const amount = parseInt(document.getElementById('depositAmount').value);
             const note = document.getElementById('depositNote').value;
@@ -1676,19 +1816,23 @@
                 return;
             }
 
-            deposits.push({
-                id: 'dep_' + Date.now(),
-                date: date,
-                amount: amount,
-                note: note,
-                createdAt: new Date().toISOString()
-            });
+            const deposit = { date, amount, note };
+            const saved = await saveDeposit(deposit);
 
-            saveDeposits();
-            document.getElementById('depositAmount').value = '';
-            document.getElementById('depositNote').value = '';
-            renderDashboard();
-            showToast('積立金を追加しました', 'success');
+            if (saved) {
+                deposits.unshift({
+                    id: saved.id,
+                    date: saved.date,
+                    amount: saved.amount,
+                    note: saved.note || '',
+                    createdAt: saved.created_at
+                });
+
+                document.getElementById('depositAmount').value = '';
+                document.getElementById('depositNote').value = '';
+                renderDashboard();
+                showToast('積立金を追加しました', 'success');
+            }
         }
 
         function renderCategoryChart() {
@@ -1929,34 +2073,44 @@
             setFormAccount(currentAccount);
         }
 
-        function saveExpense(event) {
+        async function submitExpense(event) {
             event.preventDefault();
 
             const editId = document.getElementById('editExpenseId').value;
             const expense = {
-                id: editId || 'exp_' + Date.now(),
+                id: editId || null,
                 account: document.getElementById('expenseAccount').value,
                 date: document.getElementById('expenseDate').value,
                 category: document.getElementById('expenseCategory').value,
                 amount: parseInt(document.getElementById('expenseAmount').value),
                 description: document.getElementById('expenseDescription').value,
-                note: document.getElementById('expenseNote').value,
-                createdAt: editId ? expenses.find(e => e.id === editId)?.createdAt : new Date().toISOString(),
-                updatedAt: new Date().toISOString()
+                note: document.getElementById('expenseNote').value
             };
 
             if (editId) {
+                await updateExpense(expense);
                 const index = expenses.findIndex(e => e.id === editId);
                 if (index !== -1) {
-                    expenses[index] = expense;
+                    expenses[index] = { ...expenses[index], ...expense };
                 }
                 showToast('経費を更新しました', 'success');
             } else {
-                expenses.push(expense);
-                showToast('経費を追加しました', 'success');
+                const saved = await saveExpense(expense);
+                if (saved) {
+                    expenses.unshift({
+                        id: saved.id,
+                        date: saved.date,
+                        category: saved.category,
+                        amount: saved.amount,
+                        description: saved.description || '',
+                        note: saved.note || '',
+                        account: saved.account_type || 'seimu',
+                        createdAt: saved.created_at
+                    });
+                    showToast('経費を追加しました', 'success');
+                }
             }
 
-            saveExpenses();
             resetForm();
             renderExpenseTable();
             renderDashboard();
@@ -2019,11 +2173,11 @@
             document.getElementById('filteredTotal').textContent = formatCurrency(total);
         }
 
-        function deleteExpense(id) {
+        async function deleteExpense(id) {
             if (!confirm('この経費を削除しますか？')) return;
 
+            await deleteExpenseFromDB(id);
             expenses = expenses.filter(exp => exp.id !== id);
-            saveExpenses();
             renderExpenseTable();
             renderDashboard();
             showToast('経費を削除しました');
@@ -2049,25 +2203,30 @@
             document.getElementById('editModal').classList.remove('active');
         }
 
-        function updateExpense(event) {
+        async function updateExpenseModal(event) {
             event.preventDefault();
 
             const id = document.getElementById('modalExpenseId').value;
             const index = expenses.findIndex(exp => exp.id === id);
             if (index === -1) return;
 
-            expenses[index] = {
-                ...expenses[index],
+            const updatedExpense = {
+                id: id,
                 account: document.getElementById('modalAccount').value,
                 date: document.getElementById('modalDate').value,
                 category: document.getElementById('modalCategory').value,
                 amount: parseInt(document.getElementById('modalAmount').value),
                 description: document.getElementById('modalDescription').value,
-                note: document.getElementById('modalNote').value,
-                updatedAt: new Date().toISOString()
+                note: document.getElementById('modalNote').value
             };
 
-            saveExpenses();
+            await updateExpense(updatedExpense);
+
+            expenses[index] = {
+                ...expenses[index],
+                ...updatedExpense
+            };
+
             closeEditModal();
             renderExpenseTable();
             renderDashboard();
@@ -2081,10 +2240,10 @@
             document.getElementById('settingTsumitateInitial').value = budgetConfig.tsumitateInitial || 0;
         }
 
-        function updateFiscalYear() {
+        async function updateFiscalYear() {
             const year = parseInt(document.getElementById('settingYear').value);
             budgetConfig.fiscalYear = year;
-            saveConfig();
+            await saveConfig();
             updateFiscalYearDisplay();
             populateMonthFilter();
             renderDashboard();
@@ -2096,10 +2255,10 @@
             document.getElementById('fiscalYearDisplay').textContent = `令和${reiwa}年度（${year}年度）`;
         }
 
-        function saveBudgetSettings() {
+        async function saveBudgetSettings() {
             budgetConfig.seimuBudget = parseInt(document.getElementById('settingSeimuBudget').value) || 0;
             budgetConfig.tsumitateInitial = parseInt(document.getElementById('settingTsumitateInitial').value) || 0;
-            saveConfig();
+            await saveConfig();
             renderDashboard();
             showToast('設定を保存しました', 'success');
         }
