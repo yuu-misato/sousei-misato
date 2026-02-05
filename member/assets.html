@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会派アセット | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
+    <style>
+        /* 認証済みの場合はログイン画面を即座に非表示 */
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --purple: #8b5cf6;
+            --blue: #3b82f6;
+            --orange: #f59e0b;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo { font-size: 1.8rem; font-weight: 900; color: var(--navy); margin-bottom: 0.3rem; }
+        .login-sub { color: var(--gray); font-size: 0.85rem; margin-bottom: 2rem; }
+        .login-input {
+            width: 100%; padding: 0.85rem 1rem; background: var(--gray-lighter);
+            border: 1px solid var(--gray-light); border-radius: 8px;
+            color: var(--text); font-size: 1rem; font-family: inherit;
+            outline: none; margin-bottom: 1rem; transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%; padding: 0.85rem; background: var(--green); color: var(--white);
+            border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            font-family: inherit; cursor: pointer; transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2; color: #dc2626; padding: 0.6rem;
+            border-radius: 8px; font-size: 0.82rem; margin-bottom: 1rem;
+            display: none; border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px; background: var(--navy); position: fixed;
+            top: 0; left: 0; bottom: 0; z-index: 100;
+            display: flex; flex-direction: column; transition: transform 0.3s ease;
+        }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+        .sidebar-logo-icon { width: 40px; height: 40px; background: var(--white); border-radius: 8px; padding: 4px; }
+        .sidebar-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .sidebar-logo-text { font-size: 1.1rem; font-weight: 700; }
+        .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 700;
+            color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;
+            transition: all 0.2s; border-left: 3px solid transparent;
+        }
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+        .sidebar-nav a.active { background: rgba(255,255,255,0.1); color: var(--white); border-left-color: var(--green); }
+        .sidebar-nav a svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .sidebar-footer {
+            padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem; color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile ===== */
+        .mobile-header {
+            display: none; position: fixed; top: 0; left: 0; right: 0;
+            height: 60px; background: var(--navy); z-index: 101;
+            padding: 0 1rem; align-items: center; justify-content: space-between;
+        }
+        .mobile-header-logo { display: flex; align-items: center; gap: 0.5rem; color: var(--white); text-decoration: none; font-weight: 700; }
+        .mobile-header-logo img { width: 32px; height: 32px; background: var(--white); border-radius: 6px; padding: 2px; }
+        .menu-toggle { background: none; border: none; color: var(--white); cursor: pointer; padding: 0.5rem; }
+        .menu-toggle svg { width: 28px; height: 28px; }
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+
+        /* ===== Main ===== */
+        .main-wrapper { flex: 1; margin-left: 260px; }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .mobile-header { display: flex; }
+            .main-wrapper { margin-left: 0; }
+            .main-container { padding: 80px 1rem 2rem; }
+        }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .page-header h1 { font-size: 1.5rem; color: var(--navy); }
+        .page-header p { color: var(--gray); font-size: 0.9rem; }
+
+        /* ===== Category Tabs ===== */
+        .category-tabs {
+            display: flex; gap: 0.5rem; margin-bottom: 2rem;
+            border-bottom: 2px solid var(--gray-light); padding-bottom: 0;
+            overflow-x: auto;
+        }
+        .category-tab {
+            padding: 0.75rem 1.25rem; background: none; border: none;
+            color: var(--gray); font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; border-bottom: 3px solid transparent;
+            margin-bottom: -2px; transition: all 0.2s; white-space: nowrap;
+            font-family: inherit;
+        }
+        .category-tab:hover { color: var(--navy); }
+        .category-tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+        /* ===== Asset Grid ===== */
+        .asset-section { display: none; }
+        .asset-section.active { display: block; }
+
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .asset-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .asset-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .asset-preview {
+            height: 140px;
+            background: var(--gray-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .asset-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .asset-preview.logo-bg {
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 100%);
+        }
+        .asset-preview.color-sample {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            height: 100%;
+        }
+        .color-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .asset-preview .file-icon {
+            width: 60px;
+            height: 60px;
+            color: var(--gray);
+        }
+
+        .asset-info { padding: 1rem; }
+        .asset-name {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+        .asset-desc {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        .asset-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .asset-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .asset-meta svg { width: 14px; height: 14px; }
+
+        .asset-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--gray-lighter);
+            background: var(--gray-lighter);
+        }
+        .asset-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-family: inherit;
+            text-decoration: none;
+        }
+        .asset-btn svg { width: 16px; height: 16px; }
+        .asset-btn-primary {
+            background: var(--green);
+            color: var(--white);
+        }
+        .asset-btn-primary:hover { background: var(--green-dark); }
+        .asset-btn-secondary {
+            background: var(--white);
+            color: var(--gray);
+            border: 1px solid var(--gray-light);
+        }
+        .asset-btn-secondary:hover {
+            background: var(--gray-lighter);
+            color: var(--navy);
+        }
+
+        /* ===== Color Palette Section ===== */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .color-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .color-swatch {
+            height: 80px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 0.5rem;
+        }
+        .color-swatch span {
+            background: rgba(255,255,255,0.9);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .color-details {
+            padding: 0.75rem 1rem;
+        }
+        .color-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .color-codes {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .color-copy {
+            cursor: pointer;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+        .color-copy:hover { background: var(--gray-lighter); }
+
+        /* ===== Typography Section ===== */
+        .typography-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .typography-title {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .typography-sample {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .typography-sample.h1 { font-size: 2rem; font-weight: 900; }
+        .typography-sample.h2 { font-size: 1.5rem; font-weight: 700; }
+        .typography-sample.h3 { font-size: 1.2rem; font-weight: 600; }
+        .typography-sample.body { font-size: 1rem; font-weight: 400; line-height: 1.8; }
+        .typography-sample.small { font-size: 0.85rem; font-weight: 400; color: var(--gray); }
+        .typography-meta {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        /* ===== Document Templates ===== */
+        .template-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .template-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
+        }
+        .template-item:hover { transform: translateX(4px); }
+        .template-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .template-icon svg { width: 24px; height: 24px; color: white; }
+        .template-icon.doc { background: var(--blue); }
+        .template-icon.sheet { background: var(--green); }
+        .template-icon.slide { background: var(--orange); }
+        .template-icon.pdf { background: #dc2626; }
+        .template-info { flex: 1; }
+        .template-name { font-weight: 700; color: var(--navy); margin-bottom: 0.15rem; }
+        .template-desc { font-size: 0.8rem; color: var(--gray); }
+        .template-btn {
+            padding: 0.5rem 1rem;
+            background: var(--gray-lighter);
+            border: none;
+            border-radius: 6px;
+            color: var(--gray);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-decoration: none;
+            font-family: inherit;
+        }
+        .template-btn:hover { background: var(--green); color: white; }
+        .template-btn svg { width: 16px; height: 16px; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--navy);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">創政MISATO</div>
+            <div class="login-sub">会員専用ページ</div>
+            <div class="login-error" id="loginError">パスワードが正しくありません</div>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力">
+                <button type="submit" class="login-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <div class="mobile-header">
+            <a href="/member/" class="mobile-header-logo">
+                <img src="/assets/images/logo.png" alt="創政MISATO">
+                <span>創政MISATO</span>
+            </a>
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+        <div class="app-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <a href="/member/" class="sidebar-logo">
+                        <div class="sidebar-logo-icon">
+                            <img src="/assets/images/logo.png" alt="創政MISATO">
+                        </div>
+                        <span class="sidebar-logo-text">創政MISATO</span>
+                    </a>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-section">メニュー</div>
+                    <a href="/member/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        ホーム
+                    </a>
+                    <a href="/member/budget/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                        </svg>
+                        会派予算管理
+                    </a>
+                    <a href="/member/assets.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        会派アセット
+                    </a>
+                    <div class="sidebar-nav-section">条例AI</div>
+                    <a href="/member/search.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        条例を検索
+                    </a>
+                    <a href="/member/review.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                        条例をレビュー
+                    </a>
+                    <a href="/member/barrier.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        障壁を調べる
+                    </a>
+                    <div class="sidebar-nav-section">リサーチAI</div>
+                    <a href="/member/research.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        一般質問リサーチ
+                    </a>
+                    <a href="/member/research-history.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        リサーチ履歴
+                    </a>
+                    <div class="sidebar-nav-section">その他</div>
+                    <a href="/member/guideline.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        ガイドライン
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    &copy; 2026 創政MISATO
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-wrapper">
+                <main class="main-container">
+                    <div class="page-header">
+                        <div>
+                            <h1>会派アセット</h1>
+                            <p>ロゴ・カラー・テンプレートなど会派で統一して使う素材集</p>
+                        </div>
+                    </div>
+
+                    <!-- Category Tabs -->
+                    <div class="category-tabs">
+                        <button class="category-tab active" data-tab="logos">ロゴ・マーク</button>
+                        <button class="category-tab" data-tab="colors">カラーパレット</button>
+                        <button class="category-tab" data-tab="typography">タイポグラフィ</button>
+                        <button class="category-tab" data-tab="templates">テンプレート</button>
+                        <button class="category-tab" data-tab="photos">写真素材</button>
+                    </div>
+
+                    <!-- Logos Section -->
+                    <div class="asset-section active" id="logos">
+                        <div class="asset-grid">
+                            <div class="asset-card">
+                                <div class="asset-preview logo-bg">
+                                    <img src="/assets/images/logo.png" alt="創政MISATOロゴ" style="padding: 1.5rem;">
+                                </div>
+                                <div class="asset-info">
+                                    <div class="asset-name">メインロゴ（カラー）</div>
+                                    <div class="asset-desc">白背景・濃色背景両用のメインロゴ</div>
+                                    <div class="asset-meta">
+                                        <span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                            PNG
+                                        </span>
+                                        <span>透過対応</span>
+                                    </div>
+                                </div>
+                                <div class="asset-actions">
+                                    <a href="/assets/images/logo.png" download class="asset-btn asset-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        ダウンロード
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="asset-card">
+                                <div class="asset-preview" style="background: #f8f9fa;">
+                                    <img src="/assets/images/logo.png" alt="創政MISATOロゴ" style="padding: 1.5rem;">
+                                </div>
+                                <div class="asset-info">
+                                    <div class="asset-name">メインロゴ（白背景用）</div>
+                                    <div class="asset-desc">明るい背景用のロゴ</div>
+                                    <div class="asset-meta">
+                                        <span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                            PNG
+                                        </span>
+                                        <span>透過対応</span>
+                                    </div>
+                                </div>
+                                <div class="asset-actions">
+                                    <a href="/assets/images/logo.png" download class="asset-btn asset-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        ダウンロード
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="asset-card">
+                                <div class="asset-preview logo-bg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" style="width:60px;height:60px;opacity:0.7;">
+                                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="asset-info">
+                                    <div class="asset-name">ロゴ（SVG版）</div>
+                                    <div class="asset-desc">印刷物・大型出力用のベクター形式</div>
+                                    <div class="asset-meta">
+                                        <span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                            SVG
+                                        </span>
+                                        <span>拡大縮小自由</span>
+                                    </div>
+                                </div>
+                                <div class="asset-actions">
+                                    <a href="/member/images/logo.svg" download class="asset-btn asset-btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                        ダウンロード
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colors Section -->
+                    <div class="asset-section" id="colors">
+                        <div class="color-palette">
+                            <div class="color-item">
+                                <div class="color-swatch" style="background: #2c4a6e;">
+                                    <span>Navy</span>
+                                </div>
+                                <div class="color-details">
+                                    <div class="color-name">ネイビー（メイン）</div>
+                                    <div class="color-codes">
+                                        <span class="color-copy" onclick="copyColor('#2c4a6e')">#2c4a6e</span> ・
+                                        <span class="color-copy" onclick="copyColor('rgb(44, 74, 110)')">RGB(44, 74, 110)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-item">
+                                <div class="color-swatch" style="background: #3d5a80;">
+                                    <span>Navy Light</span>
+                                </div>
+                                <div class="color-details">
+                                    <div class="color-name">ネイビーライト</div>
+                                    <div class="color-codes">
+                                        <span class="color-copy" onclick="copyColor('#3d5a80')">#3d5a80</span> ・
+                                        <span class="color-copy" onclick="copyColor('rgb(61, 90, 128)')">RGB(61, 90, 128)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-item">
+                                <div class="color-swatch" style="background: #7cb342;">
+                                    <span>Green</span>
+                                </div>
+                                <div class="color-details">
+                                    <div class="color-name">グリーン（アクセント）</div>
+                                    <div class="color-codes">
+                                        <span class="color-copy" onclick="copyColor('#7cb342')">#7cb342</span> ・
+                                        <span class="color-copy" onclick="copyColor('rgb(124, 179, 66)')">RGB(124, 179, 66)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-item">
+                                <div class="color-swatch" style="background: #5a8f2a;">
+                                    <span>Green Dark</span>
+                                </div>
+                                <div class="color-details">
+                                    <div class="color-name">グリーンダーク</div>
+                                    <div class="color-codes">
+                                        <span class="color-copy" onclick="copyColor('#5a8f2a')">#5a8f2a</span> ・
+                                        <span class="color-copy" onclick="copyColor('rgb(90, 143, 42)')">RGB(90, 143, 42)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-item">
+                                <div class="color-swatch" style="background: #374151;">
+                                    <span>Text</span>
+                                </div>
+                                <div class="color-details">
+                                    <div class="color-name">テキスト</div>
+                                    <div class="color-codes">
+                                        <span class="color-copy" onclick="copyColor('#374151')">#374151</span> ・
+                                        <span class="color-copy" onclick="copyColor('rgb(55, 65, 81)')">RGB(55, 65, 81)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-item">
+                                <div class="color-swatch" style="background: #6b7280;">
+                                    <span>Gray</span>
+                                </div>
+                                <div class="color-details">
+                                    <div class="color-name">グレー</div>
+                                    <div class="color-codes">
+                                        <span class="color-copy" onclick="copyColor('#6b7280')">#6b7280</span> ・
+                                        <span class="color-copy" onclick="copyColor('rgb(107, 114, 128)')">RGB(107, 114, 128)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typography Section -->
+                    <div class="asset-section" id="typography">
+                        <div class="typography-card">
+                            <div class="typography-title">見出し1（H1）</div>
+                            <div class="typography-sample h1">創政MISATO</div>
+                            <div class="typography-meta">Noto Sans JP / Extra Bold (900) / 2rem (32px)</div>
+                        </div>
+                        <div class="typography-card">
+                            <div class="typography-title">見出し2（H2）</div>
+                            <div class="typography-sample h2">三郷市をもっと住みやすく</div>
+                            <div class="typography-meta">Noto Sans JP / Bold (700) / 1.5rem (24px)</div>
+                        </div>
+                        <div class="typography-card">
+                            <div class="typography-title">見出し3（H3）</div>
+                            <div class="typography-sample h3">政策提言と地域活動</div>
+                            <div class="typography-meta">Noto Sans JP / Semi Bold (600) / 1.2rem (19.2px)</div>
+                        </div>
+                        <div class="typography-card">
+                            <div class="typography-title">本文</div>
+                            <div class="typography-sample body">創政MISATOは、三郷市議会において市民の声を代弁し、より良い地域社会の実現を目指す会派です。透明性のある政治と、市民参加型の政策づくりを推進しています。</div>
+                            <div class="typography-meta">Noto Sans JP / Regular (400) / 1rem (16px) / line-height: 1.8</div>
+                        </div>
+                        <div class="typography-card">
+                            <div class="typography-title">キャプション・注釈</div>
+                            <div class="typography-sample small">※この情報は2026年2月時点のものです</div>
+                            <div class="typography-meta">Noto Sans JP / Regular (400) / 0.85rem (13.6px)</div>
+                        </div>
+                    </div>
+
+                    <!-- Templates Section -->
+                    <div class="asset-section" id="templates">
+                        <div class="template-list">
+                            <div class="template-item">
+                                <div class="template-icon doc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </div>
+                                <div class="template-info">
+                                    <div class="template-name">一般質問原稿テンプレート</div>
+                                    <div class="template-desc">議会での一般質問用の原稿フォーマット</div>
+                                </div>
+                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    取得
+                                </a>
+                            </div>
+                            <div class="template-item">
+                                <div class="template-icon sheet">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                                </div>
+                                <div class="template-info">
+                                    <div class="template-name">政務活動費報告書</div>
+                                    <div class="template-desc">月次の政務活動費精算用スプレッドシート</div>
+                                </div>
+                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    取得
+                                </a>
+                            </div>
+                            <div class="template-item">
+                                <div class="template-icon slide">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                </div>
+                                <div class="template-info">
+                                    <div class="template-name">市政報告会スライド</div>
+                                    <div class="template-desc">市民向け報告会用のプレゼンテーション</div>
+                                </div>
+                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    取得
+                                </a>
+                            </div>
+                            <div class="template-item">
+                                <div class="template-icon pdf">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                                </div>
+                                <div class="template-info">
+                                    <div class="template-name">会派紹介リーフレット</div>
+                                    <div class="template-desc">会派紹介用の配布資料（A4両面）</div>
+                                </div>
+                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    取得
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photos Section -->
+                    <div class="asset-section" id="photos">
+                        <div class="asset-grid">
+                            <div class="asset-card">
+                                <div class="asset-preview">
+                                    <svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="asset-info">
+                                    <div class="asset-name">議場写真</div>
+                                    <div class="asset-desc">三郷市議会議場の様子</div>
+                                    <div class="asset-meta">
+                                        <span>準備中</span>
+                                    </div>
+                                </div>
+                                <div class="asset-actions">
+                                    <button class="asset-btn asset-btn-secondary" onclick="showToast('準備中です')">
+                                        準備中
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="asset-card">
+                                <div class="asset-preview">
+                                    <svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="asset-info">
+                                    <div class="asset-name">メンバー集合写真</div>
+                                    <div class="asset-desc">会派メンバーの集合写真</div>
+                                    <div class="asset-meta">
+                                        <span>準備中</span>
+                                    </div>
+                                </div>
+                                <div class="asset-actions">
+                                    <button class="asset-btn asset-btn-secondary" onclick="showToast('準備中です')">
+                                        準備中
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== Auth =====
+        const CORRECT_PASSWORD = 'sousei2026';
+
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true';
+            if (isLoggedIn) {
+                localStorage.setItem('member_auth', '1');
+                showMain();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+            if (password === CORRECT_PASSWORD) {
+                localStorage.setItem('member_auth', '1');
+                showMain();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function showMain() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        // ===== Sidebar =====
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+            document.querySelector('.sidebar-overlay').classList.toggle('open');
+        }
+
+        // ===== Tabs =====
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.asset-section').forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // ===== Copy Color =====
+        function copyColor(color) {
+            navigator.clipboard.writeText(color);
+            showToast(`${color} をコピーしました`);
+        }
+
+        // ===== Toast =====
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Check auth on page load
+        checkAuth();
+    </script>
+</body>
+</html>

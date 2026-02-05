@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
-        if (sessionStorage.getItem('member_auth') === '1' || sessionStorage.getItem('memberLoggedIn') === 'true') {
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
             document.documentElement.classList.add('auth-ready');
         }
     </script>
@@ -1286,6 +1286,12 @@
                         </svg>
                         会派予算管理
                     </a>
+                    <a href="/member/assets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        会派アセット
+                    </a>
                     <div class="sidebar-nav-section">条例AI</div>
                     <a href="/member/search.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2089,7 +2095,7 @@
             if (hash === HASH) {
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
-                sessionStorage.setItem('member_auth', '1');
+                localStorage.setItem('member_auth', '1');
                 initApp();
             } else {
                 document.getElementById('loginError').style.display = 'block';
@@ -3479,7 +3485,7 @@
         }
 
         // ===== Auto Login Check =====
-        if (sessionStorage.getItem('member_auth') === '1') {
+        if (localStorage.getItem('member_auth') === '1') {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
             initApp();
