@@ -701,6 +701,9 @@
         .data-table .actions button.delete:hover {
             background: var(--danger);
         }
+        .data-table .actions button.edit:hover {
+            background: #6366f1;
+        }
         .table-footer {
             display: flex;
             justify-content: space-between;
@@ -1327,11 +1330,14 @@
                                 <label class="form-label">カテゴリ *</label>
                                 <select class="form-select" id="expenseCategory" required>
                                     <option value="">選択してください</option>
-                                    <option value="research">調査研究費</option>
-                                    <option value="training">研修費</option>
-                                    <option value="pr">広報費</option>
+                                    <!-- 政務活動費カテゴリ（デフォルト） -->
+                                    <option value="training">研究研修費</option>
+                                    <option value="research">調査旅費</option>
+                                    <option value="document">資料作成費</option>
                                     <option value="materials">資料購入費</option>
-                                    <option value="other">その他</option>
+                                    <option value="pr">広報費</option>
+                                    <option value="hearing">広聴費</option>
+                                    <option value="office">事務費</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -1635,6 +1641,7 @@
                         経費を追加
                     </div>
                     <form id="personalExpenseForm" onsubmit="submitPersonalExpense(event)">
+                        <input type="hidden" id="editPersonalExpenseId" value="">
                         <div class="form-row">
                             <div class="form-group" style="flex:1;">
                                 <label class="form-label">日付</label>
@@ -1643,11 +1650,13 @@
                             <div class="form-group" style="flex:1;">
                                 <label class="form-label">カテゴリ</label>
                                 <select class="form-select" id="personalExpenseCategory" required>
-                                    <option value="research">調査研究費</option>
-                                    <option value="training">研修費</option>
-                                    <option value="pr">広報費</option>
+                                    <option value="training">研究研修費</option>
+                                    <option value="research">調査旅費</option>
+                                    <option value="document">資料作成費</option>
                                     <option value="materials">資料購入費</option>
-                                    <option value="other">その他</option>
+                                    <option value="pr">広報費</option>
+                                    <option value="hearing">広聴費</option>
+                                    <option value="office">事務費</option>
                                 </select>
                             </div>
                             <div class="form-group" style="flex:1;">
@@ -1665,7 +1674,10 @@
                                 <input type="text" class="form-input" id="personalExpenseNote" placeholder="任意">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="background:linear-gradient(135deg, #6366f1, #8b5cf6);">追加</button>
+                        <div style="display:flex;gap:0.5rem;">
+                            <button type="submit" id="personalSubmitBtn" class="btn btn-primary" style="background:linear-gradient(135deg, #6366f1, #8b5cf6);">保存する</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetPersonalExpenseForm()">キャンセル</button>
+                        </div>
                     </form>
                 </div>
 
@@ -1795,19 +1807,47 @@
         // ===== Constants =====
         const GEMINI_API_URL = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
 
-        const DEFAULT_CATEGORIES = [
-            { id: 'research', name: '調査研究費' },
-            { id: 'training', name: '研修費' },
-            { id: 'pr', name: '広報費' },
+        // 政務活動費カテゴリ（使途指針に準拠）
+        const SEIMU_CATEGORIES = [
+            { id: 'training', name: '研究研修費' },
+            { id: 'research', name: '調査旅費' },
+            { id: 'document', name: '資料作成費' },
             { id: 'materials', name: '資料購入費' },
-            { id: 'other', name: 'その他' }
+            { id: 'pr', name: '広報費' },
+            { id: 'hearing', name: '広聴費' },
+            { id: 'office', name: '事務費' }
         ];
 
+        // 積立金カテゴリ（一般勘定科目）
+        const TSUMITATE_CATEGORIES = [
+            { id: 'food', name: '飲食費' },
+            { id: 'transport', name: '交通費' },
+            { id: 'accommodation', name: '宿泊費' },
+            { id: 'supplies', name: '消耗品費' },
+            { id: 'communication', name: '通信費' },
+            { id: 'misc', name: '雑費' }
+        ];
+
+        // 全カテゴリ（後方互換性のため）
+        const ALL_CATEGORIES = [...SEIMU_CATEGORIES, ...TSUMITATE_CATEGORIES];
+
         const CATEGORY_COLORS = {
-            research: '#3b82f6',
-            training: '#22c55e',
-            pr: '#f59e0b',
+            // 政務活動費
+            training: '#3b82f6',
+            research: '#22c55e',
+            document: '#14b8a6',
             materials: '#a855f7',
+            pr: '#f59e0b',
+            hearing: '#ec4899',
+            office: '#6366f1',
+            // 積立金
+            food: '#ef4444',
+            transport: '#f97316',
+            accommodation: '#8b5cf6',
+            supplies: '#06b6d4',
+            communication: '#84cc16',
+            misc: '#6b7280',
+            // 旧カテゴリ（後方互換性）
             other: '#6b7280'
         };
 
@@ -2094,6 +2134,16 @@
                 btn.classList.remove('active');
             });
             document.querySelector(`.account-toggle-btn.${account}`).classList.add('active');
+            // カテゴリ選択肢を更新
+            updateCategoryOptions(account);
+        }
+
+        function updateCategoryOptions(accountType) {
+            const select = document.getElementById('expenseCategory');
+            const categories = accountType === 'seimu' ? SEIMU_CATEGORIES : TSUMITATE_CATEGORIES;
+
+            select.innerHTML = '<option value="">選択してください</option>' +
+                categories.map(cat => `<option value="${cat.id}">${cat.name}</option>`).join('');
         }
 
         // ===== Tab Switching =====
@@ -2216,20 +2266,30 @@
             const ctx = document.getElementById('categoryChart').getContext('2d');
             const filteredExpenses = currentAccount ? expenses.filter(e => e.account === currentAccount) : expenses;
 
+            // 現在のアカウントに応じてカテゴリを選択
+            const categories = currentAccount === 'seimu' ? SEIMU_CATEGORIES : TSUMITATE_CATEGORIES;
+
             const categoryTotals = {};
-            DEFAULT_CATEGORIES.forEach(cat => {
+            categories.forEach(cat => {
                 categoryTotals[cat.id] = 0;
             });
 
             filteredExpenses.forEach(exp => {
                 if (categoryTotals[exp.category] !== undefined) {
                     categoryTotals[exp.category] += exp.amount;
+                } else {
+                    // 旧カテゴリの場合は雑費/その他に振り分け
+                    if (currentAccount === 'seimu') {
+                        categoryTotals['office'] = (categoryTotals['office'] || 0) + exp.amount;
+                    } else {
+                        categoryTotals['misc'] = (categoryTotals['misc'] || 0) + exp.amount;
+                    }
                 }
             });
 
-            const labels = DEFAULT_CATEGORIES.map(cat => cat.name);
-            const data = DEFAULT_CATEGORIES.map(cat => categoryTotals[cat.id]);
-            const colors = DEFAULT_CATEGORIES.map(cat => CATEGORY_COLORS[cat.id] || '#6b7280');
+            const labels = categories.map(cat => cat.name);
+            const data = categories.map(cat => categoryTotals[cat.id]);
+            const colors = categories.map(cat => CATEGORY_COLORS[cat.id] || '#6b7280');
 
             if (categoryChart) {
                 categoryChart.destroy();
@@ -2919,7 +2979,7 @@
         }
 
         function getCategoryName(categoryId) {
-            const cat = DEFAULT_CATEGORIES.find(c => c.id === categoryId);
+            const cat = ALL_CATEGORIES.find(c => c.id === categoryId);
             return cat ? cat.name : categoryId;
         }
 
@@ -3058,6 +3118,7 @@
                         <td>${escapeHtml(exp.description)}${exp.note ? `<br><small style="color:var(--gray)">${escapeHtml(exp.note)}</small>` : ''}</td>
                         <td class="amount">${formatCurrency(exp.amount)}</td>
                         <td class="actions">
+                            <button class="edit" onclick="editPersonalExpense('${exp.id}')" title="編集">✏️</button>
                             <button class="delete" onclick="deletePersonalExpense('${exp.id}')" title="削除">🗑️</button>
                         </td>
                     </tr>
@@ -3071,6 +3132,7 @@
         async function submitPersonalExpense(event) {
             event.preventDefault();
 
+            const editId = document.getElementById('editPersonalExpenseId').value;
             const expense = {
                 memberName: currentPersonalMember,
                 date: document.getElementById('personalExpenseDate').value,
@@ -3081,41 +3143,90 @@
             };
 
             try {
-                const { data, error } = await supabaseClient
-                    .from('personal_expenses')
-                    .insert({
-                        member_name: expense.memberName,
-                        date: expense.date,
-                        category: expense.category,
-                        amount: expense.amount,
-                        description: expense.description,
-                        note: expense.note
-                    })
-                    .select()
-                    .single();
+                if (editId) {
+                    // 更新モード
+                    const { error } = await supabaseClient
+                        .from('personal_expenses')
+                        .update({
+                            date: expense.date,
+                            category: expense.category,
+                            amount: expense.amount,
+                            description: expense.description,
+                            note: expense.note
+                        })
+                        .eq('id', editId);
 
-                if (error) throw error;
+                    if (error) throw error;
 
-                personalExpenses.unshift({
-                    id: data.id,
-                    memberName: data.member_name,
-                    date: data.date,
-                    category: data.category,
-                    amount: data.amount,
-                    description: data.description || '',
-                    note: data.note || '',
-                    createdAt: data.created_at
-                });
+                    // ローカルデータを更新
+                    const idx = personalExpenses.findIndex(e => e.id === editId);
+                    if (idx !== -1) {
+                        personalExpenses[idx] = { ...personalExpenses[idx], ...expense };
+                    }
 
-                document.getElementById('personalExpenseForm').reset();
-                setPersonalDefaultDate();
+                    showToast('経費を更新しました', 'success');
+                } else {
+                    // 新規追加モード
+                    const { data, error } = await supabaseClient
+                        .from('personal_expenses')
+                        .insert({
+                            member_name: expense.memberName,
+                            date: expense.date,
+                            category: expense.category,
+                            amount: expense.amount,
+                            description: expense.description,
+                            note: expense.note
+                        })
+                        .select()
+                        .single();
+
+                    if (error) throw error;
+
+                    personalExpenses.unshift({
+                        id: data.id,
+                        memberName: data.member_name,
+                        date: data.date,
+                        category: data.category,
+                        amount: data.amount,
+                        description: data.description || '',
+                        note: data.note || '',
+                        createdAt: data.created_at
+                    });
+
+                    showToast('経費を追加しました', 'success');
+                }
+
+                resetPersonalExpenseForm();
                 renderPersonalDashboard();
                 renderPersonalExpenseTable();
-                showToast('経費を追加しました', 'success');
             } catch (error) {
                 console.error('Error saving personal expense:', error);
                 showToast('経費の保存に失敗しました', 'error');
             }
+        }
+
+        function editPersonalExpense(id) {
+            const expense = personalExpenses.find(e => e.id === id);
+            if (!expense) return;
+
+            document.getElementById('editPersonalExpenseId').value = id;
+            document.getElementById('personalExpenseDate').value = expense.date;
+            document.getElementById('personalExpenseCategory').value = expense.category;
+            document.getElementById('personalExpenseAmount').value = expense.amount;
+            document.getElementById('personalExpenseDescription').value = expense.description;
+            document.getElementById('personalExpenseNote').value = expense.note || '';
+
+            document.getElementById('personalSubmitBtn').textContent = '更新する';
+
+            // フォームにスクロール
+            document.getElementById('personalExpenseForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetPersonalExpenseForm() {
+            document.getElementById('personalExpenseForm').reset();
+            document.getElementById('editPersonalExpenseId').value = '';
+            document.getElementById('personalSubmitBtn').textContent = '保存する';
+            setPersonalDefaultDate();
         }
 
         async function deletePersonalExpense(id) {
