@@ -396,7 +396,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 公共的団体等の代表者</p>
 <p class="jorei-item">(2) 知識経験を有する者</p>
 <p class="jorei-item">(3) 公募による市民</p>
-</div>` } },
+</div>` },
     { id: 31, title: '三郷市まちづくり委員会条例', category: '執行機関', keywords: ['まちづくり', '委員会', '市民参加'], summary: 'まちづくり委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000037.html',
         fullText: `<div class="jorei-header">○三郷市まちづくり委員会条例<br> </div>
 <div class="jorei-body">
@@ -413,7 +413,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 知識経験を有する者</p>
 <p class="jorei-item">(3) 公募による市民</p>
 <p class="jorei-item">(4) その他市長が必要と認める者</p>
-</div>` } },
+</div>` },
     { id: 32, title: '三郷市情報公開条例', category: '執行機関', keywords: ['情報公開', '公文書', '透明性', '市民の知る権利'], summary: '市の情報公開に関する条例。市民の知る権利を保障。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000063.html',
         fullText: `<div class="jorei-header">○三郷市情報公開条例<br> </div>
 <div class="jorei-body">
@@ -467,7 +467,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 法人その他の団体 (国、独立行政法人等、他の地方公共団体及び地方独立行政法人を除く。以下「法人等」という。) に関する情報又は事業を営む個人の当該事業に関する情報であって、次に掲げるもの。 ただし、人の生命、健康、生活又は財産を保護するため、公にすることが必要であると認められる情報を除く。</p>
 <p class="jorei-item">(3) 公にすることにより、人の生命、身体又は財産上の保護、犯罪の予防及び捜査その他の公共の安全と秩序の維持に支障を及ぼすおそれがある情報</p>
 <p class="jorei-item">(4) 実施機関の内部若しくは相互又は実施機関と国等 (国、独立行政法人等、他の地方公共団体、地方独立行政法人及び公共的団体等をいう。以下同じ。) との間における審議、検討又は協議に関する情報であって、公にすることにより、率直な意見の交換若しくは意思決定の中立性が不当に損なわれるおそれ、不当に市民の間に混乱を生じさせるおそれ又は特定の者に不当に利益を与え若しくは不利益を及ぼすおそれがあるもの</p>
-</div>` } },
+</div>` },
     { id: 33, title: '三郷市個人情報の保護に関する法律施行条例', category: '執行機関', keywords: ['個人情報', '保護', 'プライバシー'], summary: '個人情報保護法の施行に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001183.html',
         fullText: `<div class="jorei-header">○三郷市個人情報の保護に関する法律施行条例<br> </div>
 <div class="jorei-body">
@@ -498,7 +498,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 施行日前において、旧条例第13条第1項に規定する受託者等であった者又は同項に規定する受託した業務又は管理の業務 (以下「受託業務等」という。) に従事していた者</p>
 <p class="jorei-item">(1) 施行日において現に旧実施機関の職員である者又は同日前において旧実施機関の職員であった者</p>
 <p class="jorei-item">(2) 施行日前において受託業務等に従事していた者</p>
-</div>` } },
+</div>` },
     { id: 34, title: '三郷市情報公開・個人情報保護審査会条例', category: '執行機関', keywords: ['審査会', '情報公開', '個人情報'], summary: '情報公開・個人情報保護に関する審査会の設置条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000694.html',
         fullText: `<div class="jorei-header">○三郷市情報公開・個人情報保護審査会条例<br> </div>
 <div class="jorei-body">
@@ -530,7 +530,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 法第78条第1項第4号、第94条第1項又は第102条第1項に規定する開示決定等、訂正決定等又は利用停止決定等</p>
 <p class="jorei-item">(2) 情報公開条例第12条第1項 に規定する公開決定等</p>
 <p class="jorei-item">(3) 議会個人情報保護条例第20条第5号ア 、 第35条第1項 又は 第42条第1項 に規定する開示決定等、訂正決定等又は利用停止決定等</p>
-</div>` } },
+</div>` },
     { id: 35, title: '三郷市行政手続条例', category: '執行機関', keywords: ['行政手続', '処分', '申請', '不利益処分'], summary: '行政手続の透明性・公正性を確保する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000068.html',
         fullText: `<div class="jorei-header">○三郷市行政手続条例<br> </div>
 <div class="jorei-body">
@@ -585,7 +585,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 前号ア から ウ までのいずれにも該当しないとき 弁明の機会の付与</p>
 <p class="jorei-item">(1) 公益上、緊急に不利益処分をする必要があるため、 前項 に規定する意見陳述のための手続を執ることができないとき。</p>
 <p class="jorei-item">(2) 条例等の規定上必要とされる資格がなかったこと又は失われるに至ったことが判明した場合に必ずすることとされている不利益処分であって、その資格の不存在又は喪失の事実が裁判所の判決書又は決定書、一定の職に就いたことを証する当該任命権者の書類その他の客観的な資料により直接証明されたものをしようとするとき。</p>
-</div>` } },
+</div>` },
     { id: 36, title: '三郷市行政手続等における情報通信の技術の利用に関する条例', category: '執行機関', keywords: ['電子申請', 'オンライン', 'デジタル化'], summary: '行政手続のオンライン化に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000809.html',
         fullText: `<div class="jorei-header">○三郷市行政手続等における情報通信の技術の利用に関する条例<br> </div>
 <div class="jorei-body">
@@ -609,7 +609,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(9) 縦覧等 法令又は条例等の規定に基づき市の機関が書面等又は電磁的記録に記録されている事項を縦覧又は閲覧に供することをいう。</p>
 <p class="jorei-item">(10) 作成等 法令又は条例等の規定に基づき市の機関が書面等又は電磁的記録を作成し、又は保存することをいう。</p>
 <p class="jorei-item">(11) 手続等 申請等、処分通知等、縦覧等又は作成等をいう。</p>
-</div>` } },
+</div>` },
     { id: 37, title: '三郷市行政不服審査法関係手数料徴収条例', category: '執行機関', keywords: ['行政不服審査', '手数料', '不服申立て'], summary: '行政不服審査に関する手数料の条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001057.html',
         fullText: `<div class="jorei-header">○三郷市行政不服審査法関係手数料徴収条例<br> </div>
 <div class="jorei-body">
@@ -621,7 +621,7 @@ const allOrdinanceData = [
 <p>(準用) 第6条 第1条 及び 第4条第1項 の規定は、法第81条第3項において準用する法第78条第1項の規定による交付について準用する。 この場合において、 第1条 中「第38条第1項」とあるのは「第81条第3項において準用する法第78条第1項」と、 第4条第1項 中「審理員 (法第11条第2項に規定する審理員をいう。) 」とあるのは「三郷市行政不服審査会」と読み替えるものとする。</p>
 <p>(委任) 第7条 この条例 の施行に関し必要な事項は、規則で定める。</p>
 <p>(過料) 第8条 詐欺その他不正の行為により、 第2条 の手数料の徴収を免れた者は、その徴収を免れた金額の5倍に相当する金額 (当該5倍に相当する金額が5万円を超えないときは、5万円とする。) 以下の過料に処する。</p>
-</div>` } },
+</div>` },
     { id: 38, title: '三郷市行政不服審査会条例', category: '執行機関', keywords: ['行政不服審査', '審査会', '救済'], summary: '行政不服審査会の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001056.html',
         fullText: `<div class="jorei-header">○三郷市行政不服審査会条例<br> </div>
 <div class="jorei-body">
@@ -632,7 +632,7 @@ const allOrdinanceData = [
 <p>(会議の非公開) 第5条 審査会の会議は、非公開とする。</p>
 <p>(庶務) 第6条 審査会の庶務は、総務部総務課において処理する。</p>
 <p>(委任) 第7条 この条例に定めるもののほか、審査会に関し必要な事項は、規則で定める。</p>
-</div>` } },
+</div>` },
     { id: 39, title: '三郷市個人番号の利用及び特定個人情報の提供に関する条例', category: '執行機関', keywords: ['マイナンバー', '個人番号', '番号制度'], summary: 'マイナンバーの利用に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001051.html',
         fullText: `<div class="jorei-header">○三郷市個人番号の利用及び特定個人情報の提供に関する条例<br> </div>
 <div class="jorei-body">
@@ -648,7 +648,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 情報提供ネットワークシステム 法第2条第15項に規定する情報提供ネットワークシステムをいう。</p>
 <p class="jorei-item">(5) 特定個人番号利用事務 法第19条第8号に規定する特定個人番号利用事務をいう。</p>
 <p class="jorei-item">(6) 利用特定個人情報 法第19条第8号に規定する利用特定個人情報をいう。</p>
-</div>` } },
+</div>` },
     { id: 40, title: '三郷市選挙管理委員会規程', category: '執行機関', keywords: ['選挙', '選挙管理', '投票'], summary: '選挙管理委員会に関する規程。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000071.html',
         fullText: `<div class="jorei-header">○三郷市選挙管理委員会規程<br> </div>
 <div class="jorei-body">
@@ -713,7 +713,7 @@ const allOrdinanceData = [
 <p>(委任) 第15条 この条例に定めるもののほか、支払の請求の手続その他必要な事項は、委員会が定める。</p>
 <p class="jorei-item">(1) 当該契約が一般乗用旅客自動車運送事業者との運送契約 (以下この条において「一般運送契約」という。) である場合当該選挙運動用自動車 (同一の日において一般運送契約により2台以上の選挙運動用自動車が使用される場合には、当該公職の候補者が指定するいずれか1台の選挙運動用自動車に限る。) のそれぞれにつき、選挙運動用自動車として使用された各日についてその使用に対し支払うべき金額 (当該金額が64,500円を超える場合には、64,500円) の合計金額</p>
 <p class="jorei-item">(2) 当該契約が一般運送契約以外の契約である場合次に掲げる区分に応じ、それぞれに定める金額</p>
-</div>` } },
+</div>` },
     { id: 42, title: '三郷市選挙公報発行条例', category: '執行機関', keywords: ['選挙公報', '選挙', '情報提供'], summary: '選挙公報の発行に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000079.html',
         fullText: `<div class="jorei-header">○三郷市選挙公報発行条例<br> </div>
 <div class="jorei-body">
@@ -724,7 +724,7 @@ const allOrdinanceData = [
 <p>(選挙公報の配布) 第5条 選挙公報は、委員会が当該選挙に用いるべき選挙人名簿に登録された者の属する各世帯に対して、選挙の期日の前日までに配布するものとする。</p>
 <p>(選挙公報の発行を中止する場合) 第6条 法第100条第4項の規定に該当し、投票を行うことを必要としなくなったとき、又は天災その他避けることのできない事故その他特別の事情があるときは、選挙公報発行の手続は、中止する。</p>
 <p>(委任) 第7条 この条例 に定めるもののほか、選挙公報の発行に関し必要な事項は、委員会が定める。</p>
-</div>` } },
+</div>` },
     { id: 43, title: '三郷市監査委員条例', category: '執行機関', keywords: ['監査', '監査委員', 'チェック機能'], summary: '監査委員に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000082.html',
         fullText: `<div class="jorei-header">○三郷市監査委員条例<br> </div>
 <div class="jorei-body">
@@ -738,7 +738,7 @@ const allOrdinanceData = [
 <p>(事務局の設置) 第8条 監査委員に事務局を置く。</p>
 <p>(職員の定数) 第9条 事務局長、書記その他の職員の定数は、 三郷市職員定数条例 (昭和38年条例第9号) の定めるところによる。</p>
 <p>(委任) 第10条 この条例に定めるものを除くほか、監査委員に関し必要な事項は、監査委員が定める。</p>
-</div>` } },
+</div>` },
     { id: 44, title: '三郷市公平委員会設置条例', category: '執行機関', keywords: ['公平委員会', '職員', '救済'], summary: '公平委員会の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000090.html' },
     { id: 45, title: '三郷市人事行政の運営等の状況の公表に関する条例', category: '執行機関', keywords: ['人事行政', '公表', '透明性'], summary: '人事行政の状況公表に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000763.html',
         fullText: `<div class="jorei-header">○三郷市人事行政の運営等の状況の公表に関する条例<br> </div>
@@ -767,7 +767,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 市の広報紙に掲載する方法</p>
 <p class="jorei-item">(2) 公衆の見やすい場所に掲示し、又は閲覧所を設けて公衆の閲覧に供する方法</p>
 <p class="jorei-item">(3) その他市長が必要と認める方法</p>
-</div>` } },
+</div>` },
     { id: 46, title: '固定資産評価審査委員会条例', category: '執行機関', keywords: ['固定資産', '評価', '審査'], summary: '固定資産評価審査委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000088.html',
         fullText: `<div class="jorei-header">○固定資産評価審査委員会条例<br> </div>
 <div class="jorei-body">
@@ -811,13 +811,13 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 事案の概要</p>
 <p class="jorei-item">(3) 審査申出人及び市長の主張の要旨</p>
 <p class="jorei-item">(4) 理由</p>
-</div>` } },
+</div>` },
     { id: 47, title: '三郷市附属機関に関する条例', category: '執行機関', keywords: ['附属機関', '審議会', '委員会'], summary: '市の附属機関に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000091.html',
         fullText: `<div class="jorei-header">○三郷市附属機関に関する条例<br> </div>
 <div class="jorei-body">
 <p>(設置) 第1条 法律又はこれに基づく政令の定めるところにより置かれるもののほか、地方自治法 (昭和22年法律第67号) 第138条の4第3項及び第202条の3第1項の規定により、附属機関の設置並びに担任する事務及び権限を 別表 のとおり定める。</p>
 <p>(補則) 第2条 この条例 に定めるもののほか、必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
 
     // ===== 第4編 人事 =====
     { id: 48, title: '三郷市副市長の定数を定める条例', category: '人事', keywords: ['副市長', '定数', '特別職'], summary: '副市長の定数を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000106.html',
@@ -875,7 +875,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 4級 特に困難な業務で重要なものを行う職務</p>
 <p class="jorei-item">(1) 第1条、第4条及び第5条の規定 公布の日</p>
 <p class="jorei-item">(2) 第2条、第4条、第5条、第6条、第8条及び第10条の規定並びに附則第4条及び第5条の規定 令和7年4月1日</p>
-</div>` } },
+</div>` },
     { id: 51, title: '職員の分限に関する手続及び効果に関する条例', category: '人事', keywords: ['分限', '処分', '職員'], summary: '職員の分限処分に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000100.html',
         fullText: `<div class="jorei-header">○職員の分限に関する手続及び効果に関する条例<br> </div>
 <div class="jorei-body">
@@ -894,7 +894,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 三郷市企業職員の給与の種類及び基準に関する条例 (昭和42年条例第10号) 附則第2項 の措置</p>
 <p class="jorei-item">(3) 技能労務職員の給与の種類及び基準に関する条例 (昭和48年条例第6号) 附則第2項 の措置</p>
 <p class="jorei-item">(4) 前各号 に掲げる措置に相当するもので規則その他の規程で定めるもの</p>
-</div>` } },
+</div>` },
     { id: 52, title: '三郷市職員の定年等に関する条例', category: '人事', keywords: ['定年', '退職', '職員'], summary: '職員の定年に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000101.html',
         fullText: `<div class="jorei-header">○三郷市職員の定年等に関する条例<br> </div>
 <div class="jorei-body">
@@ -952,7 +952,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 施行日以後に組織の変更等により名称が変更された職</p>
 <p class="jorei-item">(1) 施行日以後に新たに設置された短時間勤務の職</p>
 <p class="jorei-item">(2) 施行日以後に組織の変更等により名称が変更された短時間勤務の職</p>
-</div>` } },
+</div>` },
     { id: 53, title: '公益的法人等への職員の派遣等に関する条例', category: '人事', keywords: ['派遣', '公益法人', '職員'], summary: '公益法人等への職員派遣に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000667.html',
         fullText: `<div class="jorei-header">○公益的法人等への職員の派遣等に関する条例<br> </div>
 <div class="jorei-body">
@@ -982,7 +982,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 派遣職員が地方公務員法第28条第1項第2号又は第3号に該当することとなった場合</p>
 <p class="jorei-item">(5) 派遣職員が地方公務員法第28条第2項各号のいずれかに該当することとなった場合又は水難、火災その他の災害により生死不明若しくは所在不明となった場合</p>
 <p class="jorei-item">(6) 派遣職員が地方公務員法第29条第1項第1号又は第3号に該当することとなった場合</p>
-</div>` } },
+</div>` },
     { id: 54, title: '職員の懲戒の手続及び効果に関する条例', category: '人事', keywords: ['懲戒', '処分', '職員'], summary: '職員の懲戒処分に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000104.html',
         fullText: `<div class="jorei-header">○職員の懲戒の手続及び効果に関する条例<br> </div>
 <div class="jorei-body">
@@ -996,7 +996,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 社会福祉法人三郷市社会福祉協議会</p>
 <p class="jorei-item">(2) 公益財団法人三郷市文化振興公社</p>
 <p class="jorei-item">(3) 公益社団法人三郷市シルバー人材センター</p>
-</div>` } },
+</div>` },
     { id: 55, title: '職員の服務の宣誓に関する条例', category: '人事', keywords: ['服務', '宣誓', '職員'], summary: '職員の服務宣誓に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000126.html',
         fullText: `<div class="jorei-header">○職員の服務の宣誓に関する条例<br>昭和31年10月30日 条例第9号</div>
 <div class="jorei-article"><span class="article-title">（目的）</span><br>第1条 この条例は、地方公務員法（昭和25年法律第261号）第31条の規定に基づき、職員の服務の宣誓について定めることを目的とする。</div>
@@ -1063,7 +1063,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 出産の場合 出産予定日6週間 (多胎妊娠の場合にあっては、14週間) 前から産後8週間を経過するまでの期間。 ただし、職員から請求があり、かつ、任命権者が特に必要と認めたときは、出産予定日前の期間及び産後の期間をあわせて1週間の範囲内の期間を加算した期間</p>
 <p class="jorei-item">(4) 妊娠中又は出産後1年以内の職員が妊娠又は出産に関し母子保健法 (昭和40年法律第141号) 第10条に規定する保健指導又は同法第13条に規定する健康診査を受ける場合 妊娠6月 (1月は28日として計算する。以下この号において同じ。) までは4週間に1回、妊娠7月から9月までは2週間に1回、妊娠10月から出産までは1週間に1回、産後1年まではその間に1回 (医師等の特別の指示があった場合には、いずれの期間においても、その指示された回数) とし、1回につき1日の範囲内でその都度必要と認める時間</p>
 <p class="jorei-item">(5) 妊娠中の女性職員が通勤に利用する交通機関の混雑の程度が母体又は胎児の健康保持に影響があると認める場合 正規の勤務時間の始め又は終わりにおいて、1日を通じて1時間を超えない範囲内でそれぞれ必要と認める時間</p>
-</div>` } },
+</div>` },
     { id: 58, title: '職員の育児休業等に関する条例', category: '人事', keywords: ['育児休業', '育休', 'ワークライフバランス'], summary: '職員の育児休業に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000113.html',
         fullText: `<div class="jorei-header">○職員の育児休業等に関する条例<br> </div>
 <div class="jorei-body">
@@ -1117,7 +1117,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 非常勤職員の配偶者 (届出をしないが事実上婚姻関係と同様の事情にある者を含む。以下同じ。) が当該非常勤職員の養育する子の1歳到達日以前のいずれかの日において当該子を養育するために育児休業法その他の法律の規定による育児休業 (以下この条及び 次条 において「地方等育児休業」という。) をしている場合において当該非常勤職員が当該子について育児休業をしようとする場合 (当該育児休業の期間の初日とされた日が当該子の1歳到達日の翌日後である場合又は当該地方等育児休業の期間の初日前である場合を除く。) 当該子が1歳2か月に達する日 (当該日が当該育児休業の期間の初日とされた日から起算して育児休業等可能日数 (当該子の出生の日から当該子の1歳到達日までの日数をいう。) から育児休業等取得日数 (当該子の出生の日以後当該非常勤職員が労働基準法 (昭和22年法律第49号) 第65条第1項又は第2項の規定により勤務しなかった日数と当該子について育児休業をした日数を合算した日数をいう。) を差し引いた日数を経過する日より後の日であるときは、当該経過する日)</p>
 <p class="jorei-item">(3) 1歳から1歳6か月に達するまでの子を養育する非常勤職員が、次に掲げる場合のいずれにも該当する場合 (当該子についてこの号に掲げる場合に該当して育児休業をしている場合であって 第3条第7号 に掲げる事情に該当するときは イ 及び ウ に掲げる場合に該当する場合、規則で定める特別の事情がある場合にあっては ウ に掲げる場合に該当する場合) 当該子の1歳6か月到達日</p>
 <p class="jorei-item">(1) 当該非常勤職員が当該子の1歳6か月到達日の翌日 (当該非常勤職員の配偶者がこの条の規定に該当し、又はこれに相当する場合に該当して地方等育児休業をする場合にあっては、当該地方等育児休業の期間の末日とされた日の翌日以前の日) を育児休業の期間の初日とする育児休業をしようとする場合</p>
-</div>` } },
+</div>` },
     { id: 59, title: '議会の議員その他非常勤の職員の公務災害補償等に関する条例', category: '人事', keywords: ['公務災害', '補償', '非常勤'], summary: '非常勤職員の公務災害補償に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000121.html',
         fullText: `<div class="jorei-header">○議会の議員その他非常勤の職員の公務災害補償等に関する条例<br> </div>
 <div class="jorei-body">
@@ -1176,7 +1176,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 第1号 に掲げる往復に先行し、又は後続する住居間の移動 (規則で定める要件に該当するものに限る。)</p>
 <p class="jorei-item">(1) 議会の議員 議長</p>
 <p class="jorei-item">(2) 執行機関たる委員会の非常勤の委員及び非常勤の監査委員 市長</p>
-</div>` } },
+</div>` },
     { id: 60, title: '三郷市職員公務災害等見舞金支給条例', category: '人事', keywords: ['公務災害', '見舞金', '職員'], summary: '職員の公務災害見舞金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000124.html',
         fullText: `<div class="jorei-header">○三郷市職員公務災害等見舞金支給条例<br> </div>
 <div class="jorei-body">
@@ -1208,7 +1208,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 障害見舞金の額 対応障害等級に定める額から 賞じゅつ金条例 により授与されることとなる障害者賞じゅつ金の額を控除して得た額</p>
 <p class="jorei-item">(1) 三郷市消防賞じゅつ金条例 (昭和47年条例第37号)</p>
 <p class="jorei-item">(2) 三郷市交通賞じゅつ金条例 (昭和48年条例第9号)</p>
-</div>` } },
+</div>` },
     { id: 61, title: '職員団体の登録に関する条例', category: '人事', keywords: ['職員団体', '労働組合', '登録'], summary: '職員団体の登録に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000133.html',
         fullText: `<div class="jorei-header">○職員団体の登録に関する条例<br> </div>
 <div class="jorei-body">
@@ -1223,7 +1223,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 連合体である職員団体にあっては、その構成団体の名称</p>
 <p class="jorei-item">(1) 規約の作成又は変更、役員の選挙その他これらに準ずる重要な行為が、法第53条第3項の規定に従い決定されたこと並びにその投票の日、場所及び投票の結果を証明する書類</p>
 <p class="jorei-item">(2) 当該職員団体の組織が法第53条第4項の規定に適合していることを証明する書類</p>
-</div>` } },
+</div>` },
 
     // ===== 第5編 給与 =====
     { id: 62, title: '議会の議員の議員報酬及び費用弁償等に関する条例', category: '給与', keywords: ['議員報酬', '報酬', '議会', '給与', '議員'], summary: '議員の報酬に関する条例。議長月額49万円、副議長月額45万円、議員月額43万円。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000138.html',
@@ -1261,7 +1261,7 @@ const allOrdinanceData = [
 <p>(費用弁償) 第3条 特別職の職員が招集に応じ、会議に出席したとき、又は公務のため旅行したときは、費用弁償として旅費を支給する。</p>
 <p>(規則への委任) 第4条 この条例の実施に関し必要な事項は、規則で定める。</p>
 <p>(施行期日) 第1条 この条例は、平成12年4月1日から施行する。</p>
-</div>` } },
+</div>` },
     { id: 64, title: '三郷市会計年度任用職員の報酬等に関する条例', category: '給与', keywords: ['会計年度任用職員', '報酬', '非正規'], summary: '会計年度任用職員の報酬に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001129.html',
         fullText: `<div class="jorei-header">○三郷市会計年度任用職員の報酬等に関する条例<br> </div>
 <div class="jorei-body">
@@ -1279,7 +1279,7 @@ const allOrdinanceData = [
 <p>(施行期日等) 第1条 この条例は、次の各号に掲げる区分に応じ、当該各号に定める日から施行する。</p>
 <p class="jorei-item">(1) 第1条、第4条及び第5条の規定 公布の日</p>
 <p class="jorei-item">(1) 第1条及び第7条の規定並びに附則第2条、第3条及び第6条の規定 公布の日</p>
-</div>` } },
+</div>` },
     { id: 65, title: '証人等の実費弁償に関する条例', category: '給与', keywords: ['証人', '実費弁償', '費用'], summary: '証人等の実費弁償に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000142.html',
         fullText: `<div class="jorei-header">○証人等の実費弁償に関する条例<br> </div>
 <div class="jorei-body">
@@ -1294,7 +1294,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(6) 地方公務員法 (昭和25年法律第261号) 第8条第6項の規定により出頭した証人</p>
 <p class="jorei-item">(7) 農業委員会等に関する法律 (昭和26年法律第88号) 第35条第1項の規定により出頭した農地等の所有者、農業者その他の関係者</p>
 <p class="jorei-item">(8) 前各号 に掲げるもののほか、法令又は条例若しくは規則の定めるところにより、市長その他の執行機関又はこれらの附属機関の求めにより出頭し、又は公聴会等に参加した者</p>
-</div>` } },
+</div>` },
     { id: 66, title: '三郷市特別職報酬等審議会条例', category: '給与', keywords: ['特別職', '報酬', '審議会'], summary: '特別職報酬審議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000143.html',
         fullText: `<div class="jorei-header">○三郷市特別職報酬等審議会条例<br> </div>
 <div class="jorei-body">
@@ -1305,7 +1305,7 @@ const allOrdinanceData = [
 <p>(会議) 第5条 審議会は、会長が招集する。</p>
 <p>(庶務) 第6条 審議会の庶務は、総務部人事課において処理する。</p>
 <p>(委任) 第7条 この条例に定めるもののほか、審議会の運営に関し必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
     { id: 67, title: '市長及び副市長の給与等に関する条例', category: '給与', keywords: ['市長', '副市長', '給与'], summary: '市長・副市長の給与に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000144.html',
         fullText: `<div class="jorei-header">○市長及び副市長の給与等に関する条例<br> </div>
 <div class="jorei-body">
@@ -1346,7 +1346,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 一時差止処分を受けた者がその者の在職期間中の行為に係る刑事事件に関し起訴をされることなく当該一時差止処分に係る期末手当の基準日から起算して1年を経過した場合</p>
 <p class="jorei-item">(1) 第1条及び第3条の規定並びに次条の規定 公布の日</p>
 <p class="jorei-item">(2) 第2条及び第4条の規定 令和7年4月1日</p>
-</div>` } },
+</div>` },
     { id: 68, title: '三郷市教育委員会教育長の給与等に関する条例', category: '給与', keywords: ['教育長', '給与', '教育委員会'], summary: '教育長の給与に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000145.html',
         fullText: `<div class="jorei-header">○三郷市教育委員会教育長の給与等に関する条例<br> </div>
 <div class="jorei-body">
@@ -1388,7 +1388,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 一時差止処分を受けた者がその者の在職期間中の行為に係る刑事事件に関し起訴をされることなく当該一時差止処分に係る期末手当の基準日から起算して1年を経過した場合</p>
 <p class="jorei-item">(1) 第1条及び第3条の規定並びに次条の規定 公布の日</p>
 <p class="jorei-item">(2) 第2条及び第4条の規定 令和7年4月1日</p>
-</div>` } },
+</div>` },
     { id: 69, title: '職員の給与に関する条例', category: '給与', keywords: ['給与', '職員', '給料'], summary: '職員の給与に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000146.html',
         fullText: `<div class="jorei-header">○職員の給与に関する条例<br> </div>
 <div class="jorei-body">
@@ -1448,7 +1448,7 @@ const allOrdinanceData = [
 <p class="jorei-article">第4条 前条の規定による給料を支給される職員に関する給与条例第7条第2項の規定の適用については、同項中「調整前における給料月額」とあるのは「その調整前における給料月額と職員の給与に関する条例等の一部を改正する条例 (平成28年条例第5号) 附則第3条の規定による給料の額との合計額」とする。</p>
 
 <p>(施行期日等) 第1条 この条例は、公布の日から施行する。 ただし、第2条の規定は、平成29年4月1日から施行する。</p>
-</div>` } },
+</div>` },
     { id: 70, title: '技能労務職員の給与の種類及び基準に関する条例', category: '給与', keywords: ['技能労務', '給与', '職員'], summary: '技能労務職員の給与に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000150.html',
         fullText: `<div class="jorei-header">○技能労務職員の給与の種類及び基準に関する条例<br> </div>
 <div class="jorei-body">
@@ -1469,7 +1469,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 電話交換手、自動車運転手</p>
 <p class="jorei-item">(5) 前各号 に掲げる者を除くほか、これらの者に準ずる者</p>
 <p class="jorei-item">(2) 第2条、第4条、第5条、第6条、第8条及び第10条の規定並びに附則第4条及び第5条の規定 令和7年4月1日</p>
-</div>` } },
+</div>` },
     { id: 71, title: '職員の特殊勤務手当に関する条例', category: '給与', keywords: ['特殊勤務', '手当', '職員'], summary: '特殊勤務手当に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000157.html',
         fullText: `<div class="jorei-header">○職員の特殊勤務手当に関する条例<br> </div>
 <div class="jorei-body">
@@ -1489,7 +1489,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(8) 交通指導手当</p>
 <p class="jorei-item">(9) ホーム・体育館職員手当</p>
 <p class="jorei-item">(10) 公民館職員手当</p>
-</div>` } },
+</div>` },
     { id: 72, title: '職員等の旅費に関する条例', category: '給与', keywords: ['旅費', '出張', '職員'], summary: '職員の旅費に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000163.html',
         fullText: `<div class="jorei-header">○職員等の旅費に関する条例<br> </div>
 <div class="jorei-body">
@@ -1546,7 +1546,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 運賃の等級を3階級に区分する船舶による旅行の場合には、次に規定する運賃</p>
 <p class="jorei-item">(2) 運賃の等級を2階級に区分する船舶による旅行の場合には、上級の運賃</p>
 <p class="jorei-item">(3) 運賃の等級を設けない船舶による旅行の場合には、その乗船に要する運賃</p>
-</div>` } },
+</div>` },
 
     // ===== 第6編 財務 =====
     { id: 73, title: '議会の議決に付すべき契約及び財産の取得又は処分に関する条例', category: '財務', keywords: ['契約', '財産', '議会議決'], summary: '議会議決が必要な契約等に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000208.html',
@@ -1607,7 +1607,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 不動産及びその従物</p>
 <p class="jorei-item">(2) 機械及び重要な器具で市長が定めるもの</p>
 <p class="jorei-item">(3) その他市長が補助金等の交付の目的を達成するため、特に必要があると認めたもの</p>
-</div>` } },
+</div>` },
     { id: 75, title: '財政事情の作成及び公表に関する条例', category: '財務', keywords: ['財政', '公表', '透明性'], summary: '財政状況の公表に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000167.html',
         fullText: `<div class="jorei-header">○財政事情の作成及び公表に関する条例<br> </div>
 <div class="jorei-body">
@@ -1625,7 +1625,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 公営事業の経理の状況</p>
 <p class="jorei-item">(5) 財産、公債及び一時借入金の現在高</p>
 <p class="jorei-item">(6) その他市長において必要と認める事項</p>
-</div>` } },
+</div>` },
     { id: 76, title: '三郷市税条例', category: '財務', keywords: ['市税', '住民税', '固定資産税', '税金'], summary: '市税に関する総合的な条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000171.html',
         fullText: `<div class="jorei-header">○三郷市税条例<br> </div>
 <div class="jorei-body">
@@ -1689,7 +1689,7 @@ const allOrdinanceData = [
 
 <p>(個人の市民税の納期) 第40条 普通徴収の方法によって徴収する個人の市民税の納期は、次のとおりとする。</p>
 <p>(個人の市民税の納税通知書) 第41条 個人の市民税の納税通知書に記載すべき各納期の納付額は、当該年度分の個人の市民税額、個人の県民税額及び森林環境税額の合算額 ( 第47条第1項 又は 第47条の6第1項 の規定により徴収する場合にあっては特別徴収の方法により徴収されないこととなった金額に相当する税額) を 前条第1項 の納期 ( 第47条第1項 又は 第47条の6第1項 の規定により徴収する場合にあっては特別徴収の方法により徴収されないこととなった日以後に到来する納期) の数で除して得た額とする。</p>
-</div>` } },
+</div>` },
     { id: 77, title: '三郷市都市計画税条例', category: '財務', keywords: ['都市計画税', '税金', '都市計画'], summary: '都市計画税に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000785.html',
         fullText: `<div class="jorei-header">○三郷市都市計画税条例<br> </div>
 <div class="jorei-body">
@@ -1707,7 +1707,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(6) 利便性等向上改修工事が完了した日から3月を経過した後に申告書を提出する場合には、3月以内に提出することができなかった理由</p>
 <p class="jorei-item">(1) 第2条の規定 平成31年4月1日</p>
 <p class="jorei-item">(2) 附則第17項の改正規定 (「若しくは第45項」を「、第45項若しくは第48項」に改める部分に限る。) 都市再生特別措置法等の一部を改正する法律 (平成30年法律第22号) の施行の日</p>
-</div>` } },
+</div>` },
     { id: 78, title: '三郷市国民健康保険税条例', category: '財務', keywords: ['国保', '国民健康保険', '保険税'], summary: '国民健康保険税に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000176.html',
         fullText: `<div class="jorei-header">○三郷市国民健康保険税条例<br> </div>
 <div class="jorei-body">
@@ -1763,7 +1763,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 納税義務者の氏名、住所、生年月日及び個人番号 (行政手続における特定の個人を識別するための番号の利用等に関する法律 (平成25年法律第27号) 第2条第5項に規定する個人番号をいう。以下同じ。)</p>
 <p class="jorei-item">(2) 出産被保険者の氏名、住所、生年月日及び個人番号</p>
 <p class="jorei-item">(3) 出産の予定日</p>
-</div>` } },
+</div>` },
     { id: 79, title: '三郷市財政調整基金条例', category: '財務', keywords: ['財政調整', '基金', '積立'], summary: '財政調整基金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000197.html',
         fullText: `<div class="jorei-header">○三郷市財政調整基金条例<br> </div>
 <div class="jorei-body">
@@ -1776,7 +1776,7 @@ const allOrdinanceData = [
 <p>(委任) 第7条 この条例 に定めるものを除くほか、基金の管理に関し必要な事項は、市長が別に定める。</p>
 <p class="jorei-item">(1) 経済事情の変動等により、財源が不足する場合において、当該不足額をうめるための財源に充てるとき。</p>
 <p class="jorei-item">(2) 災害復旧の経費に充てるとき。</p>
-</div>` } },
+</div>` },
     { id: 80, title: '三郷市減債基金条例', category: '財務', keywords: ['減債', '基金', '借金返済'], summary: '減債基金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000198.html',
         fullText: `<div class="jorei-header">○三郷市減債基金条例<br> </div>
 <div class="jorei-body">
@@ -1791,7 +1791,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 市債の償還額が他の年度に比して多額となる年度において、市債の償還の財源に充てるとき。</p>
 <p class="jorei-item">(3) 償還期限を繰り上げて行う市債の償還の財源に充てるとき。</p>
 <p class="jorei-item">(4) 市債のうち地方税の減収補てん又は財源対策のため発行を許可されたものの償還の財源に充てるとき。</p>
-</div>` } },
+</div>` },
     { id: 81, title: '三郷市公共施設整備基金条例', category: '財務', keywords: ['公共施設', '基金', '整備'], summary: '公共施設整備基金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000200.html',
         fullText: `<div class="jorei-header">○三郷市公共施設整備基金条例<br> </div>
 <div class="jorei-body">
@@ -1802,7 +1802,7 @@ const allOrdinanceData = [
 <p>(繰替運用) 第5条 市長は、財政上必要があると認めるときは、確実な繰戻しの方法、期間及び利率を定めて基金に属する現金を歳計現金に繰り替えて運用することができる。</p>
 <p>(処分) 第6条 基金は、公共施設の整備に要する経費の財源に充てる場合に限り、一般会計歳入歳出予算の定めるところにより、その全部又は一部を処分することができる。</p>
 <p>(委任) 第7条 この条例 に定めるもののほか、基金の管理に関し必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
     { id: 82, title: '三郷市地域福祉基金条例', category: '財務', keywords: ['地域福祉', '基金', '福祉'], summary: '地域福祉基金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000201.html',
         fullText: `<div class="jorei-header">○三郷市地域福祉基金条例<br> </div>
 <div class="jorei-body">
@@ -1818,7 +1818,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 生きがいづくり促進事業</p>
 <p class="jorei-item">(3) 健康づくり促進事業</p>
 <p class="jorei-item">(4) ボランティア活動の促進事業</p>
-</div>` } },
+</div>` },
     { id: 83, title: '三郷市国民健康保険財政調整基金条例', category: '財務', keywords: ['国保', '基金', '財政'], summary: '国民健康保険財政調整基金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001103.html',
         fullText: `<div class="jorei-header">○三郷市国民健康保険財政調整基金条例<br> </div>
 <div class="jorei-body">
@@ -1829,7 +1829,7 @@ const allOrdinanceData = [
 <p>(繰替運用) 第5条 市長は、財政上必要があると認めるときは、確実な繰戻しの方法、期間及び利率を定めて基金に属する現金を歳計現金に繰り替えて運用することができる。</p>
 <p>(処分) 第6条 基金は、国民健康保険事業の運営上必要がある場合に限り、国保会計予算の定めるところにより、その全部又は一部を処分することができる。</p>
 <p>(委任) 第7条 この条例 に定めるものを除くほか、基金の管理に関し必要な事項は、市長が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 84, title: '三郷市介護保険給付費支払基金条例', category: '財務', keywords: ['介護保険', '基金', '給付'], summary: '介護保険給付費支払基金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000207.html',
         fullText: `<div class="jorei-header">○三郷市介護保険給付費支払基金条例<br> </div>
 <div class="jorei-body">
@@ -1840,7 +1840,7 @@ const allOrdinanceData = [
 <p>(繰替運用) 第5条 市長は、財政上必要があると認めるときは、確実な繰戻しの方法、期間及び利率を定めて基金に属する現金を歳計現金に繰り替えて運用することができる。</p>
 <p>(処分) 第6条 基金は、介護保険給付費に要する経費の財源に充てる場合に限り、介護保険特別会計歳入歳出予算の定めるところにより、その全部又は一部を処分することができる。</p>
 <p>(委任) 第7条 この条例 に定めるもののほか、基金の管理に関し必要な事項は、市長が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 85, title: '三郷市みどりの基金条例', category: '財務', keywords: ['みどり', '基金', '緑化', '環境'], summary: 'みどりの基金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000210.html',
         fullText: `<div class="jorei-header">○三郷市みどりの基金条例<br> </div>
 <div class="jorei-body">
@@ -1851,7 +1851,7 @@ const allOrdinanceData = [
 <p>(繰替運用) 第5条 市長は、財政上必要があると認めるときは、確実な繰戻しの方法、期間及び利率を定めて基金に属する現金を歳計現金に繰り替えて運用することができる。</p>
 <p>(処分) 第6条 基金は、緑化の推進、緑の保全に要する経費の財源に充てる場合に限り、一般会計歳入歳出予算の定めるところにより、その全部又は一部を処分することができる。</p>
 <p>(委任) 第7条 この条例 に定めるもののほか、基金の管理に関し必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
     { id: 86, title: '財産の交換、譲与、無償貸付等に関する条例', category: '財務', keywords: ['財産', '交換', '貸付'], summary: '財産の交換等に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000195.html',
         fullText: `<div class="jorei-header">○財産の交換、譲与、無償貸付等に関する条例<br> </div>
 <div class="jorei-body">
@@ -1872,7 +1872,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 地震、火災、水害等の災害により普通財産の貸付けを受けた者が、当該財産を使用の目的に供しがたいと認めるとき。</p>
 <p class="jorei-item">(1) 公益上の必要に基づき、他の地方公共団体その他公共団体又は私人に物品を譲渡するとき。</p>
 <p class="jorei-item">(2) 公用又は公共用に供するため寄附を受けた物品又は工作物のうち、その用途を廃止した場合には、当該物品又は工作物の解体若しくは撤去により物品となるものを寄附者又はその相続人その他の包括承継人に譲渡することを、寄附の条例として定めたものをその条件に従い譲渡するとき。</p>
-</div>` } },
+</div>` },
     { id: 87, title: '三郷市長期継続契約を締結することができる契約を定める条例', category: '財務', keywords: ['長期継続契約', '契約', '調達'], summary: '長期継続契約に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000878.html',
         fullText: `<div class="jorei-header">○三郷市長期継続契約を締結することができる契約を定める条例<br> </div>
 <div class="jorei-body">
@@ -1881,7 +1881,7 @@ const allOrdinanceData = [
 <p>(委任) 第3条 この条例 の施行に関し必要な事項は、規則で定める。</p>
 <p class="jorei-item">(1) 物品を借り入れる契約で、商慣習上複数年にわたり契約を締結することが一般的であるもの</p>
 <p class="jorei-item">(2) 経常的かつ継続的な役務の提供を受ける契約で、翌年度以降にわたり契約を締結する必要があるもの</p>
-</div>` } },
+</div>` },
 
     // ===== 第7編 教育 =====
     { id: 88, title: '三郷市教育に関する事務の職務権限の特例に関する条例', category: '教育・文化', keywords: ['教育', '職務権限', '特例'], summary: '教育事務の職務権限の特例に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000236.html' },
@@ -1904,7 +1904,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(5) 福祉事務所等の職員</p>
 <p class="jorei-item">(6) 教育委員会職員</p>
 <p class="jorei-item">(7) その他教育委員会が適当と認める者</p>
-</div>` } },
+</div>` },
     { id: 90, title: '三郷市人権教育推進協議会条例', category: '教育・文化', keywords: ['人権', '教育', '推進'], summary: '人権教育推進協議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000225.html',
         fullText: `<div class="jorei-header">○三郷市人権教育推進協議会条例<br> </div>
 <div class="jorei-body">
@@ -1919,7 +1919,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 学校教育関係者</p>
 <p class="jorei-item">(2) 社会教育関係者</p>
 <p class="jorei-item">(3) 学識経験者</p>
-</div>` } },
+</div>` },
     { id: 91, title: '三郷市立学校設置及び管理に関する条例', category: '教育・文化', keywords: ['学校', '設置', '小中学校'], summary: '市立学校の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000227.html',
         fullText: `<div class="jorei-header">○三郷市立学校設置及び管理に関する条例<br> </div>
 <div class="jorei-body">
@@ -1927,7 +1927,7 @@ const allOrdinanceData = [
 <p>(設置) 第2条 市に、学校教育法 (昭和22年法律第26号) 第1条に定める小学校及び中学校 (以下「学校」という。) を置く。</p>
 <p>(管理) 第3条 学校の管理に関する事項は、法令に定めがあるものを除くほか、教育委員会規則で定める。</p>
 <p>(廃止) 第4条 学校を廃止する場合は、議会において出席議員の3分の2以上の者の同意を得なければならない。</p>
-</div>` } },
+</div>` },
     { id: 92, title: '三郷市学校運営協議会規則', category: '教育・文化', keywords: ['学校運営', 'コミュニティスクール', '協議会'], summary: '学校運営協議会（コミュニティスクール）に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001163.html',
         fullText: `<div class="jorei-header">○三郷市学校運営協議会規則<br> </div>
 <div class="jorei-body">
@@ -1958,7 +1958,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 委員としてふさわしくない行為</p>
 <p class="jorei-item">(2) 委員の地位を利用した営利行為、政治活動又は宗教活動等</p>
 <p class="jorei-item">(3) その他協議会及び対象学校の運営に著しく支障をきたす言動</p>
-</div>` } },
+</div>` },
     { id: 93, title: '三郷市いじめ問題対策連絡協議会条例', category: '教育・文化', keywords: ['いじめ', '対策', '連絡協議会'], summary: 'いじめ問題対策連絡協議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001061.html',
         fullText: `<div class="jorei-header">○三郷市いじめ問題対策連絡協議会条例<br> </div>
 <div class="jorei-body">
@@ -1978,7 +1978,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 市の職員</p>
 <p class="jorei-item">(3) 関係行政機関の職員</p>
 <p class="jorei-item">(4) 前3号 に掲げるもののほか、教育委員会が必要と認める者</p>
-</div>` } },
+</div>` },
     { id: 94, title: '三郷市いじめ問題調査委員会条例', category: '教育・文化', keywords: ['いじめ', '調査', '委員会'], summary: 'いじめ問題調査委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001062.html',
         fullText: `<div class="jorei-header">○三郷市いじめ問題調査委員会条例<br> </div>
 <div class="jorei-body">
@@ -1992,7 +1992,7 @@ const allOrdinanceData = [
 <p>(守秘義務) 第8条 委員及び臨時委員は、職務上知り得た秘密を漏らしてはならない。 その職を退いた後も、同様とする。</p>
 <p>(庶務) 第9条 委員会の庶務は、学校教育部指導課において処理する。</p>
 <p>(委任) 第10条 この条例 に定めるもののほか、委員会の運営に関し必要な事項は、教育委員会が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 95, title: '三郷市いじめ問題再調査委員会条例', category: '教育・文化', keywords: ['いじめ', '再調査', '委員会'], summary: 'いじめ問題再調査委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001063.html',
         fullText: `<div class="jorei-header">○三郷市いじめ問題再調査委員会条例<br> </div>
 <div class="jorei-body">
@@ -2005,7 +2005,7 @@ const allOrdinanceData = [
 <p>(守秘義務) 第7条 委員は、職務上知り得た秘密を漏らしてはならない。 その職を退いた後も、同様とする。</p>
 <p>(庶務) 第8条 委員会の庶務は、総務部人権・男女共同参画課において処理する。</p>
 <p>(委任) 第9条 この条例に定めるもののほか、委員会の運営に関し必要な事項は、市長が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 96, title: '三郷市入学準備金貸付条例', category: '教育・文化', keywords: ['入学', '準備金', '貸付', '奨学金'], summary: '入学準備金の貸付に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000234.html',
         fullText: `<div class="jorei-header">○三郷市入学準備金貸付条例<br> </div>
 <div class="jorei-body">
@@ -2035,7 +2035,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 貸付金を目的以外に使用したとき。</p>
 <p class="jorei-item">(4) 申請内容に偽りがあったとき。</p>
 <p class="jorei-item">(5) 故意に貸付金の返還を怠ったとき。</p>
-</div>` } },
+</div>` },
     { id: 97, title: '三郷市立学校給食センター設置及び管理条例', category: '教育・文化', keywords: ['給食', 'センター', '学校給食'], summary: '学校給食センターの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000238.html',
         fullText: `<div class="jorei-header">○三郷市立学校給食センター設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2048,7 +2048,7 @@ const allOrdinanceData = [
 <p>(経費) 第7条 学校給食の実施に必要な施設及び設備に要する経費並びに学校給食の運営に要する経費は、市費をもって充てる。</p>
 <p>(運営委員会) 第8条 給食センターの運営に関する重要事項を調査審議するため、三郷市立学校給食センター運営委員会 (以下「運営委員会」という。) を置く。</p>
 <p>(委任) 第9条 この条例に定めるもののほか、必要な事項は、教育委員会が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 98, title: '三郷市社会教育委員設置条例', category: '教育・文化', keywords: ['社会教育', '委員', '生涯学習'], summary: '社会教育委員の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000242.html',
         fullText: `<div class="jorei-header">○三郷市社会教育委員設置条例<br> </div>
 <div class="jorei-body">
@@ -2064,7 +2064,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 家庭教育の向上に資する活動を行う者</p>
 <p class="jorei-item">(4) 知識経験を有する者</p>
 <p class="jorei-item">(5) 公募による市民</p>
-</div>` } },
+</div>` },
     { id: 99, title: '三郷市立公民館設置及び管理条例', category: '教育・文化', keywords: ['公民館', '設置', '生涯学習'], summary: '公民館の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000244.html',
         fullText: `<div class="jorei-header">○三郷市立公民館設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2076,7 +2076,7 @@ const allOrdinanceData = [
 <p>(委任) 第6条 この条例に定めるもののほか、必要な事項は、教育委員会が別に定める。</p>
 <p class="jorei-item">(1) 次に掲げる規定 平成16年4月1日</p>
 <p class="jorei-item">(2) 次に掲げる規定 平成16年8月1日</p>
-</div>` } },
+</div>` },
     { id: 100, title: '三郷市図書館設置及び管理条例', category: '教育・文化', keywords: ['図書館', '読書', '設置', '文化'], summary: '図書館の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000247.html',
         fullText: `<div class="jorei-header">○三郷市図書館設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2095,7 +2095,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 社会教育関係者</p>
 <p class="jorei-item">(3) 家庭教育の向上に資する活動を行う者</p>
 <p class="jorei-item">(4) 知識経験を有する者</p>
-</div>` } },
+</div>` },
     { id: 101, title: '三郷市郷土資料館設置及び管理条例', category: '教育・文化', keywords: ['郷土資料館', '歴史', '文化財'], summary: '郷土資料館の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000250.html',
         fullText: `<div class="jorei-header">○三郷市郷土資料館設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2119,7 +2119,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) その他資料館の設置の目的に反するとき。</p>
 <p class="jorei-item">(1) 入館の許可の条件に反したとき。</p>
 <p class="jorei-item">(2) 遵守事項又は指示に違反したとき。</p>
-</div>` } },
+</div>` },
     { id: 102, title: '三郷市青少年ホーム設置及び管理条例', category: '教育・文化', keywords: ['青少年', 'ホーム', '若者支援'], summary: '青少年ホームの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000255.html',
         fullText: `<div class="jorei-header">○三郷市青少年ホーム設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2157,7 +2157,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) ホームの管理上特に必要があるため、市長が利用許可を取り消したとき。</p>
 <p class="jorei-item">(1) 次に掲げる規定 平成16年4月1日</p>
 <p class="jorei-item">(2) 次に掲げる規定 平成16年8月1日</p>
-</div>` } },
+</div>` },
     { id: 103, title: '三郷市青少年問題協議会条例', category: '教育・文化', keywords: ['青少年', '問題', '協議会'], summary: '青少年問題協議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000257.html',
         fullText: `<div class="jorei-header">○三郷市青少年問題協議会条例<br> </div>
 <div class="jorei-body">
@@ -2171,7 +2171,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 関係各種団体の代表者</p>
 <p class="jorei-item">(3) 知識経験を有する者</p>
 <p class="jorei-item">(4) 公募による市民</p>
-</div>` } },
+</div>` },
     { id: 104, title: '三郷市スポーツ推進審議会条例', category: '教育・文化', keywords: ['スポーツ', '推進', '審議会'], summary: 'スポーツ推進審議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000260.html',
         fullText: `<div class="jorei-header">○三郷市スポーツ推進審議会条例<br> </div>
 <div class="jorei-body">
@@ -2191,7 +2191,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(6) 前各号 に掲げるもののほか、スポーツの推進に関すること。</p>
 <p class="jorei-item">(1) 知識経験者</p>
 <p class="jorei-item">(2) 関係行政機関の職員</p>
-</div>` } },
+</div>` },
     { id: 105, title: '三郷市スポーツ推進委員設置条例', category: '教育・文化', keywords: ['スポーツ', '推進委員', '地域'], summary: 'スポーツ推進委員の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000261.html',
         fullText: `<div class="jorei-header">○三郷市スポーツ推進委員設置条例<br> </div>
 <div class="jorei-body">
@@ -2202,7 +2202,7 @@ const allOrdinanceData = [
 <p>(委員長及び副委員長) 第4条 委員の会議 (以下「会議」という。) に、委員長及び副委員長1人を置く。</p>
 <p>(会議の招集) 第5条 会議は、委員長が招集する。</p>
 <p>(委任) 第6条 この条例に規定するもののほか、必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
     { id: 106, title: '三郷市体育館設置及び管理条例', category: '教育・文化', keywords: ['体育館', 'スポーツ施設', '設置'], summary: '体育館の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000264.html',
         fullText: `<div class="jorei-header">○三郷市体育館設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2256,7 +2256,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 市民の平等な体育館の利用を確保することができること。</p>
 <p class="jorei-item">(3) 関係する法令、条例及び規則を遵守し、適正に体育館の運営を行うことができること。</p>
 <p class="jorei-item">(4) 指定管理業務を安定して行う経営基盤を有していること。</p>
-</div>` } },
+</div>` },
     { id: 107, title: '三郷市立小・中学校体育施設の開放に関する規則', category: '教育・文化', keywords: ['学校開放', '体育施設', 'スポーツ'], summary: '学校体育施設の開放に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001143.html',
         fullText: `<div class="jorei-header">○三郷市立小・中学校体育施設の開放に関する規則<br> </div>
 <div class="jorei-body">
@@ -2293,7 +2293,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 利用者が、開放施設を目的以外に使用したとき。</p>
 <p class="jorei-item">(3) 学校教育又は施設の管理上支障が生じたとき。</p>
 <p class="jorei-item">(4) その他公益上やむを得ない必要が生じたとき。</p>
-</div>` } },
+</div>` },
     { id: 108, title: '三郷市文化財保護条例', category: '教育・文化', keywords: ['文化財', '保護', '歴史', '伝統'], summary: '文化財の保護に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000661.html',
         fullText: `<div class="jorei-header">○三郷市文化財保護条例<br> </div>
 <div class="jorei-body">
@@ -2322,7 +2322,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(5) 地域における人々の生活又は生業及び当該地域の風土により形成された景観地で我が国民の生活又は生業の理解のため欠くことのできないもの</p>
 <p class="jorei-item">(1) 有形文化財、有形民俗文化財、史跡及び天然記念物については、当該文化財の所有者等。 ただし、所有者等が判明しない場合は、この限りでない。</p>
 <p class="jorei-item">(2) 無形文化財及び無形民俗文化財については、当該文化財の保持者 (保持団体と認定されたものを含む。以下同じ。)</p>
-</div>` } },
+</div>` },
 
     // ===== 第8編 民生 =====
     { id: 109, title: '三郷市福祉事務所設置条例', category: '民生・福祉', keywords: ['福祉事務所', '社会福祉', '生活保護'], summary: '福祉事務所の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000273.html',
@@ -2335,7 +2335,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 社会福祉法の施行に関すること。</p>
 <p class="jorei-item">(2) 民生委員法 (昭和23年法律第198号) の施行に関すること。</p>
 <p class="jorei-item">(3) その他社会福祉に関する事務のうち市長が必要と認めること。</p>
-</div>` } },
+</div>` },
     { id: 110, title: '三郷市社会福祉法人の助成に関する条例', category: '民生・福祉', keywords: ['社会福祉法人', '助成', '福祉'], summary: '社会福祉法人への助成に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000276.html',
         fullText: `<div class="jorei-header">○三郷市社会福祉法人の助成に関する条例<br> </div>
 <div class="jorei-body">
@@ -2348,7 +2348,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 助成を受けようとする事業の計画書及びこれに伴う収支予算</p>
 <p class="jorei-item">(3) 財産目録及び貸借対照表</p>
 <p class="jorei-item">(4) その他市長が必要と認める書類</p>
-</div>` } },
+</div>` },
     { id: 111, title: '三郷市児童発達支援センター設置及び管理条例', category: '民生・福祉', keywords: ['児童発達支援', '障害児', '療育'], summary: '児童発達支援センターの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001059.html',
         fullText: `<div class="jorei-header">○三郷市児童発達支援センター設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2376,7 +2376,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 常時直接の医学的管理を必要とする場合</p>
 <p class="jorei-item">(2) 感染症疾患にかかったとき又はその病状が他の利用者に感染するおそれがあると認められるとき。</p>
 <p class="jorei-item">(3) 前2号 に掲げるもののほか、センターの管理運営上、市長が特に必要があると認めるとき。</p>
-</div>` } },
+</div>` },
     { id: 112, title: '三郷市保育所設置及び管理条例', category: '民生・福祉', keywords: ['保育所', '保育', '子育て'], summary: '保育所の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000292.html',
         fullText: `<div class="jorei-header">○三郷市保育所設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2416,7 +2416,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 第7条第2項各号 に掲げる基準を満たさなくなったと認めるとき。</p>
 <p class="jorei-item">(3) 前条第1項各号 に掲げる基準を遵守しないとき。</p>
 <p class="jorei-item">(4) 前3号 に掲げるもののほか、当該指定管理者による管理を継続することが適当でないと認められるとき。</p>
-</div>` } },
+</div>` },
     { id: 113, title: '三郷市地域型保育事業の設備及び運営の基準に関する条例', category: '民生・福祉', keywords: ['地域型保育', '小規模保育', '子育て'], summary: '地域型保育事業の基準に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001020.html',
         fullText: `<div class="jorei-header">○三郷市地域型保育事業の設備及び運営の基準に関する条例<br> </div>
 <div class="jorei-body">
@@ -2471,7 +2471,7 @@ const allOrdinanceData = [
 <p>(準用) 第46条 第24条 から 第26条 までの規定は、保育所型事業所内保育事業について準用する。 この場合において、 第24条 中「家庭的保育事業を行う者 (次条及び第26条において「家庭的保育事業者」という。) 」とあるのは「保育所型事業所内保育事業を行う者 (第46条において準用する次条及び第26条において「保育所型事業所内保育事業者」という。) 」と、 第25条 及び 第26条 中「家庭的保育事業者」とあるのは「保育所型事業所内保育事業者」とする。</p>
 <p>(職員) 第47条 事業所内保育事業 (利用定員が19人以下のものに限る。以下この条及び 次条 において「小規模型事業所内保育事業」という。) を行う事業所 (以下この条及び 次条 において「小規模型事業所内保育事業所」という。) には、保育士その他保育に従事する職員として市長が行う研修 (市長が指定する都道府県知事その他の機関が行う研修を含む。) を修了した者 (以下この条において「保育従事者」という。) 、嘱託医及び調理員を置かなければならない。 ただし、調理業務の全部を委託する小規模型事業所内保育事業所又は 第16条第1項 の規定により搬入施設から食事を搬入する小規模型事業所内保育事業所にあっては、調理員を置かないことができる。</p>
 <p>(準用) 第48条 第24条 から 第26条 まで及び 第28条 の規定は、小規模型事業所内保育事業について準用する。 この場合において、 第24条 中「家庭的保育事業を行う者 (次条及び第26条において「家庭的保育事業者」という。) 」とあるのは「小規模型事業所内保育事業を行う者 (第48条において準用する次条及び第26条において「小規模型事業所内保育事業者」という。) 」と、 第25条 及び 第26条 中「家庭的保育事業者」とあるのは「小規模型事業所内保育事業者」と、 第28条 中「小規模保育事業所A型」とあるのは「小規模型事業所内保育事業所」と、「調理設備」とあるのは「調理設備 (当該小規模型事業所内保育事業所を設置及び管理する事業主が事業場に附属して設置する炊事場を含む。第4号において同じ。) 」と、 同条第4号 中「次号」とあるのは「第48条において準用する第28条第5号」とする。</p>
-</div>` } },
+</div>` },
     { id: 114, title: '三郷市放課後児童健全育成事業の設備及び運営の基準に関する条例', category: '民生・福祉', keywords: ['放課後', '児童クラブ', '学童'], summary: '放課後児童クラブの基準に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001022.html',
         fullText: `<div class="jorei-header">○三郷市放課後児童健全育成事業の設備及び運営の基準に関する条例<br> </div>
 <div class="jorei-body">
@@ -2525,7 +2525,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(11) その他事業の運営に関する重要事項</p>
 <p class="jorei-item">(1) 小学校の授業の休業日に行う放課後児童健全育成事業 1日につき8時間</p>
 <p class="jorei-item">(2) 小学校の授業の休業日以外の日に行う放課後児童健全育成事業 1日につき3時間</p>
-</div>` } },
+</div>` },
     { id: 115, title: '三郷市子ども・子育て会議条例', category: '民生・福祉', keywords: ['子ども', '子育て', '会議'], summary: '子ども・子育て会議に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000996.html',
         fullText: `<div class="jorei-header">○三郷市子ども・子育て会議条例<br> </div>
 <div class="jorei-body">
@@ -2545,7 +2545,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 子ども・子育て支援に関し学識経験のある者</p>
 <p class="jorei-item">(4) 公募による市民</p>
 <p class="jorei-item">(5) その他市長が必要と認める者</p>
-</div>` } },
+</div>` },
     { id: 116, title: '三郷市立児童館設置及び管理条例', category: '民生・福祉', keywords: ['児童館', '子ども', '居場所'], summary: '児童館の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000306.html',
         fullText: `<div class="jorei-header">○三郷市立児童館設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2596,14 +2596,14 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 第13条第2項各号 に掲げる基準を満たさなくなったと認めるとき。</p>
 <p class="jorei-item">(3) 前条第1項各号 に掲げる基準を遵守しないとき。</p>
 <p class="jorei-item">(4) 前3号 に掲げるもののほか、当該指定管理者による管理を継続することが適当でないと認められるとき。</p>
-</div>` } },
+</div>` },
     { id: 117, title: '三郷市児童遊園設置条例', category: '民生・福祉', keywords: ['児童遊園', '公園', '子ども'], summary: '児童遊園の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000310.html',
         fullText: `<div class="jorei-header">○三郷市児童遊園設置条例<br> </div>
 <div class="jorei-body">
 <p>(設置) 第1条 児童福祉法 (昭和22年法律第164号) 第40条の目的を達成するため、児童施設として児童遊園を設置する。</p>
 <p>(名称及び位置) 第2条 児童遊園の名称及び位置は、次のとおりとする。</p>
 <p>(委任) 第3条 この条例 の施行に関し必要な事項は、市長が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 118, title: '三郷市児童クラブ設置及び管理条例', category: '民生・福祉', keywords: ['児童クラブ', '学童', '放課後'], summary: '児童クラブの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000313.html',
         fullText: `<div class="jorei-header">○三郷市児童クラブ設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2628,7 +2628,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 12月29日から翌年の1月3日までの日 ( 前号 に掲げる日を除く。)</p>
 <p class="jorei-item">(4) その他市長が必要と認めた日</p>
 <p class="jorei-item">(1) 第5条の規定 平成16年4月1日</p>
-</div>` } },
+</div>` },
     { id: 119, title: '三郷市こども医療費支給に関する条例', category: '民生・福祉', keywords: ['子ども', '医療費', '助成', '子育て支援'], summary: '子どもの医療費助成に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000658.html',
         fullText: `<div class="jorei-header">○三郷市こども医療費支給に関する条例<br> </div>
 <div class="jorei-body">
@@ -2649,7 +2649,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(6) 医療機関等 次に掲げる医療機関等をいう。</p>
 <p class="jorei-item">(7) 医療費 医療保険各法に規定する医療給付の対象となる費用 (入院時食事療養費及び交通事故等により第三者からの賠償として支払われる医療費を除く。) をいう。</p>
 <p class="jorei-item">(8) 一部負担金 対象となるこどもに係る医療費のうち、受給資格者が医療機関等に支払う医療保険各法の規定により負担すべき額及び他の法令に基づいて、医療の給付に係る負担すべき額をいう。 ただし、法令又はそれに準ずる規定による給付及び保険者が給付する附加給付があるときは、その額を控除した額をいう。</p>
-</div>` } },
+</div>` },
     { id: 120, title: '三郷市ひとり親家庭等の医療費の支給に関する条例', category: '民生・福祉', keywords: ['ひとり親', '医療費', '助成', '母子家庭'], summary: 'ひとり親家庭の医療費助成に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000320.html',
         fullText: `<div class="jorei-header">○三郷市ひとり親家庭等の医療費の支給に関する条例<br> </div>
 <div class="jorei-body">
@@ -2685,7 +2685,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 対象者の属するひとり親家庭の父又は母及び養育者 (以下「ひとり親等」という。) の所得が、その者の所得税法 (昭和40年法律第33号) に規定する同一生計配偶者及び扶養親族 (以下「扶養親族等」という。) 並びに当該ひとり親等の扶養親族等でない児童でひとり親等が当該所得のあった年の12月31日において生計を維持したものの有無及び数に応じて、規則で定める額以上であるとき。</p>
 <p class="jorei-item">(2) ひとり親等の配偶者の所得又はそのひとり親等の民法 (明治29年法律第89号) 第877条第1項に定める扶養義務者でそのひとり親等と生計を同じくするものの所得がその者の扶養親族等の有無及び数に応じて、規則で定める額以上であるとき。</p>
 <p class="jorei-item">(3) 前各号 の所得が、所得の申告を行わないこと等により確認できないとき。</p>
-</div>` } },
+</div>` },
     { id: 121, title: '三郷市老人デイサービスセンター設置及び管理条例', category: '民生・福祉', keywords: ['高齢者', 'デイサービス', '介護'], summary: '老人デイサービスセンターの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000327.html',
         fullText: `<div class="jorei-header">○三郷市老人デイサービスセンター設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2739,7 +2739,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 前3号 に掲げるもののほか、センターの管理の適正を期するため必要な事項</p>
 <p class="jorei-item">(1) 指定管理業務又はその経理に関する市長の指示に従わないとき。</p>
 <p class="jorei-item">(2) 第11条第2項各号 に掲げる基準を満たさなくなったと認めるとき。</p>
-</div>` } },
+</div>` },
     { id: 122, title: '三郷市老人福祉センター設置及び管理条例', category: '民生・福祉', keywords: ['高齢者', '福祉センター', '交流'], summary: '老人福祉センターの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000329.html',
         fullText: `<div class="jorei-header">○三郷市老人福祉センター設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2792,7 +2792,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 前条第1項各号 に掲げる基準を遵守しないとき。</p>
 <p class="jorei-item">(4) 前3号 に掲げるもののほか、当該指定管理者による管理を継続することが適当でないと認められるとき。</p>
 <p class="jorei-item">(2) 次に掲げる規定 平成16年6月1日</p>
-</div>` } },
+</div>` },
     { id: 123, title: '三郷市後期高齢者医療に関する条例', category: '民生・福祉', keywords: ['後期高齢者', '医療', '保険'], summary: '後期高齢者医療に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000852.html',
         fullText: `<div class="jorei-header">○三郷市後期高齢者医療に関する条例<br> </div>
 <div class="jorei-body">
@@ -2822,13 +2822,13 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 法第55条第2項第1号 (法第55条の2第2項において準用する場合を含む。) の規定の適用を受ける被保険者であって、継続して入院等をしている2以上の病院等のうち最初の病院等に入院等をした際市内に住所を有していた被保険者</p>
 <p class="jorei-item">(4) 法第55条第2項第2号 (法第55条の2第2項において準用する場合を含む。) の規定の適用を受ける被保険者であって、最後に行った同号に規定する特定住所変更に係る同号に規定する継続入院等の際市内に住所を有していた被保険者</p>
 <p class="jorei-item">(5) 法第55条の2第1項の規定の適用を受ける埼玉県後期高齢者医療広域連合が行う後期高齢者医療の被保険者であって、当該被保険者の資格を取得した際市を同項に規定する従前住所地市町村とする被保険者</p>
-</div>` } },
+</div>` },
     { id: 124, title: '三郷市障害支援区分審査会の委員の定数等を定める条例', category: '民生・福祉', keywords: ['障害', '支援区分', '審査会'], summary: '障害支援区分審査会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000801.html',
         fullText: `<div class="jorei-header">○三郷市障害支援区分審査会の委員の定数等を定める条例<br> </div>
 <div class="jorei-body">
 <p>(審査会の委員の定数) 第1条 障害者の日常生活及び社会生活を総合的に支援するための法律 (平成17年法律第123号) 第15条の規定に基づき設置する三郷市障害支援区分審査会 (以下「審査会」という。) の委員の定数は、10人とする。</p>
 <p>(委任) 第2条 法令及び この条例 に定めるもののほか、審査会に関し必要な事項は、規則で定める。</p>
-</div>` } },
+</div>` },
     { id: 125, title: '三郷市障がい者福祉施設みさと設置及び管理条例', category: '民生・福祉', keywords: ['障害者', '福祉施設', '支援'], summary: '障がい者福祉施設みさとの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000929.html',
         fullText: `<div class="jorei-header">○三郷市障がい者福祉施設みさと設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -2861,7 +2861,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 災害その他の事故により、利用ができなくなったとき。</p>
 <p class="jorei-item">(4) 長期にわたる療養のため、医療機関に入院又は通院し、利用を続けることが不可能となったとき。</p>
 <p class="jorei-item">(5) 前各号 に掲げるもののほか、市長が特に必要があると認めるとき。</p>
-</div>` } },
+</div>` },
     { id: 126, title: '三郷市障がい者等の利用に係る公の施設使用料減免条例', category: '民生・福祉', keywords: ['障害者', '減免', '公共施設'], summary: '障がい者等の施設使用料減免に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000880.html',
         fullText: `<div class="jorei-header">○三郷市障がい者等の利用に係る公の施設使用料減免条例<br> </div>
 <div class="jorei-body">
@@ -2872,7 +2872,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 身体障害者福祉法 (昭和24年法律第283号) 第15条の規定により身体障害者手帳の交付を受けている者</p>
 <p class="jorei-item">(2) 療育手帳制度要綱 (昭和48年9月27日厚生省発児第156号) の規定による療育手帳の交付を受けている者</p>
 <p class="jorei-item">(3) 精神保健及び精神障害者福祉に関する法律 (昭和25年法律第123号) 第45条の規定により精神障害者保健福祉手帳の交付を受けている者</p>
-</div>` } },
+</div>` },
     { id: 127, title: '三郷市こころつながる手話言語条例', category: '民生・福祉', keywords: ['手話', '言語', '障害者', 'コミュニケーション'], summary: '手話言語に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001079.html',
         fullText: `<div class="jorei-header">○三郷市こころつながる手話言語条例<br> </div>
 <div class="jorei-body">
@@ -2887,7 +2887,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 手話を習得し聴覚に障がいのある者を支援する人材を養成するための施策</p>
 <p class="jorei-item">(3) 手話その他の意思疎通手段による情報の共有の機会を拡充するための施策</p>
 <p class="jorei-item">(4) 前3号 に掲げるもののほか、 この条例 の目的を達成するために必要な施策</p>
-</div>` } },
+</div>` },
     { id: 128, title: '三郷市重度心身障害者医療費支給に関する条例', category: '民生・福祉', keywords: ['重度障害', '医療費', '助成'], summary: '重度心身障害者の医療費助成に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000367.html',
         fullText: `<div class="jorei-header">○三郷市重度心身障害者医療費支給に関する条例<br> </div>
 <div class="jorei-body">
@@ -2933,7 +2933,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(7) 他の都道府県又は市町村が実施する制度により乳幼児、重度心身障害者又はひとり親家庭等に対する医療費の支給を現に受けている者</p>
 <p class="jorei-item">(1) 第2条第1項第3号 に規定する重度心身障害者が医療法 (昭和23年法律第205号) 第7条第2項第1号に規定する精神病床に入院したときの一部負担金</p>
 <p class="jorei-item">(2) 第2条第1項第6号 に規定する重度心身障害者に係る精神通院医療費以外の一部負担金</p>
-</div>` } },
+</div>` },
     { id: 129, title: '三郷市在宅重度心身障害者手当支給条例', category: '民生・福祉', keywords: ['在宅', '重度障害', '手当'], summary: '在宅重度心身障害者手当に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000369.html',
         fullText: `<div class="jorei-header">○三郷市在宅重度心身障害者手当支給条例<br> </div>
 <div class="jorei-body">
@@ -2960,7 +2960,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 市内に住所を有しなくなったとき。</p>
 <p class="jorei-item">(2) 第2条 の規定に該当しなくなったとき。</p>
 <p class="jorei-item">(3) 死亡したとき。</p>
-</div>` } },
+</div>` },
     { id: 130, title: '三郷市国民健康保険条例', category: '民生・福祉', keywords: ['国民健康保険', '国保', '医療保険'], summary: '国民健康保険に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000384.html',
         fullText: `<div class="jorei-header">○三郷市国民健康保険条例<br> </div>
 <div class="jorei-body">
@@ -3005,7 +3005,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) その他被保険者の健康の保持増進又は保険給付のために必要な事業</p>
 <p class="jorei-item">(1) 三郷村国民健康保険条例 (昭和32年条例第22号)</p>
 <p class="jorei-item">(2) 国民健康保険法の制定に伴う国民健康保険事業の応急措置に関する条例 (昭和34年条例第1号)</p>
-</div>` } },
+</div>` },
     { id: 131, title: '三郷市介護保険条例', category: '民生・福祉', keywords: ['介護保険', '介護', '高齢者'], summary: '介護保険に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000388.html',
         fullText: `<div class="jorei-header">○三郷市介護保険条例<br> </div>
 <div class="jorei-body">
@@ -3065,7 +3065,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(5) 令第39条第1項第5号に掲げる者 75,600円</p>
 <p class="jorei-item">(6) 次のいずれかに該当する者 90,720円</p>
 <p class="jorei-item">(7) 次のいずれかに該当する者 98,280円</p>
-</div>` } },
+</div>` },
     { id: 132, title: '三郷市介護認定審査会規則', category: '民生・福祉', keywords: ['介護認定', '審査会', '要介護'], summary: '介護認定審査会に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000392.html',
         fullText: `<div class="jorei-header">○三郷市介護認定審査会規則<br> </div>
 <div class="jorei-body">
@@ -3098,7 +3098,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 第2号被保険者は、主治医意見書により介護保険法施行令 (平成10年政令第412号) に規定する特定疾病によって生じている障害を原因として要介護状態又は要支援状態となっていること。</p>
 <p class="jorei-item">(1) 被保険者の要介護状態又は要支援状態の軽減又は悪化の防止のために必要な療養に関する事項</p>
 <p class="jorei-item">(2) 指定居宅サービス、指定施設サービス又は指定地域密着型サービスの有効な利用等に関し被保険者が留意すべき事項</p>
-</div>` } },
+</div>` },
     { id: 133, title: '三郷市指定居宅介護支援等の事業の人員及び運営等に関する基準を定める条例', category: '民生・福祉', keywords: ['居宅介護', 'ケアマネジャー', '介護支援'], summary: '居宅介護支援事業の基準に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001104.html',
         fullText: `<div class="jorei-header">○三郷市指定居宅介護支援等の事業の人員及び運営等に関する基準を定める条例<br> </div>
 <div class="jorei-body">
@@ -3152,7 +3152,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 介護支援専門員は、居宅サービス計画の作成に当たっては、利用者の日常生活全般を支援する観点から、介護給付等対象サービス (法第24条第2項に規定する介護給付等対象サービスをいう。以下同じ。) 以外の保健医療サービス又は福祉サービス、当該地域の住民による自発的な活動によるサービス等の利用も含めて居宅サービス計画上に位置付けるよう努めなければならない。</p>
 <p class="jorei-item">(5) 介護支援専門員は、居宅サービス計画の作成の開始に当たっては、利用者によるサービスの選択に資するよう、当該地域における指定居宅サービス事業者等に関するサービスの内容、利用料等の情報を適正に利用者又はその家族に対して提供するものとする。</p>
 <p class="jorei-item">(6) 介護支援専門員は、居宅サービス計画の作成に当たっては、適切な方法により、利用者について、その有する能力、既に提供を受けている指定居宅サービス等のその置かれている環境等の評価を通じて利用者が現に抱える問題点を明らかにし、利用者が自立した日常生活を営むことができるように支援する上で解決すべき課題を把握しなければならない。</p>
-</div>` } },
+</div>` },
     { id: 134, title: '三郷市指定地域密着型サービスの事業の人員、設備及び運営等に関する基準を定める条例', category: '民生・福祉', keywords: ['地域密着型', '介護サービス', '基準'], summary: '地域密着型サービスの基準に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000969.html',
         fullText: `<div class="jorei-header">○三郷市指定地域密着型サービスの事業の人員、設備及び運営等に関する基準を定める条例<br> </div>
 <div class="jorei-body">
@@ -3206,7 +3206,7 @@ const allOrdinanceData = [
 <p>(指定夜間対応型訪問介護) 第46条 前条 に規定する援助を行うため、指定夜間対応型訪問介護においては、定期的に利用者の居宅を巡回して行う夜間対応型訪問介護 (以下この章において「定期巡回サービス」という。) 、あらかじめ利用者の心身の状況、その置かれている環境等を把握した上で、随時、利用者からの通報を受け、通報内容等を基に訪問介護員等 (指定夜間対応型訪問介護の提供に当たる介護福祉士又は法第8条第2項に規定する政令で定める者 (施行規則第22条の23第1項に規定する介護職員初任者研修課程を修了した者に限る。) をいう。以下この章において同じ。) の訪問の要否等を判断するサービス (以下「オペレーションセンターサービス」という。) 及びオペレーションセンター (オペレーションセンターサービスを行うための 次条第1項第1号 に規定するオペレーションセンター従業者を置いている事務所をいう。以下同じ。) 等からの随時の連絡に対応して行う夜間対応型訪問介護 (以下この章において「随時訪問サービス」という。) を提供するものとする。</p>
 <p>(訪問介護員等の員数) 第47条 指定夜間対応型訪問介護の事業を行う者 (以下「指定夜間対応型訪問介護事業者」という。) が当該事業を行う事業所 (以下「指定夜間対応型訪問介護事業所」という。) ごとに置くべき従業者 (以下「夜間対応型訪問介護従業者」という。) の職種及び員数は、次のとおりとする。 ただし、 前条第2項ただし書 の規定に基づきオペレーションセンターを設置しない場合においては、オペレーションセンター従業者を置かないことができる。</p>
 <p>(管理者) 第48条 指定夜間対応型訪問介護事業者は、指定夜間対応型訪問介護事業所ごとに専らその職務に従事する常勤の管理者を置かなければならない。 ただし、指定夜間対応型訪問介護事業所の管理上支障がない場合は、当該指定夜間対応型訪問介護事業所の他の職務又は他の事業所、施設等 (当該指定夜間対応型訪問介護事業者が、指定定期巡回・随時対応型訪問介護看護事業者の指定を併せて受け、かつ、当該他の事業所、施設等と一体的に運営している場合に限る。) の職務に従事することができるものとし、日中のオペレーションセンターサービスを実施する場合であって、指定訪問介護事業者 (指定居宅サービス等基準第5条第1項に規定する指定訪問介護事業者をいう。) の指定を併せて受けて、一体的に運営するときは、指定訪問介護事業所の職務に従事することができるものとする。</p>
-</div>` } },
+</div>` },
     { id: 135, title: '三郷市地域包括支援センターの包括的支援事業の実施に関する基準を定める条例', category: '民生・福祉', keywords: ['地域包括', '支援センター', '高齢者'], summary: '地域包括支援センターの基準に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001030.html',
         fullText: `<div class="jorei-header">○三郷市地域包括支援センターの包括的支援事業の実施に関する基準を定める条例<br> </div>
 <div class="jorei-body">
@@ -3224,7 +3224,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 保健師その他これに準ずる者 1人</p>
 <p class="jorei-item">(2) 社会福祉士その他これに準ずる者 1人</p>
 <p class="jorei-item">(3) 主任介護支援専門員 (介護支援専門員であって、介護保険法施行規則第140条の68第1項第1号に規定する主任介護支援専門員研修を修了した者 (当該研修を修了した日 (以下この号において「修了日」という。) から起算して5年を経過した者にあっては、修了日から起算して5年を経過するごとに、当該経過する日までの間に、同項第2号に規定する主任介護支援専門員更新研修を修了している者に限る。) をいう。) その他これに準ずる者 1人</p>
-</div>` } },
+</div>` },
     { id: 136, title: '三郷市健康推進協議会条例', category: '民生・福祉', keywords: ['健康', '推進', '協議会'], summary: '健康推進協議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000396.html',
         fullText: `<div class="jorei-header">○三郷市健康推進協議会条例<br> </div>
 <div class="jorei-body">
@@ -3245,7 +3245,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 保健健康関係団体の代表者</p>
 <p class="jorei-item">(4) 公募による市民</p>
 <p class="jorei-item">(5) その他市長が必要と認める者</p>
-</div>` } },
+</div>` },
     { id: 137, title: '三郷市健康福祉会館設置及び管理条例', category: '民生・福祉', keywords: ['健康', '福祉会館', '施設'], summary: '健康福祉会館の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000398.html',
         fullText: `<div class="jorei-header">○三郷市健康福祉会館設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -3268,7 +3268,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 地域福祉の振興に関すること。</p>
 <p class="jorei-item">(2) 福祉増進のための各種相談及びサービスの調整に関すること。</p>
 <p class="jorei-item">(3) その他設置の目的を達成するために必要な業務</p>
-</div>` } },
+</div>` },
     { id: 138, title: '三郷市動物の愛護及び管理に関する条例', category: '民生・福祉', keywords: ['動物', '愛護', 'ペット'], summary: '動物の愛護・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001080.html',
         fullText: `<div class="jorei-header">○三郷市動物の愛護及び管理に関する条例<br> </div>
 <div class="jorei-body">
@@ -3295,7 +3295,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 疾病への感染及び不慮の事故を防止し、周辺の生活環境を保全するため、屋内で飼養するよう努めること。</p>
 <p class="jorei-item">(2) やむを得ず屋外で飼養する場合は、当該猫の不妊手術、去勢手術その他繁殖を制限するための措置を講ずるとともに、首輪、名札等により自己の所有を明らかにするための措置を講ずること。</p>
 <p class="jorei-item">(3) 猫を譲渡する場合は、出生後8週間は当該猫とその親を共に飼養してから譲渡するよう努めること。</p>
-</div>` } },
+</div>` },
     { id: 139, title: '三郷市廃棄物の処理及び再利用並びに資源物の持ち去り防止に関する条例', category: '民生・福祉', keywords: ['廃棄物', 'ごみ', 'リサイクル', '再利用'], summary: '廃棄物処理・再利用に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000881.html',
         fullText: `<div class="jorei-header">○三郷市廃棄物の処理及び再利用並びに資源物の持ち去り防止に関する条例<br> </div>
 <div class="jorei-body">
@@ -3340,7 +3340,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 容積又は重量の著しく大きい物</p>
 <p class="jorei-item">(5) 特別管理一般廃棄物に指定されている物</p>
 <p class="jorei-item">(6) 前各号 に定めるもののほか、市が行う処理に支障を及ぼすおそれのある物</p>
-</div>` } },
+</div>` },
     { id: 140, title: '三郷市墓地等の経営の許可等に関する条例', category: '民生・福祉', keywords: ['墓地', '霊園', '経営許可'], summary: '墓地の経営許可に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000765.html',
         fullText: `<div class="jorei-header">○三郷市墓地等の経営の許可等に関する条例<br> </div>
 <div class="jorei-body">
@@ -3378,7 +3378,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 墓地の区域及び施設基準は、 別表第1 のとおりとする。</p>
 <p class="jorei-item">(3) 納骨堂の設置場所及び施設基準は、 別表第2 のとおりとする。</p>
 <p class="jorei-item">(4) 火葬場の施設基準は、 別表第3 のとおりとする。</p>
-</div>` } },
+</div>` },
     { id: 141, title: '三郷市ペット霊園の設置の許可等に関する条例', category: '民生・福祉', keywords: ['ペット', '霊園', '許可'], summary: 'ペット霊園の設置許可に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000948.html',
         fullText: `<div class="jorei-header">○三郷市ペット霊園の設置の許可等に関する条例<br> </div>
 <div class="jorei-body">
@@ -3432,7 +3432,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 設置等計画に係る敷地に隣接するすべての土地の所有者 (公道等を介して接する土地の所有者を含む。) の同意を得ていること。</p>
 <p class="jorei-item">(3) 設置等計画に係る敷地は、次の基準に適合していること。</p>
 <p class="jorei-item">(4) ペット霊園の施設又は設備は、次の基準に適合していること。</p>
-</div>` } },
+</div>` },
     { id: 142, title: '三郷市公害防止条例', category: '民生・福祉', keywords: ['公害', '環境', '防止'], summary: '公害防止に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000414.html',
         fullText: `<div class="jorei-header">○三郷市公害防止条例<br> </div>
 <div class="jorei-body">
@@ -3478,7 +3478,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 作業の時間及び実施の期間</p>
 <p class="jorei-item">(5) 騒音又は振動等の防止の方法</p>
 <p class="jorei-item">(6) その他規則で定める事項</p>
-</div>` } },
+</div>` },
     { id: 143, title: '三郷市環境基本条例', category: '民生・福祉', keywords: ['環境', '基本条例', '持続可能'], summary: '環境保全の基本理念を定める条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000653.html',
         fullText: `<div class="jorei-header">○三郷市環境基本条例<br> </div>
 <div class="jorei-body">
@@ -3534,7 +3534,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(5) その他環境の保全等に関すること。</p>
 <p class="jorei-item">(1) 学識経験を有する者</p>
 <p class="jorei-item">(2) 商工団体に属する者</p>
-</div>` } },
+</div>` },
     { id: 144, title: '三郷市あき地の雑草等の除去に関する条例', category: '民生・福祉', keywords: ['空き地', '雑草', '環境美化'], summary: '空き地の雑草除去に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001009.html',
         fullText: `<div class="jorei-header">○三郷市あき地の雑草等の除去に関する条例<br> </div>
 <div class="jorei-body">
@@ -3551,7 +3551,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 雑草等 青草、枯れ草又はかん木をいう。</p>
 <p class="jorei-item">(3) 所有者等 所有者、管理者又は占有者をいう。</p>
 <p class="jorei-item">(4) 管理不良状態 雑草等が繁茂し、かつ、それがそのまま放置されていることにより、火災又は病害虫の発生、ごみの不法投棄、交通障害その他生活環境を害するおそれのある状態をいう。</p>
-</div>` } },
+</div>` },
     { id: 145, title: '三郷市空き缶等の散乱防止に関する条例', category: '民生・福祉', keywords: ['空き缶', '散乱防止', '美化'], summary: '空き缶等の散乱防止に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000420.html',
         fullText: `<div class="jorei-header">○三郷市空き缶等の散乱防止に関する条例<br> </div>
 <div class="jorei-body">
@@ -3570,7 +3570,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 市民等 市民及び本市の区域内に滞在する者 (通過する者を含む。) をいう。</p>
 <p class="jorei-item">(3) 事業者 容器等に収納した飲食物その他の製品、たばこ及びチューインガムの製造、販売等をする者をいう。</p>
 <p class="jorei-item">(4) 占有者等 土地の占有者及び管理者をいう。</p>
-</div>` } },
+</div>` },
     { id: 146, title: '三郷市ラブホテルの建築規制に関する条例', category: '民生・福祉', keywords: ['ラブホテル', '建築規制', '風営'], summary: 'ラブホテルの建築規制に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000422.html',
         fullText: `<div class="jorei-header">○三郷市ラブホテルの建築規制に関する条例<br> </div>
 <div class="jorei-body">
@@ -3601,7 +3601,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 建築基準法 (昭和25年法律第201号) 第6条第1項の規定による建築確認の申請</p>
 <p class="jorei-item">(1) 知識経験を有する者</p>
 <p class="jorei-item">(2) 関係地域の団体に属する者</p>
-</div>` } },
+</div>` },
     { id: 147, title: '三郷市市民パブリック・コメント手続条例', category: '民生・福祉', keywords: ['パブリックコメント', '市民参加', '意見募集'], summary: 'パブリックコメント手続に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000851.html',
         fullText: `<div class="jorei-header">○三郷市市民パブリック・コメント手続条例<br> </div>
 <div class="jorei-body">
@@ -3646,7 +3646,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 提出意見を考慮した結果 (パブリック・コメント手続を実施した政策等の案と定めた政策等との差異を含む。) 及びその理由</p>
 <p class="jorei-item">(1) 政策等の題名及び趣旨</p>
 <p class="jorei-item">(2) パブリック・コメント手続を実施しなかった旨及びその理由</p>
-</div>` } },
+</div>` },
     { id: 148, title: '三郷市男女共同参画社会づくり条例', category: '民生・福祉', keywords: ['男女共同参画', 'ジェンダー', '平等'], summary: '男女共同参画社会づくりに関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000810.html',
         fullText: `<div class="jorei-header">○三郷市男女共同参画社会づくり条例<br> </div>
 <div class="jorei-body">
@@ -3700,7 +3700,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 男女共同参画に関する活動団体その他の団体の代表者</p>
 <p class="jorei-item">(2) 知識経験を有する者</p>
 <p class="jorei-item">(3) 公募による市民</p>
-</div>` } },
+</div>` },
     { id: 149, title: '三郷市印鑑条例', category: '民生・福祉', keywords: ['印鑑', '登録', '証明'], summary: '印鑑登録に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000428.html',
         fullText: `<div class="jorei-header">○三郷市印鑑条例<br> </div>
 <div class="jorei-body">
@@ -3748,7 +3748,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(5) 氏名、氏 (氏に変更があった者にあっては、住民票に記載されている旧氏を含む。) 又は名 (外国人住民にあっては、通称又は氏名の片仮名表記を含む。) を変更 (登録されている印影を変更する必要のない場合を除く。) したため、登録されている印鑑が 第3条第2項第1号 の規定に該当することになったとき。</p>
 <p class="jorei-item">(6) 外国人住民にあっては、法第30条の45の表の上欄に掲げる者ではなくなったとき (日本国籍を取得した場合を除く。) 。</p>
 <p class="jorei-item">(7) 前各号 に定めるもののほか、抹消すべき事由が生じたとき。</p>
-</div>` } },
+</div>` },
     { id: 150, title: '三郷市防災会議条例', category: '民生・福祉', keywords: ['防災', '会議', '災害対策'], summary: '防災会議に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000432.html',
         fullText: `<div class="jorei-header">○三郷市防災会議条例<br> </div>
 <div class="jorei-body">
@@ -3771,7 +3771,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(7) 指定公共機関又は指定地方公共機関の職員のうちから市長が委嘱する者</p>
 <p class="jorei-item">(8) 自主防災組織を構成する者又は学識経験のある者のうちから市長が委嘱するもの</p>
 <p class="jorei-item">(9) 前各号 に掲げる者のほか、市長が特に必要と認めて任命する者</p>
-</div>` } },
+</div>` },
     { id: 151, title: '三郷市災害対策本部条例', category: '民生・福祉', keywords: ['災害', '対策本部', '緊急'], summary: '災害対策本部に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000434.html',
         fullText: `<div class="jorei-header">○三郷市災害対策本部条例<br> </div>
 <div class="jorei-body">
@@ -3780,7 +3780,7 @@ const allOrdinanceData = [
 <p>(部) 第3条 本部長は、必要と認めるときは、災害対策本部に部を置くことができる。</p>
 <p>(現地災害対策本部) 第4条 現地災害対策本部に現地災害対策本部長及び現地災害対策本部員その他の職員を置き、副本部長、災害対策本部員その他の職員のうちから本部長が指名する者をもって充てる。</p>
 <p>(委任) 第5条 この条例 に定めるもののほか、災害対策本部に関し必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
     { id: 152, title: '三郷市防災センター設置及び管理条例', category: '民生・福祉', keywords: ['防災', 'センター', '施設'], summary: '防災センターの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000438.html',
         fullText: `<div class="jorei-header">○三郷市防災センター設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -3803,7 +3803,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) その他センターの設置の目的に反するとき。</p>
 <p class="jorei-item">(1) 利用の許可の条件に反したとき。</p>
 <p class="jorei-item">(2) 遵守事項又は指示に違反したとき。</p>
-</div>` } },
+</div>` },
     { id: 153, title: '三郷市国民保護対策本部及び三郷市緊急対処事態対策本部に関する条例', category: '民生・福祉', keywords: ['国民保護', '緊急事態', '対策本部'], summary: '国民保護対策本部に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000787.html',
         fullText: `<div class="jorei-header">○三郷市国民保護対策本部及び三郷市緊急対処事態対策本部に関する条例<br> </div>
 <div class="jorei-body">
@@ -3814,7 +3814,7 @@ const allOrdinanceData = [
 <p>(現地対策本部) 第5条 国民保護現地対策本部に国民保護現地対策本部長、国民保護現地対策本部員その他の職員を置き、副本部長、本部員その他の職員のうちから本部長が指名する者をもって充てる。</p>
 <p>(委任) 第6条 前各条 に定めるもののほか、対策本部に関し必要な事項は、本部長が定める。</p>
 <p>(準用) 第7条 第2条 から 前条 までの規定は、三郷市緊急対処事態対策本部について準用する。</p>
-</div>` } },
+</div>` },
     { id: 154, title: '三郷市国民保護協議会条例', category: '民生・福祉', keywords: ['国民保護', '協議会', '安全'], summary: '国民保護協議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000788.html',
         fullText: `<div class="jorei-header">○三郷市国民保護協議会条例<br> </div>
 <div class="jorei-body">
@@ -3824,7 +3824,7 @@ const allOrdinanceData = [
 <p>(会議) 第4条 協議会の会議は、会長が招集し、その議長となる。</p>
 <p>(庶務) 第5条 協議会の庶務は、危機管理防災課において処理する。</p>
 <p>(委任) 第6条 この条例に定めるもののほか、協議会の運営に関し必要な事項は、会長が協議会に諮って定める。</p>
-</div>` } },
+</div>` },
     { id: 155, title: '三郷市新型インフルエンザ等対策本部条例', category: '民生・福祉', keywords: ['新型インフルエンザ', '対策', '感染症'], summary: '新型インフルエンザ等対策本部に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000977.html',
         fullText: `<div class="jorei-header">○三郷市新型インフルエンザ等対策本部条例<br> </div>
 <div class="jorei-body">
@@ -3833,14 +3833,14 @@ const allOrdinanceData = [
 <p>(会議) 第3条 本部長は、対策本部における情報交換及び連絡調整を円滑に行うため、必要に応じ、対策本部の会議を招集するものとする。</p>
 <p>(部) 第4条 本部長は、必要と認めるときは、対策本部に部を置くことができる。</p>
 <p>(委任) 第5条 前各条 に定めるもののほか、対策本部に関し必要な事項は、別に定める。</p>
-</div>` } },
+</div>` },
     { id: 156, title: '三郷市災害派遣手当等の支給に関する条例', category: '民生・福祉', keywords: ['災害派遣', '手当', '支援'], summary: '災害派遣手当の支給に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000808.html',
         fullText: `<div class="jorei-header">○三郷市災害派遣手当等の支給に関する条例<br> </div>
 <div class="jorei-body">
 <p>(趣旨) 第1条 この条例は、地方公務員法 (昭和25年法律第261号) 第24条第5項の規定に基づき、災害対策基本法 (昭和36年法律第223号) 第32条第1項に規定する災害派遣手当、武力攻撃事態等における国民の保護のための措置に関する法律 (平成16年法律第112号。以下「国民保護法」という。) 第154条に規定する武力攻撃災害等派遣手当、新型インフルエンザ等対策特別措置法 (平成24年法律第31号) 第26条の8に規定する特定新型インフルエンザ等対策派遣手当及び大規模災害からの復興に関する法律 (平成25年法律第55号) 第56条第1項に規定する災害派遣手当 (以下「災害派遣手当等」という。) の支給に関し必要な事項を定めるものとする。</p>
 <p>(災害派遣手当等の額等) 第2条 災害派遣手当等は、災害対策基本法第32条第1項に規定する職員、国民保護法第154条 (同法第183条において準用する場合を含む。) に規定する職員、新型インフルエンザ等対策特別措置法第26条の8に規定する職員又は大規模災害からの復興に関する法律第56条第1項に規定する職員 (以下「災害派遣職員等」という。) が住所又は居所を離れて本市の区域に滞在することを要する場合に限り、滞在した期間及び施設の利用区分に応じ、 別表 に定める額を支給する。</p>
 <p>(委任) 第3条 この条例の施行に関し必要な事項は、規則で定める。</p>
-</div>` } },
+</div>` },
     { id: 157, title: '三郷市自転車等の放置の防止に関する条例', category: '民生・福祉', keywords: ['自転車', '放置', '駐輪'], summary: '自転車等の放置防止に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000440.html',
         fullText: `<div class="jorei-header">○三郷市自転車等の放置の防止に関する条例<br> </div>
 <div class="jorei-body">
@@ -3862,7 +3862,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 生活環境 公共の場所等における人若しくは物の移動又は災害の防止等の活動が円滑に行われるために必要な公共空間の維持及び美観の状態をいう。</p>
 <p class="jorei-item">(3) 自転車等 道路交通法 (昭和35年法律第105号) 第2条第1項第11号の2に規定する自転車及び同項第10号に規定する原動機付自転車をいう。</p>
 <p class="jorei-item">(4) 放置 自転車等の利用者が当該自転車等を離れて、直ちに移動させることができない状態にあることをいう。</p>
-</div>` } },
+</div>` },
     { id: 158, title: '三郷市防犯のまちづくり推進条例', category: '民生・福祉', keywords: ['防犯', 'まちづくり', '安全'], summary: '防犯のまちづくり推進に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000741.html',
         fullText: `<div class="jorei-header">○三郷市防犯のまちづくり推進条例<br> </div>
 <div class="jorei-body">
@@ -3879,7 +3879,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 事業者 市内において商業、工業その他の事業を営む者をいう。</p>
 <p class="jorei-item">(3) 土地建物所有者等 市の区域に存する土地又は建物その他の工作物を所有し、又は管理する者をいう。</p>
 <p class="jorei-item">(4) 関係機関 警察及び防犯推進団体をいう。</p>
-</div>` } },
+</div>` },
     { id: 159, title: '三郷市犯罪被害者等支援条例', category: '民生・福祉', keywords: ['犯罪被害者', '支援', '救済'], summary: '犯罪被害者支援に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001207.html',
         fullText: `<div class="jorei-header">○三郷市犯罪被害者等支援条例<br> </div>
 <div class="jorei-body">
@@ -3902,7 +3902,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(5) 二次的被害 犯罪等による直接的な被害を受けた後に、風評、誹謗中傷、報道機関 (報道を業として行う個人を含む。) による過度な取材等により、犯罪被害者等が受ける精神的な苦痛、身体の不調、プライバシーの侵害等の被害をいう。</p>
 <p class="jorei-item">(6) 民間支援団体 犯罪被害者等の支援を行う民間の団体をいう。</p>
 <p class="jorei-item">(7) 関係団体等 国、県、警察その他の関係機関、民間支援団体その他の犯罪被害者等支援に関するものをいう。</p>
-</div>` } },
+</div>` },
     { id: 160, title: '三郷市振り込め詐欺等の被害防止に関する条例', category: '民生・福祉', keywords: ['振り込め詐欺', '詐欺', '被害防止'], summary: '振り込め詐欺被害防止に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001117.html',
         fullText: `<div class="jorei-header">○三郷市振り込め詐欺等の被害防止に関する条例<br> </div>
 <div class="jorei-body">
@@ -3927,7 +3927,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(8) 事業者 次に掲げる者であって、市内で事業活動を行うものをいう。</p>
 <p class="jorei-item">(1) その言動から振り込め詐欺等による被害に遭いかけていると疑われる者を発見したとき。</p>
 <p class="jorei-item">(2) 自己又は自己と同一の世帯に属する者が振り込め詐欺等と疑われる不審な電話、郵便物等を受けたとき。</p>
-</div>` } },
+</div>` },
     { id: 161, title: '三郷市空家等の適切な管理に関する条例', category: '民生・福祉', keywords: ['空き家', '管理', '防犯'], summary: '空き家の適切な管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001086.html',
         fullText: `<div class="jorei-header">○三郷市空家等の適切な管理に関する条例<br> </div>
 <div class="jorei-body">
@@ -3954,7 +3954,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 学識経験者</p>
 <p class="jorei-item">(2) 関係行政機関の職員</p>
 <p class="jorei-item">(3) その他市長が必要と認める者</p>
-</div>` } },
+</div>` },
     { id: 162, title: '三郷市暴力団排除条例', category: '民生・福祉', keywords: ['暴力団', '排除', '安全'], summary: '暴力団排除に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000968.html',
         fullText: `<div class="jorei-header">○三郷市暴力団排除条例<br> </div>
 <div class="jorei-body">
@@ -3972,7 +3972,7 @@ const allOrdinanceData = [
 <p>(委任) 第12条 この条例 に定めるもののほか、必要な事項は、市長が別に定める。</p>
 <p class="jorei-item">(1) 暴力団 暴力団員による不当な行為の防止等に関する法律 (平成3年法律第77号。以下「法」という。) 第2条第2号に規定する暴力団をいう。</p>
 <p class="jorei-item">(2) 暴力団員 法第2条第6号に規定する暴力団員をいう。</p>
-</div>` } },
+</div>` },
     { id: 163, title: '三郷市住居表示に関する条例', category: '民生・福祉', keywords: ['住居表示', '住所', '地番'], summary: '住居表示に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000452.html',
         fullText: `<div class="jorei-header">○三郷市住居表示に関する条例<br> </div>
 <div class="jorei-body">
@@ -3983,7 +3983,7 @@ const allOrdinanceData = [
 <p>(委任) 第5条 この条例 に定めるもののほか、住居の表示に関し必要な事項は、市長が別に定める。</p>
 <p class="jorei-item">(1) 当該建物その他の工作物の主要な出入口が道路に接している場合は当該出入口付近</p>
 <p class="jorei-item">(2) 当該建物その他の工作物の主要な出入口が道路から離れている場合は、当該建物その他の工作物から道路への主要な通路が道路に接する付近</p>
-</div>` } },
+</div>` },
     { id: 164, title: '三郷市文化会館設置及び管理条例', category: '民生・福祉', keywords: ['文化会館', '施設', '文化活動'], summary: '文化会館の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000454.html',
         fullText: `<div class="jorei-header">○三郷市文化会館設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -4037,7 +4037,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 第3条各号 に掲げる業務</p>
 <p class="jorei-item">(2) 会館の施設 (設備及び物品を含む。以下同じ。) の維持管理に関する業務</p>
 <p class="jorei-item">(3) 前2号 に掲げるもののほか、市長が別に定める業務</p>
-</div>` } },
+</div>` },
     { id: 165, title: '三郷市立コミュニティセンター設置及び管理条例', category: '民生・福祉', keywords: ['コミュニティセンター', '地域活動', '施設'], summary: 'コミュニティセンターの設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000456.html',
         fullText: `<div class="jorei-header">○三郷市立コミュニティセンター設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -4091,7 +4091,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 利用者が規則で定める期限までに利用許可の取消しを申し出たとき。</p>
 <p class="jorei-item">(1) 第3条各号 に掲げる業務</p>
 <p class="jorei-item">(2) センターの施設 (設備及び物品を含む。以下同じ。) の維持管理に関する業務</p>
-</div>` } },
+</div>` },
     { id: 166, title: '三郷市斎場条例', category: '民生・福祉', keywords: ['斎場', '火葬場', '葬祭'], summary: '斎場に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000463.html',
         fullText: `<div class="jorei-header">○三郷市斎場条例<br> </div>
 <div class="jorei-body">
@@ -4107,7 +4107,7 @@ const allOrdinanceData = [
 <p>(委任) 第10条 この条例 に定めるもののほか、必要な事項は、規則で定める。</p>
 <p class="jorei-item">(1) 名称 三郷市斎場</p>
 <p class="jorei-item">(2) 位置 三郷市茂田井15番地</p>
-</div>` } },
+</div>` },
     { id: 167, title: '災害弔慰金の支給等に関する条例', category: '民生・福祉', keywords: ['災害', '弔慰金', '支援'], summary: '災害弔慰金の支給に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000465.html',
         fullText: `<div class="jorei-header">○災害弔慰金の支給等に関する条例<br> </div>
 <div class="jorei-body">
@@ -4138,7 +4138,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 療養に要する期間がおおむね1月以上である世帯主の負傷 (以下「世帯主の負傷」という。) があり、かつ、次のいずれかに該当する場合</p>
 <p class="jorei-item">(2) 世帯主の負傷がなく、かつ、次のいずれかに該当する場合</p>
 <p class="jorei-item">(3) 第1号のウ 又は 前号のイ 若しくは ウ において、被災した住居を建て直すに際しその住居の残存部分を取り壊さざるを得ない場合等特別の事情がある場合には、「270万円」とあるのは「350万円」と、「170万円」とあるのは「250万円」と、「250万円」とあるのは「350万円」と読み替えるものとする。</p>
-</div>` } },
+</div>` },
     { id: 168, title: '三郷市災害見舞金支給条例', category: '民生・福祉', keywords: ['災害', '見舞金', '支援'], summary: '災害見舞金の支給に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000467.html',
         fullText: `<div class="jorei-header">○三郷市災害見舞金支給条例<br> </div>
 <div class="jorei-body">
@@ -4163,7 +4163,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 死亡者の収入によって生計を維持していた子、父母、孫、祖父母及び兄弟姉妹</p>
 <p class="jorei-item">(3) 前2号 に掲げる者以外の者で、主として死亡者の収入によって生計を維持していたもの</p>
 <p class="jorei-item">(4) 第2号 に該当しない子、父母、孫、祖父母及び兄弟姉妹</p>
-</div>` } },
+</div>` },
 
     // ===== 第9編 産業経済 =====
     { id: 169, title: '三郷市農業委員会の委員及び農地利用最適化推進委員の定数に関する条例', category: '産業経済', keywords: ['農業委員会', '農地', '委員'], summary: '農業委員会の委員定数に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001087.html',
@@ -4172,7 +4172,7 @@ const allOrdinanceData = [
 <p>(趣旨) 第1条 この条例 は、農業委員会等に関する法律 (昭和26年法律第88号) 第8条第2項及び第18条第2項の規定に基づき、三郷市農業委員会の委員及び農地利用最適化推進委員の定数を定めるものとする。</p>
 <p>(農業委員会の委員の定数) 第2条 三郷市農業委員会の委員の定数は、14人とする。</p>
 <p>(農地利用最適化推進委員の定数) 第3条 三郷市農業委員会の農地利用最適化推進委員の定数は、4人とする。</p>
-</div>` } },
+</div>` },
     { id: 170, title: '三郷市農政審議会条例', category: '産業経済', keywords: ['農政', '審議会', '農業'], summary: '農政審議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000474.html',
         fullText: `<div class="jorei-header">○三郷市農政審議会条例<br> </div>
 <div class="jorei-body">
@@ -4190,7 +4190,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 農業共済組合</p>
 <p class="jorei-item">(4) 市内の各種農業団体</p>
 <p class="jorei-item">(5) 知識経験を有する者</p>
-</div>` } },
+</div>` },
     { id: 171, title: '三郷市営土地改良事業受益者負担金徴収条例', category: '産業経済', keywords: ['土地改良', '受益者負担', '農業基盤'], summary: '土地改良事業の受益者負担金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000476.html',
         fullText: `<div class="jorei-header">○三郷市営土地改良事業受益者負担金徴収条例<br> </div>
 <div class="jorei-body">
@@ -4201,7 +4201,7 @@ const allOrdinanceData = [
 <p>(徴収の猶予) 第5条 災害その他市長が必要があると認めた場合は、 前条 の規定にかかわらず、負担金の全部又は一部の徴収を猶予することができる。</p>
 <p>(延滞金及び督促手数料) 第6条 第4条 の規定に基づき、市長が指定する納期限までに負担金を納入しない者に対し督促した場合は、督促手数料及び延滞金を徴収する。 ただし、督促状に指定する期限までに滞納した負担金及び督促手数料を完納した場合は、延滞金は徴収しない。</p>
 <p>(委任) 第7条 この条例 の施行について必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
     { id: 172, title: '農業近代化資金利子補給条例', category: '産業経済', keywords: ['農業', '近代化', '融資', '利子補給'], summary: '農業近代化資金の利子補給に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000478.html',
         fullText: `<div class="jorei-header">○農業近代化資金利子補給条例<br> </div>
 <div class="jorei-body">
@@ -4210,7 +4210,7 @@ const allOrdinanceData = [
 <p>(利子補給) 第3条 市長は、 この条例 の定めるところにより、農業近代化資金の貸付けを行う融資機関に対し、農業近代化資金として貸し付けた資金につき年1分の範囲内において利子の補給を行うことができる。</p>
 <p>(利子補給の打切り又は返還) 第4条 市長は、 この条例 による利子補給に係る資金を借り受けた者がその借入金を目的以外の目的に使用したときは、融資機関に対する利子補給金を打ち切ることができる。</p>
 <p>(委任) 第5条 この条例 の施行に関して必要な事項は、市長が定める。</p>
-</div>` } },
+</div>` },
     { id: 173, title: '三郷市商工審議会条例', category: '産業経済', keywords: ['商工', '審議会', '産業振興'], summary: '商工審議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000483.html',
         fullText: `<div class="jorei-header">○三郷市商工審議会条例<br> </div>
 <div class="jorei-body">
@@ -4221,7 +4221,7 @@ const allOrdinanceData = [
 <p>(会議) 第5条 審議会の会議は、会長が招集する。</p>
 <p>(庶務) 第6条 審議会の庶務は、地域振興部商工観光課において処理する。</p>
 <p>(委任) 第7条 この条例に定めるもののほか、審議会の運営に関し必要な事項は、市長が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 174, title: '三郷市中小企業融資条例', category: '産業経済', keywords: ['中小企業', '融資', '経営支援'], summary: '中小企業融資に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000485.html',
         fullText: `<div class="jorei-header">○三郷市中小企業融資条例<br> </div>
 <div class="jorei-body">
@@ -4254,7 +4254,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 小売業振興資金 小売業者が大型店対策又は商業の近代化に必要とする運転資金及び設備資金をいう。</p>
 <p class="jorei-item">(1) 利子補給金 小売業振興資金の借受者に対して、借受額の年2パーセント (延滞利子を除く。) とする。 ただし、融資を受けた日から3年間とする。</p>
 <p class="jorei-item">(2) 保証料補助金</p>
-</div>` } },
+</div>` },
     { id: 175, title: '三郷市家内労働者生業資金貸付条例', category: '産業経済', keywords: ['家内労働', '貸付', '資金'], summary: '家内労働者への生業資金貸付に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000495.html',
         fullText: `<div class="jorei-header">○三郷市家内労働者生業資金貸付条例<br> </div>
 <div class="jorei-body">
@@ -4286,7 +4286,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 保証能力が十分と認められるもの</p>
 <p class="jorei-item">(4) 市民税を完納していること。</p>
 <p class="jorei-item">(5) 選挙権を有するもの</p>
-</div>` } },
+</div>` },
     { id: 176, title: '三郷市消費生活センターの組織及び運営等に関する条例', category: '産業経済', keywords: ['消費生活', 'センター', '相談'], summary: '消費生活センターに関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001058.html',
         fullText: `<div class="jorei-header">○三郷市消費生活センターの組織及び運営等に関する条例<br> </div>
 <div class="jorei-body">
@@ -4297,7 +4297,7 @@ const allOrdinanceData = [
 <p>(研修) 第5条 市長は、消費生活センターの事務に従事する職員に対し、その資質の向上のための研修の機会を確保するものとする。</p>
 <p>(情報の安全管理) 第6条 市長は、消費生活センターの事務の実施により得られた情報の漏えい、滅失又は毀損の防止その他の当該情報の適切な管理のために必要な措置を講ずるものとする。</p>
 <p>(委任) 第7条 この条例 の施行に関し必要な事項は、規則で定める。</p>
-</div>` } },
+</div>` },
 
     // ===== 第10編 建設 =====
     { id: 177, title: '三郷市道路の構造、管理及び占用に関する条例', category: '建設', keywords: ['道路', '管理', '占用'], summary: '道路の構造・管理・占用に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000972.html',
@@ -4345,7 +4345,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 占用許可を受けた期間が満了したとき。</p>
 <p class="jorei-item">(2) 占用者が死亡し、又は占用許可を受けた法人が解散等した場合で、 第10条第2項 及び 第3項 の規定による届出がないとき。</p>
 <p class="jorei-item">(3) 第10条第1項各号 に該当し、 同項 の規定による届出があったとき。</p>
-</div>` } },
+</div>` },
     { id: 178, title: '三郷市道路占用料条例', category: '建設', keywords: ['道路', '占用料', '使用料'], summary: '道路占用料に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000504.html',
         fullText: `<div class="jorei-header">○三郷市道路占用料条例<br> </div>
 <div class="jorei-body">
@@ -4367,14 +4367,14 @@ const allOrdinanceData = [
 <p class="jorei-item">(8) 雨水又は汚水を排水するために必要な施設</p>
 <p class="jorei-item">(9) 祭礼、縁日等に際し、一時的に設けるもの</p>
 <p class="jorei-item">(10) 前各号 に掲げるもののほか、市長が特に必要と認めるもの</p>
-</div>` } },
+</div>` },
     { id: 179, title: '三郷市市道に設置する道路標識の寸法に関する条例', category: '建設', keywords: ['道路標識', '寸法', '基準'], summary: '道路標識の寸法に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000971.html',
         fullText: `<div class="jorei-header">○三郷市市道に設置する道路標識の寸法に関する条例<br> </div>
 <div class="jorei-body">
 <p>(趣旨) 第1条 この条例 は、道路法 (昭和27年法律第180号。以下「法」という。) 第45条第3項の規定に基づき、市道に設ける道路標識の寸法に関し必要な事項を定めるものとする。</p>
 <p>(定義) 第2条 この条例 において使用する用語は、法及び道路標識、区画線及び道路標示に関する命令 (昭和35年総理府・建設省令第3号) において使用する用語の例による。</p>
 <p>(寸法) 第3条 市道に設ける道路標識のうち案内標識及び警戒標識並びにこれらに附置される補助標識の寸法は、 別表 のとおりとする。</p>
-</div>` } },
+</div>` },
     { id: 180, title: '三郷市準用河川条例', category: '建設', keywords: ['準用河川', '河川', '管理'], summary: '準用河川に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000973.html',
         fullText: `<div class="jorei-header">○三郷市準用河川条例<br> </div>
 <div class="jorei-body">
@@ -4395,7 +4395,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 法第26条第1項の規定による河川区域内の土地における工作物の新築、改築又は除去</p>
 <p class="jorei-item">(3) 法第27条第1項の規定による河川区域内の土地における掘削、盛土、切土その他土地の形状を変更する行為又は竹木の栽植若しくは伐採</p>
 <p class="jorei-item">(4) 河川への排水</p>
-</div>` } },
+</div>` },
     { id: 181, title: '三郷市都市計画審議会条例', category: '建設', keywords: ['都市計画', '審議会', 'まちづくり'], summary: '都市計画審議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000507.html',
         fullText: `<div class="jorei-header">○三郷市都市計画審議会条例<br> </div>
 <div class="jorei-body">
@@ -4409,7 +4409,7 @@ const allOrdinanceData = [
 <p>(幹事) 第8条 審議会に、幹事若干人を置く。</p>
 <p>(庶務) 第9条 審議会の庶務は、まちづくり推進部都市デザイン課において処理する。</p>
 <p>(委任) 第10条 この条例 に定めるもののほか、審議会に関し必要な事項は、規則で定める。</p>
-</div>` } },
+</div>` },
     { id: 182, title: '三郷市開発事業等の手続等に関する条例', category: '建設', keywords: ['開発', '手続', '宅地造成'], summary: '開発事業の手続に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000909.html',
         fullText: `<div class="jorei-header">○三郷市開発事業等の手続等に関する条例<br> </div>
 <div class="jorei-body">
@@ -4463,7 +4463,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 第10条第3項 の規定に違反して開発事業を行ったとき。</p>
 <p class="jorei-item">(4) 第11条 の規定に違反して標識を設置しないとき。</p>
 <p class="jorei-item">(5) 第12条 の規定に違反して開発事業に関する工事の届け出しないとき。</p>
-</div>` } },
+</div>` },
     { id: 183, title: '三郷市地区計画等の案の作成手続に関する条例', category: '建設', keywords: ['地区計画', 'まちづくり', '都市計画'], summary: '地区計画の作成手続に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000511.html',
         fullText: `<div class="jorei-header">○三郷市地区計画等の案の作成手続に関する条例<br> </div>
 <div class="jorei-body">
@@ -4473,7 +4473,7 @@ const allOrdinanceData = [
 <p>(委任) 第4条 この条例 の施行に関し必要な事項は、規則で定める。</p>
 <p class="jorei-item">(1) 地区計画等の原案の内容のうち、種類、名称、位置及び区域</p>
 <p class="jorei-item">(2) 縦覧場所</p>
-</div>` } },
+</div>` },
     { id: 184, title: '三郷市都市計画法に基づく開発許可等の基準に関する条例', category: '建設', keywords: ['開発許可', '都市計画', '基準'], summary: '開発許可の基準に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000696.html',
         fullText: `<div class="jorei-header">○三郷市都市計画法に基づく開発許可等の基準に関する条例<br> </div>
 <div class="jorei-body">
@@ -4509,7 +4509,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 令第25条第2号に規定する道路は、標準幅員が12メートル以上あること。 ただし、環境の保全上、災害の防止上、通行の安全上及び事業活動の効率上支障がないと認められる場合には、9メートル以上とすることができる。</p>
 <p class="jorei-item">(2) 予定建築物の用途が工業・流通業務施設の場合には、規則で定める基準の緑地帯その他の緩衝帯が開発区域の境界に沿って、その内側に配置されていること。</p>
 <p class="jorei-item">(1) 令第25条第2号に規定する道路は、標準幅員が12メートル以上あること。 ただし、環境の保全上、災害の防止上、通行の安全上及び事業活動の効率上支障がないと認められる場合は9メートル以上とすることができる。</p>
-</div>` } },
+</div>` },
     { id: 185, title: '三郷市景観条例', category: '建設', keywords: ['景観', 'まちなみ', '美しいまち'], summary: '景観保全に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000925.html',
         fullText: `<div class="jorei-header">○三郷市景観条例<br> </div>
 <div class="jorei-body">
@@ -4563,13 +4563,13 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 学識経験者</p>
 <p class="jorei-item">(2) 公募による市民</p>
 <p class="jorei-item">(3) 重点地区景観協議会の代表者</p>
-</div>` } },
+</div>` },
     { id: 186, title: '三郷市生産緑地地区の区域の規模に関する条件を定める条例', category: '建設', keywords: ['生産緑地', '農地', '都市農業'], summary: '生産緑地の規模条件に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001159.html',
         fullText: `<div class="jorei-header">○三郷市生産緑地地区の区域の規模に関する条件を定める条例<br> </div>
 <div class="jorei-body">
 <p>(趣旨) 第1条 この条例は、生産緑地法 (昭和49年法律第68号。以下「法」という。) 第3条第2項の規定に基づき、本市における生産緑地地区の区域の規模に関する条件を定めるものとする。</p>
 <p>(区域の規模に関する条件) 第2条 法第3条第2項の規定により条例で定める区域の規模に関する条件は、300平方メートル以上の規模の区域であることとする。</p>
-</div>` } },
+</div>` },
     { id: 187, title: '三郷市みどりの条例', category: '建設', keywords: ['みどり', '緑化', '環境'], summary: 'みどりの保全・創出に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000516.html',
         fullText: `<div class="jorei-header">○三郷市みどりの条例<br> </div>
 <div class="jorei-body">
@@ -4601,7 +4601,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 保存樹木等を移植し、又は伐採しようとするとき。</p>
 <p class="jorei-item">(2) 保存樹木等が枯死し、又は著しく折損したとき。</p>
 <p class="jorei-item">(3) 当該土地の所有権及びその他の権利を他に移転しようとするとき。</p>
-</div>` } },
+</div>` },
     { id: 188, title: '三郷市屋外広告物条例', category: '建設', keywords: ['屋外広告', '看板', '景観'], summary: '屋外広告物に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001060.html',
         fullText: `<div class="jorei-header">○三郷市屋外広告物条例<br> </div>
 <div class="jorei-body">
@@ -4659,7 +4659,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(8) 都市公園法 (昭和31年法律第79号) 第2条第1項に規定する都市公園の区域</p>
 <p class="jorei-item">(9) 河川及びその付近の地域で市長が指定する区域</p>
 <p class="jorei-item">(10) 駅前広場及びその付近の地域で市長が指定する区域</p>
-</div>` } },
+</div>` },
     { id: 189, title: '三郷市都市公園条例', category: '建設', keywords: ['公園', '都市公園', 'みどり'], summary: '都市公園に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000521.html',
         fullText: `<div class="jorei-header">○三郷市都市公園条例<br> </div>
 <div class="jorei-body">
@@ -4713,7 +4713,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 競技会、展示会、博覧会その他これらに類する催しのために都市公園の全部又は一部を独占して利用すること。</p>
 <p class="jorei-item">(5) 花火、キャンプファイヤー等火気を使用すること。</p>
 <p class="jorei-item">(1) 公衆の公園の利用に支障を及ぼすおそれがあるとき。</p>
-</div>` } },
+</div>` },
     { id: 190, title: '三郷市公園運営委員会条例', category: '建設', keywords: ['公園', '運営', '委員会'], summary: '公園運営委員会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000523.html',
         fullText: `<div class="jorei-header">○三郷市公園運営委員会条例<br> </div>
 <div class="jorei-body">
@@ -4729,7 +4729,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 緑化推進団体に属する者</p>
 <p class="jorei-item">(3) 関係地域の団体に属する者</p>
 <p class="jorei-item">(4) その他市長が必要と認める者</p>
-</div>` } },
+</div>` },
     { id: 191, title: '三郷市運動公園の設置及び管理に関する条例', category: '建設', keywords: ['運動公園', 'スポーツ', '施設'], summary: '運動公園の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000525.html',
         fullText: `<div class="jorei-header">○三郷市運動公園の設置及び管理に関する条例<br> </div>
 <div class="jorei-body">
@@ -4765,7 +4765,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 第6条 の規定に違反して 同条各号 に掲げる行為をした者</p>
 <p class="jorei-item">(2) 第10条第2項 の規定による市長の命令に違反した者</p>
 <p class="jorei-item">(1) 第1条中三郷市運動公園の設置及び管理に関する条例第11条及び第12条の改正規定</p>
-</div>` } },
+</div>` },
     { id: 192, title: '三郷市公共下水道事業の設置等に関する条例', category: '建設', keywords: ['下水道', '公共下水道', 'インフラ'], summary: '公共下水道事業に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001136.html',
         fullText: `<div class="jorei-header">○三郷市公共下水道事業の設置等に関する条例<br> </div>
 <div class="jorei-body">
@@ -4779,7 +4779,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 事業の概況</p>
 <p class="jorei-item">(2) 経理の状況</p>
 <p class="jorei-item">(3) 前2号 に掲げるもののほか、公共下水道事業の経営状況を明らかにするため市長が必要と認める事項</p>
-</div>` } },
+</div>` },
     { id: 193, title: '三郷市下水道事業審議会条例', category: '建設', keywords: ['下水道', '審議会', 'インフラ'], summary: '下水道事業審議会に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000528.html',
         fullText: `<div class="jorei-header">○三郷市下水道事業審議会条例<br> </div>
 <div class="jorei-body">
@@ -4793,7 +4793,7 @@ const allOrdinanceData = [
 <p>(委任) 第8条 この条例 に定めるもののほか、審議会に関し必要な事項は、市長が定める。</p>
 <p class="jorei-item">(1) 市内の公共的団体等の代表者</p>
 <p class="jorei-item">(2) その他市長が必要と認める者</p>
-</div>` } },
+</div>` },
     { id: 194, title: '三郷市公共下水道の構造等の技術上の基準に関する条例', category: '建設', keywords: ['下水道', '基準', '技術'], summary: '公共下水道の技術基準に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000974.html',
         fullText: `<div class="jorei-header">○三郷市公共下水道の構造等の技術上の基準に関する条例<br> </div>
 <div class="jorei-body">
@@ -4816,7 +4816,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(10) 桝 ます 又はマンホールには、蓋 (汚水を排除すべき桝又はマンホールにあっては、密閉することができる蓋) を設けること。</p>
 <p class="jorei-item">(1) 工事を施行するために仮に設けられる公共下水道</p>
 <p class="jorei-item">(2) 非常災害のために必要な応急措置として設けられる公共下水道</p>
-</div>` } },
+</div>` },
     { id: 195, title: '三郷市下水道条例', category: '建設', keywords: ['下水道', '使用', '排水'], summary: '下水道の使用等に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000529.html',
         fullText: `<div class="jorei-header">○三郷市下水道条例<br> </div>
 <div class="jorei-body">
@@ -4870,7 +4870,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 流域下水道 法第2条第4号に規定する流域下水道をいう。</p>
 <p class="jorei-item">(5) 都市下水路 法第2条第5号に規定する都市下水路をいう。</p>
 <p class="jorei-item">(6) 終末処理場 法第2条第6号に規定する終末処理場をいう。</p>
-</div>` } },
+</div>` },
     { id: 196, title: '三郷都市計画下水道事業受益者負担に関する条例', category: '建設', keywords: ['下水道', '受益者負担', '負担金'], summary: '下水道事業受益者負担に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000532.html',
         fullText: `<div class="jorei-header">○三郷都市計画下水道事業受益者負担に関する条例<br> </div>
 <div class="jorei-body">
@@ -4893,7 +4893,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 公の生活扶助を受けている受益者その他これに準ずる特別の事情があると認められる受益者</p>
 <p class="jorei-item">(4) 事業のため土地、物件又は金銭を提供した受益者</p>
 <p class="jorei-item">(5) 前各号 に掲げる受益者のほか、その状況により特に負担金を減免する必要があると認められる土地に係る受益者</p>
-</div>` } },
+</div>` },
     { id: 197, title: '三郷市公共下水道使用料条例', category: '建設', keywords: ['下水道', '使用料', '料金'], summary: '公共下水道使用料に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000534.html',
         fullText: `<div class="jorei-header">○三郷市公共下水道使用料条例<br> </div>
 <div class="jorei-body">
@@ -4925,7 +4925,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 第6条第2項 の規定による申告で不実の記載のあるものを提出した者</p>
 <p class="jorei-item">(2) 第6条第3項 の規定による計測装置の取付けを拒否し、又は妨げた者</p>
 <p class="jorei-item">(3) 第6条第4項 に規定する資料の提出を拒み、又は不実の記載のある資料を提出した者</p>
-</div>` } },
+</div>` },
     { id: 198, title: '三郷市地区計画区域内における建築物等の制限に関する条例', category: '建設', keywords: ['地区計画', '建築制限', 'まちづくり'], summary: '地区計画区域内の建築制限に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000628.html',
         fullText: `<div class="jorei-header">○三郷市地区計画区域内における建築物等の制限に関する条例<br> </div>
 <div class="jorei-body">
@@ -4965,7 +4965,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 第4条 又は 第6条第1項 の規定に違反した場合における当該建築物の建築主 (建築物を建築した後において、当該建築物の敷地を分割したことによって 第6条第1項 の規定に違反した場合においては、当該建築物の敷地の所有者、管理者又は占有者)</p>
 <p class="jorei-item">(2) 第5条第1項 若しくは 第2項 、 第5条の2第1項 若しくは 第2項 又は 第5条の3 の規定に違反した場合における当該建築物の設計者 (設計図書を用いないで工事を施工し、又は設計図書に従わないで工事を施工した場合においては、当該建築物の工事施工者)</p>
 <p class="jorei-item">(3) 法第87条第2項において準用する 第4条 の規定に違反した場合における当該建築物の所有者、管理者又は占有者</p>
-</div>` } },
+</div>` },
     { id: 199, title: '三郷市建築協定条例', category: '建設', keywords: ['建築協定', 'まちなみ', '住環境'], summary: '建築協定に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000542.html',
         fullText: `<div class="jorei-header">○三郷市建築協定条例<br> </div>
 <div class="jorei-body">
@@ -4973,7 +4973,7 @@ const allOrdinanceData = [
 <p>(建築協定) 第2条 次条 に定める区域内において、住宅地としての環境又は商店街としての利便を高度に維持増進する等建築物の利用を増進し、かつ、土地の環境を改善するため土地の所有権者並びに建築物の所有を目的とする地上権者及び賃借権者は、その権利の目的となっている土地について一定の区域を定め、その区域内における建築物の敷地、位置、構造、用途、形態、意匠又は建築設備に関する基準を協定することができる。</p>
 <p>(建築協定のすることができる区域) 第3条 法第69条の規定による建築協定のすることができる区域は、都市計画法 (昭和43年法律第100号) 第8条第1項の規定に基づく地域及び用途地域の指定のない区域において住宅地としての環境を保護し、又は商店街としての利便を高度に維持増進することが必要と認める区域内で、市長が別に定める区域とする。</p>
 <p>(委任) 第4条 この条例 の施行に関し必要な事項は、市長が別に定める。</p>
-</div>` } },
+</div>` },
     { id: 200, title: '三郷市特別工業地区条例', category: '建設', keywords: ['工業地区', '用途地域', '建築'], summary: '特別工業地区に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000545.html',
         fullText: `<div class="jorei-header">○三郷市特別工業地区条例<br> </div>
 <div class="jorei-body">
@@ -4984,7 +4984,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 増築又は改築が基準時における敷地内におけるものであり、かつ、増築又は改築後における建築面積が基準時における敷地面積に対して法第53条の規定に適合すること。</p>
 <p class="jorei-item">(2) 増築後の床面積の合計は、基準時における床面積の合計の1.2倍を超えないこと。</p>
 <p class="jorei-item">(3) 増築後の 前条 に適合しない用途に供する建築物の部分の床面積の合計は、基準時におけるその部分の床面積の1.2倍を超えないこと。</p>
-</div>` } },
+</div>` },
     { id: 201, title: '三郷市建築基準法の規定に基づく建築物の建築等に係る確認申請手数料等の徴収に関する条例', category: '建設', keywords: ['建築確認', '手数料', '建築基準法'], summary: '建築確認申請手数料に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000548.html',
         fullText: `<div class="jorei-header">○三郷市建築基準法の規定に基づく建築物の建築等に係る確認申請手数料等の徴収に関する条例<br> </div>
 <div class="jorei-body">
@@ -4999,7 +4999,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 前2号 の規定は、建築設備及び工作物について準用する。</p>
 <p class="jorei-item">(4) 建築基準法に基づく許可、認定等の申請をするものが三郷市長である場合においては、手数料を免除する。</p>
 <p class="jorei-item">(5) 公用で使用するとき及び官公署から請求があったときは、証明書又は写しの交付の手数料を免除する。</p>
-</div>` } },
+</div>` },
     { id: 202, title: '三郷市市営住宅設置及び管理条例', category: '建設', keywords: ['市営住宅', '公営住宅', '住宅'], summary: '市営住宅の設置・管理に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000549.html',
         fullText: `<div class="jorei-header">○三郷市市営住宅設置及び管理条例<br> </div>
 <div class="jorei-body">
@@ -5053,7 +5053,7 @@ const allOrdinanceData = [
 <p>(委任) 第47条 この条例の施行に関し必要な事項は、規則で定める。</p>
 <p class="jorei-item">(1) 市営住宅 市が建設し、低額所得者に賃貸するための住宅及びその附帯施設で、法の規定による国の補助に係るものをいう。</p>
 <p class="jorei-item">(2) 共同施設 法第2条第9号に規定する施設をいう。</p>
-</div>` } },
+</div>` },
 
     // ===== 第11編 水道 =====
     { id: 203, title: '三郷市水道事業の設置等に関する条例', category: '水道', keywords: ['水道', '事業', '設置'], summary: '水道事業の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000552.html',
@@ -5075,7 +5075,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 三郷市上水道特別会計条例 (昭和41年条例第13号)</p>
 <p class="jorei-item">(3) 上水道施設整備基金条例 (昭和41年条例第14号)</p>
 <p class="jorei-item">(4) 上水道施設整備基金の特例に関する条例 (昭和41年条例第26号)</p>
-</div>` } },
+</div>` },
     { id: 204, title: '三郷市企業職員の給与の種類及び基準に関する条例', category: '水道', keywords: ['企業職員', '給与', '水道'], summary: '企業職員の給与に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000559.html',
         fullText: `<div class="jorei-header">○三郷市企業職員の給与の種類及び基準に関する条例<br> </div>
 <div class="jorei-body">
@@ -5119,7 +5119,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 通勤のため交通機関等を利用してその運賃等を負担し、かつ、自動車等を使用することを常例とする職員 (交通機関等を利用し、又は自動車等を使用しなければ通勤することが著しく困難である職員以外の職員であって、交通機関等を利用せず、かつ、自動車等を使用しないで徒歩により通勤するものとした場合の通勤距離が片道2キロメートル未満であるものを除く。)</p>
 <p class="jorei-item">(2) 第3条及び附則第2条の規定 令和6年4月1日</p>
 <p class="jorei-item">(2) 第2条、第4条、第5条、第6条、第8条及び第10条の規定並びに附則第4条及び第5条の規定 令和7年4月1日</p>
-</div>` } },
+</div>` },
     { id: 205, title: '三郷市水道事業給水条例', category: '水道', keywords: ['給水', '水道', '使用'], summary: '水道の給水に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000565.html',
         fullText: `<div class="jorei-header">○三郷市水道事業給水条例<br> </div>
 <div class="jorei-body">
@@ -5174,7 +5174,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 専用給水装置 1世帯又は1箇所で専用するもの</p>
 <p class="jorei-item">(2) 共用給水装置 2世帯又は2箇所以上で共用するもの</p>
 <p class="jorei-item">(3) 私設消火栓 消防用に使用するもの</p>
-</div>` } },
+</div>` },
     { id: 206, title: '三郷市水道事業の布設工事監督者及び水道技術管理者に関する条例', category: '水道', keywords: ['水道', '監督者', '技術管理'], summary: '水道の布設工事監督者等に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000955.html',
         fullText: `<div class="jorei-header">○三郷市水道事業の布設工事監督者及び水道技術管理者に関する条例<br> </div>
 <div class="jorei-body">
@@ -5203,7 +5203,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(6) 国土交通大臣及び環境大臣の登録を受けた者が行う水道の管理に関する講習の課程を修了した者</p>
 <p class="jorei-item">(7) 技術士法第4条第1項の規定による第2次試験のうち上下水道部門に合格した者 (選択科目として上水道及び工業用水道を選択したものに限る。) であって、1年以上水道に関する技術上の実務に従事した経験を有するもの</p>
 <p class="jorei-item">(8) 建設業法施行令第37条第1項及び第2項の規定による土木施工管理に係る1級の技術検定に合格した者であって、3年以上水道に関する技術上の実務に従事した経験を有するもの</p>
-</div>` } },
+</div>` },
 
     // ===== 第12編 消防 =====
     { id: 207, title: '三郷市消防本部及び消防署の設置に関する条例', category: '消防', keywords: ['消防', '消防署', '設置'], summary: '消防本部・消防署の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000570.html',
@@ -5217,7 +5217,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 位置 三郷市中央五丁目45番地4</p>
 <p class="jorei-item">(1) 名称 三郷市消防署</p>
 <p class="jorei-item">(3) 管轄区域 三郷市一円</p>
-</div>` } },
+</div>` },
     { id: 208, title: '三郷市消防長に対する事務委任に関する規則', category: '消防', keywords: ['消防長', '事務委任', '消防'], summary: '消防長への事務委任に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000775.html' },
     { id: 209, title: '三郷市消防長及び消防署長の資格を定める条例', category: '消防', keywords: ['消防長', '消防署長', '資格'], summary: '消防長等の資格に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00001010.html',
         fullText: `<div class="jorei-header">○三郷市消防長及び消防署長の資格を定める条例<br> </div>
@@ -5227,7 +5227,7 @@ const allOrdinanceData = [
 <p>(消防署長の資格) 第3条 消防署長の資格は、本市の消防吏員として消防事務に従事した者で、消防司令以上の階級に1年以上あったものとする。</p>
 <p class="jorei-item">(1) 本市の消防職員として消防事務に従事した者で、消防署長の職又はこれと同等以上と認められる職に1年以上あったものであること。</p>
 <p class="jorei-item">(2) 本市の行政事務に従事した者で、行政職給料表8級の職その他本市におけるこれと同等以上と認められる職に2年以上あったものであること。</p>
-</div>` } },
+</div>` },
     { id: 210, title: '三郷市消防職員の特殊勤務手当に関する条例', category: '消防', keywords: ['消防職員', '特殊勤務', '手当'], summary: '消防職員の特殊勤務手当に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000585.html',
         fullText: `<div class="jorei-header">○三郷市消防職員の特殊勤務手当に関する条例<br> </div>
 <div class="jorei-body">
@@ -5240,7 +5240,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 救急救命士手当 救急救命士法 (平成3年法律第36号) 第44条第1項の救急救命処置を実施したとき。</p>
 <p class="jorei-item">(4) 潜水手当 潜水業務に従事したとき。</p>
 <p class="jorei-item">(5) 緊急消防援助隊出動手当 消防組織法 (昭和22年法律第226号) 第45条第1項の緊急消防援助隊の出動隊で派遣隊員として従事したとき。</p>
-</div>` } },
+</div>` },
     { id: 211, title: '三郷市消防賞じゅつ金及び殉職者特別賞じゅつ金条例', category: '消防', keywords: ['消防', '賞じゅつ金', '殉職'], summary: '消防賞じゅつ金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000586.html',
         fullText: `<div class="jorei-header">○三郷市消防賞じゅつ金及び殉職者特別賞じゅつ金条例<br> </div>
 <div class="jorei-body">
@@ -5253,7 +5253,7 @@ const allOrdinanceData = [
 <p>(委任) 第7条 この条例 に定めるもののほか、必要な事項は、規則で定める。</p>
 <p class="jorei-item">(1) 殉職者賞じゅつ金は、490万円以上2,520万円以下とし、功労の程度によって定める。</p>
 <p class="jorei-item">(2) 障害者賞じゅつ金は、2,060万円以下とし、 別表 に定める障害等級の区分ごとに功労の程度によって定める。</p>
-</div>` } },
+</div>` },
     { id: 212, title: '三郷市消防事務に係る手数料徴収条例', category: '消防', keywords: ['消防', '手数料', '許可'], summary: '消防事務の手数料に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000594.html',
         fullText: `<div class="jorei-header">○三郷市消防事務に係る手数料徴収条例<br> </div>
 <div class="jorei-body">
@@ -5268,7 +5268,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 火薬類取締法第17条第1項の規定に基づく火薬類の譲受けの許可の申請に対する審査 次に掲げる事務の区分に応じ、それぞれ次に定める金額</p>
 <p class="jorei-item">(4) 火薬類取締法第25条第1項の規定に基づく煙火の消費の許可の申請に対する審査 7,900円</p>
 <p class="jorei-item">(5) 三郷市火災予防条例第47条 の規定による指定数量未満のタンクの検査 次に掲げる事務の区分に応じ、それぞれ次に定める金額</p>
-</div>` } },
+</div>` },
     { id: 213, title: '三郷市火災予防条例', category: '消防', keywords: ['火災', '予防', '防火'], summary: '火災予防に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000595.html',
         fullText: `<div class="jorei-header">○三郷市火災予防条例<br> </div>
 <div class="jorei-body">
@@ -5324,13 +5324,13 @@ const allOrdinanceData = [
 <p>(指定数量の5分の1以上指定数量未満の危険物の貯蔵及び取扱いの技術上の基準等) 第31条 指定数量の5分の1以上指定数量未満の危険物の貯蔵及び取扱い並びに貯蔵し、又は取り扱う場所の位置、構造及び設備は、 前条 に定めるもののほか、 次条 から 第31条の8 までに定める技術上の基準によらなければならない。</p>
 <p class="jorei-article">第31条の2 指定数量の5分の1以上指定数量未満の危険物の貯蔵及び取扱いのすべてに共通する技術上の基準は、次のとおりとする。</p>
 
-</div>` } },
+</div>` },
     { id: 214, title: '三郷市消防団の設置等に関する条例', category: '消防', keywords: ['消防団', '設置', '消防'], summary: '消防団の設置に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000610.html',
         fullText: `<div class="jorei-header">○三郷市消防団の設置等に関する条例<br> </div>
 <div class="jorei-body">
 <p>(趣旨) 第1条 消防組織法 (昭和22年法律第226号。以下「法」という。) 第18条第1項に規定する消防団の設置、名称及び区域については、 この条例 の定めるところによる。</p>
 <p>(消防団の設置、名称及び区域) 第2条 法第9条第3号の規定に基づき、次の消防団を設置する。</p>
-</div>` } },
+</div>` },
     { id: 215, title: '三郷市消防団員の定員、任免、給与、服務等に関する条例', category: '消防', keywords: ['消防団員', '定員', '給与'], summary: '消防団員の身分等に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000612.html',
         fullText: `<div class="jorei-header">○三郷市消防団員の定員、任免、給与、服務等に関する条例<br> </div>
 <div class="jorei-body">
@@ -5372,7 +5372,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 消防に関する法令及び条例又は規則に違反したとき。</p>
 <p class="jorei-item">(2) 職務上の義務に違反し、又は職務を怠ったとき。</p>
 <p class="jorei-item">(3) 団員としてふさわしくない非行があったとき。</p>
-</div>` } },
+</div>` },
     { id: 216, title: '三郷市非常勤消防団員に係る退職報償金の支給に関する条例', category: '消防', keywords: ['消防団員', '退職報償金', '非常勤'], summary: '消防団員の退職報償金に関する条例。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000615.html',
         fullText: `<div class="jorei-header">○三郷市非常勤消防団員に係る退職報償金の支給に関する条例<br> </div>
 <div class="jorei-body">
@@ -5410,7 +5410,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(3) 停職処分を受けたことにより退職した者</p>
 <p class="jorei-item">(4) 勤務成績が、特に不良であった者</p>
 <p class="jorei-item">(5) 前各号 に掲げるもののほか、退職報償金を支給することが不適当と認められる者</p>
-</div>` } },
+</div>` },
     { id: 217, title: '三郷市消防委員会規則', category: '消防', keywords: ['消防', '委員会', '審議'], summary: '消防委員会に関する規則。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000617.html',
         fullText: `<div class="jorei-header">○三郷市消防委員会規則<br> </div>
 <div class="jorei-body">
@@ -5427,7 +5427,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(1) 消防団長及び副団長</p>
 <p class="jorei-item">(2) 知識経験を有する者</p>
 <p class="jorei-item">(3) その他市長が必要と認める者</p>
-</div>` } },
+</div>` },
 
     // ===== 第13編 その他 =====
     { id: 218, title: '埼玉県市町村総合事務組合規約', category: 'その他', keywords: ['事務組合', '広域', '連携'], summary: '埼玉県市町村総合事務組合の規約。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000815.html',
@@ -5459,7 +5459,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 交通災害共済加入者の会費</p>
 <p class="jorei-item">(3) 組合の財産から生ずる収入</p>
 <p class="jorei-item">(4) その他の収入</p>
-</div>` } },
+</div>` },
     { id: 219, title: '江戸川水防事務組合規約', category: 'その他', keywords: ['水防', '事務組合', '江戸川'], summary: '江戸川水防事務組合の規約。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000620.html',
         fullText: `<div class="jorei-header">○江戸川水防事務組合規約<br> </div>
 <div class="jorei-body">
@@ -5479,7 +5479,7 @@ const allOrdinanceData = [
 <p>(監査委員) 第14条 組合に監査委員2人を置く。</p>
 <p>(経費) 第15条 組合の経費は、 別表第2 に掲げる割合により組合市町が負担する。</p>
 <p>(地方自治法の準用) 第16条 この規約 に規定すべき事項で、 この規約 に定めないものについては、地方自治法 (昭和22年法律第67号) 中、市に関する規定を準用する。</p>
-</div>` } },
+</div>` },
     { id: 220, title: '東埼玉資源環境組合規約', category: 'その他', keywords: ['資源環境', '事務組合', 'ごみ処理'], summary: '東埼玉資源環境組合の規約。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000621.html',
         fullText: `<div class="jorei-header">○東埼玉資源環境組合規約<br> </div>
 <div class="jorei-body">
@@ -5503,7 +5503,7 @@ const allOrdinanceData = [
 <p>(監査委員) 第18条 組合に監査委員2人を置く。</p>
 <p>(経費) 第19条 組合の経費は、次の割合をもって組合市町が負担するものとする。 なお、組合の事業 (財産) より生ずる収入及びその他の収入がある場合は、これに充てるものとする。</p>
 <p>(地方自治法の準用) 第20条 この規約 に規定すべき事項で、 この規約 に定めのないものについては、地方自治法 (昭和22年法律第67号) 中、市に関する規定を準用する。</p>
-</div>` } },
+</div>` },
     { id: 221, title: '彩の国さいたま人づくり広域連合規約', category: 'その他', keywords: ['広域連合', '人材育成', '研修'], summary: '彩の国さいたま人づくり広域連合の規約。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000624.html',
         fullText: `<div class="jorei-header">○彩の国さいたま人づくり広域連合規約<br> </div>
 <div class="jorei-body">
@@ -5543,7 +5543,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(4) 第1項第5号 に掲げる者 すべての町村議会の議長をもって組織する団体又は構成団体 (町村に限る。) の議員の定数の総数の20分の1以上の者</p>
 <p class="jorei-item">(1) 構成団体の負担金</p>
 <p class="jorei-item">(2) その他</p>
-</div>` } },
+</div>` },
     { id: 222, title: '埼玉県後期高齢者医療広域連合規約', category: 'その他', keywords: ['後期高齢者', '広域連合', '医療'], summary: '埼玉県後期高齢者医療広域連合の規約。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000841.html',
         fullText: `<div class="jorei-header">○埼玉県後期高齢者医療広域連合規約<br> </div>
 <div class="jorei-body">
@@ -5584,7 +5584,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 事業収入</p>
 <p class="jorei-item">(3) 国及び県の支出金</p>
 <p class="jorei-item">(4) その他</p>
-</div>` } },
+</div>` },
     { id: 223, title: '三郷市土地開発公社定款', category: 'その他', keywords: ['土地開発公社', '公社', '土地'], summary: '三郷市土地開発公社の定款。', url: 'https://www1.g-reiki.net/misato/reiki_honbun/z600RG00000625.html',
         fullText: `<div class="jorei-header">○三郷市土地開発公社定款<br> </div>
 <div class="jorei-body">
@@ -5630,7 +5630,7 @@ const allOrdinanceData = [
 <p class="jorei-item">(2) 国、地方公共団体その他公共的団体の委託に基づき、土地の取得のあっせん、調査、測量その他これらに類する業務を行うこと。</p>
 <p class="jorei-item">(1) 国債又は地方債の取得</p>
 <p class="jorei-item">(2) 銀行その他主務大臣の指定する金融機関への預金</p>
-</div>` } }
+</div>` }
 ];
 
 // カテゴリリスト
