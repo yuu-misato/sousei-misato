@@ -663,6 +663,22 @@
         .data-table .actions {
             white-space: nowrap;
         }
+        .data-table .receipt-cell {
+            text-align: center;
+        }
+        .data-table .receipt-thumb {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .data-table .receipt-thumb:hover {
+            transform: scale(1.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
         .data-table .actions button {
             padding: 0.4rem 0.6rem;
             margin-right: 0.25rem;
@@ -1024,16 +1040,16 @@
         <!-- Header -->
         <header class="header">
             <div class="header-inner">
-                <a href="/" class="header-logo">
+                <a href="/member/" class="header-logo">
                     <div class="header-logo-icon">
-                        <img src="/images/logo.svg" alt="Logo">
+                        <img src="/member/images/logo.svg" alt="Logo">
                     </div>
                     <span class="header-logo-text">創政MISATO</span>
                 </a>
                 <nav class="header-nav">
-                    <a href="/">会員TOP</a>
-                    <a href="/search.html">条例検索</a>
-                    <a href="/budget/" class="active">予算管理</a>
+                    <a href="/member/">会員TOP</a>
+                    <a href="/member/search.html">条例検索</a>
+                    <a href="/member/budget/" class="active">予算管理</a>
                 </nav>
             </div>
         </header>
@@ -1166,10 +1182,17 @@
                         </div>
                         <div class="deposit-form">
                             <input type="date" id="depositDate">
-                            <input type="number" id="depositAmount" placeholder="金額（例: 10000）" style="width:140px;">
-                            <input type="text" id="depositNote" placeholder="メモ（任意）" style="flex:1;min-width:150px;">
+                            <select id="depositDepositor" style="width:120px;">
+                                <option value="">入金者</option>
+                                <option value="鈴木">鈴木</option>
+                                <option value="菊名">菊名</option>
+                            </select>
+                            <input type="number" id="depositAmount" placeholder="金額（例: 10000）" style="width:120px;">
+                            <input type="text" id="depositNote" placeholder="メモ（任意）" style="flex:1;min-width:100px;">
                             <button class="btn btn-primary btn-sm" onclick="addDeposit()">追加</button>
                         </div>
+                        <!-- Deposit History -->
+                        <div id="depositHistory" class="deposit-history" style="margin-top:1rem;max-height:200px;overflow-y:auto;"></div>
                     </div>
                 </div>
 
@@ -1298,6 +1321,7 @@
                                     <th>カテゴリ</th>
                                     <th>摘要</th>
                                     <th>金額</th>
+                                    <th>領収書</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -1403,16 +1427,16 @@
             <div class="footer-inner">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="/images/logo.svg" alt="創政MISATO">
+                        <img src="/member/images/logo.svg" alt="創政MISATO">
                         <span class="footer-logo-text">創政MISATO</span>
                     </div>
                     <p class="footer-tagline">三郷市議会 会派<br>市民とともに創る、新しい政治のかたち</p>
                 </div>
                 <div class="footer-nav-group">
                     <div class="footer-nav-title">会員メニュー</div>
-                    <a href="/">会員TOP</a>
-                    <a href="/search.html">条例・法律検索</a>
-                    <a href="/budget/">予算管理</a>
+                    <a href="/member/">会員TOP</a>
+                    <a href="/member/search.html">条例・法律検索</a>
+                    <a href="/member/budget/">予算管理</a>
                 </div>
                 <div class="footer-nav-group">
                     <div class="footer-nav-title">外部リンク</div>
@@ -1517,6 +1541,7 @@
         let currentAccount = 'seimu';
         let categoryChart = null;
         let monthlyChart = null;
+        let currentReceiptImageData = null; // Store current receipt image for upload
 
         // ===== Authentication =====
         async function hashPassword(password) {
@@ -1590,6 +1615,7 @@
                         description: e.description || '',
                         note: e.note || '',
                         account: e.account_type || 'seimu',
+                        receiptImageUrl: e.receipt_image_url || null,
                         createdAt: e.created_at
                     }));
                 }
@@ -1604,6 +1630,7 @@
                     deposits = depositsData.map(d => ({
                         id: d.id,
                         date: d.date,
+                        depositor: d.depositor || '',
                         amount: d.amount,
                         note: d.note || '',
                         createdAt: d.created_at
@@ -1701,6 +1728,7 @@
                     .from('deposits')
                     .insert({
                         date: deposit.date,
+                        depositor: deposit.depositor,
                         amount: deposit.amount,
                         note: deposit.note
                     })
@@ -1803,27 +1831,30 @@
             // Set deposit date default
             document.getElementById('depositDate').value = new Date().toISOString().split('T')[0];
 
+            renderDepositHistory();
             renderCategoryChart();
             renderMonthlyChart();
         }
 
         async function addDeposit() {
             const date = document.getElementById('depositDate').value;
+            const depositor = document.getElementById('depositDepositor').value;
             const amount = parseInt(document.getElementById('depositAmount').value);
             const note = document.getElementById('depositNote').value;
 
-            if (!date || !amount || amount <= 0) {
-                showToast('日付と金額を入力してください', 'error');
+            if (!date || !depositor || !amount || amount <= 0) {
+                showToast('日付、入金者、金額を入力してください', 'error');
                 return;
             }
 
-            const deposit = { date, amount, note };
+            const deposit = { date, depositor, amount, note };
             const saved = await saveDeposit(deposit);
 
             if (saved) {
                 deposits.unshift({
                     id: saved.id,
                     date: saved.date,
+                    depositor: saved.depositor || '',
                     amount: saved.amount,
                     note: saved.note || '',
                     createdAt: saved.created_at
@@ -1831,9 +1862,41 @@
 
                 document.getElementById('depositAmount').value = '';
                 document.getElementById('depositNote').value = '';
+                document.getElementById('depositDepositor').value = '';
                 renderDashboard();
                 showToast('積立金を追加しました', 'success');
             }
+        }
+
+        function renderDepositHistory() {
+            const container = document.getElementById('depositHistory');
+            if (deposits.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray);font-size:0.85rem;text-align:center;padding:1rem;">入金履歴はありません</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:var(--gray-lighter);">
+                            <th style="padding:0.4rem;text-align:left;">日付</th>
+                            <th style="padding:0.4rem;text-align:left;">入金者</th>
+                            <th style="padding:0.4rem;text-align:right;">金額</th>
+                            <th style="padding:0.4rem;text-align:left;">メモ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${deposits.map(d => `
+                            <tr style="border-bottom:1px solid var(--gray-light);">
+                                <td style="padding:0.4rem;">${formatDate(d.date)}</td>
+                                <td style="padding:0.4rem;">${escapeHtml(d.depositor || '-')}</td>
+                                <td style="padding:0.4rem;text-align:right;">${formatCurrency(d.amount)}</td>
+                                <td style="padding:0.4rem;color:var(--gray);">${escapeHtml(d.note || '')}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
         }
 
         function renderCategoryChart() {
@@ -1994,6 +2057,7 @@
             // Show preview
             const reader = new FileReader();
             reader.onload = async (e) => {
+                currentReceiptImageData = e.target.result; // Store for later upload
                 document.getElementById('receiptImage').src = e.target.result;
                 document.getElementById('receiptPreview').classList.add('show');
                 document.getElementById('aiAnalyzing').classList.add('show');
@@ -2002,6 +2066,50 @@
                 await analyzeReceipt(e.target.result);
             };
             reader.readAsDataURL(file);
+        }
+
+        // Upload receipt image to Supabase Storage
+        async function uploadReceiptImage(expenseId) {
+            if (!currentReceiptImageData) return null;
+
+            try {
+                // Convert base64 to blob
+                const base64Data = currentReceiptImageData.split(',')[1];
+                const mimeType = currentReceiptImageData.match(/data:([^;]+);/)[1];
+                const byteCharacters = atob(base64Data);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: mimeType });
+
+                // Generate unique filename
+                const ext = mimeType.split('/')[1] || 'jpg';
+                const fileName = `${expenseId}.${ext}`;
+
+                // Upload to Supabase Storage
+                const { data, error } = await supabaseClient
+                    .storage
+                    .from('receipts')
+                    .upload(fileName, blob, {
+                        contentType: mimeType,
+                        upsert: true
+                    });
+
+                if (error) throw error;
+
+                // Get public URL
+                const { data: urlData } = supabaseClient
+                    .storage
+                    .from('receipts')
+                    .getPublicUrl(fileName);
+
+                return urlData.publicUrl;
+            } catch (error) {
+                console.error('Error uploading receipt image:', error);
+                return null;
+            }
         }
 
         async function analyzeReceipt(imageData) {
@@ -2126,6 +2234,19 @@
             } else {
                 const saved = await saveExpense(expense);
                 if (saved) {
+                    // Upload receipt image if exists
+                    let receiptImageUrl = null;
+                    if (currentReceiptImageData) {
+                        receiptImageUrl = await uploadReceiptImage(saved.id);
+                        if (receiptImageUrl) {
+                            // Update expense with image URL
+                            await supabaseClient
+                                .from('expenses')
+                                .update({ receipt_image_url: receiptImageUrl })
+                                .eq('id', saved.id);
+                        }
+                    }
+
                     expenses.unshift({
                         id: saved.id,
                         date: saved.date,
@@ -2134,12 +2255,14 @@
                         description: saved.description || '',
                         note: saved.note || '',
                         account: saved.account_type || 'seimu',
+                        receiptImageUrl: receiptImageUrl,
                         createdAt: saved.created_at
                     });
                     showToast('経費を追加しました', 'success');
                 }
             }
 
+            currentReceiptImageData = null; // Clear after saving
             resetForm();
             renderExpenseTable();
             renderDashboard();
@@ -2179,7 +2302,7 @@
             if (filtered.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" class="no-data">経費データがありません</td>
+                        <td colspan="7" class="no-data">経費データがありません</td>
                     </tr>
                 `;
             } else {
@@ -2190,6 +2313,9 @@
                         <td><span class="category-badge ${exp.category}">${getCategoryName(exp.category)}</span></td>
                         <td>${escapeHtml(exp.description)}${exp.note ? `<br><small style="color:var(--gray)">${escapeHtml(exp.note)}</small>` : ''}</td>
                         <td class="amount">${formatCurrency(exp.amount)}</td>
+                        <td class="receipt-cell">
+                            ${exp.receiptImageUrl ? `<a href="${exp.receiptImageUrl}" target="_blank" title="領収書を表示"><img src="${exp.receiptImageUrl}" class="receipt-thumb" alt="領収書"></a>` : '<span style="color:var(--gray);font-size:0.75rem;">-</span>'}
+                        </td>
                         <td class="actions">
                             <button onclick="openEditModal('${exp.id}')" title="編集">✏️</button>
                             <button class="delete" onclick="deleteExpense('${exp.id}')" title="削除">🗑️</button>
