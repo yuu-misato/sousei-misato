@@ -103,128 +103,228 @@
             border: 1px solid #fecaca;
         }
 
-        /* ===== Header ===== */
+        /* ===== Layout ===== */
         #guideContent { display: none; }
 
-        .header {
-            background: var(--white);
-            padding: 1rem 2rem;
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--navy);
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
+            bottom: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            transition: transform 0.3s ease;
         }
-        .header-logo {
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             text-decoration: none;
-            color: var(--text);
+            color: var(--white);
         }
-        .header-logo-icon { width: 40px; height: 40px; }
-        .header-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
-        .header-logo-text {
-            font-size: 1.125rem;
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .sidebar-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-logo-text {
+            font-size: 1.1rem;
             font-weight: 700;
-            color: var(--text);
         }
-        .header-nav {
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-nav a {
             display: flex;
-            gap: 1rem;
             align-items: center;
-        }
-        .header-nav a {
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7);
             text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-left-color: var(--green);
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile Menu Toggle ===== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--navy);
+            z-index: 101;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .mobile-header-logo img {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* ===== Main Content ===== */
+        .main-wrapper {
+            flex: 1;
+            margin-left: 260px;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+        }
+
+        /* ===== Page Title ===== */
+        .page-title {
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .page-title p {
             color: var(--gray);
             font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        .header-nav a:hover {
-            background: var(--gray-lighter);
-            color: var(--text);
-        }
-        .header-nav a.active {
-            background: var(--navy);
-            color: var(--white);
-        }
-        .header-menu-btn {
-            width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            background: none; border: none; cursor: pointer;
-            border-radius: 8px; transition: background 0.2s;
-        }
-        .header-menu-btn:hover { background: var(--gray-lighter); }
-        .header-menu-btn svg { width: 24px; height: 24px; stroke: var(--gray); }
-
-        .menu-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 200; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        .menu-overlay.open { opacity: 1; pointer-events: auto; }
-        .menu-panel {
-            position: fixed; top: 0; right: 0;
-            width: min(320px, 85vw); height: 100vh;
-            background: var(--white); z-index: 201;
-            transform: translateX(100%);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex; flex-direction: column; overflow-y: auto;
-        }
-        .menu-panel.open { transform: translateX(0); }
-        .menu-panel-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1rem 1.5rem; border-bottom: 1px solid var(--gray-light);
-        }
-        .menu-panel-header span { font-weight: 700; font-size: 1rem; color: var(--text); }
-        .menu-close-btn {
-            width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            background: none; border: none; cursor: pointer;
-            border-radius: 8px; transition: background 0.2s;
-        }
-        .menu-close-btn:hover { background: var(--gray-lighter); }
-        .menu-close-btn svg { width: 20px; height: 20px; stroke: var(--gray); }
-        .menu-nav { padding: 1rem 0; flex: 1; }
-        .menu-nav-label {
-            font-size: 0.7rem; font-weight: 600; color: var(--gray);
-            letter-spacing: 0.1em; padding: 0.75rem 1.5rem 0.5rem;
-        }
-        .menu-nav a {
-            display: flex; align-items: center; gap: 0.75rem;
-            padding: 0.875rem 1.5rem; color: var(--text);
-            text-decoration: none; font-size: 0.9375rem;
-            transition: background 0.15s, color 0.15s;
-        }
-        .menu-nav a:hover { background: var(--gray-lighter); color: var(--green-dark); }
-        .menu-nav a svg { width: 18px; height: 18px; stroke: var(--gray); flex-shrink: 0; }
-        .menu-nav a:hover svg { stroke: var(--green-dark); }
-        .menu-divider { height: 1px; background: var(--gray-light); margin: 0.5rem 1.5rem; }
-        .guide-header-badge {
-            font-size: 0.68rem;
-            font-weight: 600;
-            background: var(--green);
-            color: var(--white);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
         }
 
         /* ===== Hero ===== */
         .guide-hero {
             background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            padding: 5rem 2rem 2.5rem;
+            padding: 2rem;
+            border-radius: 16px;
             text-align: center;
+            margin-bottom: 2rem;
         }
         .guide-hero h1 {
             font-size: 1.5rem;
@@ -1143,79 +1243,98 @@
 
 <!-- ===== Guide Content ===== -->
 <div id="guideContent">
-    <header class="header">
-        <div class="header-inner">
-            <a href="/member/" class="header-logo">
-                <div class="header-logo-icon">
-                    <img src="/member/images/logo.png" alt="創政MISATO">
-                </div>
-                <span class="header-logo-text">創政MISATO</span>
+    <div class="app-layout">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <a href="/member/" class="mobile-header-logo">
+                <img src="/member/images/logo.png" alt="">
+                <span>創政MISATO</span>
             </a>
-            <nav class="header-nav">
-                <a href="/member/">会員TOP</a>
-                <a href="/member/search.html">条例検索</a>
-                <a href="/member/budget/">予算管理</a>
-                <a href="/member/guideline.html" class="active">ガイドライン</a>
-            </nav>
-        </div>
-    </header>
-
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <div class="menu-panel" id="menuPanel">
-        <div class="menu-panel-header">
-            <span>メニュー</span>
-            <button class="menu-close-btn" id="menuCloseBtn" aria-label="メニューを閉じる">
+            <button class="menu-toggle" onclick="toggleSidebar()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
-        </div>
-        <nav class="menu-nav">
-            <div class="menu-nav-label">メンバーツール</div>
-            <a href="search.html">条例・法律検索</a>
-            <div class="menu-divider"></div>
-            <div class="menu-nav-label">このページ</div>
-            <a href="#sec1">理念</a>
-            <a href="#sec2">会派ルール</a>
-            <a href="#sec3">議場の所作</a>
-            <a href="#sec4">一般質問</a>
-            <a href="#sec5">情報管理</a>
-            <a href="#sec6">連絡</a>
-            <a href="#sec7">視察</a>
-            <a href="#sec8">FAQ</a>
-            <div class="menu-divider"></div>
-            <div class="menu-nav-label">メンバーツール</div>
-            <a href="jorei/">条例改善提案</a>
-            <div class="menu-divider"></div>
-            <div class="menu-nav-label">サイト</div>
-            <a href="https://souseimisato.com">トップページ</a>
-            <a href="https://souseimisato.com/shisatsu/">視察レポート一覧</a>
-            <a href="https://souseimisato.com/policy.html">会派運営指針</a>
-            <div class="menu-divider"></div>
-            <div class="menu-nav-label">外部リンク</div>
-            <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
-            <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">三郷市公式サイト</a>
-        </nav>
-    </div>
+        </header>
 
-    <div class="guide-hero">
-        <h1>メンバーガイドライン</h1>
-        <p>会派メンバーが知っておくべきルール・所作・考え方</p>
-        <nav class="guide-nav">
-            <a href="search.html">条例・法律検索</a>
-            <a href="#sec1">理念</a>
-            <a href="#sec2">会派ルール</a>
-            <a href="#sec3">議場の所作</a>
-            <a href="#sec4">一般質問</a>
-            <a href="#sec5">情報管理</a>
-            <a href="#sec6">連絡</a>
-            <a href="#sec7">視察</a>
-            <a href="#sec8">FAQ</a>
-        </nav>
-    </div>
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <main class="guide-body">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="/member/" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <img src="/member/images/logo.png" alt="">
+                    </div>
+                    <span class="sidebar-logo-text">創政MISATO</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">メニュー</div>
+                <a href="/member/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    ホーム
+                </a>
+                <a href="/member/budget/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                    </svg>
+                    会派予算管理
+                </a>
+                <div class="sidebar-nav-section">条例AI</div>
+                <a href="/member/search.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    条例検索
+                </a>
+                <a href="/member/review.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                    条例AIレビュー
+                </a>
+                <a href="/member/barrier.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    障壁を調べる
+                </a>
+                <div class="sidebar-nav-section">その他</div>
+                <a href="/member/guideline.html" class="active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                    ガイドライン
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                © 2025 創政MISATO
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <main class="main-container">
+                <div class="guide-hero">
+                    <h1>メンバーガイドライン</h1>
+                    <p>会派メンバーが知っておくべきルール・所作・考え方</p>
+                    <nav class="guide-nav">
+                        <a href="#sec1">理念</a>
+                        <a href="#sec2">会派ルール</a>
+                        <a href="#sec3">議場の所作</a>
+                        <a href="#sec4">一般質問</a>
+                        <a href="#sec5">情報管理</a>
+                        <a href="#sec6">連絡</a>
+                        <a href="#sec7">視察</a>
+                        <a href="#sec8">FAQ</a>
+                    </nav>
+                </div>
+
+                <div class="guide-body">
 
         <!-- Quick Link to Search Page -->
         <a href="search.html" class="search-link-card">
@@ -1691,35 +1810,11 @@
                     <div class="giscus" data-term="8-新人議員向けFAQ"></div>
                 </div>
             </div>
-        </div>
-
-    </main>
-
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    <img src="/member/images/logo.png" alt="創政MISATO">
-                    <span class="footer-logo-text">創政MISATO</span>
                 </div>
-                <p class="footer-tagline">三郷市議会 会派<br>市民とともに創る、新しい政治のかたち</p>
-            </div>
-            <div class="footer-nav-group">
-                <div class="footer-nav-title">会員メニュー</div>
-                <a href="/member/">会員TOP</a>
-                <a href="/member/search.html">条例・法律検索</a>
-                <a href="/member/budget/">予算管理</a>
-                <a href="/member/guideline.html">ガイドライン</a>
-            </div>
-            <div class="footer-nav-group">
-                <div class="footer-nav-title">外部リンク</div>
-                <a href="https://souseimisato.com" target="_blank">公式サイト</a>
-                <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
-                <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener">三郷市例規集</a>
-            </div>
+                </div>
+            </main>
         </div>
-        <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
-    </footer>
+    </div>
 </div>
 
 <!-- Ordinance Modal -->
@@ -1767,6 +1862,14 @@ async function sha256(text) {
     const data = new TextEncoder().encode(text);
     const hash = await crypto.subtle.digest('SHA-256', data);
     return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Sidebar toggle
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
 }
 
 async function tryLogin() {

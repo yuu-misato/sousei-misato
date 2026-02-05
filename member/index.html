@@ -101,49 +101,222 @@
             border: 1px solid #fecaca;
         }
 
-        /* ===== Dashboard ===== */
-        #dashboard {
-            display: none;
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+
+        .app-layout {
+            display: flex;
             min-height: 100vh;
-            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
         }
 
-        .dashboard-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--navy);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
         }
 
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            padding-top: 1rem;
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .dashboard-logo {
+        .sidebar-logo {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.75rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .dashboard-logo img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-
-        .dashboard-logo-text {
-            font-size: 1.5rem;
-            font-weight: 900;
+            text-decoration: none;
             color: var(--white);
         }
 
-        .dashboard-title {
-            font-size: 1rem;
-            font-weight: 500;
-            color: rgba(255,255,255,0.8);
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .sidebar-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-left-color: var(--green);
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile Menu Toggle ===== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--navy);
+            z-index: 101;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .mobile-header-logo img {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* ===== Main Content ===== */
+        .main-wrapper {
+            flex: 1;
+            margin-left: 260px;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+        }
+
+        /* ===== Dashboard ===== */
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.9rem;
         }
 
         .dashboard-grid {
@@ -164,17 +337,18 @@
             padding: 2rem 1.5rem;
             text-decoration: none;
             color: var(--text);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            border: 1px solid var(--gray-light);
         }
 
         .dashboard-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
         }
 
         .dashboard-card:active {
@@ -229,28 +403,6 @@
             font-size: 0.85rem;
             color: var(--gray);
         }
-
-        .dashboard-footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            color: var(--white);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
     </style>
 </head>
 <body>
@@ -267,78 +419,146 @@
         </div>
     </div>
 
-    <!-- Dashboard -->
-    <div id="dashboard">
-        <div class="dashboard-container">
-            <div class="dashboard-header">
-                <div class="dashboard-logo">
-                    <img src="./images/logo.png" alt="創政MISATO">
-                    <span class="dashboard-logo-text">創政MISATO</span>
+    <!-- Main Content -->
+    <div id="mainContent">
+        <div class="app-layout">
+            <!-- Mobile Header -->
+            <header class="mobile-header">
+                <a href="/member/" class="mobile-header-logo">
+                    <img src="/member/images/logo.png" alt="">
+                    <span>創政MISATO</span>
+                </a>
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Sidebar Overlay -->
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <a href="/member/" class="sidebar-logo">
+                        <div class="sidebar-logo-icon">
+                            <img src="/member/images/logo.png" alt="">
+                        </div>
+                        <span class="sidebar-logo-text">創政MISATO</span>
+                    </a>
                 </div>
-                <div class="dashboard-title">会員ダッシュボード</div>
-            </div>
-
-            <div class="dashboard-grid">
-                <a href="/member/budget/" class="dashboard-card">
-                    <div class="card-icon budget">
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-section">メニュー</div>
+                    <a href="/member/" class="active">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="4" width="20" height="16" rx="2"/>
-                            <path d="M2 10h20"/>
-                            <path d="M6 16h4"/>
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
-                    </div>
-                    <div class="card-title">予算管理</div>
-                    <div class="card-desc">政務活動費・積立金の管理</div>
-                </a>
-
-                <a href="/member/search.html" class="dashboard-card">
-                    <div class="card-icon search">
+                        ホーム
+                    </a>
+                    <a href="/member/budget/">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="M21 21l-4.35-4.35"/>
+                            <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
                         </svg>
-                    </div>
-                    <div class="card-title">条例検索</div>
-                    <div class="card-desc">三郷市条例・規則の検索</div>
-                </a>
-
-                <a href="/member/guideline.html" class="dashboard-card">
-                    <div class="card-icon guideline">
+                        会派予算管理
+                    </a>
+                    <div class="sidebar-nav-section">条例AI</div>
+                    <a href="/member/search.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <polyline points="10 9 9 9 8 9"/>
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                    </div>
-                    <div class="card-title">ガイドライン</div>
-                    <div class="card-desc">メンバー向け活動指針</div>
-                </a>
-
-                <a href="/member/review.html" class="dashboard-card">
-                    <div class="card-icon review">
+                        条例検索
+                    </a>
+                    <a href="/member/review.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                         </svg>
-                    </div>
-                    <div class="card-title">条例AIレビュー</div>
-                    <div class="card-desc">条例の問題点をAIが分析</div>
-                </a>
-
-                <a href="/member/barrier.html" class="dashboard-card">
-                    <div class="card-icon barrier">
+                        条例AIレビュー
+                    </a>
+                    <a href="/member/barrier.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
-                    </div>
-                    <div class="card-title">条例の障壁を調べる</div>
-                    <div class="card-desc">やりたいことの妨げを確認</div>
-                </a>
-            </div>
+                        障壁を調べる
+                    </a>
+                    <div class="sidebar-nav-section">その他</div>
+                    <a href="/member/guideline.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        ガイドライン
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    © 2025 創政MISATO
+                </div>
+            </aside>
 
-            <div class="dashboard-footer">
-                <button class="logout-btn" onclick="handleLogout()">ログアウト</button>
+            <!-- Main Content -->
+            <div class="main-wrapper">
+                <main class="main-container">
+                    <div class="page-title">
+                        <h1>会員ダッシュボード</h1>
+                        <p>ツールを選択してください</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <a href="/member/budget/" class="dashboard-card">
+                            <div class="card-icon budget">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                                </svg>
+                            </div>
+                            <div class="card-title">会派予算管理</div>
+                            <div class="card-desc">政務活動費・積立金の管理</div>
+                        </a>
+
+                        <a href="/member/search.html" class="dashboard-card">
+                            <div class="card-icon search">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="M21 21l-4.35-4.35"/>
+                                </svg>
+                            </div>
+                            <div class="card-title">条例検索</div>
+                            <div class="card-desc">三郷市条例・規則の検索</div>
+                        </a>
+
+                        <a href="/member/review.html" class="dashboard-card">
+                            <div class="card-icon review">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                </svg>
+                            </div>
+                            <div class="card-title">条例AIレビュー</div>
+                            <div class="card-desc">条例の問題点をAIが分析</div>
+                        </a>
+
+                        <a href="/member/barrier.html" class="dashboard-card">
+                            <div class="card-icon barrier">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+                            <div class="card-title">条例の障壁を調べる</div>
+                            <div class="card-desc">やりたいことの妨げを確認</div>
+                        </a>
+
+                        <a href="/member/guideline.html" class="dashboard-card">
+                            <div class="card-icon guideline">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                            </div>
+                            <div class="card-title">ガイドライン</div>
+                            <div class="card-desc">メンバー向け活動指針</div>
+                        </a>
+                    </div>
+                </main>
             </div>
         </div>
     </div>
@@ -352,7 +572,7 @@
             if (isLoggedIn) {
                 // 新しいキーに統一
                 sessionStorage.setItem('member_auth', '1');
-                showDashboard();
+                showMain();
             }
         }
 
@@ -362,21 +582,23 @@
 
             if (password === CORRECT_PASSWORD) {
                 sessionStorage.setItem('member_auth', '1');
-                showDashboard();
+                showMain();
             } else {
                 document.getElementById('loginError').style.display = 'block';
             }
         }
 
-        function showDashboard() {
+        function showMain() {
             document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('mainContent').style.display = 'block';
         }
 
-        function handleLogout() {
-            sessionStorage.removeItem('member_auth');
-            sessionStorage.removeItem('memberLoggedIn');
-            location.reload();
+        // Sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
         }
 
         // Check auth on page load
