@@ -2899,7 +2899,7 @@
                                 <td style="padding:0.4rem;text-align:right;">${formatCurrency(d.amount)}</td>
                                 <td style="padding:0.4rem;color:var(--gray);">${escapeHtml(d.note || '')}</td>
                                 <td style="padding:0.4rem;text-align:center;">
-                                    <button onclick="deleteDepositById(${d.id})" style="background:none;border:none;color:var(--red);cursor:pointer;padding:0.25rem;">
+                                    <button onclick="deleteDepositById('${d.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;padding:0.25rem;" title="削除">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <polyline points="3 6 5 6 21 6"></polyline>
                                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -2917,14 +2917,17 @@
         async function deleteDepositById(id) {
             if (!confirm('この入金を削除しますか？')) return;
 
-            await deleteDeposit(id);
-            const idx = deposits.findIndex(d => d.id === id);
-            if (idx !== -1) deposits.splice(idx, 1);
+            const success = await deleteDeposit(id);
+            if (success) {
+                // 文字列・数値どちらでも比較できるように == を使用
+                const idx = deposits.findIndex(d => String(d.id) === String(id));
+                if (idx !== -1) deposits.splice(idx, 1);
 
-            renderDepositChecklist();
-            renderDepositHistoryTable();
-            renderDashboard();
-            showToast('入金を削除しました', 'success');
+                renderDepositChecklist();
+                renderDepositHistoryTable();
+                renderDashboard();
+                showToast('入金を削除しました', 'success');
+            }
         }
 
         // ===== Deposit Modal =====
