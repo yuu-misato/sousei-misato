@@ -327,6 +327,57 @@
         .empty-state h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem; }
         .empty-state p { font-size: 0.9rem; }
 
+        /* ===== History List ===== */
+        .history-list { display: flex; flex-direction: column; gap: 1rem; }
+        .history-card {
+            background: var(--white); border-radius: 12px; padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer;
+            transition: all 0.2s; border: 2px solid transparent;
+        }
+        .history-card:hover { border-color: var(--green); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .history-card.active { border-color: var(--green); background: rgba(124, 179, 66, 0.05); }
+        .history-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+        .history-title { font-weight: 600; color: var(--navy); font-size: 1rem; }
+        .history-badge {
+            font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;
+            background: var(--gray-lighter); color: var(--gray);
+        }
+        .history-badge.sample { background: #fff7ed; color: #c2410c; }
+        .history-meta { font-size: 0.8rem; color: var(--gray); display: flex; gap: 1rem; flex-wrap: wrap; }
+        .history-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+        .history-actions button {
+            padding: 0.4rem 0.75rem; font-size: 0.8rem; border-radius: 6px;
+            border: 1px solid var(--gray-light); background: var(--white);
+            cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 0.3rem;
+        }
+        .history-actions button:hover { background: var(--gray-lighter); }
+        .history-actions button.delete { color: var(--red); border-color: #fecaca; }
+        .history-actions button.delete:hover { background: #fef2f2; }
+        .history-actions button svg { width: 14px; height: 14px; }
+
+        /* ===== PDF Notice ===== */
+        .pdf-notice {
+            display: flex; align-items: flex-start; gap: 0.75rem;
+            background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+            padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.85rem; color: #1e40af;
+        }
+        .pdf-notice svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 0.1rem; }
+        .pdf-notice a { color: #1e40af; font-weight: 600; }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed; bottom: 2rem; left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--navy); color: white;
+            padding: 0.75rem 1.5rem; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 500;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            opacity: 0; transition: all 0.3s ease; z-index: 1000;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+
         /* ===== Responsive ===== */
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -487,6 +538,10 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             質問ポイント
                         </button>
+                        <button class="tab-btn" data-tab="history">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            分析履歴
+                        </button>
                     </div>
 
                     <!-- Input Tab -->
@@ -515,14 +570,22 @@
                                 </div>
                             </div>
 
+                            <div class="pdf-notice">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <div>
+                                    <strong>PDF予算書の場合:</strong> PDFをそのままアップロードするか、テキストをコピー＆ペーストしてください。<br>
+                                    複雑な表形式の場合は、主要な数値をテキストで入力すると精度が上がります。
+                                </div>
+                            </div>
+
                             <div class="budget-input-wrapper" id="currentYearDrop" onclick="document.getElementById('currentYearFile').click()">
-                                <input type="file" id="currentYearFile" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleFileUpload(this, 'current')">
+                                <input type="file" id="currentYearFile" accept=".csv,.xlsx,.xls,.pdf,.txt" style="display:none" onchange="handleFileUpload(this, 'current')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                 <p id="currentYearLabel">当年度予算書をドラッグ＆ドロップ<br>または クリックして選択（CSV/Excel）</p>
                             </div>
 
                             <div class="budget-input-wrapper" id="prevYearDrop" onclick="document.getElementById('prevYearFile').click()">
-                                <input type="file" id="prevYearFile" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleFileUpload(this, 'prev')">
+                                <input type="file" id="prevYearFile" accept=".csv,.xlsx,.xls,.pdf,.txt" style="display:none" onchange="handleFileUpload(this, 'prev')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                 <p id="prevYearLabel">前年度予算書をドラッグ＆ドロップ<br>または クリックして選択（比較分析用・任意）</p>
                             </div>
@@ -537,7 +600,7 @@
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
                                     AIで分析する
                                 </button>
-                                <button class="btn btn-secondary" onclick="loadSampleData()">
+                                <button class="btn btn-secondary" onclick="loadSampleAndAnalyze()">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                     サンプルデータで試す
                                 </button>
@@ -654,17 +717,55 @@
                         </div>
                     </div>
 
+                    <!-- History Tab -->
+                    <div class="tab-content" id="tab-history">
+                        <div class="input-card">
+                            <h2>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                分析履歴
+                            </h2>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem;">過去の予算分析結果を確認・再利用できます。</p>
+                            <div class="history-list" id="historyList">
+                                <div class="empty-state">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <h3>履歴がありません</h3>
+                                    <p>予算分析を行うと、結果がここに保存されます</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Loading -->
                     <div class="loading" id="loading">
                         <div class="loading-spinner"></div>
                         <span>予算データを分析中...</span>
                     </div>
+
+                    <!-- Toast -->
+                    <div class="toast" id="toast"></div>
                 </main>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script>
+        // ===== Supabase Setup =====
+        const SUPABASE_URL = 'https://rfbhmdsonengrgumpacx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmYmhtZHNvbmVuZ3JndW1wYWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzAyOTEsImV4cCI6MjA4NTgwNjI5MX0.Z0rE8CYxHSEyz-A0eXx2r7Zgg87hqkLqrl6KEfG01jk';
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ===== State =====
+        let currentAnalysisId = null;
+        let analysisResults = {
+            overview: null,
+            comparison: null,
+            fiscal: null,
+            questions: null
+        };
+
         // Auth
         const CORRECT_PASSWORD = 'misato2024';
 
@@ -672,6 +773,7 @@
             if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
+                loadHistory(); // 履歴を読み込む
             }
         }
 
@@ -813,11 +915,16 @@
 ・その他特定目的基金: 28億円`;
 
             document.getElementById('budgetText').value = sampleText;
-            document.getElementById('sampleNotice').style.display = 'flex';
+        }
+
+        // サンプルデータを読み込んで分析
+        function loadSampleAndAnalyze() {
+            loadSampleData();
+            analyzeBudget(true); // isSample = true
         }
 
         // Analysis
-        async function analyzeBudget() {
+        async function analyzeBudget(isSample = false) {
             const budgetText = document.getElementById('budgetText').value;
             if (!budgetText && !currentYearData) {
                 alert('予算データを入力またはアップロードしてください');
@@ -832,6 +939,9 @@
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.querySelector('[data-tab="overview"]').classList.add('active');
             document.getElementById('tab-overview').classList.add('active');
+
+            // サンプル通知を表示/非表示
+            document.getElementById('sampleNotice').style.display = isSample ? 'flex' : 'none';
 
             try {
                 const dataToAnalyze = budgetText || currentYearData;
@@ -895,25 +1005,36 @@ ${dataToAnalyze}
                 // Quick stats (simplified)
                 renderQuickStats();
 
-                // Overview
+                // Overview - 保存用に結果を記録
                 if (sections[1]) {
-                    document.getElementById('overviewSummary').innerHTML = marked.parse(sections[1].replace(/^[^#]*/, '').trim());
+                    const overviewContent = sections[1].replace(/^[^#]*/, '').trim();
+                    analysisResults.overview = overviewContent;
+                    document.getElementById('overviewSummary').innerHTML = marked.parse(overviewContent);
                 }
 
                 // Comparison
                 if (sections[2]) {
-                    document.getElementById('comparisonResult').innerHTML = marked.parse(sections[2].replace(/^[^#]*/, '').trim());
+                    const comparisonContent = sections[2].replace(/^[^#]*/, '').trim();
+                    analysisResults.comparison = comparisonContent;
+                    document.getElementById('comparisonResult').innerHTML = marked.parse(comparisonContent);
                 }
 
                 // Fiscal
                 if (sections[3]) {
-                    document.getElementById('fiscalResult').innerHTML = marked.parse(sections[3].replace(/^[^#]*/, '').trim());
+                    const fiscalContent = sections[3].replace(/^[^#]*/, '').trim();
+                    analysisResults.fiscal = fiscalContent;
+                    document.getElementById('fiscalResult').innerHTML = marked.parse(fiscalContent);
                 }
 
                 // Questions
                 if (sections[4]) {
-                    document.getElementById('questionsResult').innerHTML = marked.parse(sections[4].replace(/^[^#]*/, '').trim());
+                    const questionsContent = sections[4].replace(/^[^#]*/, '').trim();
+                    analysisResults.questions = questionsContent;
+                    document.getElementById('questionsResult').innerHTML = marked.parse(questionsContent);
                 }
+
+                // Supabaseに自動保存
+                await saveAnalysis(isSample);
 
             } catch (error) {
                 console.error('Analysis error:', error);
@@ -949,8 +1070,334 @@ ${dataToAnalyze}
             const element = document.getElementById(elementId);
             const text = element.innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert('コピーしました');
+                showToast('コピーしました');
             });
+        }
+
+        // ===== Toast =====
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (type ? ' ' + type : '');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ===== Supabase CRUD =====
+        async function loadHistory() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                renderHistoryList(data || []);
+            } catch (error) {
+                console.error('履歴の読み込みエラー:', error);
+            }
+        }
+
+        function renderHistoryList(items) {
+            const container = document.getElementById('historyList');
+
+            if (!items || items.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <h3>履歴がありません</h3>
+                        <p>予算分析を行うと、結果がここに保存されます</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const budgetTypeLabels = {
+                'general': '一般会計',
+                'special': '特別会計',
+                'enterprise': '企業会計'
+            };
+
+            container.innerHTML = items.map(item => `
+                <div class="history-card" data-id="${item.id}">
+                    <div class="history-header">
+                        <span class="history-title">${item.title || `令和${item.fiscal_year - 2018}年度（${item.fiscal_year}）予算分析`}</span>
+                        ${item.is_sample ? '<span class="history-badge sample">サンプル</span>' : `<span class="history-badge">${budgetTypeLabels[item.budget_type] || item.budget_type}</span>`}
+                    </div>
+                    <div class="history-meta">
+                        <span>年度: ${item.fiscal_year}</span>
+                        <span>作成: ${new Date(item.created_at).toLocaleDateString('ja-JP')}</span>
+                    </div>
+                    <div class="history-actions">
+                        <button onclick="loadAnalysisById(${item.id})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            表示
+                        </button>
+                        <button onclick="compareWithYear(${item.id}, ${item.fiscal_year})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            年度比較
+                        </button>
+                        <button class="delete" onclick="deleteAnalysis(${item.id})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            削除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function saveAnalysis(isSample = false) {
+            const fiscalYear = parseInt(document.getElementById('targetYear').value);
+            const budgetType = document.getElementById('budgetType').value;
+            const inputData = document.getElementById('budgetText').value;
+
+            const analysisData = {
+                fiscal_year: fiscalYear,
+                budget_type: budgetType,
+                title: null,
+                input_data: inputData,
+                overview_summary: analysisResults.overview,
+                comparison_result: analysisResults.comparison,
+                fiscal_result: analysisResults.fiscal,
+                questions_result: analysisResults.questions,
+                quick_stats: null,
+                is_sample: isSample
+            };
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .insert([analysisData])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                currentAnalysisId = data.id;
+                showToast('分析結果を保存しました', 'success');
+                loadHistory();
+            } catch (error) {
+                console.error('保存エラー:', error);
+                showToast('保存に失敗しました', 'error');
+            }
+        }
+
+        async function loadAnalysisById(id) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error) throw error;
+
+                currentAnalysisId = data.id;
+
+                // フォームに値を設定
+                document.getElementById('targetYear').value = data.fiscal_year;
+                document.getElementById('budgetType').value = data.budget_type;
+                document.getElementById('budgetText').value = data.input_data || '';
+
+                // サンプル通知
+                if (data.is_sample) {
+                    document.getElementById('sampleNotice').style.display = 'flex';
+                } else {
+                    document.getElementById('sampleNotice').style.display = 'none';
+                }
+
+                // 分析結果を表示
+                if (data.overview_summary) {
+                    document.getElementById('overviewSummary').innerHTML = marked.parse(data.overview_summary);
+                    analysisResults.overview = data.overview_summary;
+                }
+                if (data.comparison_result) {
+                    document.getElementById('comparisonResult').innerHTML = marked.parse(data.comparison_result);
+                    analysisResults.comparison = data.comparison_result;
+                }
+                if (data.fiscal_result) {
+                    document.getElementById('fiscalResult').innerHTML = marked.parse(data.fiscal_result);
+                    analysisResults.fiscal = data.fiscal_result;
+                }
+                if (data.questions_result) {
+                    document.getElementById('questionsResult').innerHTML = marked.parse(data.questions_result);
+                    analysisResults.questions = data.questions_result;
+                }
+
+                // Quick Stats を表示
+                renderQuickStats();
+
+                // 概要タブに切り替え
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector('[data-tab="overview"]').classList.add('active');
+                document.getElementById('tab-overview').classList.add('active');
+
+                showToast('分析結果を読み込みました');
+            } catch (error) {
+                console.error('読み込みエラー:', error);
+                showToast('読み込みに失敗しました', 'error');
+            }
+        }
+
+        async function deleteAnalysis(id) {
+            if (!confirm('この分析結果を削除しますか？')) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('budget_analyses')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                if (currentAnalysisId === id) {
+                    currentAnalysisId = null;
+                }
+
+                showToast('削除しました', 'success');
+                loadHistory();
+            } catch (error) {
+                console.error('削除エラー:', error);
+                showToast('削除に失敗しました', 'error');
+            }
+        }
+
+        // ===== 年度間比較機能 =====
+        async function compareWithYear(currentId, currentFiscalYear) {
+            try {
+                // 他の年度の分析を取得
+                const { data: allAnalyses, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('id, fiscal_year, title, is_sample')
+                    .neq('id', currentId)
+                    .order('fiscal_year', { ascending: false });
+
+                if (error) throw error;
+
+                if (!allAnalyses || allAnalyses.length === 0) {
+                    alert('比較できる他の年度のデータがありません。\n先に他の年度の予算分析を登録してください。');
+                    return;
+                }
+
+                // 年度選択ダイアログを表示
+                const yearOptions = allAnalyses.map(a =>
+                    `${a.fiscal_year}年度${a.is_sample ? '（サンプル）' : ''}`
+                ).join('\n');
+
+                const selectedYear = prompt(
+                    `比較する年度を入力してください:\n\n登録済みの年度:\n${yearOptions}`,
+                    allAnalyses[0].fiscal_year
+                );
+
+                if (!selectedYear) return;
+
+                const compareAnalysis = allAnalyses.find(a => a.fiscal_year === parseInt(selectedYear));
+                if (!compareAnalysis) {
+                    alert('指定された年度のデータが見つかりません');
+                    return;
+                }
+
+                // 両方の分析データを取得して比較
+                await performYearComparison(currentId, compareAnalysis.id);
+
+            } catch (error) {
+                console.error('年度比較エラー:', error);
+                showToast('比較処理に失敗しました', 'error');
+            }
+        }
+
+        async function performYearComparison(id1, id2) {
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+
+            try {
+                // 両年度のデータを取得
+                const { data: analyses, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('*')
+                    .in('id', [id1, id2]);
+
+                if (error) throw error;
+
+                const [analysis1, analysis2] = analyses.sort((a, b) => b.fiscal_year - a.fiscal_year);
+
+                // Claude APIで比較分析
+                const response = await fetch('https://misato-api-proxy.yusaku41.workers.dev/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 4096,
+                        messages: [{
+                            role: 'user',
+                            content: `あなたは自治体財政の専門家です。以下の2つの年度の予算データを比較分析してください。
+
+【${analysis1.fiscal_year}年度予算データ】
+${analysis1.input_data}
+
+【${analysis2.fiscal_year}年度予算データ】
+${analysis2.input_data}
+
+以下の観点でMarkdown形式で詳細な比較分析を行ってください：
+
+## 年度間比較サマリー
+- ${analysis1.fiscal_year}年度 vs ${analysis2.fiscal_year}年度の全体比較
+- 予算規模の変化（金額・率）
+- 最も大きな変化があった項目TOP5
+
+## 歳入の比較
+| 項目 | ${analysis2.fiscal_year}年度 | ${analysis1.fiscal_year}年度 | 増減額 | 増減率 |
+表形式で主要歳入項目を比較
+
+## 歳出の比較
+| 項目 | ${analysis2.fiscal_year}年度 | ${analysis1.fiscal_year}年度 | 増減額 | 増減率 |
+表形式で主要歳出項目を比較
+
+## 財政指標の推移
+- 経常収支比率の変化と評価
+- 実質公債費比率の変化と評価
+- その他重要指標の推移
+
+## 政策の変化・傾向
+- 新規事業・廃止事業
+- 重点分野の変化
+- 今後の見通し
+
+## 議会質問のポイント
+年度間比較を踏まえた質問案を5つ提案`
+                        }]
+                    })
+                });
+
+                if (!response.ok) throw new Error('API request failed');
+
+                const data = await response.json();
+                const result = data.content[0].text;
+
+                // 比較結果を表示
+                document.getElementById('comparisonResult').innerHTML = `
+                    <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <strong>📊 年度間比較:</strong> ${analysis1.fiscal_year}年度 vs ${analysis2.fiscal_year}年度
+                    </div>
+                    ${marked.parse(result)}
+                `;
+
+                // 比較タブに切り替え
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector('[data-tab="comparison"]').classList.add('active');
+                document.getElementById('tab-comparison').classList.add('active');
+
+                showToast('年度間比較が完了しました', 'success');
+
+            } catch (error) {
+                console.error('比較分析エラー:', error);
+                showToast('比較分析に失敗しました', 'error');
+            } finally {
+                loading.classList.remove('active');
+            }
         }
 
         // Init
