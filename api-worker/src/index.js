@@ -29,7 +29,7 @@ export default {
 
     try {
       const body = await request.json();
-      const { question, ordinanceContext, lawContext, receiptImage, isReceiptAnalysis, isOrdinanceReview, ordinances, analysisCategories } = body;
+      const { question, ordinanceContext, lawContext, receiptImage, isReceiptAnalysis, isOrdinanceReview, ordinances, analysisCategories, isBarrierSearch, userGoal } = body;
 
       const apiKey = env.GEMINI_API_KEY;
       if (!apiKey) {
@@ -47,6 +47,11 @@ export default {
       // 条例レビューモード
       if (isOrdinanceReview && ordinances) {
         return await handleOrdinanceReview(ordinances, analysisCategories, apiKey, corsHeaders);
+      }
+
+      // 障壁条例検索モード
+      if (isBarrierSearch && userGoal) {
+        return await handleBarrierSearch(userGoal, ordinances, apiKey, corsHeaders);
       }
 
       // 通常の質問応答モード
@@ -518,6 +523,124 @@ ${o.text}
     return new Response(JSON.stringify({
       error: '条例分析中にエラーが発生しました: ' + error.message,
       issues: []
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+/**
+ * ユーザーの目標に対する障壁となる条例を検索
+ */
+async function handleBarrierSearch(userGoal, ordinances, apiKey, corsHeaders) {
+  const barrierPrompt = `あなたは三郷市の条例に詳しい専門家です。
+
+【ユーザーの目標】
+${userGoal}
+
+【条例データ】
+${ordinances.map(o => `
+---
+条例ID: ${o.id}
+条例名: ${o.title}
+カテゴリ: ${o.category}
+本文（抜粋）:
+${o.text}
+---
+`).join('\n')}
+
+【分析タスク】
+この目標を達成するにあたり、障壁となる可能性のある条例を特定してください。
+
+【判定基準】
+- 許可・申請が必要な規定
+- 禁止・制限されている事項
+- 基準値・上限値の規定
+- 資格・適格性の要件
+- 届出義務
+
+【優先度の判定】
+- high: 許可なしでは実行不可、または明確に禁止されている
+- medium: 条件付きで可能、または届出・確認が必要
+- low: 注意事項として把握しておくべき
+
+【出力形式】
+障壁が見つかった場合のみ、以下のJSON配列形式で出力してください。
+障壁がない場合は空の配列 [] を返してください。
+
+[
+  {
+    "ordinanceId": 条例ID（数値）,
+    "title": "条例名",
+    "priority": "high" または "medium" または "low",
+    "relevantArticle": "該当条項（第○条など）",
+    "barrier": "障壁の内容（どのような制限があるか）",
+    "requirement": "必要な手続き（許可申請、届出、相談など）",
+    "suggestion": "対応策・アドバイス"
+  }
+]
+
+必ずJSON形式のみで出力してください。説明文は不要です。`;
+
+  try {
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: barrierPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 4096,
+          },
+        }),
+      }
+    );
+
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Barrier search API error:', errorText);
+      return new Response(JSON.stringify({
+        error: '障壁検索に失敗しました',
+        barriers: []
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const data = await geminiResponse.json();
+    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+
+    // JSONを抽出
+    const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+    let barriers = [];
+
+    if (jsonMatch) {
+      try {
+        barriers = JSON.parse(jsonMatch[0]);
+      } catch (e) {
+        console.error('JSON parse error in barrier search:', e);
+        barriers = [];
+      }
+    }
+
+    return new Response(JSON.stringify({ barriers }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('Barrier search error:', error);
+    return new Response(JSON.stringify({
+      error: '障壁検索中にエラーが発生しました: ' + error.message,
+      barriers: []
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

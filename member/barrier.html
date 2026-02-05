@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条例の障壁を調べる | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --orange: #f59e0b;
+            --purple: #8b5cf6;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --red: #ef4444;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+
+        /* ===== Header ===== */
+        #mainContent { display: none; }
+
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .header-logo-icon { width: 40px; height: 40px; }
+        .header-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .header-logo-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .header-nav a {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .header-nav a:hover {
+            background: var(--gray-lighter);
+            color: var(--text);
+        }
+
+        /* ===== Main Content ===== */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 6rem 1rem 2rem;
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .page-title h1 svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--red);
+        }
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Search Card ===== */
+        .search-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--gray-light);
+        }
+
+        .search-card label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .search-input-large {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .search-input-large:focus {
+            border-color: var(--purple);
+        }
+
+        .search-input-large::placeholder {
+            color: #9ca3af;
+        }
+
+        .example-queries {
+            margin-bottom: 1rem;
+        }
+
+        .example-queries p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .example-btn {
+            display: inline-block;
+            padding: 0.4rem 0.75rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--text);
+            cursor: pointer;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .example-btn:hover {
+            background: var(--purple);
+            color: var(--white);
+            border-color: var(--purple);
+        }
+
+        .search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: var(--purple);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-btn:hover:not(:disabled) {
+            background: #7c3aed;
+        }
+
+        .search-btn:disabled {
+            background: var(--gray-light);
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .search-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== Loading ===== */
+        .loading-section {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading-section.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--gray-light);
+            border-top-color: var(--purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Results ===== */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .results-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .results-count {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .result-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--gray);
+        }
+
+        .result-item.high {
+            border-left-color: var(--red);
+        }
+
+        .result-item.medium {
+            border-left-color: var(--orange);
+        }
+
+        .result-item.low {
+            border-left-color: var(--green);
+        }
+
+        .result-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .result-item-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .result-item-badge.high {
+            background: #fef2f2;
+            color: var(--red);
+        }
+
+        .result-item-badge.medium {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .result-item-badge.low {
+            background: #f0fdf4;
+            color: var(--green-dark);
+        }
+
+        .result-item-article {
+            font-size: 0.85rem;
+            color: var(--purple);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item-barrier {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background: #fef2f2;
+            border-radius: 6px;
+        }
+
+        .result-item-requirement {
+            font-size: 0.85rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item-requirement strong {
+            color: var(--navy);
+        }
+
+        .result-item-suggestion {
+            font-size: 0.85rem;
+            color: var(--gray);
+            background: var(--gray-lighter);
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .result-item-suggestion strong {
+            color: var(--green-dark);
+        }
+
+        .result-item-actions {
+            margin-top: 0.75rem;
+        }
+
+        .result-item-actions a {
+            font-size: 0.8rem;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .result-item-actions a:hover {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+
+        .result-item-actions a svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            stroke: var(--green);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state small {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            .header-nav {
+                display: none;
+            }
+            .example-btn {
+                font-size: 0.75rem;
+                padding: 0.35rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">創政MISATO</div>
+            <div class="login-sub">条例の障壁を調べる</div>
+            <div id="loginError" class="login-error">パスワードが正しくありません</div>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力" required>
+                <button type="submit" class="login-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <header class="header">
+            <div class="header-inner">
+                <a href="/member/" class="header-logo">
+                    <div class="header-logo-icon">
+                        <img src="/member/images/logo.png" alt="">
+                    </div>
+                    <span class="header-logo-text">創政MISATO</span>
+                </a>
+                <nav class="header-nav">
+                    <a href="/member/">会員TOP</a>
+                    <a href="/member/search.html">条例検索</a>
+                    <a href="/member/review.html">条例レビュー</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-container">
+            <div class="page-title">
+                <h1>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    条例の障壁を調べる
+                </h1>
+                <p>やりたいことを入力すると、妨げとなる可能性のある条例をAIが分析します</p>
+            </div>
+
+            <div class="search-card">
+                <label for="goalInput">何をやりたいですか？</label>
+                <input
+                    type="text"
+                    class="search-input-large"
+                    id="goalInput"
+                    placeholder="例：公園でフリーマーケットを開きたい"
+                >
+
+                <div class="example-queries">
+                    <p>入力例：</p>
+                    <button class="example-btn" onclick="setExample(this)">公園でキッチンカーを出したい</button>
+                    <button class="example-btn" onclick="setExample(this)">空き家をシェアオフィスにしたい</button>
+                    <button class="example-btn" onclick="setExample(this)">道路で募金活動をしたい</button>
+                    <button class="example-btn" onclick="setExample(this)">イベントで花火を打ち上げたい</button>
+                </div>
+
+                <button class="search-btn" id="searchBtn" onclick="searchBarriers()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    障壁を調べる
+                </button>
+            </div>
+
+            <div class="loading-section" id="loadingSection">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">条例を分析しています...</div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <div class="results-header">
+                    <h2>分析結果</h2>
+                    <span class="results-count" id="resultsCount">0件の障壁</span>
+                </div>
+                <div id="resultsList">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Load ordinance data -->
+    <script src="/member/ordinance-data.js"></script>
+
+    <script>
+        const CORRECT_PASSWORD = 'sousei2026';
+        const AI_API_ENDPOINT = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
+
+        // Auth
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('member_auth') === '1';
+            if (isLoggedIn) {
+                showMain();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+
+            if (password === CORRECT_PASSWORD) {
+                sessionStorage.setItem('member_auth', '1');
+                showMain();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function showMain() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        // Example queries
+        function setExample(btn) {
+            document.getElementById('goalInput').value = btn.textContent;
+        }
+
+        // Search
+        async function searchBarriers() {
+            const goal = document.getElementById('goalInput').value.trim();
+            if (!goal) {
+                alert('やりたいことを入力してください');
+                return;
+            }
+
+            const searchBtn = document.getElementById('searchBtn');
+            const loadingSection = document.getElementById('loadingSection');
+            const resultsSection = document.getElementById('resultsSection');
+
+            searchBtn.disabled = true;
+            loadingSection.classList.add('active');
+            resultsSection.classList.remove('active');
+
+            try {
+                // Find relevant ordinances based on keywords
+                const relevantOrdinances = findRelevantOrdinances(goal);
+
+                // Send to API
+                const response = await fetch(AI_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        isBarrierSearch: true,
+                        userGoal: goal,
+                        ordinances: relevantOrdinances.map(o => ({
+                            id: o.id,
+                            title: o.title,
+                            category: o.category,
+                            text: o.fullText ? o.fullText.replace(/<[^>]*>/g, '').substring(0, 3000) : o.summary
+                        }))
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('API error');
+                }
+
+                const data = await response.json();
+                displayResults(data.barriers || []);
+
+            } catch (error) {
+                console.error('Search error:', error);
+                displayResults([]);
+            }
+
+            searchBtn.disabled = false;
+            loadingSection.classList.remove('active');
+        }
+
+        // Find relevant ordinances (reuse logic from search.html)
+        function findRelevantOrdinances(query) {
+            const q = query.toLowerCase();
+
+            // Keywords that might indicate regulatory relevance
+            const regulatoryKeywords = [
+                '許可', '申請', '届出', '禁止', '制限', '基準', '規制',
+                '条件', '義務', '要件', '承認', '認可', '免許', '登録'
+            ];
+
+            // Synonym map for common activities
+            const activityMap = {
+                '公園': ['公園', '緑地', '広場', 'イベント', '催物'],
+                'キッチンカー': ['露店', '営業', '屋台', '販売', '食品', '衛生'],
+                'フリーマーケット': ['露店', '販売', 'イベント', '催物', '公園'],
+                'イベント': ['催物', '行事', '集会', '公園', '広場', '道路'],
+                '空き家': ['建築', '用途', '住宅', '建物', '改築'],
+                'シェアオフィス': ['建築', '用途', '事務所', '建物', '消防'],
+                '道路': ['道路', '占用', '使用', '通行'],
+                '募金': ['道路', '寄付', '慈善', '占用'],
+                '花火': ['火災', '消防', '危険物', '騒音', '公園'],
+                'ドローン': ['航空', '飛行', '公園', '施設'],
+                '看板': ['屋外広告', '広告物', '景観', '道路'],
+                '建物': ['建築', '建物', '用途', '消防', '防火'],
+                '飲食': ['食品', '衛生', '営業', '許可'],
+                '騒音': ['騒音', '公害', '環境', '生活'],
+            };
+
+            // Extract keywords from query
+            let searchTerms = new Set();
+            searchTerms.add(q);
+
+            Object.entries(activityMap).forEach(([key, synonyms]) => {
+                if (q.includes(key)) {
+                    synonyms.forEach(s => searchTerms.add(s));
+                }
+            });
+
+            // Score ordinances
+            const scored = allOrdinanceData
+                .filter(o => o.fullText) // Only those with full text
+                .map(ord => {
+                    let score = 0;
+                    const title = ord.title.toLowerCase();
+                    const keywords = ord.keywords.map(k => k.toLowerCase());
+                    const summary = ord.summary.toLowerCase();
+                    const fullText = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+
+                    // Check for search term matches
+                    searchTerms.forEach(term => {
+                        if (title.includes(term)) score += 15;
+                        if (keywords.some(k => k.includes(term))) score += 10;
+                        if (summary.includes(term)) score += 5;
+                        if (fullText.includes(term)) score += 3;
+                    });
+
+                    // Bonus for regulatory keywords in fullText
+                    regulatoryKeywords.forEach(rk => {
+                        if (fullText.includes(rk)) score += 2;
+                    });
+
+                    return { ...ord, score };
+                })
+                .filter(o => o.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 20); // Top 20
+
+            return scored;
+        }
+
+        // Display results
+        function displayResults(barriers) {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsList = document.getElementById('resultsList');
+            const resultsCount = document.getElementById('resultsCount');
+
+            resultsSection.classList.add('active');
+            resultsCount.textContent = `${barriers.length}件の障壁`;
+
+            if (barriers.length === 0) {
+                resultsList.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>障壁となる条例は見つかりませんでした</p>
+                        <small>ただし、実際の活動には他の法令や許可が必要な場合があります。詳しくは担当課にご確認ください。</small>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by priority
+            const priorityOrder = { high: 0, medium: 1, low: 2 };
+            barriers.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+            resultsList.innerHTML = barriers.map(result => {
+                const ordinance = allOrdinanceData.find(o => o.id === result.ordinanceId);
+                const priorityLabels = {
+                    high: '要対応',
+                    medium: '確認推奨',
+                    low: '参考'
+                };
+
+                return `
+                    <div class="result-item ${result.priority}">
+                        <div class="result-item-header">
+                            <div class="result-item-title">${result.title || (ordinance ? ordinance.title : '条例')}</div>
+                            <span class="result-item-badge ${result.priority}">${priorityLabels[result.priority] || '確認'}</span>
+                        </div>
+                        ${result.relevantArticle ? `
+                            <div class="result-item-article">${result.relevantArticle}</div>
+                        ` : ''}
+                        <div class="result-item-barrier">
+                            <strong>障壁:</strong> ${result.barrier}
+                        </div>
+                        ${result.requirement ? `
+                            <div class="result-item-requirement">
+                                <strong>必要な手続き:</strong> ${result.requirement}
+                            </div>
+                        ` : ''}
+                        ${result.suggestion ? `
+                            <div class="result-item-suggestion">
+                                <strong>対応策:</strong> ${result.suggestion}
+                            </div>
+                        ` : ''}
+                        ${ordinance ? `
+                            <div class="result-item-actions">
+                                <a href="${ordinance.url}" target="_blank" rel="noopener">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                        <polyline points="15 3 21 3 21 9"/>
+                                        <line x1="10" y1="14" x2="21" y2="3"/>
+                                    </svg>
+                                    三郷市例規集で確認
+                                </a>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Enter key handler
+        document.getElementById('goalInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchBarriers();
+        });
+
+        // Initialize
+        checkAuth();
+    </script>
+</body>
+</html>
