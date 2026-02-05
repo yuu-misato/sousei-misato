@@ -114,6 +114,18 @@
             padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.75rem; color: rgba(255,255,255,0.4);
         }
+        .sidebar-external-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+        .sidebar-external-link:hover {
+            color: var(--white);
+        }
 
         /* ===== Mobile ===== */
         .mobile-header {
@@ -484,7 +496,7 @@
     <div id="mainContent">
         <div class="mobile-header">
             <a href="/member/" class="mobile-header-logo">
-                <img src="/assets/images/logo.png" alt="創政MISATO">
+                <img src="/member/images/logo.png" alt="創政MISATO">
                 <span>創政MISATO</span>
             </a>
             <button class="menu-toggle" onclick="toggleSidebar()">
@@ -501,7 +513,7 @@
                 <div class="sidebar-header">
                     <a href="/member/" class="sidebar-logo">
                         <div class="sidebar-logo-icon">
-                            <img src="/assets/images/logo.png" alt="創政MISATO">
+                            <img src="/member/images/logo.png" alt="創政MISATO">
                         </div>
                         <span class="sidebar-logo-text">創政MISATO</span>
                     </a>
@@ -568,7 +580,13 @@
                     </a>
                 </nav>
                 <div class="sidebar-footer">
-                    &copy; 2026 創政MISATO
+                    <a href="https://souseimisato.com" target="_blank" class="sidebar-external-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+                            <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        souseimisato.com
+                    </a>
+                    <div>&copy; 2026 創政MISATO</div>
                 </div>
             </aside>
 
