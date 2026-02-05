@@ -879,6 +879,68 @@
             background: var(--white);
         }
 
+        /* ===== Footer ===== */
+        .footer {
+            background: #1f2937;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 3rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+        }
+        .footer-brand {}
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        .footer-logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .footer-tagline {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+        .footer-nav-group {}
+        .footer-nav-title {
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        .footer-nav-group a {
+            display: block;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.3rem 0;
+            transition: color 0.2s;
+        }
+        .footer-nav-group a:hover {
+            color: var(--white);
+        }
+        .footer-copy {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.8rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+        }
+
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .header {
@@ -935,6 +997,13 @@
                 padding: 0.6rem 0.5rem;
                 font-size: 0.85rem;
             }
+            .footer-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-logo {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -955,16 +1024,16 @@
         <!-- Header -->
         <header class="header">
             <div class="header-inner">
-                <a href="../../index.html" class="header-logo">
+                <a href="/" class="header-logo">
                     <div class="header-logo-icon">
-                        <img src="../../images/logo.svg" alt="Logo">
+                        <img src="/images/logo.svg" alt="Logo">
                     </div>
                     <span class="header-logo-text">創政MISATO</span>
                 </a>
                 <nav class="header-nav">
-                    <a href="../search.html">条例検索</a>
-                    <a href="./" class="active">予算管理</a>
-                    <a href="../index.html">会員TOP</a>
+                    <a href="/">会員TOP</a>
+                    <a href="/search.html">条例検索</a>
+                    <a href="/budget/" class="active">予算管理</a>
                 </nav>
             </div>
         </header>
@@ -1329,6 +1398,31 @@
                 </div>
             </div>
         </main>
+
+        <footer class="footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="/images/logo.svg" alt="創政MISATO">
+                        <span class="footer-logo-text">創政MISATO</span>
+                    </div>
+                    <p class="footer-tagline">三郷市議会 会派<br>市民とともに創る、新しい政治のかたち</p>
+                </div>
+                <div class="footer-nav-group">
+                    <div class="footer-nav-title">会員メニュー</div>
+                    <a href="/">会員TOP</a>
+                    <a href="/search.html">条例・法律検索</a>
+                    <a href="/budget/">予算管理</a>
+                </div>
+                <div class="footer-nav-group">
+                    <div class="footer-nav-title">外部リンク</div>
+                    <a href="https://souseimisato.com" target="_blank">公式サイト</a>
+                    <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
+                    <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener">三郷市例規集</a>
+                </div>
+            </div>
+            <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
+        </footer>
     </div>
 
     <!-- Edit Modal -->

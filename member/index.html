@@ -137,6 +137,27 @@
             font-weight: 700;
             color: var(--text);
         }
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .header-nav a {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .header-nav a:hover {
+            background: var(--gray-lighter);
+            color: var(--text);
+        }
+        .header-nav a.active {
+            background: var(--navy);
+            color: var(--white);
+        }
         .header-menu-btn {
             width: 40px; height: 40px;
             display: flex; align-items: center; justify-content: center;
@@ -1098,22 +1119,17 @@
 <div id="guideContent">
     <header class="header">
         <div class="header-inner">
-            <a href="https://souseimisato.com" class="header-logo">
+            <a href="/" class="header-logo">
                 <div class="header-logo-icon">
-                    <img src="../logo.png" alt="創政MISATO">
+                    <img src="/images/logo.svg" alt="創政MISATO">
                 </div>
                 <span class="header-logo-text">創政MISATO</span>
             </a>
-            <div style="display:flex;align-items:center;gap:0.75rem;">
-                <span class="guide-header-badge">MEMBER ONLY</span>
-                <button class="header-menu-btn" id="menuOpenBtn" aria-label="メニューを開く">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="6" x2="21" y2="6"/>
-                        <line x1="3" y1="12" x2="21" y2="12"/>
-                        <line x1="3" y1="18" x2="21" y2="18"/>
-                    </svg>
-                </button>
-            </div>
+            <nav class="header-nav">
+                <a href="/" class="active">会員TOP</a>
+                <a href="/search.html">条例検索</a>
+                <a href="/budget/">予算管理</a>
+            </nav>
         </div>
     </header>
 
@@ -1620,22 +1636,22 @@
         <div class="footer-inner">
             <div class="footer-brand">
                 <div class="footer-logo">
-                    <img src="../logo.png" alt="創政MISATO">
+                    <img src="/images/logo.svg" alt="創政MISATO">
                     <span class="footer-logo-text">創政MISATO</span>
                 </div>
                 <p class="footer-tagline">三郷市議会 会派<br>市民とともに創る、新しい政治のかたち</p>
             </div>
             <div class="footer-nav-group">
-                <div class="footer-nav-title">コンテンツ</div>
-                <a href="https://souseimisato.com">トップページ</a>
-                <a href="https://souseimisato.com/shisatsu/">視察レポート一覧</a>
-                <a href="https://souseimisato.com/policy.html">会派運営指針</a>
-                <a href="https://member.souseimisato.com/member/">会派メンバー</a>
+                <div class="footer-nav-title">会員メニュー</div>
+                <a href="/">会員TOP</a>
+                <a href="/search.html">条例・法律検索</a>
+                <a href="/budget/">予算管理</a>
             </div>
             <div class="footer-nav-group">
                 <div class="footer-nav-title">外部リンク</div>
+                <a href="https://souseimisato.com" target="_blank">公式サイト</a>
                 <a href="https://www.city.misato.lg.jp/shiseijoho/shigikai/" target="_blank" rel="noopener">三郷市議会</a>
-                <a href="https://www.city.misato.lg.jp/" target="_blank" rel="noopener">三郷市公式サイト</a>
+                <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener">三郷市例規集</a>
             </div>
         </div>
         <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>

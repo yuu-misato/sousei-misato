@@ -69,13 +69,25 @@
             font-weight: 700;
             color: var(--text);
         }
-        .header-badge {
-            font-size: 0.68rem;
-            font-weight: 600;
-            background: var(--orange);
-            color: var(--white);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .header-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .header-nav a:hover {
+            color: var(--navy);
+        }
+        .header-nav a.active {
+            color: var(--navy);
+            border-bottom-color: var(--green);
         }
 
         /* ===== Hero ===== */
@@ -318,27 +330,70 @@
 
         /* ===== Footer ===== */
         .footer {
-            background: var(--white);
-            border-top: 1px solid var(--gray-light);
-            color: var(--text-light);
-            padding: 2rem;
+            background: var(--navy);
+            color: rgba(255,255,255,0.8);
+            padding: 3rem 2rem 2rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-section h4 {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .footer-section ul {
+            list-style: none;
+        }
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-section a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-section a:hover {
+            color: var(--green-light);
+        }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .footer-brand img {
+            width: 40px;
+            height: 40px;
+        }
+        .footer-brand span {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .footer-brand-text {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
             text-align: center;
         }
         .footer-copy {
             font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
         }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .footer-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
-        .footer-links a:hover { color: var(--green-dark); }
 
         @media (max-width: 600px) {
             .hero { padding: 5rem 1rem 2rem; }
@@ -354,13 +409,17 @@
 
 <header class="header">
     <div class="header-inner">
-        <a href="https://souseimisato.com" class="header-logo">
+        <a href="/" class="header-logo">
             <div class="header-logo-icon">
-                <img src="../../logo.png" alt="創政MISATO">
+                <img src="/images/logo.svg" alt="創政MISATO">
             </div>
             <span class="header-logo-text">創政MISATO</span>
         </a>
-        <span class="header-badge">条例改善</span>
+        <nav class="header-nav">
+            <a href="/">会員TOP</a>
+            <a href="/search.html">条例検索</a>
+            <a href="/budget/">予算管理</a>
+        </nav>
     </div>
 </header>
 
@@ -546,12 +605,35 @@
 </main>
 
 <footer class="footer">
-    <div class="footer-links">
-        <a href="../">メンバーガイドライン</a>
-        <a href="https://souseimisato.com">トップページ</a>
-        <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank">三郷市例規集</a>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <img src="/images/logo.svg" alt="創政MISATO">
+                    <span>創政MISATO</span>
+                </div>
+                <p class="footer-brand-text">三郷市議会 会派<br>会員専用エリア</p>
+            </div>
+            <div class="footer-section">
+                <h4>会員メニュー</h4>
+                <ul>
+                    <li><a href="/">会員TOP</a></li>
+                    <li><a href="/search.html">条例検索</a></li>
+                    <li><a href="/budget/">予算管理</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>外部リンク</h4>
+                <ul>
+                    <li><a href="https://souseimisato.com" target="_blank">公式サイト</a></li>
+                    <li><a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank">三郷市例規集</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
+        </div>
     </div>
-    <p class="footer-copy">&copy; 2026 創政MISATO - 三郷市議会 会派</p>
 </footer>
 
 </body>
