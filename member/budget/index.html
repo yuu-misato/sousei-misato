@@ -2427,6 +2427,8 @@
 
         async function analyzeReceipt(imageData) {
             try {
+                showToast('画像を認識中...', 'info');
+
                 const response = await fetch(GEMINI_API_URL, {
                     method: 'POST',
                     headers: {
@@ -2439,20 +2441,29 @@
                     })
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.error || 'AI解析に失敗しました');
-                }
-
                 const result = await response.json();
 
                 // Check for error response from API
                 if (result.error) {
-                    showToast('AI解析エラー: ' + result.error, 'error');
+                    // エラーメッセージをより分かりやすく表示
+                    let errorMessage = result.error;
+                    if (result.error.includes('レシート/領収書ではない')) {
+                        errorMessage = 'この画像はレシート/領収書として認識できませんでした。別の画像をお試しください。';
+                    }
+                    showToast(errorMessage, 'error');
                     return;
                 }
 
+                if (!response.ok) {
+                    throw new Error('AI解析に失敗しました');
+                }
+
                 if (result.receiptData) {
+                    // 認識成功のログ
+                    if (result.recognition) {
+                        console.log('Receipt recognized with confidence:', result.recognition.confidence);
+                    }
+
                     let filledFields = [];
                     let missingFields = [];
 
@@ -2490,14 +2501,15 @@
                         setFormAccount(result.receiptData.suggestedAccount);
                     }
 
-                    // Show appropriate message
+                    // Show appropriate message with confidence
+                    const confidenceText = result.recognition?.confidence >= 0.9 ? '' : '（認識精度が低い可能性があります）';
                     if (missingFields.length > 0) {
-                        showToast(`読み取り完了。${missingFields.join('、')}は手動入力してください`, 'warning');
+                        showToast(`読み取り完了${confidenceText}。${missingFields.join('、')}は手動入力してください`, 'warning');
                     } else {
-                        showToast('領収書を読み取りました。内容を確認してください', 'success');
+                        showToast(`領収書を読み取りました${confidenceText}。内容を確認してください`, 'success');
                     }
                 } else {
-                    showToast('領収書の読み取りに失敗しました。手動で入力してください', 'error');
+                    showToast('領収書の読み取りに失敗しました。画像が鮮明であることを確認してください', 'error');
                 }
             } catch (error) {
                 console.error('Receipt analysis error:', error);

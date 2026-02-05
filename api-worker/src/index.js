@@ -122,14 +122,42 @@ ${lawContext || '関連する法律データがありません'}
 };
 
 /**
- * 領収書画像を解析してデータを抽出
+ * 領収書画像を解析してデータを抽出（2段階処理）
+ * Step 1: 画像がレシート/領収書かどうかを判定
+ * Step 2: レシートの場合のみOCRを実行
  */
 async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
-  const receiptPrompt = `この領収書の画像を解析して、以下の情報をJSON形式で抽出してください。
+
+  // Step 1: レシート認識用プロンプト
+  const recognitionPrompt = `この画像を分析して、レシートまたは領収書かどうかを判定してください。
+
+【判定基準】
+以下のいずれかに該当する場合は「レシート/領収書」と判定：
+- 店舗のレシート（POSレジ出力）
+- 手書きまたは印刷の領収書
+- 請求書・明細書
+- クレジットカード利用明細
+- 交通系ICカードの利用履歴
+- 振込明細・ATM利用明細
+
+以下の場合は「レシート/領収書ではない」と判定：
+- 風景・人物・物品の写真
+- スクリーンショット（購入画面以外）
+- 書類・契約書
+- 名刺
+- 判読不能な画像
+- ぼやけた画像
+
+【出力形式】
+必ず以下のJSON形式のみで出力してください。説明文は一切不要です。
+{"isReceipt": true または false, "confidence": 0.0〜1.0, "reason": "判定理由を簡潔に"}`;
+
+  // Step 2: OCR用プロンプト
+  const ocrPrompt = `この領収書/レシートの画像から、以下の情報をJSON形式で抽出してください。
 
 【抽出する情報】
 1. date: 日付（YYYY-MM-DD形式。読み取れない場合は今日の日付）
-2. amount: 金額（数値のみ。税込金額を優先）
+2. amount: 金額（数値のみ。税込金額を優先。「合計」「請求金額」を優先）
 3. description: 摘要（店名や購入内容を簡潔に。例：「○○書店 書籍購入」）
 4. category: カテゴリ（以下から最も適切なものを1つ選択）
    - research: 調査研究費（書籍、調査旅費、視察など）
@@ -156,15 +184,8 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
 - 政党活動・選挙活動に関する経費
 
 【出力形式】
-必ず以下のJSON形式で出力してください。説明文は不要です。
-{
-  "date": "YYYY-MM-DD",
-  "amount": 数値,
-  "description": "摘要",
-  "category": "カテゴリID",
-  "note": "備考",
-  "suggestedAccount": "seimu または tsumitate"
-}`;
+必ず以下のJSON形式のみで出力してください。説明文は一切不要です。
+{"date": "YYYY-MM-DD", "amount": 数値, "description": "摘要", "category": "カテゴリID", "note": "備考", "suggestedAccount": "seimu または tsumitate"}`;
 
   try {
     // Base64画像データからMIMEタイプとデータを分離
@@ -194,9 +215,10 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
       });
     }
 
-    // Gemini Vision APIを呼び出し
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+    // ===== Step 1: レシート認識 =====
+    console.log('Step 1: Receipt recognition starting...');
+    const recognitionResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -204,7 +226,94 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
           contents: [
             {
               parts: [
-                { text: receiptPrompt },
+                { text: recognitionPrompt },
+                {
+                  inline_data: {
+                    mime_type: mimeType,
+                    data: imageData
+                  }
+                }
+              ],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 256,
+          },
+        }),
+      }
+    );
+
+    if (!recognitionResponse.ok) {
+      const errorText = await recognitionResponse.text();
+      console.error('Recognition API error:', errorText);
+      return new Response(JSON.stringify({
+        error: '画像の認識に失敗しました。もう一度お試しください。',
+        receiptData: null
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const recognitionData = await recognitionResponse.json();
+    const recognitionText = recognitionData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    console.log('Recognition response:', recognitionText);
+
+    // 認識結果をパース
+    const recognitionMatch = recognitionText.match(/\{[\s\S]*\}/);
+    if (!recognitionMatch) {
+      console.error('Failed to parse recognition result:', recognitionText);
+      return new Response(JSON.stringify({
+        error: '画像の認識に失敗しました。画像を確認してください。',
+        receiptData: null
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    let recognitionResult;
+    try {
+      recognitionResult = JSON.parse(recognitionMatch[0]);
+    } catch (e) {
+      console.error('Recognition JSON parse error:', e);
+      return new Response(JSON.stringify({
+        error: '画像の認識に失敗しました。',
+        receiptData: null
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // レシートでない場合はエラーを返す
+    if (!recognitionResult.isReceipt) {
+      const reason = recognitionResult.reason || 'レシート/領収書として認識できませんでした';
+      return new Response(JSON.stringify({
+        error: `この画像はレシート/領収書ではないようです: ${reason}`,
+        receiptData: null,
+        recognition: recognitionResult
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.log('Step 1 complete: Image is a receipt (confidence:', recognitionResult.confidence, ')');
+
+    // ===== Step 2: OCR処理 =====
+    console.log('Step 2: OCR processing starting...');
+    const ocrResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                { text: ocrPrompt },
                 {
                   inline_data: {
                     mime_type: mimeType,
@@ -222,11 +331,11 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
       }
     );
 
-    if (!geminiResponse.ok) {
-      const errorText = await geminiResponse.text();
-      console.error('Gemini Vision API error:', errorText);
+    if (!ocrResponse.ok) {
+      const errorText = await ocrResponse.text();
+      console.error('OCR API error:', errorText);
       return new Response(JSON.stringify({
-        error: '画像解析に失敗しました',
+        error: 'レシートの読み取りに失敗しました。画像が鮮明であることを確認してください。',
         receiptData: null
       }), {
         status: 500,
@@ -234,15 +343,16 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
       });
     }
 
-    const data = await geminiResponse.json();
-    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const ocrData = await ocrResponse.json();
+    const ocrText = ocrData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    console.log('OCR response:', ocrText);
 
     // JSONを抽出してパース
-    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    const jsonMatch = ocrText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.error('Failed to extract JSON from response:', responseText);
+      console.error('Failed to extract JSON from OCR response:', ocrText);
       return new Response(JSON.stringify({
-        error: 'データの抽出に失敗しました。領収書が読み取れませんでした。',
+        error: 'レシートの内容を読み取れませんでした。画像が鮮明であることを確認してください。',
         receiptData: null
       }), {
         status: 500,
@@ -256,7 +366,7 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
     } catch (parseError) {
       console.error('JSON parse error:', parseError, 'Raw:', jsonMatch[0]);
       return new Response(JSON.stringify({
-        error: 'レスポンス形式が無効です。再度お試しください。',
+        error: 'レシートデータの解析に失敗しました。再度お試しください。',
         receiptData: null
       }), {
         status: 500,
@@ -278,7 +388,15 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
       receiptData.suggestedAccount = 'seimu';
     }
 
-    return new Response(JSON.stringify({ receiptData }), {
+    console.log('Step 2 complete: OCR successful', receiptData);
+
+    return new Response(JSON.stringify({
+      receiptData,
+      recognition: {
+        isReceipt: true,
+        confidence: recognitionResult.confidence
+      }
+    }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -286,7 +404,7 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
   } catch (error) {
     console.error('Receipt analysis error:', error);
     return new Response(JSON.stringify({
-      error: '領収書の解析中にエラーが発生しました',
+      error: '領収書の解析中にエラーが発生しました: ' + error.message,
       receiptData: null
     }), {
       status: 500,
