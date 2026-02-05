@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一般質問リサーチ | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo { font-size: 1.8rem; font-weight: 900; color: var(--navy); margin-bottom: 0.3rem; }
+        .login-sub { color: var(--gray); font-size: 0.85rem; margin-bottom: 2rem; }
+        .login-input {
+            width: 100%; padding: 0.85rem 1rem; background: var(--gray-lighter);
+            border: 1px solid var(--gray-light); border-radius: 8px;
+            color: var(--text); font-size: 1rem; font-family: inherit;
+            outline: none; margin-bottom: 1rem; transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%; padding: 0.85rem; background: var(--green); color: var(--white);
+            border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            font-family: inherit; cursor: pointer; transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2; color: #dc2626; padding: 0.6rem;
+            border-radius: 8px; font-size: 0.82rem; margin-bottom: 1rem;
+            display: none; border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px; background: var(--navy); position: fixed;
+            top: 0; left: 0; bottom: 0; z-index: 100;
+            display: flex; flex-direction: column; transition: transform 0.3s ease;
+        }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+        .sidebar-logo-icon { width: 40px; height: 40px; background: var(--white); border-radius: 8px; padding: 4px; }
+        .sidebar-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .sidebar-logo-text { font-size: 1.1rem; font-weight: 700; }
+        .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 700;
+            color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;
+            transition: all 0.2s; border-left: 3px solid transparent;
+        }
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+        .sidebar-nav a.active { background: rgba(255,255,255,0.1); color: var(--white); border-left-color: var(--green); }
+        .sidebar-nav a svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .sidebar-footer {
+            padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem; color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile ===== */
+        .mobile-header {
+            display: none; position: fixed; top: 0; left: 0; right: 0;
+            height: 60px; background: var(--navy); z-index: 101;
+            padding: 0 1rem; align-items: center; justify-content: space-between;
+        }
+        .mobile-header-logo { display: flex; align-items: center; gap: 0.5rem; color: var(--white); text-decoration: none; font-weight: 700; }
+        .mobile-header-logo img { width: 32px; height: 32px; background: var(--white); border-radius: 6px; padding: 2px; }
+        .menu-toggle { background: none; border: none; color: var(--white); cursor: pointer; padding: 0.5rem; }
+        .menu-toggle svg { width: 28px; height: 28px; }
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+
+        /* ===== Main ===== */
+        .main-wrapper { flex: 1; margin-left: 260px; }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .mobile-header { display: flex; }
+            .main-wrapper { margin-left: 0; }
+            .main-container { padding: 80px 1rem 2rem; }
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+            border-radius: 16px; padding: 3rem 2rem; margin-bottom: 2rem;
+            text-align: center; color: var(--white);
+        }
+        .hero h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .hero p { opacity: 0.9; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .search-bar {
+            display: flex; gap: 0.5rem; max-width: 600px; margin: 0 auto;
+        }
+        .search-bar input {
+            flex: 1; padding: 0.9rem 1rem; border: none; border-radius: 8px;
+            font-size: 1rem; font-family: inherit; outline: none;
+        }
+        .search-bar button {
+            padding: 0 1.5rem; background: var(--green); color: var(--white);
+            border: none; border-radius: 8px; font-weight: 700;
+            cursor: pointer; transition: background 0.2s; font-family: inherit;
+        }
+        .search-bar button:hover { background: var(--green-dark); }
+        .search-bar button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .hero-tags { margin-top: 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+        .tag {
+            background: rgba(255,255,255,0.2); border: none; color: var(--white);
+            padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;
+            cursor: pointer; transition: background 0.2s; font-family: inherit;
+        }
+        .tag:hover { background: rgba(255,255,255,0.3); }
+
+        /* ===== Trend Section ===== */
+        .trend-section { margin-bottom: 2rem; }
+        .trend-heading { font-size: 1.2rem; color: var(--navy); margin-bottom: 0.5rem; }
+        .trend-desc { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+        .trend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+        .trend-category {
+            background: var(--white); border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden;
+        }
+        .trend-cat-header {
+            background: var(--cat-color, var(--navy)); color: var(--white);
+            padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .trend-cat-header h3 { font-size: 0.95rem; font-weight: 600; }
+        .trend-tags { padding: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .trend-tag {
+            background: var(--gray-lighter); border: none; color: var(--text);
+            padding: 0.35rem 0.65rem; border-radius: 4px; font-size: 0.8rem;
+            cursor: pointer; transition: all 0.2s; font-family: inherit;
+        }
+        .trend-tag:hover { background: var(--green); color: var(--white); }
+
+        /* ===== Results ===== */
+        .results-section { display: none; }
+        .results-section.active { display: block; }
+
+        .results-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .results-header h2 { font-size: 1.3rem; color: var(--navy); }
+
+        /* Score Card */
+        .score-section { display: none; margin-bottom: 2rem; }
+        .score-section.active { display: block; }
+        .score-box {
+            background: var(--white); border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;
+        }
+        .score-header {
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 100%);
+            color: var(--white); padding: 1rem 1.5rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .score-header h2 { font-size: 1.1rem; font-weight: 700; }
+        .score-body { padding: 1.5rem; }
+        .score-main { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+        .score-gauge { position: relative; width: 120px; height: 120px; }
+        .gauge-svg { width: 100%; height: 100%; }
+        .gauge-fill { stroke: var(--green); transition: stroke-dasharray 1s ease; }
+        .gauge-label {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .gauge-number { font-size: 2rem; font-weight: 900; color: var(--navy); }
+        .gauge-text { font-size: 0.75rem; color: var(--gray); }
+        .score-dimensions { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .dim-card { background: var(--gray-lighter); border-radius: 8px; padding: 1rem; text-align: center; }
+        .dim-score { font-size: 1.5rem; font-weight: 900; }
+        .dim-label { font-size: 0.8rem; color: var(--gray); margin-bottom: 0.5rem; }
+        .dim-evidence { font-size: 0.75rem; color: var(--text); }
+        .dim-evidence span { display: block; }
+        .score-factors { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .factors-col h3 { font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .factors-col ul { font-size: 0.85rem; margin-left: 1.2rem; }
+        .factors-positive { color: var(--green-dark); }
+        .factors-negative { color: #dc2626; }
+
+        /* Summary Box */
+        .summary-box {
+            background: var(--white); border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 2rem; overflow: hidden;
+        }
+        .summary-header {
+            background: var(--navy); color: var(--white); padding: 1rem 1.5rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .summary-header h2 { font-size: 1.1rem; font-weight: 700; flex: 1; }
+        .summary-actions { display: flex; gap: 0.5rem; }
+        .export-btn {
+            background: rgba(255,255,255,0.2); border: none; color: var(--white);
+            padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.8rem;
+            cursor: pointer; transition: background 0.2s; font-family: inherit;
+            display: flex; align-items: center; gap: 0.3rem;
+        }
+        .export-btn:hover { background: rgba(255,255,255,0.3); }
+        .summary-content {
+            padding: 1.5rem; max-height: 600px; overflow-y: auto;
+            font-size: 0.9rem; line-height: 1.9;
+        }
+        .summary-content h2 { font-size: 1.1rem; color: var(--navy); margin: 1.5rem 0 0.5rem; border-bottom: 2px solid var(--gray-light); padding-bottom: 0.3rem; }
+        .summary-content h3 { font-size: 1rem; color: var(--navy); margin: 1rem 0 0.3rem; }
+        .summary-content ul { margin-left: 1.5rem; }
+        .summary-content li { margin: 0.3rem 0; }
+        .summary-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+        .summary-content th, .summary-content td { border: 1px solid var(--gray-light); padding: 0.5rem; text-align: left; }
+        .summary-content th { background: var(--gray-lighter); }
+
+        .stream-status {
+            display: flex; align-items: center; gap: 0.5rem;
+            color: var(--navy); font-size: 0.9rem;
+        }
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .error-msg { color: #dc2626; background: #fef2f2; padding: 1rem; border-radius: 8px; }
+
+        /* Result Columns */
+        .section-label {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; color: var(--navy); margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--gray-light);
+        }
+        .columns { display: grid; gap: 1rem; margin-bottom: 1.5rem; }
+        .cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cols-2 { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 900px) { .cols-3 { grid-template-columns: 1fr; } .cols-2 { grid-template-columns: 1fr; } }
+        .column {
+            background: var(--white); border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1rem;
+        }
+        .column h2 { font-size: 0.95rem; color: var(--navy); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .col-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .col-dot.kokkai { background: #1a56db; }
+        .col-dot.saitama { background: #7c3aed; }
+        .col-dot.misato { background: var(--green); }
+        .col-dot.yoshikawa { background: #f59e0b; }
+        .col-dot.yashio { background: #ec4899; }
+        .col-dot.koshigaya { background: #14b8a6; }
+        .col-dot.gov { background: #6366f1; }
+        .col-dot.news { background: #ef4444; }
+        .col-dot.law { background: #0ea5e9; }
+        .col-dot.official { background: #8b5cf6; }
+
+        .result-item { padding: 0.75rem 0; border-bottom: 1px solid var(--gray-light); }
+        .result-item:last-child { border-bottom: none; }
+        .result-item .meta { font-size: 0.75rem; color: var(--gray); margin-bottom: 0.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .date-badge { background: var(--navy); color: var(--white); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.7rem; }
+        .speaker-badge { background: var(--gray-lighter); color: var(--text); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .source-badge { background: var(--gray-lighter); color: var(--text); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.7rem; }
+        .result-item .title { font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .result-item .title a { color: var(--navy); text-decoration: none; }
+        .result-item .title a:hover { text-decoration: underline; }
+        .view-link { font-size: 0.75rem; color: var(--green); margin-left: 0.5rem; }
+        .result-item .speech { font-size: 0.8rem; color: var(--text); line-height: 1.6; }
+        .no-results { text-align: center; color: var(--gray); padding: 1rem; font-size: 0.85rem; }
+
+        /* Action Buttons */
+        .action-buttons { display: none; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .action-buttons.active { display: flex; }
+        .action-btn {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.25rem; border-radius: 8px;
+            border: none; cursor: pointer; font-family: inherit;
+            font-weight: 600; font-size: 0.9rem; transition: all 0.2s;
+        }
+        .action-draft { background: #1a56db; color: var(--white); }
+        .action-predict { background: #7c3aed; color: var(--white); }
+        .action-check { background: #059669; color: var(--white); }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+        /* Tool Modal */
+        .tool-modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 200;
+            display: flex; align-items: center; justify-content: center; padding: 1rem;
+        }
+        .tool-modal {
+            background: var(--white); border-radius: 16px;
+            width: 100%; max-width: 800px; max-height: 90vh;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .tool-modal-header {
+            padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
+            background: var(--navy); color: var(--white);
+        }
+        .tool-header-draft { background: #1a56db; }
+        .tool-header-answer { background: #7c3aed; }
+        .tool-header-consistency { background: #059669; }
+        .tool-modal-header h2 { font-size: 1.1rem; }
+        .tool-modal-close {
+            background: rgba(255,255,255,0.2); border: none; color: var(--white);
+            width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+            font-size: 1.2rem; line-height: 1;
+        }
+        .tool-modal-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+        .tool-modal-status { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .tool-modal-content { font-size: 0.9rem; line-height: 1.8; }
+        .tool-modal-content h2, .tool-modal-content h3 { color: var(--navy); margin: 1rem 0 0.5rem; }
+        .tool-modal-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+        .tool-modal-content th, .tool-modal-content td { border: 1px solid var(--gray-light); padding: 0.5rem; }
+        .tool-modal-content th { background: var(--gray-lighter); }
+        .tool-modal-footer {
+            padding: 1rem 1.5rem; border-top: 1px solid var(--gray-light);
+            display: flex; gap: 0.5rem; justify-content: flex-end;
+        }
+
+        /* Stance Summary */
+        .stance-summary { margin-bottom: 2rem; }
+        .stance-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        @media (max-width: 768px) { .stance-cards { grid-template-columns: 1fr; } }
+        .stance-card {
+            background: var(--white); border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1rem;
+        }
+        .stance-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .stance-icon { font-size: 1.2rem; }
+        .stance-title { font-weight: 700; font-size: 0.9rem; flex: 1; }
+        .stance-badge {
+            font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;
+            color: var(--white); font-weight: 700;
+        }
+        .stance-body { font-size: 0.85rem; line-height: 1.6; margin-bottom: 0.5rem; }
+        .stance-facts { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+        .stance-fact {
+            font-size: 0.75rem; background: var(--gray-lighter);
+            padding: 0.2rem 0.5rem; border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">創政MISATO</div>
+            <div class="login-sub">一般質問リサーチ</div>
+            <div id="loginError" class="login-error">パスワードが正しくありません</div>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力" required>
+                <button type="submit" class="login-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <div class="app-layout">
+            <!-- Mobile Header -->
+            <header class="mobile-header">
+                <a href="/member/" class="mobile-header-logo">
+                    <img src="/member/images/logo.png" alt="">
+                    <span>創政MISATO</span>
+                </a>
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Sidebar Overlay -->
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <a href="/member/" class="sidebar-logo">
+                        <div class="sidebar-logo-icon">
+                            <img src="/member/images/logo.png" alt="">
+                        </div>
+                        <span class="sidebar-logo-text">創政MISATO</span>
+                    </a>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-section">メニュー</div>
+                    <a href="/member/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        ホーム
+                    </a>
+                    <a href="/member/budget/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                        </svg>
+                        会派予算管理
+                    </a>
+                    <div class="sidebar-nav-section">条例AI</div>
+                    <a href="/member/search.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        条例検索
+                    </a>
+                    <a href="/member/review.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                        条例AIレビュー
+                    </a>
+                    <a href="/member/barrier.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        障壁を調べる
+                    </a>
+                    <div class="sidebar-nav-section">リサーチAI</div>
+                    <a href="/member/research.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        一般質問リサーチ
+                    </a>
+                    <a href="/member/research-history.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        検索履歴
+                    </a>
+                    <div class="sidebar-nav-section">その他</div>
+                    <a href="/member/guideline.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        ガイドライン
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    © 2026 創政MISATO
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-wrapper">
+                <main class="main-container">
+                    <!-- Search Hero -->
+                    <div class="hero" id="heroSection">
+                        <h2>一般質問リサーチ</h2>
+                        <p>キーワードを入力すると、国会・埼玉県議会・三郷市議会の会議録、政府資料、ニュースを横断検索し、AIが分析レポートを作成します。</p>
+                        <div class="search-bar">
+                            <input type="text" id="keywordInput" placeholder="例：少子化対策、防災、GIGAスクール" required>
+                            <button id="searchBtn" onclick="startSearch()">調査開始</button>
+                        </div>
+                        <div class="hero-tags">
+                            <span style="opacity:0.8">よく使われるテーマ:</span>
+                            <button class="tag" onclick="setKeyword('少子化対策')">少子化対策</button>
+                            <button class="tag" onclick="setKeyword('防災')">防災</button>
+                            <button class="tag" onclick="setKeyword('GIGAスクール')">GIGAスクール</button>
+                            <button class="tag" onclick="setKeyword('ヤングケアラー')">ヤングケアラー</button>
+                            <button class="tag" onclick="setKeyword('空き家対策')">空き家対策</button>
+                        </div>
+                    </div>
+
+                    <!-- Trend Topics -->
+                    <div class="trend-section" id="trendSection">
+                        <h2 class="trend-heading">いま議会で取り上げるべきトレンドテーマ</h2>
+                        <p class="trend-desc">市民の悩み・課題別にテーマを整理しています。クリックで調査を開始できます。</p>
+                        <div class="trend-grid">
+                            <div class="trend-category">
+                                <div class="trend-cat-header" style="--cat-color:#dc2626">
+                                    <h3>子育て・教育</h3>
+                                </div>
+                                <div class="trend-tags">
+                                    <button class="trend-tag" onclick="setKeyword('待機児童')">待機児童</button>
+                                    <button class="trend-tag" onclick="setKeyword('学童保育')">学童保育</button>
+                                    <button class="trend-tag" onclick="setKeyword('不登校')">不登校</button>
+                                    <button class="trend-tag" onclick="setKeyword('給食費無償化')">給食費無償化</button>
+                                    <button class="trend-tag" onclick="setKeyword('ヤングケアラー')">ヤングケアラー</button>
+                                </div>
+                            </div>
+                            <div class="trend-category">
+                                <div class="trend-cat-header" style="--cat-color:#7c3aed">
+                                    <h3>高齢者・介護</h3>
+                                </div>
+                                <div class="trend-tags">
+                                    <button class="trend-tag" onclick="setKeyword('認知症対策')">認知症対策</button>
+                                    <button class="trend-tag" onclick="setKeyword('介護人材不足')">介護人材不足</button>
+                                    <button class="trend-tag" onclick="setKeyword('フレイル予防')">フレイル予防</button>
+                                    <button class="trend-tag" onclick="setKeyword('孤独死対策')">孤独死対策</button>
+                                </div>
+                            </div>
+                            <div class="trend-category">
+                                <div class="trend-cat-header" style="--cat-color:#d97706">
+                                    <h3>暮らし・住環境</h3>
+                                </div>
+                                <div class="trend-tags">
+                                    <button class="trend-tag" onclick="setKeyword('空き家対策')">空き家対策</button>
+                                    <button class="trend-tag" onclick="setKeyword('道路冠水')">道路冠水</button>
+                                    <button class="trend-tag" onclick="setKeyword('公園整備')">公園整備</button>
+                                    <button class="trend-tag" onclick="setKeyword('バリアフリー')">バリアフリー</button>
+                                </div>
+                            </div>
+                            <div class="trend-category">
+                                <div class="trend-cat-header" style="--cat-color:#1a56db">
+                                    <h3>安全・防災</h3>
+                                </div>
+                                <div class="trend-tags">
+                                    <button class="trend-tag" onclick="setKeyword('水害対策')">水害対策</button>
+                                    <button class="trend-tag" onclick="setKeyword('地震対策')">地震対策</button>
+                                    <button class="trend-tag" onclick="setKeyword('通学路安全')">通学路安全</button>
+                                    <button class="trend-tag" onclick="setKeyword('防犯カメラ')">防犯カメラ</button>
+                                </div>
+                            </div>
+                            <div class="trend-category">
+                                <div class="trend-cat-header" style="--cat-color:#6366f1">
+                                    <h3>行政DX・未来</h3>
+                                </div>
+                                <div class="trend-tags">
+                                    <button class="trend-tag" onclick="setKeyword('自治体DX')">自治体DX</button>
+                                    <button class="trend-tag" onclick="setKeyword('マイナンバーカード')">マイナンバーカード</button>
+                                    <button class="trend-tag" onclick="setKeyword('AI活用')">AI活用</button>
+                                    <button class="trend-tag" onclick="setKeyword('カーボンニュートラル')">カーボンニュートラル</button>
+                                </div>
+                            </div>
+                            <div class="trend-category">
+                                <div class="trend-cat-header" style="--cat-color:#0f2557">
+                                    <h3>三郷市ならでは</h3>
+                                </div>
+                                <div class="trend-tags">
+                                    <button class="trend-tag" onclick="setKeyword('江戸川 中川 治水')">江戸川・中川の治水</button>
+                                    <button class="trend-tag" onclick="setKeyword('三郷スマートIC')">スマートIC整備</button>
+                                    <button class="trend-tag" onclick="setKeyword('TX延伸')">TX延伸</button>
+                                    <button class="trend-tag" onclick="setKeyword('三郷中央 まちづくり')">三郷中央まちづくり</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section (hidden until search) -->
+                    <div class="results-section" id="resultsSection">
+                        <div class="results-header">
+                            <h2 id="resultsTitle">検索結果</h2>
+                            <div class="search-bar" style="max-width:400px">
+                                <input type="text" id="keywordInputSmall" placeholder="キーワード">
+                                <button onclick="startSearch()">再検索</button>
+                            </div>
+                        </div>
+
+                        <!-- Score Section -->
+                        <div class="score-section" id="scoreSection">
+                            <div class="score-box">
+                                <div class="score-header">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                    <h2>政策実現可能性スコア</h2>
+                                </div>
+                                <div class="score-body">
+                                    <div class="score-main">
+                                        <div class="score-gauge">
+                                            <svg viewBox="0 0 120 120" class="gauge-svg">
+                                                <circle cx="60" cy="60" r="52" fill="none" stroke="#e5e7eb" stroke-width="10"/>
+                                                <circle cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke-linecap="round"
+                                                    id="gaugeCircle" stroke-dasharray="0 326.7" transform="rotate(-90 60 60)" class="gauge-fill"/>
+                                            </svg>
+                                            <div class="gauge-label">
+                                                <span class="gauge-number" id="gaugeNumber">--</span>
+                                                <span class="gauge-text">/ 100</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="score-dimensions" id="scoreDimensions"></div>
+                                    <div class="score-factors">
+                                        <div class="factors-col factors-positive" id="positiveFactors"></div>
+                                        <div class="factors-col factors-negative" id="negativeFactors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons" id="actionButtons">
+                            <button class="action-btn action-draft" onclick="openTool('draft')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                質問原稿を生成
+                            </button>
+                            <button class="action-btn action-predict" onclick="openTool('answer')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                答弁を予測
+                            </button>
+                            <button class="action-btn action-check" onclick="openTool('consistency')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                                整合性チェック
+                            </button>
+                        </div>
+
+                        <!-- AI Summary -->
+                        <div class="summary-box" id="summaryBox">
+                            <div class="summary-header">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44H2.5A1.5 1.5 0 0 1 1 18.5v-12A1.5 1.5 0 0 1 2.5 5h4.04A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44h4.54a1.5 1.5 0 0 0 1.5-1.5v-12a1.5 1.5 0 0 0-1.5-1.5h-4.04A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+                                <h2>AI分析レポート</h2>
+                                <div class="summary-actions" id="summaryActions" style="display:none">
+                                    <button class="export-btn" onclick="exportMarkdown()">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                        MD
+                                    </button>
+                                    <button class="export-btn" onclick="printReport()">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                                        PDF
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="summary-content" id="summaryContent">
+                                <div class="stream-status" id="streamStatus">
+                                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#1a56db" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>
+                                    AI分析レポートを生成中...
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stance Summary -->
+                        <div class="stance-summary" id="stanceSummary" style="display:none">
+                            <div class="stance-cards">
+                                <div class="stance-card">
+                                    <div class="stance-header">
+                                        <span class="stance-icon">🏛️</span>
+                                        <span class="stance-title">国の見解</span>
+                                        <span class="stance-badge" id="stanceNationalBadge">-</span>
+                                    </div>
+                                    <div class="stance-body" id="stanceNationalBody">読み込み中...</div>
+                                    <div class="stance-facts" id="stanceNationalFacts"></div>
+                                </div>
+                                <div class="stance-card">
+                                    <div class="stance-header">
+                                        <span class="stance-icon">🏢</span>
+                                        <span class="stance-title">埼玉県の見解</span>
+                                        <span class="stance-badge" id="stancePrefectureBadge">-</span>
+                                    </div>
+                                    <div class="stance-body" id="stancePrefectureBody">読み込み中...</div>
+                                    <div class="stance-facts" id="stancePrefectureFacts"></div>
+                                </div>
+                                <div class="stance-card">
+                                    <div class="stance-header">
+                                        <span class="stance-icon">🏠</span>
+                                        <span class="stance-title">三郷市の見解</span>
+                                        <span class="stance-badge" id="stanceCityBadge">-</span>
+                                    </div>
+                                    <div class="stance-body" id="stanceCityBody">読み込み中...</div>
+                                    <div class="stance-facts" id="stanceCityFacts"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search Results -->
+                        <div class="section-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                            議会会議録
+                        </div>
+                        <div class="columns cols-3">
+                            <div class="column">
+                                <h2><span class="col-dot kokkai"></span>国会会議録</h2>
+                                <div id="kokkaiResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                            <div class="column">
+                                <h2><span class="col-dot saitama"></span>埼玉県議会</h2>
+                                <div id="saitamaResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                            <div class="column">
+                                <h2><span class="col-dot misato"></span>三郷市議会</h2>
+                                <div id="misatoResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                        </div>
+
+                        <div class="section-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            近隣市比較
+                        </div>
+                        <div class="columns cols-3">
+                            <div class="column">
+                                <h2><span class="col-dot yoshikawa"></span>吉川市議会</h2>
+                                <div id="yoshikawaResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                            <div class="column">
+                                <h2><span class="col-dot yashio"></span>八潮市議会</h2>
+                                <div id="yashioResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                            <div class="column">
+                                <h2><span class="col-dot koshigaya"></span>越谷市議会</h2>
+                                <div id="koshigayaResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                        </div>
+
+                        <div class="section-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
+                            政府資料・ニュース
+                        </div>
+                        <div class="columns cols-2">
+                            <div class="column">
+                                <h2><span class="col-dot gov"></span>政府資料</h2>
+                                <div id="ministryResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                            <div class="column">
+                                <h2><span class="col-dot news"></span>ニュース</h2>
+                                <div id="newsResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                        </div>
+
+                        <div class="section-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            法令・公式資料
+                        </div>
+                        <div class="columns cols-2">
+                            <div class="column">
+                                <h2><span class="col-dot law"></span>関連法令（e-Gov）</h2>
+                                <div id="lawsResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                            <div class="column">
+                                <h2><span class="col-dot official"></span>県・市 公式資料</h2>
+                                <div id="officialResults"><div class="no-results">検索中...</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tool Modal -->
+    <div class="tool-modal-overlay" id="toolModal" style="display:none" onclick="if(event.target===this)closeToolModal()">
+        <div class="tool-modal">
+            <div class="tool-modal-header" id="toolModalHeader">
+                <h2 id="toolModalTitle">-</h2>
+                <button class="tool-modal-close" onclick="closeToolModal()">✕</button>
+            </div>
+            <div class="tool-modal-body">
+                <div class="tool-modal-status" id="toolModalStatus">
+                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#1a56db" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>
+                    <span id="toolModalStatusText">生成中...</span>
+                </div>
+                <div class="tool-modal-content" id="toolModalContent"></div>
+            </div>
+            <div class="tool-modal-footer" id="toolModalFooter" style="display:none">
+                <button class="export-btn" onclick="exportToolMarkdown()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    MDダウンロード
+                </button>
+                <button class="export-btn" onclick="printToolContent()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    PDF印刷
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://misato-research-api.yusaku-suzuki.workers.dev';
+        const CORRECT_PASSWORD = 'sousei2026';
+        let currentKeyword = '';
+        let rawMarkdown = '';
+        let toolRawMarkdown = '';
+        let searchResults = null;
+
+        // Auth
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('member_auth') === '1';
+            if (isLoggedIn) showMain();
+        }
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+            if (password === CORRECT_PASSWORD) {
+                sessionStorage.setItem('member_auth', '1');
+                showMain();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+        function showMain() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+
+        // Keyword
+        function setKeyword(kw) {
+            document.getElementById('keywordInput').value = kw;
+            startSearch();
+        }
+
+        // Search
+        async function startSearch() {
+            const keyword = document.getElementById('keywordInput').value.trim() || document.getElementById('keywordInputSmall')?.value.trim();
+            if (!keyword) return;
+
+            currentKeyword = keyword;
+            document.getElementById('keywordInputSmall').value = keyword;
+
+            // Show results section
+            document.getElementById('heroSection').style.display = 'none';
+            document.getElementById('trendSection').style.display = 'none';
+            document.getElementById('resultsSection').classList.add('active');
+            document.getElementById('resultsTitle').textContent = `「${keyword}」の検索結果`;
+
+            // Reset
+            document.getElementById('searchBtn').disabled = true;
+            document.getElementById('scoreSection').classList.remove('active');
+            document.getElementById('actionButtons').classList.remove('active');
+            document.getElementById('summaryActions').style.display = 'none';
+            document.getElementById('stanceSummary').style.display = 'none';
+            rawMarkdown = '';
+
+            // Reset result containers
+            ['kokkai', 'saitama', 'misato', 'yoshikawa', 'yashio', 'koshigaya', 'ministry', 'news', 'laws', 'official'].forEach(id => {
+                document.getElementById(id + 'Results').innerHTML = '<div class="no-results">検索中...</div>';
+            });
+
+            // Show loading for summary
+            document.getElementById('summaryContent').innerHTML = `
+                <div class="stream-status" id="streamStatus">
+                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#1a56db" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>
+                    検索を実行中...
+                </div>
+            `;
+
+            try {
+                // Execute search
+                const response = await fetch(`${API_BASE}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ keyword }),
+                });
+                searchResults = await response.json();
+
+                // Display results
+                displayResults();
+
+                // Start AI streaming
+                startAIStreaming(keyword);
+                startStanceStreaming(keyword);
+
+            } catch (error) {
+                console.error('Search error:', error);
+                document.getElementById('summaryContent').innerHTML = `<p class="error-msg">検索中にエラーが発生しました: ${error.message}</p>`;
+            }
+
+            document.getElementById('searchBtn').disabled = false;
+        }
+
+        function displayResults() {
+            if (!searchResults) return;
+
+            // Kokkai
+            displayKaigirokuResults('kokkaiResults', searchResults.kokkai);
+            displayKaigirokuResults('saitamaResults', searchResults.saitama);
+            displayKaigirokuResults('misatoResults', searchResults.misato);
+
+            // Nearby
+            if (searchResults.nearby) {
+                displayKaigirokuResults('yoshikawaResults', searchResults.nearby.yoshikawa);
+                displayKaigirokuResults('yashioResults', searchResults.nearby.yashio);
+                displayKaigirokuResults('koshigayaResults', searchResults.nearby.koshigaya);
+            }
+
+            // Ministry & News
+            displaySimpleResults('ministryResults', searchResults.ministry);
+            displaySimpleResults('newsResults', searchResults.news);
+
+            // Laws
+            displayLawResults('lawsResults', searchResults.laws);
+
+            // Official
+            displaySimpleResults('officialResults', searchResults.official);
+        }
+
+        function displayKaigirokuResults(containerId, results) {
+            const container = document.getElementById(containerId);
+            if (!results || !results.length) {
+                container.innerHTML = '<div class="no-results">結果が見つかりませんでした</div>';
+                return;
+            }
+            container.innerHTML = results.map(r => `
+                <div class="result-item">
+                    <div class="meta">
+                        <span class="date-badge">${r.date || ''}</span>
+                        <span>${r.meeting || ''}</span>
+                    </div>
+                    <div class="title">
+                        <span class="speaker-badge">${r.speaker || ''}</span>
+                        ${r.url ? `<a href="${r.url}" target="_blank" class="view-link">原文</a>` : ''}
+                    </div>
+                    <div class="speech">${r.speech || ''}</div>
+                </div>
+            `).join('');
+        }
+
+        function displaySimpleResults(containerId, results) {
+            const container = document.getElementById(containerId);
+            if (!results || !results.length) {
+                container.innerHTML = '<div class="no-results">結果が見つかりませんでした</div>';
+                return;
+            }
+            container.innerHTML = results.map(r => `
+                <div class="result-item">
+                    <div class="meta"><span class="source-badge">${r.source || ''}</span></div>
+                    <div class="title">
+                        ${r.url ? `<a href="${r.url}" target="_blank">${r.title || ''}</a>` : r.title || ''}
+                    </div>
+                    ${r.snippet ? `<div class="speech">${r.snippet}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function displayLawResults(containerId, results) {
+            const container = document.getElementById(containerId);
+            if (!results || !results.length) {
+                container.innerHTML = '<div class="no-results">結果が見つかりませんでした</div>';
+                return;
+            }
+            container.innerHTML = results.map(r => `
+                <div class="result-item">
+                    <div class="meta"><span class="source-badge">${r.category || ''}</span> <span>${r.law_num || ''}</span></div>
+                    <div class="title">
+                        ${r.url ? `<a href="${r.url}" target="_blank">${r.title || ''}</a>` : r.title || ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // AI Streaming
+        function startAIStreaming(keyword) {
+            const content = document.getElementById('summaryContent');
+            const status = document.getElementById('streamStatus');
+            const actions = document.getElementById('summaryActions');
+            rawMarkdown = '';
+
+            content.innerHTML = `
+                <div class="stream-status" id="streamStatus">
+                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#1a56db" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>
+                    AI分析レポートを生成中...
+                </div>
+            `;
+
+            const es = new EventSource(`${API_BASE}/stream-summary?keyword=${encodeURIComponent(keyword)}`);
+
+            es.onmessage = function(e) {
+                if (e.data === '[DONE]') {
+                    es.close();
+                    document.getElementById('streamStatus')?.remove();
+                    actions.style.display = 'flex';
+                    document.getElementById('actionButtons').classList.add('active');
+
+                    // Extract and render score
+                    let displayMarkdown = rawMarkdown;
+                    try {
+                        const jsonMatch = rawMarkdown.match(/```json\s*([\s\S]*?)```/);
+                        if (jsonMatch) {
+                            const scoreData = JSON.parse(jsonMatch[1]);
+                            renderScoreCard(scoreData);
+                            displayMarkdown = rawMarkdown.replace(/## 政策実現可能性スコア[\s\S]*?```json[\s\S]*?```/, '');
+                        }
+                    } catch(e) { console.log('Score parse failed:', e); }
+
+                    content.innerHTML = marked.parse(displayMarkdown);
+                    saveHistory(keyword, rawMarkdown);
+                    return;
+                }
+                try {
+                    const msg = JSON.parse(e.data);
+                    if (msg.error) {
+                        document.getElementById('streamStatus')?.remove();
+                        content.innerHTML = `<p class="error-msg">${msg.error}</p>`;
+                        es.close();
+                        return;
+                    }
+                    if (msg.text) {
+                        rawMarkdown += msg.text;
+                        if (!content._renderTimer) {
+                            content._renderTimer = setTimeout(() => {
+                                content.innerHTML = `
+                                    <div class="stream-status">
+                                        <svg class="spinner" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#1a56db" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>
+                                        生成中...
+                                    </div>
+                                ` + marked.parse(rawMarkdown);
+                                content._renderTimer = null;
+                            }, 150);
+                        }
+                    }
+                } catch(err) {}
+            };
+
+            es.onerror = function() {
+                es.close();
+                if (!rawMarkdown) {
+                    content.innerHTML = '<p class="error-msg">AI分析の接続に失敗しました。</p>';
+                }
+            };
+        }
+
+        function startStanceStreaming(keyword) {
+            const stanceSection = document.getElementById('stanceSummary');
+            stanceSection.style.display = 'block';
+            let stanceRaw = '';
+
+            const es = new EventSource(`${API_BASE}/stream-stance-summary?keyword=${encodeURIComponent(keyword)}`);
+
+            es.onmessage = function(e) {
+                if (e.data === '[DONE]') {
+                    es.close();
+                    try {
+                        const jsonMatch = stanceRaw.match(/```json\s*([\s\S]*?)```/);
+                        if (jsonMatch) {
+                            renderStanceSummary(JSON.parse(jsonMatch[1]));
+                        } else {
+                            renderStanceSummary(JSON.parse(stanceRaw.trim()));
+                        }
+                    } catch(err) {
+                        console.log('Stance parse failed:', err);
+                        stanceSection.style.display = 'none';
+                    }
+                    return;
+                }
+                try {
+                    const msg = JSON.parse(e.data);
+                    if (msg.text) stanceRaw += msg.text;
+                    if (msg.error) { stanceSection.style.display = 'none'; es.close(); }
+                } catch(err) {}
+            };
+
+            es.onerror = function() { es.close(); stanceSection.style.display = 'none'; };
+        }
+
+        function renderStanceSummary(data) {
+            const colors = { '積極推進': '#059669', '推進': '#0d9488', '検討中': '#d97706', '消極的': '#dc2626', '未対応': '#6b7280' };
+            ['national', 'prefecture', 'city'].forEach(key => {
+                const d = data[key];
+                if (!d) return;
+                const suffix = { national: 'National', prefecture: 'Prefecture', city: 'City' }[key];
+                document.getElementById('stance' + suffix + 'Badge').textContent = d.stance || '-';
+                document.getElementById('stance' + suffix + 'Badge').style.background = colors[d.stance] || '#6b7280';
+                document.getElementById('stance' + suffix + 'Body').textContent = d.summary || '';
+                if (d.key_facts && d.key_facts.length) {
+                    document.getElementById('stance' + suffix + 'Facts').innerHTML = d.key_facts.map(f => '<span class="stance-fact">' + f + '</span>').join('');
+                }
+            });
+        }
+
+        function renderScoreCard(data) {
+            const section = document.getElementById('scoreSection');
+            if (!data || !data.overall_score) return;
+            section.classList.add('active');
+
+            const score = data.overall_score;
+            const circumference = 2 * Math.PI * 52;
+            const offset = (score / 100) * circumference;
+            document.getElementById('gaugeCircle').style.strokeDasharray = offset + ' ' + circumference;
+            document.getElementById('gaugeCircle').style.stroke = score >= 70 ? '#059669' : score >= 40 ? '#d97706' : '#dc2626';
+            document.getElementById('gaugeNumber').textContent = score;
+
+            const dims = document.getElementById('scoreDimensions');
+            dims.innerHTML = '';
+            const dimOrder = ['national_support','fiscal_feasibility','citizen_needs','precedents','legal_foundation'];
+            dimOrder.forEach(key => {
+                const d = data.dimensions?.[key];
+                if (!d) return;
+                const color = d.score >= 70 ? '#059669' : d.score >= 40 ? '#d97706' : '#dc2626';
+                dims.innerHTML += `<div class="dim-card">
+                    <div class="dim-score" style="color:${color}">${d.score}</div>
+                    <div class="dim-label">${d.label}</div>
+                    <div class="dim-evidence">${(d.evidence||[]).map(e=>'<span>'+e+'</span>').join('')}</div>
+                </div>`;
+            });
+
+            document.getElementById('positiveFactors').innerHTML = '<h3>➕ プラス要因</h3><ul>' + (data.positive_factors||[]).map(f=>'<li>'+f+'</li>').join('') + '</ul>';
+            document.getElementById('negativeFactors').innerHTML = '<h3>➖ マイナス要因</h3><ul>' + (data.negative_factors||[]).map(f=>'<li>'+f+'</li>').join('') + '</ul>';
+        }
+
+        // Export
+        function exportMarkdown() {
+            const blob = new Blob([rawMarkdown], {type: 'text/markdown;charset=utf-8'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = currentKeyword + '_レポート.md';
+            a.click();
+        }
+
+        function printReport() {
+            const content = document.getElementById('summaryContent').innerHTML;
+            const w = window.open('', '_blank');
+            w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${currentKeyword} - AI分析レポート</title>
+            <style>body{font-family:"Noto Sans JP",sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem;color:#333;line-height:1.8;font-size:14px;}
+            h1{font-size:1.3rem;border-bottom:2px solid #1a56db;padding-bottom:0.3rem;color:#0f2557;}
+            h2{font-size:1rem;color:#0f2557;margin:1.2rem 0 0.3rem;border-bottom:1px solid #e5e7eb;padding-bottom:0.2rem;}
+            ul{margin:0.3rem 0 0.3rem 1.5rem;} li{margin:0.15rem 0;}</style></head><body>
+            <h1>${currentKeyword} - AI分析レポート</h1>${content}
+            <div style="margin-top:2rem;border-top:1px solid #ccc;padding-top:0.5rem;font-size:0.75rem;color:#999;text-align:center;">
+            一般質問リサーチシステム - ${new Date().toLocaleDateString('ja-JP')}</div></body></html>`);
+            w.document.close();
+            w.print();
+        }
+
+        // Tool Modal
+        const toolTitles = { draft: '📝 一般質問原稿', answer: '🔮 答弁予測', consistency: '✅ 整合性チェック' };
+        const toolEndpoints = { draft: '/stream-draft', answer: '/stream-answer-prediction', consistency: '/stream-consistency-check' };
+
+        function openTool(type) {
+            const modal = document.getElementById('toolModal');
+            const title = document.getElementById('toolModalTitle');
+            const status = document.getElementById('toolModalStatus');
+            const statusText = document.getElementById('toolModalStatusText');
+            const content = document.getElementById('toolModalContent');
+            const footer = document.getElementById('toolModalFooter');
+            const header = document.getElementById('toolModalHeader');
+
+            modal.style.display = 'flex';
+            title.textContent = toolTitles[type] || '';
+            statusText.textContent = '生成中...';
+            status.style.display = 'flex';
+            footer.style.display = 'none';
+            content.innerHTML = '';
+            toolRawMarkdown = '';
+            header.className = 'tool-modal-header tool-header-' + type;
+
+            const url = `${API_BASE}${toolEndpoints[type]}?keyword=${encodeURIComponent(currentKeyword)}&report=${encodeURIComponent(rawMarkdown.substring(0, 3000))}`;
+            const es = new EventSource(url);
+
+            es.onmessage = function(e) {
+                if (e.data === '[DONE]') {
+                    es.close();
+                    status.style.display = 'none';
+                    footer.style.display = 'flex';
+                    content.innerHTML = marked.parse(toolRawMarkdown);
+                    return;
+                }
+                try {
+                    const msg = JSON.parse(e.data);
+                    if (msg.error) { status.style.display = 'none'; content.innerHTML = '<p class="error-msg">' + msg.error + '</p>'; es.close(); return; }
+                    if (msg.text) {
+                        toolRawMarkdown += msg.text;
+                        if (!content._renderTimer) {
+                            content._renderTimer = setTimeout(() => { content.innerHTML = marked.parse(toolRawMarkdown); content._renderTimer = null; }, 150);
+                        }
+                    }
+                } catch(err) {}
+            };
+
+            es.onerror = function() { es.close(); status.style.display = 'none'; if (!toolRawMarkdown) content.innerHTML = '<p class="error-msg">接続に失敗しました。</p>'; };
+        }
+
+        function closeToolModal() { document.getElementById('toolModal').style.display = 'none'; }
+
+        function exportToolMarkdown() {
+            const blob = new Blob([toolRawMarkdown], {type: 'text/markdown;charset=utf-8'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = currentKeyword + '_ツール出力.md';
+            a.click();
+        }
+
+        function printToolContent() {
+            const content = document.getElementById('toolModalContent').innerHTML;
+            const title = document.getElementById('toolModalTitle').textContent;
+            const w = window.open('', '_blank');
+            w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title}</title>
+            <style>body{font-family:"Noto Sans JP",sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem;color:#333;line-height:1.8;font-size:14px;}
+            h1{font-size:1.2rem;color:#0f2557;border-bottom:2px solid #1a56db;padding-bottom:0.3rem;}
+            table{border-collapse:collapse;width:100%;margin:0.5rem 0;font-size:0.85rem;}
+            th,td{border:1px solid #ddd;padding:0.4rem 0.6rem;text-align:left;} th{background:#f3f4f6;}</style></head><body>
+            <h1>${title}</h1>${content}</body></html>`);
+            w.document.close();
+            w.print();
+        }
+
+        // History
+        function saveHistory(keyword, markdown) {
+            try {
+                let history = JSON.parse(localStorage.getItem('researchHistory') || '[]');
+                history = history.filter(h => h.keyword !== keyword);
+                history.unshift({ keyword, date: new Date().toISOString(), markdown });
+                if (history.length > 20) history = history.slice(0, 20);
+                localStorage.setItem('researchHistory', JSON.stringify(history));
+            } catch(e) {}
+        }
+
+        // Init
+        checkAuth();
+        document.getElementById('keywordInput').addEventListener('keypress', e => { if (e.key === 'Enter') startSearch(); });
+    </script>
+</body>
+</html>
