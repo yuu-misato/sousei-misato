@@ -442,6 +442,86 @@
             color: var(--green-dark);
         }
 
+        /* ===== Amendment Proposal (条例改正案) ===== */
+        .amendment-proposal {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border: 2px solid var(--purple);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .amendment-proposal::before {
+            content: '💡 条例改正で実現可能に';
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            background: var(--purple);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .amendment-header {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 0.75rem;
+            padding-top: 0.5rem;
+        }
+
+        .amendment-detail {
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--purple);
+            background: rgba(255,255,255,0.7);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .amendment-detail-label {
+            font-weight: 700;
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.2rem;
+            font-size: 0.8rem;
+        }
+
+        .amendment-wording {
+            background: white;
+            border: 1px dashed var(--purple);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            color: var(--navy);
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .amendment-effect {
+            background: #dcfce7;
+            border-left: 3px solid var(--green);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: var(--green-dark);
+        }
+
+        .amendment-consideration {
+            background: #fef9c3;
+            border-left: 3px solid #eab308;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.8rem;
+            color: #854d0e;
+            margin-top: 0.5rem;
+        }
+
         .result-item-actions {
             margin-top: 0.75rem;
         }
@@ -546,7 +626,7 @@
                     </svg>
                     条例の障壁を調べる
                 </h1>
-                <p>やりたいことを入力すると、妨げとなる可能性のある条例をAIが分析します</p>
+                <p>やりたいことを入力すると、妨げとなる条例と<strong>改正すれば実現可能になる方法</strong>をAIが提案します</p>
             </div>
 
             <div class="search-card">
@@ -663,8 +743,8 @@
                     return;
                 }
 
-                // Step 3: AIで障壁を分析
-                loadingText.textContent = '障壁を分析中...';
+                // Step 3: AIで障壁を分析 + 改正案を生成
+                loadingText.textContent = '障壁と改正案を分析中...';
                 const response = await fetch(AI_API_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -874,6 +954,44 @@
                     low: '参考'
                 };
 
+                // 条例改正提案のHTML
+                const amendmentHTML = result.amendmentProposal ? `
+                    <div class="amendment-proposal">
+                        <div class="amendment-header">この条例を改正すれば実現可能</div>
+
+                        <div class="amendment-detail">
+                            <span class="amendment-detail-label">📌 現行条文の問題点</span>
+                            ${result.amendmentProposal.currentIssue}
+                        </div>
+
+                        <div class="amendment-detail">
+                            <span class="amendment-detail-label">📝 改正案の要旨</span>
+                            ${result.amendmentProposal.proposedChange}
+                        </div>
+
+                        ${result.amendmentProposal.specificWording ? `
+                            <div class="amendment-wording">
+                                <span class="amendment-detail-label">✏️ 具体的な改正文言</span>
+                                「${result.amendmentProposal.specificWording}」
+                            </div>
+                        ` : ''}
+
+                        ${result.amendmentProposal.expectedEffect ? `
+                            <div class="amendment-effect">
+                                <span class="amendment-detail-label">✅ 改正による効果</span>
+                                ${result.amendmentProposal.expectedEffect}
+                            </div>
+                        ` : ''}
+
+                        ${result.amendmentProposal.considerations ? `
+                            <div class="amendment-consideration">
+                                <span class="amendment-detail-label">⚠️ 留意点</span>
+                                ${result.amendmentProposal.considerations}
+                            </div>
+                        ` : ''}
+                    </div>
+                ` : '';
+
                 return `
                     <div class="result-item ${result.priority}">
                         <div class="result-item-header">
@@ -884,18 +1002,19 @@
                             <div class="result-item-article">${result.relevantArticle}</div>
                         ` : ''}
                         <div class="result-item-barrier">
-                            <strong>障壁:</strong> ${result.barrier}
+                            <strong>🚫 障壁:</strong> ${result.barrier}
                         </div>
                         ${result.requirement ? `
                             <div class="result-item-requirement">
-                                <strong>必要な手続き:</strong> ${result.requirement}
+                                <strong>📋 必要な手続き:</strong> ${result.requirement}
                             </div>
                         ` : ''}
                         ${result.suggestion ? `
                             <div class="result-item-suggestion">
-                                <strong>対応策:</strong> ${result.suggestion}
+                                <strong>💼 現行制度での対応策:</strong> ${result.suggestion}
                             </div>
                         ` : ''}
+                        ${amendmentHTML}
                         ${ordinance ? `
                             <div class="result-item-actions">
                                 <a href="${ordinance.url}" target="_blank" rel="noopener">
