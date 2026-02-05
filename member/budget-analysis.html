@@ -578,13 +578,7 @@
                             <div class="budget-input-wrapper" id="currentYearDrop" onclick="document.getElementById('currentYearFile').click()">
                                 <input type="file" id="currentYearFile" accept=".csv,.xlsx,.xls,.pdf,.txt" style="display:none" onchange="handleFileUpload(this, 'current')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                <p id="currentYearLabel">当年度予算書をドラッグ＆ドロップ<br>または クリックして選択（CSV/Excel）</p>
-                            </div>
-
-                            <div class="budget-input-wrapper" id="prevYearDrop" onclick="document.getElementById('prevYearFile').click()">
-                                <input type="file" id="prevYearFile" accept=".csv,.xlsx,.xls,.pdf,.txt" style="display:none" onchange="handleFileUpload(this, 'prev')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                <p id="prevYearLabel">前年度予算書をドラッグ＆ドロップ<br>または クリックして選択（比較分析用・任意）</p>
+                                <p id="currentYearLabel">予算書をドラッグ＆ドロップ<br>または クリックして選択（CSV/Excel/PDF）</p>
                             </div>
 
                             <div class="form-group">
@@ -806,14 +800,13 @@
 
         // File handling
         let currentYearData = null;
-        let prevYearData = null;
 
         function handleFileUpload(input, type) {
             const file = input.files[0];
             if (!file) return;
 
-            const wrapper = document.getElementById(type === 'current' ? 'currentYearDrop' : 'prevYearDrop');
-            const label = document.getElementById(type === 'current' ? 'currentYearLabel' : 'prevYearLabel');
+            const wrapper = document.getElementById('currentYearDrop');
+            const label = document.getElementById('currentYearLabel');
 
             wrapper.classList.add('has-data');
             label.textContent = `✓ ${file.name} を選択しました`;
@@ -821,36 +814,29 @@
             // Read file content (simplified - would need proper CSV/Excel parsing)
             const reader = new FileReader();
             reader.onload = (e) => {
-                if (type === 'current') {
-                    currentYearData = e.target.result;
-                } else {
-                    prevYearData = e.target.result;
-                }
+                currentYearData = e.target.result;
             };
             reader.readAsText(file);
         }
 
         // Drag and drop
-        ['currentYearDrop', 'prevYearDrop'].forEach(id => {
-            const el = document.getElementById(id);
-            el.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                el.style.borderColor = 'var(--green)';
-                el.style.background = 'rgba(124, 179, 66, 0.1)';
-            });
-            el.addEventListener('dragleave', () => {
-                if (!el.classList.contains('has-data')) {
-                    el.style.borderColor = '';
-                    el.style.background = '';
-                }
-            });
-            el.addEventListener('drop', (e) => {
-                e.preventDefault();
-                const type = id === 'currentYearDrop' ? 'current' : 'prev';
-                const input = document.getElementById(type === 'current' ? 'currentYearFile' : 'prevYearFile');
-                input.files = e.dataTransfer.files;
-                handleFileUpload(input, type);
-            });
+        const dropEl = document.getElementById('currentYearDrop');
+        dropEl.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropEl.style.borderColor = 'var(--green)';
+            dropEl.style.background = 'rgba(124, 179, 66, 0.1)';
+        });
+        dropEl.addEventListener('dragleave', () => {
+            if (!dropEl.classList.contains('has-data')) {
+                dropEl.style.borderColor = '';
+                dropEl.style.background = '';
+            }
+        });
+        dropEl.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('currentYearFile');
+            input.files = e.dataTransfer.files;
+            handleFileUpload(input, 'current');
         });
 
         // Sample data
@@ -1283,58 +1269,28 @@
 
                 const [analysis1, analysis2] = analyses.sort((a, b) => b.fiscal_year - a.fiscal_year);
 
-                // Claude APIで比較分析
-                const response = await fetch('https://misato-api-proxy.yusaku41.workers.dev/', {
+                // Gemini APIで比較分析
+                const response = await fetch('https://misato-jorei-ai.yusaku41.workers.dev/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 4096,
-                        messages: [{
-                            role: 'user',
-                            content: `あなたは自治体財政の専門家です。以下の2つの年度の予算データを比較分析してください。
-
-【${analysis1.fiscal_year}年度予算データ】
-${analysis1.input_data}
-
-【${analysis2.fiscal_year}年度予算データ】
-${analysis2.input_data}
-
-以下の観点でMarkdown形式で詳細な比較分析を行ってください：
-
-## 年度間比較サマリー
-- ${analysis1.fiscal_year}年度 vs ${analysis2.fiscal_year}年度の全体比較
-- 予算規模の変化（金額・率）
-- 最も大きな変化があった項目TOP5
-
-## 歳入の比較
-| 項目 | ${analysis2.fiscal_year}年度 | ${analysis1.fiscal_year}年度 | 増減額 | 増減率 |
-表形式で主要歳入項目を比較
-
-## 歳出の比較
-| 項目 | ${analysis2.fiscal_year}年度 | ${analysis1.fiscal_year}年度 | 増減額 | 増減率 |
-表形式で主要歳出項目を比較
-
-## 財政指標の推移
-- 経常収支比率の変化と評価
-- 実質公債費比率の変化と評価
-- その他重要指標の推移
-
-## 政策の変化・傾向
-- 新規事業・廃止事業
-- 重点分野の変化
-- 今後の見通し
-
-## 議会質問のポイント
-年度間比較を踏まえた質問案を5つ提案`
-                        }]
+                        isBudgetComparison: true,
+                        budget1: {
+                            fiscal_year: analysis1.fiscal_year,
+                            input_data: analysis1.input_data
+                        },
+                        budget2: {
+                            fiscal_year: analysis2.fiscal_year,
+                            input_data: analysis2.input_data
+                        }
                     })
                 });
 
                 if (!response.ok) throw new Error('API request failed');
 
                 const data = await response.json();
-                const result = data.content[0].text;
+                if (data.error) throw new Error(data.error);
+                const result = data.result;
 
                 // 比較結果を表示
                 document.getElementById('comparisonResult').innerHTML = `

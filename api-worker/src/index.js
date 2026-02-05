@@ -64,6 +64,11 @@ export default {
         return await handleBudgetAnalysis(body.budgetData, apiKey, corsHeaders);
       }
 
+      // 予算年度間比較モード
+      if (body.isBudgetComparison && body.budget1 && body.budget2) {
+        return await handleBudgetComparison(body.budget1, body.budget2, apiKey, corsHeaders);
+      }
+
       // 障壁条例検索モード
       if (isBarrierSearch && userGoal) {
         return await handleBarrierSearch(userGoal, ordinances, apiKey, corsHeaders);
@@ -1015,6 +1020,99 @@ ${budgetData}
     console.error('Budget analysis error:', error);
     return new Response(JSON.stringify({
       error: '予算分析中にエラーが発生しました: ' + error.message,
+      result: null
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+/**
+ * 予算年度間比較
+ * 2つの年度の予算データを比較分析
+ */
+async function handleBudgetComparison(budget1, budget2, apiKey, corsHeaders) {
+  const comparisonPrompt = `あなたは自治体財政の専門家です。以下の2つの年度の予算データを比較分析してください。
+
+【${budget1.fiscal_year}年度予算データ】
+${budget1.input_data}
+
+【${budget2.fiscal_year}年度予算データ】
+${budget2.input_data}
+
+以下の観点でMarkdown形式で詳細な比較分析を行ってください：
+
+## 年度間比較サマリー
+- ${budget1.fiscal_year}年度 vs ${budget2.fiscal_year}年度の全体比較
+- 予算規模の変化（金額・率）
+- 最も大きな変化があった項目TOP5
+
+## 歳入の比較
+| 項目 | ${budget2.fiscal_year}年度 | ${budget1.fiscal_year}年度 | 増減額 | 増減率 |
+表形式で主要歳入項目を比較
+
+## 歳出の比較
+| 項目 | ${budget2.fiscal_year}年度 | ${budget1.fiscal_year}年度 | 増減額 | 増減率 |
+表形式で主要歳出項目を比較
+
+## 財政指標の推移
+- 経常収支比率の変化と評価
+- 実質公債費比率の変化と評価
+- その他重要指標の推移
+
+## 政策の変化・傾向
+- 新規事業・廃止事業
+- 重点分野の変化
+- 今後の見通し
+
+## 議会質問のポイント
+年度間比較を踏まえた質問案を5つ提案`;
+
+  try {
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: comparisonPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 4096,
+          },
+        }),
+      }
+    );
+
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Budget comparison API error:', errorText);
+      return new Response(JSON.stringify({
+        error: '予算比較に失敗しました',
+        result: null
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const data = await geminiResponse.json();
+    const result = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+    return new Response(JSON.stringify({ result }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('Budget comparison error:', error);
+    return new Response(JSON.stringify({
+      error: '予算比較中にエラーが発生しました: ' + error.message,
       result: null
     }), {
       status: 500,
