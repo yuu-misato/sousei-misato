@@ -150,6 +150,25 @@
         }
         .page-header h1 { font-size: 1.5rem; color: var(--navy); }
         .page-header p { color: var(--gray); font-size: 0.9rem; }
+        .drive-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .drive-btn:hover {
+            background: var(--gray-lighter);
+            border-color: var(--gray);
+        }
 
         /* ===== Category Tabs ===== */
         .category-tabs {
@@ -422,6 +441,42 @@
         .template-btn:hover { background: var(--green); color: white; }
         .template-btn svg { width: 16px; height: 16px; }
 
+        .drive-folder-notice {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .drive-folder-notice p {
+            font-size: 0.9rem;
+            color: #2e7d32;
+            line-height: 1.6;
+        }
+        .drive-folder-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--gray-lighter);
+            border-radius: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .drive-folder-link:hover {
+            background: var(--navy);
+            color: white;
+        }
+        .drive-folder-link svg { width: 20px; height: 20px; }
+
         /* Toast */
         .toast {
             position: fixed;
@@ -559,6 +614,14 @@
                             <h1>会派アセット</h1>
                             <p>ロゴ・カラー・テンプレートなど会派で統一して使う素材集</p>
                         </div>
+                        <a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID" target="_blank" class="drive-btn">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path fill="#4285F4" d="M12 11l5.5 9.5H6.5L12 11z"/>
+                                <path fill="#34A853" d="M17.5 20.5l-5.5-9.5 5.5-9.5h5.5l-5.5 9.5 5.5 9.5h-5.5z"/>
+                                <path fill="#FBBC04" d="M6.5 20.5L1 11l5.5-9.5L12 11l-5.5 9.5z"/>
+                            </svg>
+                            Googleドライブを開く
+                        </a>
                     </div>
 
                     <!-- Category Tabs -->
@@ -755,6 +818,14 @@
 
                     <!-- Templates Section -->
                     <div class="asset-section" id="templates">
+                        <div class="drive-folder-notice">
+                            <svg viewBox="0 0 24 24" width="24" height="24">
+                                <path fill="#4285F4" d="M12 11l5.5 9.5H6.5L12 11z"/>
+                                <path fill="#34A853" d="M17.5 20.5l-5.5-9.5 5.5-9.5h5.5l-5.5 9.5 5.5 9.5h-5.5z"/>
+                                <path fill="#FBBC04" d="M6.5 20.5L1 11l5.5-9.5L12 11l-5.5 9.5z"/>
+                            </svg>
+                            <p>テンプレートはGoogleドライブで管理しています。<br>ドライブ上で直接コピー・編集できます。</p>
+                        </div>
                         <div class="template-list">
                             <div class="template-item">
                                 <div class="template-icon doc">
@@ -764,9 +835,9 @@
                                     <div class="template-name">一般質問原稿テンプレート</div>
                                     <div class="template-desc">議会での一般質問用の原稿フォーマット</div>
                                 </div>
-                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    取得
+                                <a href="https://docs.google.com/document/d/YOUR_DOC_ID/copy" target="_blank" class="template-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    開く
                                 </a>
                             </div>
                             <div class="template-item">
@@ -777,9 +848,9 @@
                                     <div class="template-name">政務活動費報告書</div>
                                     <div class="template-desc">月次の政務活動費精算用スプレッドシート</div>
                                 </div>
-                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    取得
+                                <a href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/copy" target="_blank" class="template-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    開く
                                 </a>
                             </div>
                             <div class="template-item">
@@ -790,9 +861,9 @@
                                     <div class="template-name">市政報告会スライド</div>
                                     <div class="template-desc">市民向け報告会用のプレゼンテーション</div>
                                 </div>
-                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    取得
+                                <a href="https://docs.google.com/presentation/d/YOUR_SLIDE_ID/copy" target="_blank" class="template-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    開く
                                 </a>
                             </div>
                             <div class="template-item">
@@ -803,12 +874,16 @@
                                     <div class="template-name">会派紹介リーフレット</div>
                                     <div class="template-desc">会派紹介用の配布資料（A4両面）</div>
                                 </div>
-                                <a href="#" class="template-btn" onclick="showToast('準備中です')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                    取得
+                                <a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank" class="template-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    開く
                                 </a>
                             </div>
                         </div>
+                        <a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID" target="_blank" class="drive-folder-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                            テンプレートフォルダを開く
+                        </a>
                     </div>
 
                     <!-- Photos Section -->
