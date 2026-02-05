@@ -2564,6 +2564,23 @@
             setPersonalDefaultDate();
             renderPersonalDashboard();
             renderPersonalExpenseTable();
+
+            // 保存された状態を復元
+            restoreSavedState();
+        }
+
+        function restoreSavedState() {
+            // アカウント状態を復元
+            const savedAccount = localStorage.getItem('budget_current_account');
+            if (savedAccount && ['seimu', 'tsumitate', 'personal'].includes(savedAccount)) {
+                switchAccount(savedAccount);
+            }
+
+            // タブ状態を復元（個人以外の場合のみ）
+            const savedTab = localStorage.getItem('budget_current_tab');
+            if (savedTab && savedAccount !== 'personal') {
+                switchTab(savedTab);
+            }
         }
 
         async function loadData() {
@@ -2756,11 +2773,14 @@
         // ===== Account Switching =====
         function switchAccount(account) {
             currentAccount = account;
+            localStorage.setItem('budget_current_account', account);
 
             document.querySelectorAll('.account-btn').forEach(btn => {
                 btn.classList.remove('active');
+                if (btn.getAttribute('onclick')?.includes(`'${account}'`)) {
+                    btn.classList.add('active');
+                }
             });
-            event.currentTarget.classList.add('active');
 
             // Show/hide tab navigation based on account
             const tabNav = document.querySelector('.tab-nav');
@@ -2817,10 +2837,17 @@
 
         // ===== Tab Switching =====
         function switchTab(tabId) {
+            localStorage.setItem('budget_current_tab', tabId);
+
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-            event.currentTarget.classList.add('active');
+            // Find and activate the correct tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.getAttribute('onclick')?.includes(`'${tabId}'`)) {
+                    btn.classList.add('active');
+                }
+            });
             document.getElementById('tab-' + tabId).classList.add('active');
 
             if (tabId === 'dashboard') {
