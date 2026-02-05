@@ -1641,7 +1641,7 @@ function renderLaws() {
     }
 
     listEl.innerHTML = results.map(law => `
-        <div class="result-item law-item" data-id="${law.id}" data-type="law">
+        <div class="result-item law-item" data-id="${law.id}" data-lawid="${law.lawId}" data-type="law">
             <div class="result-item-header">
                 <div class="result-item-title">${law.title}</div>
                 <span class="result-item-cat law">${law.category}</span>
@@ -1653,13 +1653,34 @@ function renderLaws() {
                 <p class="result-item-summary">${law.summary}</p>
                 <p class="result-item-meta">${law.lawNum}</p>
                 <div class="result-item-actions">
+                    ${law.hasFullText || law.fullText ? `
+                    <button class="action-btn view-law-btn" data-lawid="${law.lawId}" onclick="openLawModal('${law.lawId}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        本文を見る
+                    </button>
+                    ` : `
+                    <button class="action-btn view-law-btn" data-lawid="${law.lawId}" onclick="openLawModal('${law.lawId}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        本文を見る (API取得)
+                    </button>
+                    `}
                     <a href="${law.egov_url}" target="_blank" rel="noopener" class="action-btn law">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                             <polyline points="15 3 21 3 21 9"/>
                             <line x1="10" y1="14" x2="21" y2="3"/>
                         </svg>
-                        e-Govで全文を見る
+                        e-Gov
                     </a>
                 </div>
             </div>
@@ -1810,6 +1831,101 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
 });
 
+// ===== 法律モーダル =====
+const LAW_CACHE_KEY_PREFIX = 'law_fulltext_';
+const LAW_CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7日間
+
+async function openLawModal(lawId) {
+    const law = majorLawData.find(l => l.lawId === lawId);
+    if (!law) return;
+
+    document.getElementById('modalTitle').textContent = law.title;
+    document.getElementById('modalMeta').innerHTML = `<span>${law.category}</span><span>${law.lawNum}</span>`;
+    document.getElementById('modalExternalLink').href = law.egov_url;
+
+    // fullTextがある場合は即座に表示
+    if (law.fullText) {
+        document.getElementById('modalContent').innerHTML = law.fullText;
+        document.getElementById('modalFooterInfo').textContent = '事前取得済み';
+    } else {
+        // キャッシュをチェック
+        const cached = getLawCache(lawId);
+        if (cached) {
+            document.getElementById('modalContent').innerHTML = cached;
+            document.getElementById('modalFooterInfo').textContent = 'キャッシュから表示';
+        } else {
+            // ローディング表示
+            document.getElementById('modalContent').innerHTML = `
+                <div style="text-align:center;padding:3rem;">
+                    <div style="width:50px;height:50px;border:3px solid var(--gray-light);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem;"></div>
+                    <p style="color:var(--gray);">e-Gov法令APIから取得中...</p>
+                    <p style="color:var(--gray);font-size:0.85rem;margin-top:0.5rem;">大きな法律は数秒かかる場合があります</p>
+                </div>
+                <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+            `;
+
+            // APIから取得
+            try {
+                const content = await getLawContent(lawId);
+                if (content) {
+                    document.getElementById('modalContent').innerHTML = content;
+                    setLawCache(lawId, content);
+                    document.getElementById('modalFooterInfo').textContent = 'e-Gov APIから取得';
+                } else {
+                    document.getElementById('modalContent').innerHTML = `
+                        <div style="text-align:center;padding:3rem;">
+                            <p style="color:#dc2626;margin-bottom:1rem;">法令本文の取得に失敗しました</p>
+                            <a href="${law.egov_url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--law-green);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                                e-Gov法令検索で見る
+                            </a>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('法令取得エラー:', error);
+                document.getElementById('modalContent').innerHTML = `
+                    <div style="text-align:center;padding:3rem;">
+                        <p style="color:#dc2626;margin-bottom:1rem;">エラー: ${escapeHtml(error.message)}</p>
+                        <a href="${law.egov_url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--law-green);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                            e-Gov法令検索で見る
+                        </a>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function getLawCache(lawId) {
+    try {
+        const cached = localStorage.getItem(LAW_CACHE_KEY_PREFIX + lawId);
+        if (!cached) return null;
+        const { content, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp > LAW_CACHE_DURATION) {
+            localStorage.removeItem(LAW_CACHE_KEY_PREFIX + lawId);
+            return null;
+        }
+        return content;
+    } catch (e) {
+        return null;
+    }
+}
+
+function setLawCache(lawId, content) {
+    try {
+        localStorage.setItem(LAW_CACHE_KEY_PREFIX + lawId, JSON.stringify({
+            content,
+            timestamp: Date.now()
+        }));
+    } catch (e) {
+        console.warn('キャッシュ保存に失敗:', e);
+    }
+}
+
 // ===== AI Assistant =====
 // APIエンドポイント（Cloudflare Worker）
 const AI_API_ENDPOINT = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
@@ -1919,6 +2035,14 @@ async function askGemini(question) {
 ${o.fullText ? '本文: ' + o.fullText.replace(/<[^>]*>/g, '').substring(0, 2000) : ''}
 ---`).join('\n');
 
+    // 関連する国の法律を検索
+    const relevantLaws = findRelevantLaws(question);
+    const lawContext = relevantLaws.map(l => `
+【${l.title}】（${l.lawNum}）
+概要: ${l.summary}
+${l.fullText ? '主要条文: ' + l.fullText.replace(/<[^>]*>/g, '').substring(0, 3000) : ''}
+---`).join('\n');
+
     // Cloudflare Worker経由でAPIを呼び出し
     const response = await fetch(AI_API_ENDPOINT, {
         method: 'POST',
@@ -1927,7 +2051,8 @@ ${o.fullText ? '本文: ' + o.fullText.replace(/<[^>]*>/g, '').substring(0, 2000
         },
         body: JSON.stringify({
             question: question,
-            ordinanceContext: ordinanceContext
+            ordinanceContext: ordinanceContext,
+            lawContext: lawContext
         })
     });
 
@@ -2038,6 +2163,90 @@ function findRelevantOrdinances(question) {
     }
 
     return relevant.slice(0, 10);
+}
+
+// 関連する国の法律を検索
+function findRelevantLaws(question) {
+    const q = question.toLowerCase();
+
+    // 法律関連のキーワードマッピング
+    const lawKeywordMap = {
+        '地方自治': ['地方自治法', '地方公務員法'],
+        '自治': ['地方自治法'],
+        '議会': ['地方自治法'],
+        '議員': ['地方自治法', '公職選挙法'],
+        '選挙': ['公職選挙法', '地方自治法'],
+        '公務員': ['地方公務員法'],
+        '職員': ['地方公務員法'],
+        '給与': ['地方公務員法'],
+        '税': ['地方税法'],
+        '固定資産税': ['地方税法'],
+        '住民税': ['地方税法'],
+        '財政': ['地方財政法', '地方交付税法'],
+        '予算': ['地方財政法', '地方自治法'],
+        '福祉': ['社会福祉法', '児童福祉法'],
+        '児童': ['児童福祉法'],
+        '子ども': ['児童福祉法'],
+        '保育': ['児童福祉法'],
+        '介護': ['介護保険法'],
+        '要介護': ['介護保険法'],
+        '国保': ['国民健康保険法'],
+        '国民健康保険': ['国民健康保険法'],
+        '生活保護': ['生活保護法'],
+        '障害': ['障害者基本法'],
+        '都市計画': ['都市計画法'],
+        '用途地域': ['都市計画法'],
+        '開発許可': ['都市計画法'],
+        '建築': ['建築基準法'],
+        '建蔽率': ['建築基準法'],
+        '容積率': ['建築基準法'],
+        '道路': ['道路法'],
+        '環境': ['環境基本法'],
+        '廃棄物': ['廃棄物の処理及び清掃に関する法律'],
+        'ごみ': ['廃棄物の処理及び清掃に関する法律'],
+        '行政手続': ['行政手続法'],
+        '不服審査': ['行政不服審査法'],
+        '情報公開': ['行政機関の保有する情報の公開に関する法律'],
+        '個人情報': ['個人情報の保護に関する法律'],
+        '教育': ['教育基本法', '学校教育法', '地方教育行政の組織及び運営に関する法律'],
+        '学校': ['学校教育法'],
+        '教育委員会': ['地方教育行政の組織及び運営に関する法律'],
+        '消防': ['消防法', '消防組織法'],
+        '火災': ['消防法'],
+        '災害': ['災害対策基本法'],
+        '防災': ['災害対策基本法'],
+        '条例': ['地方自治法'],
+        '規則': ['地方自治法'],
+    };
+
+    // マッチする法律タイトルを収集
+    const matchedTitles = new Set();
+
+    Object.entries(lawKeywordMap).forEach(([keyword, titles]) => {
+        if (q.includes(keyword)) {
+            titles.forEach(t => matchedTitles.add(t));
+        }
+    });
+
+    // majorLawDataからマッチする法律を抽出
+    const relevantLaws = majorLawData.filter(law => {
+        // タイトルでマッチ
+        if (matchedTitles.has(law.title)) return true;
+
+        // キーワードでマッチ
+        if (law.keywords && law.keywords.some(kw => q.includes(kw.toLowerCase()))) return true;
+
+        return false;
+    });
+
+    // fullTextがある法律を優先してソート
+    relevantLaws.sort((a, b) => {
+        if (a.fullText && !b.fullText) return -1;
+        if (!a.fullText && b.fullText) return 1;
+        return 0;
+    });
+
+    return relevantLaws.slice(0, 5); // 最大5件
 }
 
 function formatAiResponse(text) {

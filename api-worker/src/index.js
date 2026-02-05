@@ -27,7 +27,7 @@ export default {
 
     try {
       const body = await request.json();
-      const { question, ordinanceContext } = body;
+      const { question, ordinanceContext, lawContext } = body;
 
       if (!question) {
         return new Response(JSON.stringify({ error: '質問が必要です' }), {
@@ -45,16 +45,20 @@ export default {
         });
       }
 
-      const systemPrompt = `あなたは三郷市の条例に詳しいアシスタントです。
-ユーザーの質問に対して、以下の条例データを参照しながら、わかりやすく回答してください。
+      const systemPrompt = `あなたは三郷市の条例と国の法律に詳しいアシスタントです。
+ユーザーの質問に対して、以下の条例データと法律データを参照しながら、わかりやすく回答してください。
 
-【利用可能な条例データ】
+【三郷市の条例データ】
 ${ordinanceContext || '条例データが提供されていません'}
 
+【関連する国の法律】
+${lawContext || '関連する法律データがありません'}
+
 【回答のルール】
-- 条例に基づいた正確な情報を提供してください
-- 該当する条例名と条文を明示してください
-- 条例に記載がない場合は「該当する規定が見つかりません」と回答してください
+- 三郷市の条例と国の法律の両方を適切に参照してください
+- 条例は国の法律（地方自治法など）に基づいて制定されているため、その関係性も説明してください
+- 該当する条例名・法律名と条文番号を明示してください
+- 条例・法律に記載がない場合は「該当する規定が見つかりません」と回答してください
 - 法律の専門家ではないことを明記し、重要な判断は専門家への相談を推奨してください`;
 
       const geminiResponse = await fetch(
