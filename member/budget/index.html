@@ -1336,6 +1336,86 @@
             background: #fef3c7;
         }
 
+        /* ===== Quick Deposit Mini Modal ===== */
+        .quick-deposit-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .quick-deposit-overlay.open {
+            display: flex;
+        }
+        .quick-deposit-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            width: 90%;
+            max-width: 320px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .quick-deposit-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .quick-deposit-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .quick-deposit-row label {
+            flex: 0 0 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+        }
+        .quick-deposit-row input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .quick-deposit-row input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        .quick-deposit-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .quick-deposit-buttons button {
+            flex: 1;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+        }
+        .quick-deposit-buttons .btn-cancel {
+            background: var(--gray-lighter);
+            color: var(--gray);
+        }
+        .quick-deposit-buttons .btn-submit {
+            background: var(--green);
+            color: white;
+        }
+
         /* ===== Personal Budget ===== */
         .personal-header {
             text-align: center;
@@ -2289,6 +2369,25 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <!-- Quick Deposit Mini Modal (for member card click) -->
+    <div class="quick-deposit-overlay" id="quickDepositModal">
+        <div class="quick-deposit-modal">
+            <div class="quick-deposit-title" id="quickDepositTitle">入金を登録</div>
+            <div class="quick-deposit-row">
+                <label>日付</label>
+                <input type="date" id="quickDepositDate">
+            </div>
+            <div class="quick-deposit-row">
+                <label>金額</label>
+                <input type="number" id="quickDepositAmount" value="10000">
+            </div>
+            <div class="quick-deposit-buttons">
+                <button class="btn-cancel" onclick="closeQuickDepositModal()">キャンセル</button>
+                <button class="btn-submit" onclick="submitQuickDeposit()">入金</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Deposit Modal -->
     <div class="deposit-modal-overlay" id="depositModal">
         <div class="deposit-modal">
@@ -2789,7 +2888,7 @@
             checklist.innerHTML = FACTION_MEMBERS.map(member => {
                 const isPaid = paidMembers.has(member);
                 const memberDeposit = monthDeposits.find(d => d.depositor === member);
-                const tooltip = isPaid ? 'クリックで取消' : `クリックで${formatCurrency(DEFAULT_DEPOSIT_AMOUNT)}入金`;
+                const tooltip = isPaid ? 'クリックで取消' : 'クリックで入金登録';
                 return `
                     <div class="deposit-member-card ${isPaid ? 'paid' : ''}"
                          onclick="toggleMemberDeposit('${member}', ${isPaid})"
@@ -2815,51 +2914,91 @@
         }
 
         // メンバーの入金状態を切り替え
-        async function toggleMemberDeposit(member, isPaid) {
+        let quickDepositMember = '';
+
+        function toggleMemberDeposit(member, isPaid) {
             if (isPaid) {
                 // 入金済み → 取り消し確認
-                if (!confirm(`${member}さんの入金を取り消しますか？`)) return;
-
-                const monthDeposits = deposits.filter(d =>
-                    d.date && d.date.startsWith(currentDepositMonth) && d.depositor === member
-                );
-
-                for (const deposit of monthDeposits) {
-                    await deleteDeposit(deposit.id);
-                    const idx = deposits.findIndex(d => d.id === deposit.id);
-                    if (idx !== -1) deposits.splice(idx, 1);
-                }
-
-                showToast('入金を取り消しました', 'success');
+                cancelMemberDeposit(member);
             } else {
-                // 未入金 → 入金登録
-                const [year, month] = currentDepositMonth.split('-').map(Number);
-                const date = `${currentDepositMonth}-01`; // 月初日で登録
+                // 未入金 → ミニモーダルを開く
+                openQuickDepositModal(member);
+            }
+        }
 
-                const deposit = {
-                    date: date,
-                    depositor: member,
-                    amount: DEFAULT_DEPOSIT_AMOUNT,
-                    note: `${month}月分`
-                };
+        async function cancelMemberDeposit(member) {
+            if (!confirm(`${member}さんの入金を取り消しますか？`)) return;
 
-                const saved = await saveDeposit(deposit);
-                if (saved) {
-                    deposits.unshift({
-                        id: saved.id,
-                        date: saved.date,
-                        depositor: saved.depositor || '',
-                        amount: saved.amount,
-                        note: saved.note || '',
-                        createdAt: saved.created_at
-                    });
-                    showToast(`${member}さんの入金を登録しました`, 'success');
-                }
+            const monthDeposits = deposits.filter(d =>
+                d.date && d.date.startsWith(currentDepositMonth) && d.depositor === member
+            );
+
+            for (const deposit of monthDeposits) {
+                await deleteDeposit(deposit.id);
+                const idx = deposits.findIndex(d => String(d.id) === String(deposit.id));
+                if (idx !== -1) deposits.splice(idx, 1);
             }
 
+            showToast('入金を取り消しました', 'success');
             renderDepositChecklist();
             renderDashboard();
         }
+
+        function openQuickDepositModal(member) {
+            quickDepositMember = member;
+            document.getElementById('quickDepositTitle').textContent = `${member}さんの入金`;
+            // 今日の日付をデフォルトに
+            document.getElementById('quickDepositDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('quickDepositAmount').value = DEFAULT_DEPOSIT_AMOUNT;
+            document.getElementById('quickDepositModal').classList.add('open');
+        }
+
+        function closeQuickDepositModal() {
+            document.getElementById('quickDepositModal').classList.remove('open');
+            quickDepositMember = '';
+        }
+
+        async function submitQuickDeposit() {
+            const date = document.getElementById('quickDepositDate').value;
+            const amount = parseInt(document.getElementById('quickDepositAmount').value);
+            const [year, month] = currentDepositMonth.split('-').map(Number);
+
+            if (!date || !amount || amount <= 0) {
+                showToast('日付と金額を入力してください', 'error');
+                return;
+            }
+
+            const deposit = {
+                date: date,
+                depositor: quickDepositMember,
+                amount: amount,
+                note: `${month}月分`
+            };
+
+            const saved = await saveDeposit(deposit);
+            if (saved) {
+                deposits.unshift({
+                    id: saved.id,
+                    date: saved.date,
+                    depositor: saved.depositor || '',
+                    amount: saved.amount,
+                    note: saved.note || '',
+                    createdAt: saved.created_at
+                });
+                closeQuickDepositModal();
+                renderDepositChecklist();
+                renderDashboard();
+                showToast(`${quickDepositMember}さんの入金を登録しました`, 'success');
+            }
+        }
+
+        // ミニモーダル外クリックで閉じる
+        document.addEventListener('click', (e) => {
+            const quickModal = document.getElementById('quickDepositModal');
+            if (e.target === quickModal) {
+                closeQuickDepositModal();
+            }
+        });
 
         // 入金履歴パネルを表示/非表示
         function toggleDepositHistory() {
