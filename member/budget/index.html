@@ -1830,11 +1830,11 @@
                         <div class="deposit-header">
                             <span class="deposit-title">月次積立金</span>
                             <div class="deposit-month-nav">
-                                <button onclick="changeDepositMonth(-1)" title="前月">
+                                <button type="button" onclick="changeDepositMonth(-1, event)" title="前月">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
                                 </button>
                                 <span class="deposit-month-label" id="depositMonthLabel">2026年2月</span>
-                                <button onclick="changeDepositMonth(1)" title="翌月">
+                                <button type="button" onclick="changeDepositMonth(1, event)" title="翌月">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
                                 </button>
                             </div>
@@ -2867,10 +2867,14 @@
         }
 
         // 積立月を変更
-        function changeDepositMonth(delta) {
+        function changeDepositMonth(delta, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
             const [year, month] = currentDepositMonth.split('-').map(Number);
-            const date = new Date(year, month - 1 + delta, 1);
-            currentDepositMonth = date.toISOString().slice(0, 7);
+            const newDate = new Date(year, month - 1 + delta, 1);
+            currentDepositMonth = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, '0')}`;
             renderDepositChecklist();
         }
 
@@ -2962,20 +2966,30 @@
             const date = document.getElementById('quickDepositDate').value;
             const amount = parseInt(document.getElementById('quickDepositAmount').value);
             const [year, month] = currentDepositMonth.split('-').map(Number);
+            const member = quickDepositMember; // 先に保存
 
             if (!date || !amount || amount <= 0) {
                 showToast('日付と金額を入力してください', 'error');
                 return;
             }
 
+            if (!member) {
+                showToast('入金者が指定されていません', 'error');
+                return;
+            }
+
             const deposit = {
                 date: date,
-                depositor: quickDepositMember,
+                depositor: member,
                 amount: amount,
                 note: `${month}月分`
             };
 
+            console.log('Saving deposit:', deposit); // デバッグ用
+
             const saved = await saveDeposit(deposit);
+            console.log('Save result:', saved); // デバッグ用
+
             if (saved) {
                 deposits.unshift({
                     id: saved.id,
@@ -2988,7 +3002,7 @@
                 closeQuickDepositModal();
                 renderDepositChecklist();
                 renderDashboard();
-                showToast(`${quickDepositMember}さんの入金を登録しました`, 'success');
+                showToast(`${member}さんの入金を登録しました`, 'success');
             }
         }
 
