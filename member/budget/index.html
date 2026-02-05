@@ -1032,29 +1032,166 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
         .deposit-title {
             font-weight: 700;
             color: #92400e;
+            font-size: 1.1rem;
         }
-        .deposit-form {
+        .deposit-month-nav {
             display: flex;
-            gap: 1rem;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .deposit-month-nav button {
+            background: rgba(255,255,255,0.7);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .deposit-month-nav button:hover {
+            background: var(--white);
+        }
+        .deposit-month-nav button svg {
+            width: 16px;
+            height: 16px;
+            color: #92400e;
+        }
+        .deposit-month-label {
+            font-weight: 700;
+            color: #92400e;
+            min-width: 100px;
+            text-align: center;
+        }
+        .deposit-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        .deposit-member-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .deposit-member-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .deposit-member-card.paid {
+            border-color: var(--green);
+            background: #f0fdf4;
+        }
+        .deposit-member-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .deposit-member-check.checked {
+            background: var(--green);
+            border-color: var(--green);
+        }
+        .deposit-member-check svg {
+            width: 14px;
+            height: 14px;
+            color: white;
+        }
+        .deposit-member-info {
+            flex: 1;
+        }
+        .deposit-member-name {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 0.9rem;
+            display: block;
+        }
+        .deposit-member-amount {
+            font-size: 0.75rem;
+            color: var(--green-dark);
+            display: block;
+            margin-top: 0.15rem;
+        }
+        .deposit-member-status {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .deposit-member-card.paid .deposit-member-status {
+            color: var(--green-dark);
+        }
+        .deposit-amount-badge {
+            background: var(--gray-lighter);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        .deposit-member-card.paid .deposit-amount-badge {
+            background: #dcfce7;
+            color: var(--green-dark);
+        }
+        .deposit-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(146,64,14,0.2);
             flex-wrap: wrap;
+            gap: 0.5rem;
         }
-        .deposit-form input {
-            padding: 0.6rem 1rem;
-            border: 1px solid #fcd34d;
+        .deposit-summary-text {
+            color: #92400e;
+            font-size: 0.9rem;
+        }
+        .deposit-summary-text strong {
+            font-size: 1.1rem;
+        }
+        .deposit-history-toggle {
+            background: rgba(255,255,255,0.7);
+            border: none;
+            padding: 0.4rem 0.8rem;
             border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #92400e;
+            cursor: pointer;
+            transition: background 0.2s;
             font-family: inherit;
+        }
+        .deposit-history-toggle:hover {
             background: var(--white);
         }
-        .deposit-form select {
-            padding: 0.6rem 1rem;
-            border: 1px solid #fcd34d;
-            border-radius: 6px;
-            font-family: inherit;
+        .deposit-history-panel {
+            display: none;
+            margin-top: 1rem;
             background: var(--white);
+            border-radius: 10px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .deposit-history-panel.open {
+            display: block;
         }
 
         /* ===== Personal Budget ===== */
@@ -1466,26 +1603,34 @@
                             <div class="stat-sub">現在</div>
                         </div>
                     </div>
-                    <!-- Deposit Input -->
+                    <!-- Monthly Deposit Checklist -->
                     <div class="deposit-section">
                         <div class="deposit-header">
-                            <span class="deposit-title">積立金を追加</span>
+                            <span class="deposit-title">月次積立金</span>
+                            <div class="deposit-month-nav">
+                                <button onclick="changeDepositMonth(-1)" title="前月">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                                </button>
+                                <span class="deposit-month-label" id="depositMonthLabel">2026年2月</span>
+                                <button onclick="changeDepositMonth(1)" title="翌月">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                                </button>
+                            </div>
                         </div>
-                        <div class="deposit-form">
-                            <input type="date" id="depositDate">
-                            <select id="depositDepositor" style="width:120px;">
-                                <option value="">メンバー</option>
-                                <option value="佐藤裕之">佐藤裕之</option>
-                                <option value="高橋誠一">高橋誠一</option>
-                                <option value="日髙千穂">日髙千穂</option>
-                                <option value="鈴木優作">鈴木優作</option>
-                            </select>
-                            <input type="number" id="depositAmount" placeholder="金額（例: 10000）" style="width:120px;">
-                            <input type="text" id="depositNote" placeholder="メモ（任意）" style="flex:1;min-width:100px;">
-                            <button class="btn btn-primary btn-sm" onclick="addDeposit()">追加</button>
+                        <div class="deposit-checklist" id="depositChecklist">
+                            <!-- Rendered by JS -->
                         </div>
-                        <!-- Deposit History -->
-                        <div id="depositHistory" class="deposit-history" style="margin-top:1rem;max-height:200px;overflow-y:auto;"></div>
+                        <div class="deposit-summary">
+                            <span class="deposit-summary-text">
+                                <strong id="depositPaidCount">0/4人</strong> 入金済み・計 <strong id="depositMonthTotal">¥0</strong>
+                            </span>
+                            <button class="deposit-history-toggle" onclick="toggleDepositHistory()">
+                                履歴を表示
+                            </button>
+                        </div>
+                        <div class="deposit-history-panel" id="depositHistoryPanel">
+                            <div id="depositHistoryContent"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -2070,6 +2215,11 @@
         let personalExpenses = [];
         let currentPersonalMember = '佐藤裕之';
 
+        // 積立金チェックリスト用
+        const FACTION_MEMBERS = ['佐藤裕之', '高橋誠一', '日髙千穂', '鈴木優作'];
+        const DEFAULT_DEPOSIT_AMOUNT = 10000;
+        let currentDepositMonth = new Date().toISOString().slice(0, 7); // YYYY-MM形式
+
         // ===== Authentication =====
         async function hashPassword(password) {
             const encoder = new TextEncoder();
@@ -2283,6 +2433,22 @@
             }
         }
 
+        async function deleteDeposit(id) {
+            try {
+                const { error } = await supabaseClient
+                    .from('deposits')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+                return true;
+            } catch (error) {
+                console.error('Error deleting deposit:', error);
+                showToast('積立金の削除に失敗しました', 'error');
+                return false;
+            }
+        }
+
         // Legacy functions for compatibility
         function saveExpenses() {
             // Now handled by individual save functions
@@ -2399,48 +2565,118 @@
             document.getElementById('tsumitateUsed').textContent = formatCurrency(tsumitateUsed);
             document.getElementById('tsumitateRemaining').textContent = formatCurrency(tsumitateRemaining);
 
-            // Set deposit date default
-            document.getElementById('depositDate').value = new Date().toISOString().split('T')[0];
-
-            renderDepositHistory();
+            // 積立金チェックリストをレンダリング
+            renderDepositChecklist();
             renderCategoryChart();
             renderMonthlyChart();
         }
 
-        async function addDeposit() {
-            const date = document.getElementById('depositDate').value;
-            const depositor = document.getElementById('depositDepositor').value;
-            const amount = parseInt(document.getElementById('depositAmount').value);
-            const note = document.getElementById('depositNote').value;
+        // 積立月を変更
+        function changeDepositMonth(delta) {
+            const [year, month] = currentDepositMonth.split('-').map(Number);
+            const date = new Date(year, month - 1 + delta, 1);
+            currentDepositMonth = date.toISOString().slice(0, 7);
+            renderDepositChecklist();
+        }
 
-            if (!date || !depositor || !amount || amount <= 0) {
-                showToast('日付、入金者、金額を入力してください', 'error');
-                return;
+        // 積立金チェックリストをレンダリング
+        function renderDepositChecklist() {
+            const [year, month] = currentDepositMonth.split('-').map(Number);
+            document.getElementById('depositMonthLabel').textContent = `${year}年${month}月`;
+
+            const checklist = document.getElementById('depositChecklist');
+
+            // 選択された月の入金状況を取得
+            const monthDeposits = deposits.filter(d => d.date && d.date.startsWith(currentDepositMonth));
+            const paidMembers = new Set(monthDeposits.map(d => d.depositor));
+
+            checklist.innerHTML = FACTION_MEMBERS.map(member => {
+                const isPaid = paidMembers.has(member);
+                const memberDeposit = monthDeposits.find(d => d.depositor === member);
+                return `
+                    <div class="deposit-member-card ${isPaid ? 'paid' : ''}"
+                         onclick="toggleMemberDeposit('${member}', ${isPaid})">
+                        <div class="deposit-member-check ${isPaid ? 'checked' : ''}">
+                            ${isPaid ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+                        </div>
+                        <div class="deposit-member-info">
+                            <span class="deposit-member-name">${escapeHtml(member)}</span>
+                            ${isPaid ? `<span class="deposit-member-amount">${formatCurrency(memberDeposit.amount)}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // サマリーを更新
+            const paidCount = paidMembers.size;
+            const totalMembers = FACTION_MEMBERS.length;
+            const monthTotal = monthDeposits.reduce((sum, d) => sum + d.amount, 0);
+
+            document.getElementById('depositPaidCount').textContent = `${paidCount}/${totalMembers}人`;
+            document.getElementById('depositMonthTotal').textContent = formatCurrency(monthTotal);
+        }
+
+        // メンバーの入金状態を切り替え
+        async function toggleMemberDeposit(member, isPaid) {
+            if (isPaid) {
+                // 入金済み → 取り消し確認
+                if (!confirm(`${member}さんの入金を取り消しますか？`)) return;
+
+                const monthDeposits = deposits.filter(d =>
+                    d.date && d.date.startsWith(currentDepositMonth) && d.depositor === member
+                );
+
+                for (const deposit of monthDeposits) {
+                    await deleteDeposit(deposit.id);
+                    const idx = deposits.findIndex(d => d.id === deposit.id);
+                    if (idx !== -1) deposits.splice(idx, 1);
+                }
+
+                showToast('入金を取り消しました', 'success');
+            } else {
+                // 未入金 → 入金登録
+                const [year, month] = currentDepositMonth.split('-').map(Number);
+                const date = `${currentDepositMonth}-01`; // 月初日で登録
+
+                const deposit = {
+                    date: date,
+                    depositor: member,
+                    amount: DEFAULT_DEPOSIT_AMOUNT,
+                    note: `${month}月分`
+                };
+
+                const saved = await saveDeposit(deposit);
+                if (saved) {
+                    deposits.unshift({
+                        id: saved.id,
+                        date: saved.date,
+                        depositor: saved.depositor || '',
+                        amount: saved.amount,
+                        note: saved.note || '',
+                        createdAt: saved.created_at
+                    });
+                    showToast(`${member}さんの入金を登録しました`, 'success');
+                }
             }
 
-            const deposit = { date, depositor, amount, note };
-            const saved = await saveDeposit(deposit);
+            renderDepositChecklist();
+            renderDashboard();
+        }
 
-            if (saved) {
-                deposits.unshift({
-                    id: saved.id,
-                    date: saved.date,
-                    depositor: saved.depositor || '',
-                    amount: saved.amount,
-                    note: saved.note || '',
-                    createdAt: saved.created_at
-                });
+        // 入金履歴パネルを表示/非表示
+        function toggleDepositHistory() {
+            const panel = document.getElementById('depositHistoryPanel');
+            const isOpen = panel.classList.contains('open');
+            panel.classList.toggle('open');
 
-                document.getElementById('depositAmount').value = '';
-                document.getElementById('depositNote').value = '';
-                document.getElementById('depositDepositor').value = '';
-                renderDashboard();
-                showToast('積立金を追加しました', 'success');
+            if (!isOpen) {
+                renderDepositHistoryTable();
             }
         }
 
-        function renderDepositHistory() {
-            const container = document.getElementById('depositHistory');
+        // 入金履歴テーブルをレンダリング
+        function renderDepositHistoryTable() {
+            const container = document.getElementById('depositHistoryContent');
             if (deposits.length === 0) {
                 container.innerHTML = '<p style="color:var(--gray);font-size:0.85rem;text-align:center;padding:1rem;">入金履歴はありません</p>';
                 return;
@@ -2454,6 +2690,7 @@
                             <th style="padding:0.4rem;text-align:left;">入金者</th>
                             <th style="padding:0.4rem;text-align:right;">金額</th>
                             <th style="padding:0.4rem;text-align:left;">メモ</th>
+                            <th style="padding:0.4rem;text-align:center;">操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2463,11 +2700,33 @@
                                 <td style="padding:0.4rem;">${escapeHtml(d.depositor || '-')}</td>
                                 <td style="padding:0.4rem;text-align:right;">${formatCurrency(d.amount)}</td>
                                 <td style="padding:0.4rem;color:var(--gray);">${escapeHtml(d.note || '')}</td>
+                                <td style="padding:0.4rem;text-align:center;">
+                                    <button onclick="deleteDepositById(${d.id})" style="background:none;border:none;color:var(--red);cursor:pointer;padding:0.25rem;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                    </button>
+                                </td>
                             </tr>
                         `).join('')}
                     </tbody>
                 </table>
             `;
+        }
+
+        // 入金を削除（IDで指定）
+        async function deleteDepositById(id) {
+            if (!confirm('この入金を削除しますか？')) return;
+
+            await deleteDeposit(id);
+            const idx = deposits.findIndex(d => d.id === id);
+            if (idx !== -1) deposits.splice(idx, 1);
+
+            renderDepositChecklist();
+            renderDepositHistoryTable();
+            renderDashboard();
+            showToast('入金を削除しました', 'success');
         }
 
         function renderCategoryChart() {
