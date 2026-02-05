@@ -2019,34 +2019,62 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('AI解析に失敗しました');
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || 'AI解析に失敗しました');
                 }
 
                 const result = await response.json();
 
+                // Check for error response from API
+                if (result.error) {
+                    showToast('AI解析エラー: ' + result.error, 'error');
+                    return;
+                }
+
                 if (result.receiptData) {
-                    // Fill form with AI results
+                    let filledFields = [];
+                    let missingFields = [];
+
+                    // Fill form with AI results, tracking what was filled
                     if (result.receiptData.date) {
                         document.getElementById('expenseDate').value = result.receiptData.date;
+                        filledFields.push('日付');
+                    } else {
+                        missingFields.push('日付');
                     }
-                    if (result.receiptData.amount) {
+
+                    if (result.receiptData.amount && result.receiptData.amount > 0) {
                         document.getElementById('expenseAmount').value = result.receiptData.amount;
+                        filledFields.push('金額');
+                    } else {
+                        missingFields.push('金額');
                     }
+
                     if (result.receiptData.description) {
                         document.getElementById('expenseDescription').value = result.receiptData.description;
+                        filledFields.push('摘要');
                     }
+
                     if (result.receiptData.category) {
                         document.getElementById('expenseCategory').value = result.receiptData.category;
+                        filledFields.push('カテゴリ');
                     }
+
                     if (result.receiptData.note) {
                         document.getElementById('expenseNote').value = result.receiptData.note;
                     }
+
                     // Suggest account type
                     if (result.receiptData.suggestedAccount) {
                         setFormAccount(result.receiptData.suggestedAccount);
                     }
 
-                    showToast('領収書を読み取りました。内容を確認してください', 'success');
+                    // Show appropriate message
+                    if (missingFields.length > 0) {
+                        showToast(`読み取り完了。${missingFields.join('、')}は手動入力してください`, 'warning');
+                    } else {
+                        showToast('領収書を読み取りました。内容を確認してください', 'success');
+                    }
                 } else {
                     showToast('領収書の読み取りに失敗しました。手動で入力してください', 'error');
                 }

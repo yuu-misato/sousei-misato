@@ -182,6 +182,18 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
     const mimeType = matches[1];
     const imageData = matches[2];
 
+    // MIME Type検証
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
+    if (!allowedTypes.includes(mimeType)) {
+      return new Response(JSON.stringify({
+        error: `サポートされていない画像形式です: ${mimeType}`,
+        receiptData: null
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     // Gemini Vision APIを呼び出し
     const geminiResponse = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
@@ -230,7 +242,7 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
     if (!jsonMatch) {
       console.error('Failed to extract JSON from response:', responseText);
       return new Response(JSON.stringify({
-        error: 'データの抽出に失敗しました',
+        error: 'データの抽出に失敗しました。領収書が読み取れませんでした。',
         receiptData: null
       }), {
         status: 500,
@@ -238,7 +250,19 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
       });
     }
 
-    const receiptData = JSON.parse(jsonMatch[0]);
+    let receiptData;
+    try {
+      receiptData = JSON.parse(jsonMatch[0]);
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError, 'Raw:', jsonMatch[0]);
+      return new Response(JSON.stringify({
+        error: 'レスポンス形式が無効です。再度お試しください。',
+        receiptData: null
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     // データの検証と補正
     if (!receiptData.date || !/^\d{4}-\d{2}-\d{2}$/.test(receiptData.date)) {
