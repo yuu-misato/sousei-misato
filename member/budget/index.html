@@ -1087,7 +1087,7 @@
             <div class="header-inner">
                 <a href="/member/" class="header-logo">
                     <div class="header-logo-icon">
-                        <img src="/member/images/logo.svg" alt="Logo">
+                        <img src="/member/images/logo.png" alt="Logo">
                     </div>
                     <span class="header-logo-text">創政MISATO</span>
                 </a>
@@ -1238,7 +1238,7 @@
                                 <option value="">メンバー</option>
                                 <option value="佐藤裕之">佐藤裕之</option>
                                 <option value="高橋誠一">高橋誠一</option>
-                                <option value="日高ちほ">日高ちほ</option>
+                                <option value="日髙千穂">日髙千穂</option>
                                 <option value="鈴木優作">鈴木優作</option>
                             </select>
                             <input type="number" id="depositAmount" placeholder="金額（例: 10000）" style="width:120px;">
@@ -1454,8 +1454,8 @@
                                 <span style="color:var(--gray);font-size:0.85rem;">円</span>
                             </div>
                             <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
-                                <label style="width:100px;font-weight:500;">日高ちほ</label>
-                                <input type="number" class="form-input" id="personalBudget_日高ちほ" placeholder="408000" min="0" style="flex:1;">
+                                <label style="width:100px;font-weight:500;">日髙千穂</label>
+                                <input type="number" class="form-input" id="personalBudget_日髙千穂" placeholder="408000" min="0" style="flex:1;">
                                 <span style="color:var(--gray);font-size:0.85rem;">円</span>
                             </div>
                             <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
@@ -1527,7 +1527,7 @@
                         <select id="personalMember" onchange="switchPersonalMember()">
                             <option value="佐藤裕之">佐藤裕之</option>
                             <option value="高橋誠一">高橋誠一</option>
-                            <option value="日高ちほ">日高ちほ</option>
+                            <option value="日髙千穂">日髙千穂</option>
                             <option value="鈴木優作">鈴木優作</option>
                         </select>
                     </div>
@@ -1646,7 +1646,7 @@
             <div class="footer-inner">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="/member/images/logo.svg" alt="創政MISATO">
+                        <img src="/member/images/logo.png" alt="創政MISATO">
                         <span class="footer-logo-text">創政MISATO</span>
                     </div>
                     <p class="footer-tagline">三郷市議会 会派<br>市民とともに創る、新しい政治のかたち</p>
@@ -2623,7 +2623,7 @@
             document.getElementById('settingTsumitateInitial').value = budgetConfig.tsumitateInitial || 0;
 
             // Render personal budget settings
-            const members = ['佐藤裕之', '高橋誠一', '日高ちほ', '鈴木優作'];
+            const members = ['佐藤裕之', '高橋誠一', '日髙千穂', '鈴木優作'];
             members.forEach(member => {
                 const input = document.getElementById(`personalBudget_${member}`);
                 if (input) {
@@ -2656,7 +2656,7 @@
         }
 
         async function savePersonalBudgetSettings() {
-            const members = ['佐藤裕之', '高橋誠一', '日高ちほ', '鈴木優作'];
+            const members = ['佐藤裕之', '高橋誠一', '日髙千穂', '鈴木優作'];
 
             try {
                 for (const member of members) {
