@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条例AIレビュー | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --orange: #f59e0b;
+            --orange-light: #fbbf24;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --red: #ef4444;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+
+        /* ===== Header ===== */
+        #mainContent { display: none; }
+
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .header-logo-icon { width: 40px; height: 40px; }
+        .header-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .header-logo-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .header-nav a {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .header-nav a:hover {
+            background: var(--gray-lighter);
+            color: var(--text);
+        }
+
+        /* ===== Main Content ===== */
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 1rem 2rem;
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Analysis Card ===== */
+        .analysis-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--gray-light);
+        }
+
+        .analysis-card h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analysis-card h2 svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--orange);
+        }
+
+        .category-select {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-option:hover {
+            border-color: var(--green);
+            background: #f0fdf4;
+        }
+
+        .category-option.selected {
+            border-color: var(--green);
+            background: #f0fdf4;
+        }
+
+        .category-option input {
+            margin-top: 0.25rem;
+        }
+
+        .category-option-text h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .category-option-text p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .analyze-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: var(--orange);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .analyze-btn:hover:not(:disabled) {
+            background: #d97706;
+        }
+
+        .analyze-btn:disabled {
+            background: var(--gray-light);
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .analyze-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== Progress ===== */
+        .progress-section {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .progress-section.active {
+            display: block;
+        }
+
+        .progress-bar-container {
+            background: var(--gray-lighter);
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--green);
+            border-radius: 8px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        /* ===== Results ===== */
+        .results-section {
+            margin-top: 2rem;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .results-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .results-count {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .result-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--orange);
+        }
+
+        .result-item.high {
+            border-left-color: var(--red);
+        }
+
+        .result-item.medium {
+            border-left-color: var(--orange);
+        }
+
+        .result-item.low {
+            border-left-color: var(--green);
+        }
+
+        .result-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .result-item-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .result-item-badge.high {
+            background: #fef2f2;
+            color: var(--red);
+        }
+
+        .result-item-badge.medium {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .result-item-badge.low {
+            background: #f0fdf4;
+            color: var(--green-dark);
+        }
+
+        .result-item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-item-meta span {
+            font-size: 0.75rem;
+            color: var(--gray);
+            background: var(--gray-lighter);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .result-item-issue {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-item-suggestion {
+            font-size: 0.85rem;
+            color: var(--gray);
+            background: var(--gray-lighter);
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .result-item-suggestion strong {
+            color: var(--text);
+        }
+
+        .result-item-actions {
+            margin-top: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .result-item-actions a {
+            font-size: 0.8rem;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .result-item-actions a:hover {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            stroke: var(--gray-light);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            .header-nav {
+                display: none;
+            }
+            .category-select {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">創政MISATO</div>
+            <div class="login-sub">条例AIレビュー</div>
+            <div id="loginError" class="login-error">パスワードが正しくありません</div>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力" required>
+                <button type="submit" class="login-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <header class="header">
+            <div class="header-inner">
+                <a href="/member/" class="header-logo">
+                    <div class="header-logo-icon">
+                        <img src="/member/images/logo.png" alt="">
+                    </div>
+                    <span class="header-logo-text">創政MISATO</span>
+                </a>
+                <nav class="header-nav">
+                    <a href="/member/">会員TOP</a>
+                    <a href="/member/search.html">条例検索</a>
+                    <a href="/member/budget/">予算管理</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-container">
+            <div class="page-title">
+                <h1>条例AIレビュー</h1>
+                <p>AIが三郷市の条例を自動分析し、見直しが必要な箇所を提案します</p>
+            </div>
+
+            <div class="analysis-card">
+                <h2>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    分析カテゴリを選択
+                </h2>
+
+                <div class="category-select">
+                    <label class="category-option selected">
+                        <input type="checkbox" name="category" value="price" checked>
+                        <div class="category-option-text">
+                            <h3>金額規定の見直し</h3>
+                            <p>物価上昇を反映していない金額規定を検出</p>
+                        </div>
+                    </label>
+
+                    <label class="category-option selected">
+                        <input type="checkbox" name="category" value="outdated" checked>
+                        <div class="category-option-text">
+                            <h3>長期間未改正</h3>
+                            <p>10年以上改正されていない条例を検出</p>
+                        </div>
+                    </label>
+
+                    <label class="category-option">
+                        <input type="checkbox" name="category" value="digital">
+                        <div class="category-option-text">
+                            <h3>デジタル化対応</h3>
+                            <p>押印・対面規定など時代に合わない規定を検出</p>
+                        </div>
+                    </label>
+
+                    <label class="category-option">
+                        <input type="checkbox" name="category" value="comparison">
+                        <div class="category-option-text">
+                            <h3>他市との比較</h3>
+                            <p>近隣市と比較して基準が異なる条例を検出</p>
+                        </div>
+                    </label>
+                </div>
+
+                <button class="analyze-btn" id="analyzeBtn" onclick="startAnalysis()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    分析を開始
+                </button>
+
+                <div class="progress-section" id="progressSection">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">条例データを読み込み中...</div>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>分析結果</h2>
+                    <span class="results-count" id="resultsCount">0件の提案</span>
+                </div>
+                <div id="resultsList">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Load ordinance data -->
+    <script src="/member/ordinance-data.js"></script>
+
+    <script>
+        const CORRECT_PASSWORD = 'sousei2026';
+        const AI_API_ENDPOINT = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
+
+        // Auth
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('member_auth') === '1';
+            if (isLoggedIn) {
+                showMain();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+
+            if (password === CORRECT_PASSWORD) {
+                sessionStorage.setItem('member_auth', '1');
+                showMain();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function showMain() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        // Category selection
+        document.querySelectorAll('.category-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'INPUT') {
+                    const checkbox = option.querySelector('input');
+                    checkbox.checked = !checkbox.checked;
+                }
+                option.classList.toggle('selected', option.querySelector('input').checked);
+            });
+        });
+
+        // Analysis
+        let analysisResults = [];
+
+        async function startAnalysis() {
+            const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
+                .map(cb => cb.value);
+
+            if (selectedCategories.length === 0) {
+                alert('分析カテゴリを1つ以上選択してください');
+                return;
+            }
+
+            const btn = document.getElementById('analyzeBtn');
+            const progressSection = document.getElementById('progressSection');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const resultsSection = document.getElementById('resultsSection');
+
+            btn.disabled = true;
+            progressSection.classList.add('active');
+            resultsSection.style.display = 'none';
+            analysisResults = [];
+
+            // Filter ordinances that have fullText (for detailed analysis)
+            const ordinancesWithText = allOrdinanceData.filter(o => o.fullText);
+            const totalCount = Math.min(ordinancesWithText.length, 50); // Limit to 50 for cost
+
+            progressText.textContent = `${totalCount}件の条例を分析中...`;
+
+            // Batch analysis
+            const batchSize = 5;
+            const batches = [];
+            for (let i = 0; i < totalCount; i += batchSize) {
+                batches.push(ordinancesWithText.slice(i, i + batchSize));
+            }
+
+            let processed = 0;
+
+            for (const batch of batches) {
+                try {
+                    const results = await analyzeBatch(batch, selectedCategories);
+                    analysisResults.push(...results);
+
+                    processed += batch.length;
+                    const percent = Math.round((processed / totalCount) * 100);
+                    progressBar.style.width = percent + '%';
+                    progressText.textContent = `${processed}/${totalCount}件を分析完了...`;
+                } catch (error) {
+                    console.error('Analysis error:', error);
+                }
+            }
+
+            // Sort by priority (high first)
+            analysisResults.sort((a, b) => {
+                const priority = { high: 0, medium: 1, low: 2 };
+                return priority[a.priority] - priority[b.priority];
+            });
+
+            displayResults();
+            btn.disabled = false;
+            progressSection.classList.remove('active');
+        }
+
+        async function analyzeBatch(ordinances, categories) {
+            const ordinanceTexts = ordinances.map(o => ({
+                id: o.id,
+                title: o.title,
+                category: o.category,
+                text: o.fullText.replace(/<[^>]*>/g, '').substring(0, 2000)
+            }));
+
+            const categoryDescriptions = {
+                price: '金額規定が物価上昇を反映していない（例：上限金額が10年以上前の設定のまま）',
+                outdated: '長期間（10年以上）改正されておらず、現状に合わない可能性がある',
+                digital: '押印、対面、書面など、デジタル化に対応していない規定がある',
+                comparison: '他の自治体と比較して基準が低い/高い可能性がある'
+            };
+
+            const analysisPrompt = categories.map(c => categoryDescriptions[c]).join('\n');
+
+            try {
+                const response = await fetch(AI_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        isOrdinanceReview: true,
+                        ordinances: ordinanceTexts,
+                        analysisCategories: analysisPrompt
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('API error');
+                }
+
+                const data = await response.json();
+                return data.issues || [];
+            } catch (error) {
+                console.error('Batch analysis error:', error);
+                return [];
+            }
+        }
+
+        function displayResults() {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsList = document.getElementById('resultsList');
+            const resultsCount = document.getElementById('resultsCount');
+
+            resultsSection.style.display = 'block';
+            resultsCount.textContent = `${analysisResults.length}件の提案`;
+
+            if (analysisResults.length === 0) {
+                resultsList.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>選択したカテゴリで問題点は見つかりませんでした</p>
+                    </div>
+                `;
+                return;
+            }
+
+            resultsList.innerHTML = analysisResults.map(result => {
+                const ordinance = allOrdinanceData.find(o => o.id === result.ordinanceId);
+                const priorityLabels = {
+                    high: '要検討',
+                    medium: '検討推奨',
+                    low: '参考'
+                };
+
+                return `
+                    <div class="result-item ${result.priority}">
+                        <div class="result-item-header">
+                            <div class="result-item-title">${result.title || (ordinance ? ordinance.title : '不明')}</div>
+                            <span class="result-item-badge ${result.priority}">${priorityLabels[result.priority] || '検討'}</span>
+                        </div>
+                        <div class="result-item-meta">
+                            <span>${result.category || '条例分析'}</span>
+                            ${result.lastRevised ? `<span>最終改正: ${result.lastRevised}</span>` : ''}
+                        </div>
+                        <div class="result-item-issue">${result.issue}</div>
+                        ${result.suggestion ? `
+                            <div class="result-item-suggestion">
+                                <strong>提案:</strong> ${result.suggestion}
+                            </div>
+                        ` : ''}
+                        ${ordinance ? `
+                            <div class="result-item-actions">
+                                <a href="${ordinance.url}" target="_blank" rel="noopener">三郷市例規集で確認</a>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize
+        checkAuth();
+    </script>
+</body>
+</html>

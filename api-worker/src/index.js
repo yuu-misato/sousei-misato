@@ -29,7 +29,7 @@ export default {
 
     try {
       const body = await request.json();
-      const { question, ordinanceContext, lawContext, receiptImage, isReceiptAnalysis } = body;
+      const { question, ordinanceContext, lawContext, receiptImage, isReceiptAnalysis, isOrdinanceReview, ordinances, analysisCategories } = body;
 
       const apiKey = env.GEMINI_API_KEY;
       if (!apiKey) {
@@ -42,6 +42,11 @@ export default {
       // 領収書解析モード
       if (isReceiptAnalysis && receiptImage) {
         return await handleReceiptAnalysis(receiptImage, apiKey, corsHeaders);
+      }
+
+      // 条例レビューモード
+      if (isOrdinanceReview && ordinances) {
+        return await handleOrdinanceReview(ordinances, analysisCategories, apiKey, corsHeaders);
       }
 
       // 通常の質問応答モード
@@ -406,6 +411,113 @@ async function handleReceiptAnalysis(receiptImage, apiKey, corsHeaders) {
     return new Response(JSON.stringify({
       error: '領収書の解析中にエラーが発生しました: ' + error.message,
       receiptData: null
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+/**
+ * 条例をAIでレビューして問題点を抽出
+ */
+async function handleOrdinanceReview(ordinances, analysisCategories, apiKey, corsHeaders) {
+  const reviewPrompt = `あなたは自治体条例の専門家です。以下の条例を分析し、見直しが必要な箇所を指摘してください。
+
+【分析の観点】
+${analysisCategories}
+
+【条例データ】
+${ordinances.map(o => `
+---
+条例名: ${o.title}
+カテゴリ: ${o.category}
+本文（抜粋）:
+${o.text}
+---
+`).join('\n')}
+
+【出力形式】
+問題が見つかった条例についてのみ、以下のJSON配列形式で出力してください。
+問題がない場合は空の配列 [] を返してください。
+
+[
+  {
+    "ordinanceId": 条例ID（数値）,
+    "title": "条例名",
+    "priority": "high" または "medium" または "low",
+    "category": "問題のカテゴリ（金額規定/長期未改正/デジタル化/比較分析など）",
+    "issue": "問題点の説明（具体的に）",
+    "suggestion": "改善提案",
+    "lastRevised": "最終改正年（条例文から読み取れる場合）"
+  }
+]
+
+【判定基準】
+- high: 市民生活に直接影響する可能性がある、または法改正への対応が必要
+- medium: 改善すれば市政の質が向上する
+- low: 参考情報として検討の価値がある
+
+必ずJSON形式のみで出力してください。説明文は不要です。`;
+
+  try {
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: reviewPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 4096,
+          },
+        }),
+      }
+    );
+
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Ordinance review API error:', errorText);
+      return new Response(JSON.stringify({
+        error: '条例分析に失敗しました',
+        issues: []
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const data = await geminiResponse.json();
+    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+
+    // JSONを抽出
+    const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+    let issues = [];
+
+    if (jsonMatch) {
+      try {
+        issues = JSON.parse(jsonMatch[0]);
+      } catch (e) {
+        console.error('JSON parse error in ordinance review:', e);
+        issues = [];
+      }
+    }
+
+    return new Response(JSON.stringify({ issues }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('Ordinance review error:', error);
+    return new Response(JSON.stringify({
+      error: '条例分析中にエラーが発生しました: ' + error.message,
+      issues: []
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
