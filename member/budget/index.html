@@ -224,6 +224,11 @@
             border-color: var(--orange);
             color: var(--white);
         }
+        .account-btn.active.personal {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-color: #6366f1;
+            color: var(--white);
+        }
         .account-btn svg {
             width: 20px;
             height: 20px;
@@ -904,40 +909,48 @@
 
         /* ===== Personal Budget ===== */
         .personal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
             margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
         .personal-header .section-title {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--navy);
-            margin: 0;
+            color: #6366f1;
+            margin: 0 0 1rem 0;
+        }
+        .member-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .member-tab {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid #e5e7eb;
+            background: var(--white);
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .member-tab:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+        .member-tab.active {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-color: #6366f1;
+            color: var(--white);
         }
         .member-select {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .member-select label {
-            font-weight: 500;
-            color: var(--gray);
-        }
-        .member-select select {
-            padding: 0.5rem 1rem;
-            border: 2px solid #6366f1;
-            border-radius: 8px;
-            font-family: inherit;
-            font-weight: 600;
-            color: #6366f1;
-            background: var(--white);
-            cursor: pointer;
+            display: none;
         }
 
         /* ===== Footer ===== */
@@ -1125,6 +1138,13 @@
                     </svg>
                     会派積立金
                 </button>
+                <button class="account-btn personal" onclick="switchAccount('personal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    個人政活費
+                </button>
             </div>
 
             <!-- Tab Navigation -->
@@ -1154,13 +1174,6 @@
                         <line x1="3" y1="18" x2="3.01" y2="18"/>
                     </svg>
                     経費一覧
-                </button>
-                <button class="tab-btn" onclick="switchTab('personal')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                    個人政活費
                 </button>
                 <button class="tab-btn" onclick="switchTab('settings')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1522,15 +1535,19 @@
                         </svg>
                         個人政務活動費
                     </h2>
-                    <div class="member-select">
-                        <label>メンバー選択:</label>
-                        <select id="personalMember" onchange="switchPersonalMember()">
-                            <option value="佐藤裕之">佐藤裕之</option>
-                            <option value="高橋誠一">高橋誠一</option>
-                            <option value="日髙千穂">日髙千穂</option>
-                            <option value="鈴木優作">鈴木優作</option>
-                        </select>
+                    <div class="member-tabs">
+                        <button class="member-tab active" onclick="switchPersonalMemberTab('佐藤裕之')">佐藤裕之</button>
+                        <button class="member-tab" onclick="switchPersonalMemberTab('高橋誠一')">高橋誠一</button>
+                        <button class="member-tab" onclick="switchPersonalMemberTab('日髙千穂')">日髙千穂</button>
+                        <button class="member-tab" onclick="switchPersonalMemberTab('鈴木優作')">鈴木優作</button>
                     </div>
+                    <!-- Hidden select for form compatibility -->
+                    <select id="personalMember" style="display:none;">
+                        <option value="佐藤裕之">佐藤裕之</option>
+                        <option value="高橋誠一">高橋誠一</option>
+                        <option value="日髙千穂">日髙千穂</option>
+                        <option value="鈴木優作">鈴木優作</option>
+                    </select>
                 </div>
 
                 <!-- Personal Stats -->
@@ -1990,17 +2007,39 @@
             });
             event.currentTarget.classList.add('active');
 
-            document.getElementById('seimuStats').style.display = account === 'seimu' ? 'block' : 'none';
-            document.getElementById('tsumitateStats').style.display = account === 'tsumitate' ? 'block' : 'none';
+            // Show/hide tab navigation based on account
+            const tabNav = document.querySelector('.tab-nav');
+            const personalTab = document.getElementById('tab-personal');
 
-            // Update form account toggle
-            setFormAccount(account);
+            if (account === 'personal') {
+                // 個人政活費の場合：タブナビを非表示にし、個人タブのみ表示
+                tabNav.style.display = 'none';
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                personalTab.classList.add('active');
+                loadPersonalData();
+            } else {
+                // 政務活動費・積立金の場合：通常のタブ表示
+                tabNav.style.display = 'flex';
+                document.getElementById('seimuStats').style.display = account === 'seimu' ? 'block' : 'none';
+                document.getElementById('tsumitateStats').style.display = account === 'tsumitate' ? 'block' : 'none';
 
-            // Update filter
-            document.getElementById('filterAccount').value = account;
+                // Update form account toggle
+                setFormAccount(account);
 
-            renderDashboard();
-            renderExpenseTable();
+                // Update filter
+                document.getElementById('filterAccount').value = account;
+
+                // 個人タブが表示されていたら概要タブに戻す
+                if (personalTab.classList.contains('active')) {
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    document.getElementById('tab-dashboard').classList.add('active');
+                    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    document.querySelector('.tab-btn').classList.add('active');
+                }
+
+                renderDashboard();
+                renderExpenseTable();
+            }
         }
 
         function setFormAccount(account) {
@@ -2894,6 +2933,22 @@
 
         function switchPersonalMember() {
             currentPersonalMember = document.getElementById('personalMember').value;
+            renderPersonalDashboard();
+            renderPersonalExpenseTable();
+        }
+
+        function switchPersonalMemberTab(memberName) {
+            currentPersonalMember = memberName;
+            document.getElementById('personalMember').value = memberName;
+
+            // Update tab styles
+            document.querySelectorAll('.member-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent === memberName) {
+                    tab.classList.add('active');
+                }
+            });
+
             renderPersonalDashboard();
             renderPersonalExpenseTable();
         }
