@@ -2752,13 +2752,13 @@
             document.querySelector('.progress-bar').style.width = progress + '%';
         });
 
-        // Header background on scroll
+        // Header show on scroll
         const header = document.querySelector('.header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                header.classList.add('scrolled');
+                header.classList.add('visible');
             } else {
-                header.classList.remove('scrolled');
+                header.classList.remove('visible');
             }
         });
 
@@ -2807,10 +2807,13 @@
             }, 16);
         }
 
-        // Intersection Observer for counters
-        const counterObserver = new IntersectionObserver((entries) => {
+        // General visibility observer for elements with opacity:0
+        const visibilityObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Also animate counters if present
                     const counters = entry.target.querySelectorAll('.counter');
                     counters.forEach(counter => {
                         if (!counter.classList.contains('animated')) {
@@ -2820,10 +2823,16 @@
                     });
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
 
-        document.querySelectorAll('.stats-pinned').forEach(section => {
-            counterObserver.observe(section);
+        // Observe stats elements
+        document.querySelectorAll('.stats-label, .stats-title, .stat-item, .stats-pinned').forEach(el => {
+            visibilityObserver.observe(el);
+        });
+
+        // Observe outcome cards
+        document.querySelectorAll('.outcome-card').forEach(card => {
+            visibilityObserver.observe(card);
         });
 
         // Scroll Cards Animation
@@ -2845,19 +2854,6 @@
 
             cardObserver.observe(cardStack);
         }
-
-        // Outcome Cards Animation
-        const outcomeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.2 });
-
-        document.querySelectorAll('.outcome-card').forEach(card => {
-            outcomeObserver.observe(card);
-        });
 
         // Learning Card Expand
         document.querySelectorAll('.learning-expand-btn').forEach(btn => {
