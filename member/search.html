@@ -1,0 +1,2672 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条例・法律検索 | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
+    <style>
+        /* 認証済みの場合はログイン画面を即座に非表示 */
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --law-green: #1a472a;
+            --law-green-light: #2d5a3f;
+            --bg: #fafbfc;
+            --bg-warm: #f8f9fa;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--navy);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .sidebar-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-left-color: var(--green);
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile Menu Toggle ===== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--navy);
+            z-index: 101;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .mobile-header-logo img {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* ===== Main Content ===== */
+        .main-wrapper {
+            flex: 1;
+            margin-left: 260px;
+        }
+
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ===== Tab Navigation ===== */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--white);
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .tab-btn:hover {
+            background: var(--gray-lighter);
+        }
+        .tab-btn.active {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .tab-btn.law-tab.active {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .tab-btn.ai-tab.active {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        .tab-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== AI Assistant ===== */
+        .ai-chat-container {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .ai-chat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: var(--white);
+        }
+        .ai-chat-header-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-chat-header-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--white);
+        }
+        .ai-chat-header-text h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .ai-chat-header-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        .ai-chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: var(--gray-lighter);
+        }
+        .ai-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        .ai-message.user {
+            flex-direction: row-reverse;
+        }
+        .ai-message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ai-message.assistant .ai-message-avatar {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        .ai-message.user .ai-message-avatar {
+            background: var(--navy);
+        }
+        .ai-message-avatar svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--white);
+        }
+        .ai-message-content {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 12px;
+            line-height: 1.7;
+        }
+        .ai-message.assistant .ai-message-content {
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+        }
+        .ai-message.user .ai-message-content {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .ai-message-content p {
+            margin-bottom: 0.5rem;
+        }
+        .ai-message-content p:last-child {
+            margin-bottom: 0;
+        }
+        .ai-message-content .ordinance-ref {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .ai-message-content .ordinance-ref:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+        .ai-chat-input-area {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            background: var(--white);
+        }
+        .ai-chat-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .ai-chat-input {
+            flex: 1;
+            padding: 0.85rem 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .ai-chat-input:focus {
+            border-color: #6366f1;
+        }
+        .ai-chat-send-btn {
+            padding: 0 1.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s;
+        }
+        .ai-chat-send-btn:hover {
+            opacity: 0.9;
+        }
+        .ai-chat-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .ai-chat-send-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        .ai-typing {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        .ai-typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        .ai-typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: #6366f1;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .ai-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .ai-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        .ai-api-key-setup {
+            padding: 2rem;
+            text-align: center;
+        }
+        .ai-api-key-setup p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+        .ai-api-key-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.85rem 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-bottom: 1rem;
+        }
+        .ai-api-key-btn {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .ai-example-questions {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            background: var(--gray-lighter);
+        }
+        .ai-example-questions-title {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+        }
+        .ai-example-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text);
+            cursor: pointer;
+            margin: 0.25rem;
+            transition: all 0.2s;
+        }
+        .ai-example-btn:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        /* ===== Search Section ===== */
+        .search-section {
+            display: none;
+        }
+        .search-section.active {
+            display: block;
+        }
+
+        .search-box {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .search-header-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+        }
+        .search-header-icon.law {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .search-header-icon svg {
+            width: 26px;
+            height: 26px;
+            stroke: var(--white);
+        }
+        .search-header-text h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+        .search-header-text p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .search-input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--navy);
+        }
+        .search-input.law:focus {
+            border-color: var(--law-green);
+        }
+
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .cat-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-light);
+            background: var(--white);
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-family: inherit;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cat-btn:hover {
+            background: var(--gray-lighter);
+        }
+        .cat-btn.active {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+        .cat-btn.law.active {
+            background: var(--law-green);
+            border-color: var(--law-green);
+        }
+
+        /* ===== Results Section ===== */
+        .results-section {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+            background: var(--gray-lighter);
+        }
+        .results-count {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        .results-count strong {
+            color: var(--navy);
+            font-weight: 700;
+        }
+        .results-count.law strong {
+            color: var(--law-green);
+        }
+        .ext-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: opacity 0.2s;
+        }
+        .ext-link:hover {
+            opacity: 0.9;
+        }
+        .ext-link.law {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .ext-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .results-list {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .result-item:hover {
+            background: var(--gray-lighter);
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .result-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .result-item-cat {
+            flex-shrink: 0;
+            padding: 0.25rem 0.75rem;
+            background: rgba(44, 74, 110, 0.1);
+            color: var(--navy);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+        .result-item-cat.law {
+            background: rgba(26, 71, 42, 0.1);
+            color: var(--law-green);
+        }
+
+        .result-item-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .keyword {
+            padding: 0.2rem 0.6rem;
+            background: var(--gray-lighter);
+            color: var(--gray);
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+        .keyword.fulltext {
+            background: rgba(44, 74, 110, 0.1);
+            color: var(--navy);
+        }
+
+        .result-item-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .result-item.expanded .result-item-content {
+            display: block;
+        }
+
+        .result-item-summary {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .result-item-meta {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .result-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+        .action-btn.secondary {
+            background: var(--gray-lighter);
+            color: var(--gray);
+        }
+        .action-btn.law {
+            background: linear-gradient(135deg, var(--law-green) 0%, var(--law-green-light) 100%);
+        }
+        .action-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+        }
+        .empty-state svg {
+            width: 60px;
+            height: 60px;
+            stroke: var(--gray-light);
+            margin-bottom: 1rem;
+        }
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        /* ===== e-Gov Additional Results ===== */
+        .egov-results {
+            margin-top: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--gray-lighter);
+            border-top: 1px solid var(--gray-light);
+        }
+        .egov-results-title {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .egov-results-title svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            background: var(--white);
+            border-radius: 16px;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .modal-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .modal-meta span {
+            padding: 0.25rem 0.75rem;
+            background: rgba(44, 74, 110, 0.1);
+            color: var(--navy);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-lighter);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        .modal-close:hover {
+            background: var(--gray-light);
+        }
+        .modal-close svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            background: var(--gray-lighter);
+        }
+        .modal-footer-info {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .modal-footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+        .modal-footer-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ===== Ordinance Content Styles ===== */
+        .ordinance-content .jorei-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--navy);
+        }
+        .ordinance-content .jorei-toc {
+            background: var(--gray-lighter);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-preamble {
+            background: rgba(44, 74, 110, 0.05);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-chapter {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .ordinance-content .jorei-section {
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 1rem 0 0.75rem;
+        }
+        .ordinance-content .jorei-article {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--white);
+            border-left: 3px solid var(--gray-light);
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-article .article-title {
+            font-weight: 600;
+            color: var(--navy);
+        }
+        .ordinance-content .jorei-supplementary {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--gray-light);
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            .header-nav {
+                display: none;
+            }
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+            .page-title h1 {
+                font-size: 1.5rem;
+            }
+            .search-box {
+                padding: 1.25rem;
+            }
+            .search-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .results-header {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: flex-start;
+            }
+            .result-item-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .modal {
+                width: 100%;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            /* AI Chat Mobile */
+            .ai-chat-header {
+                padding: 1rem;
+                gap: 0.75rem;
+            }
+            .ai-chat-header-icon {
+                width: 40px;
+                height: 40px;
+            }
+            .ai-chat-header-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+            .ai-chat-header-text h2 {
+                font-size: 1.1rem;
+            }
+            .ai-chat-header-text p {
+                font-size: 0.75rem;
+            }
+            .ai-chat-messages {
+                height: 300px;
+                padding: 1rem;
+            }
+            .ai-message-content {
+                max-width: 85%;
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .ai-message-avatar {
+                width: 30px;
+                height: 30px;
+            }
+            .ai-message-avatar svg {
+                width: 16px;
+                height: 16px;
+            }
+            .ai-chat-input-area {
+                padding: 0.75rem;
+            }
+            .ai-chat-input-wrapper {
+                gap: 0.5rem;
+            }
+            .ai-chat-input {
+                padding: 0.7rem 0.85rem;
+                font-size: 0.9rem;
+            }
+            .ai-chat-send-btn {
+                padding: 0 1rem;
+                font-size: 0.85rem;
+            }
+            .ai-chat-send-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+            .ai-example-questions {
+                padding: 0.75rem;
+            }
+            .ai-example-btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.75rem;
+                margin: 0.15rem;
+            }
+            /* Tab Navigation Mobile */
+            .tab-nav {
+                gap: 0.5rem;
+            }
+            .tab-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.75rem;
+                gap: 0.3rem;
+            }
+            .tab-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        /* Extra small devices (iPhone SE, etc.) */
+        @media (max-width: 380px) {
+            .main-container {
+                padding: 70px 0.75rem 1.5rem;
+            }
+            .page-title h1 {
+                font-size: 1.3rem;
+            }
+            .page-title p {
+                font-size: 0.8rem;
+            }
+            .ai-chat-container {
+                border-radius: 12px;
+            }
+            .ai-chat-header {
+                padding: 0.85rem;
+            }
+            .ai-chat-header-icon {
+                width: 36px;
+                height: 36px;
+            }
+            .ai-chat-header-text h2 {
+                font-size: 1rem;
+            }
+            .ai-chat-header-text p {
+                font-size: 0.7rem;
+            }
+            .ai-chat-messages {
+                height: 250px;
+                padding: 0.75rem;
+            }
+            .ai-message {
+                gap: 0.5rem;
+            }
+            .ai-message-content {
+                max-width: 88%;
+                padding: 0.6rem;
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+            .ai-message-avatar {
+                width: 26px;
+                height: 26px;
+            }
+            .ai-message-avatar svg {
+                width: 14px;
+                height: 14px;
+            }
+            .ai-chat-input-area {
+                padding: 0.6rem;
+            }
+            .ai-chat-input {
+                padding: 0.6rem 0.75rem;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+            .ai-chat-send-btn {
+                padding: 0 0.85rem;
+                font-size: 0.8rem;
+                border-radius: 10px;
+            }
+            .ai-chat-send-btn span {
+                display: none;
+            }
+            .ai-example-questions {
+                padding: 0.6rem;
+            }
+            .ai-example-questions-title {
+                font-size: 0.7rem;
+                margin-bottom: 0.5rem;
+            }
+            .ai-example-btn {
+                padding: 0.35rem 0.6rem;
+                font-size: 0.7rem;
+                margin: 0.1rem;
+            }
+            /* Tab Navigation Extra Small */
+            .tab-nav {
+                flex-wrap: wrap;
+                gap: 0.4rem;
+            }
+            .tab-btn {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.7rem;
+                flex: 1;
+                min-width: 0;
+                justify-content: center;
+            }
+            .tab-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        /* ===== iPhone SE / Small Mobile (375px) ===== */
+        @media (max-width: 375px) {
+            .main-container {
+                padding: 70px 0.75rem 1.5rem;
+            }
+
+            /* Search header */
+            .search-header {
+                padding: 1.5rem 1rem;
+                border-radius: 12px;
+                margin-bottom: 1.5rem;
+            }
+
+            .search-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .search-header p {
+                font-size: 0.82rem;
+            }
+
+            /* Search form */
+            .search-form {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .search-form input {
+                font-size: 16px; /* Prevent iOS zoom */
+                padding: 0.75rem;
+            }
+
+            .search-form button {
+                width: 100%;
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            /* Tab navigation */
+            .tab-nav {
+                gap: 0.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .tab-btn {
+                padding: 0.45rem 0.5rem;
+                font-size: 0.65rem;
+            }
+
+            .tab-btn svg {
+                width: 12px;
+                height: 12px;
+            }
+
+            /* Filter section */
+            .filter-section {
+                padding: 0.75rem;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.3rem;
+            }
+
+            .filter-group label {
+                font-size: 0.75rem;
+            }
+
+            .filter-group select,
+            .filter-group input {
+                font-size: 16px; /* Prevent iOS zoom */
+                padding: 0.5rem;
+            }
+
+            /* Results */
+            .result-card {
+                padding: 1rem;
+            }
+
+            .result-title {
+                font-size: 0.95rem;
+            }
+
+            .result-meta {
+                font-size: 0.75rem;
+                flex-wrap: wrap;
+                gap: 0.4rem;
+            }
+
+            .result-excerpt {
+                font-size: 0.82rem;
+            }
+
+            .result-actions button {
+                padding: 0.45rem 0.7rem;
+                font-size: 0.75rem;
+            }
+
+            /* AI Section */
+            .ai-search-section {
+                padding: 1rem;
+            }
+
+            .ai-search-section h3 {
+                font-size: 1rem;
+            }
+
+            .ai-input {
+                font-size: 16px; /* Prevent iOS zoom */
+            }
+
+            .ai-example-questions {
+                gap: 0.3rem;
+            }
+
+            .ai-example-btn {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.65rem;
+            }
+
+            .ai-answer {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            /* Mobile header */
+            .mobile-header h1 {
+                font-size: 1rem;
+            }
+
+            /* Pagination */
+            .pagination {
+                gap: 0.25rem;
+            }
+
+            .pagination button {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-logo">創政MISATO</div>
+        <div class="login-sub">条例・法律検索システム</div>
+        <div class="login-error" id="loginError">パスワードが違います</div>
+        <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力">
+        <button class="login-btn" onclick="tryLogin()">ログイン</button>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div id="mainContent">
+    <div class="app-layout">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <a href="/member/" class="mobile-header-logo">
+                <img src="/member/images/logo.png" alt="">
+                <span>創政MISATO</span>
+            </a>
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="/member/" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <img src="/member/images/logo.png" alt="">
+                    </div>
+                    <span class="sidebar-logo-text">創政MISATO</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">メニュー</div>
+                <a href="/member/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    ホーム
+                </a>
+                <a href="/member/budget/index.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                    </svg>
+                    会派予算管理
+                </a>
+                <a href="/member/budget-analysis.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    予算書AIレビュー
+                </a>
+                <a href="/member/assets.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                    会派アセット
+                </a>
+                <div class="sidebar-nav-section">条例AI</div>
+                <a href="/member/search.html" class="active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    条例検索
+                </a>
+                <a href="/member/review.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                    条例AIレビュー
+                </a>
+                <a href="/member/barrier.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    障壁を調べる
+                </a>
+                <div class="sidebar-nav-section">リサーチAI</div>
+                <a href="/member/research.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
+                    一般質問リサーチ
+                </a>
+                <a href="/member/research-history.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    リサーチ履歴
+                </a>
+                <div class="sidebar-nav-section">その他</div>
+                <a href="/member/guideline.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                    ガイドライン
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                © 2026 創政MISATO
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <main class="main-container">
+        <div class="page-title">
+            <h1>条例・法律検索</h1>
+            <p>三郷市の条例と国の法律を検索できます</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn ai-tab active" data-tab="ai">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                    <circle cx="7.5" cy="14.5" r="1.5"/>
+                    <circle cx="16.5" cy="14.5" r="1.5"/>
+                </svg>
+                AIに質問
+            </button>
+            <button class="tab-btn" data-tab="ordinance">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                三郷市 条例検索
+            </button>
+            <button class="tab-btn law-tab" data-tab="law">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                国の法律検索
+            </button>
+        </div>
+
+        <!-- Ordinance Search Section -->
+        <div class="search-section" id="ordinanceSection">
+            <div class="search-box">
+                <div class="search-header">
+                    <div class="search-header-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="search-header-text">
+                        <h2>三郷市 条例検索</h2>
+                        <p>キーワードで条例を検索し、内容を確認できます</p>
+                    </div>
+                </div>
+
+                <div class="search-input-wrapper">
+                    <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" class="search-input" id="ordinanceSearchInput" placeholder="例：防災、子育て、環境...">
+                </div>
+
+                <div class="category-buttons" id="ordinanceCategories">
+                    <button class="cat-btn active" data-cat="all">すべて</button>
+                    <button class="cat-btn" data-cat="総規・基本">総規・基本</button>
+                    <button class="cat-btn" data-cat="議会">議会</button>
+                    <button class="cat-btn" data-cat="執行機関">執行機関</button>
+                    <button class="cat-btn" data-cat="人事">人事</button>
+                    <button class="cat-btn" data-cat="給与">給与</button>
+                    <button class="cat-btn" data-cat="財務">財務</button>
+                    <button class="cat-btn" data-cat="教育・文化">教育・文化</button>
+                    <button class="cat-btn" data-cat="民生・福祉">民生・福祉</button>
+                    <button class="cat-btn" data-cat="産業経済">産業経済</button>
+                    <button class="cat-btn" data-cat="建設">建設</button>
+                    <button class="cat-btn" data-cat="水道">水道</button>
+                    <button class="cat-btn" data-cat="消防">消防</button>
+                    <button class="cat-btn" data-cat="その他">その他</button>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="results-header">
+                    <span class="results-count" id="ordinanceCount">検索結果: <strong>0</strong>件</span>
+                    <a href="https://www1.g-reiki.net/misato/reiki_menu.html" target="_blank" rel="noopener" class="ext-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        三郷市例規集
+                    </a>
+                </div>
+                <div class="results-list" id="ordinanceList">
+                    <!-- Results populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Law Search Section -->
+        <div class="search-section" id="lawSection">
+            <div class="search-box">
+                <div class="search-header">
+                    <div class="search-header-icon law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <div class="search-header-text">
+                        <h2>国の法律検索</h2>
+                        <p>地方自治法等の主要法律を検索できます（e-Gov法令検索連携）</p>
+                    </div>
+                </div>
+
+                <div class="search-input-wrapper">
+                    <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" class="search-input law" id="lawSearchInput" placeholder="例：地方自治、介護保険、都市計画...">
+                </div>
+
+                <div class="category-buttons" id="lawCategories">
+                    <button class="cat-btn law active" data-cat="all">すべて</button>
+                    <button class="cat-btn law" data-cat="地方自治">地方自治</button>
+                    <button class="cat-btn law" data-cat="税・財務">税・財務</button>
+                    <button class="cat-btn law" data-cat="福祉">福祉</button>
+                    <button class="cat-btn law" data-cat="都市計画">都市計画</button>
+                    <button class="cat-btn law" data-cat="環境">環境</button>
+                    <button class="cat-btn law" data-cat="行政手続">行政手続</button>
+                    <button class="cat-btn law" data-cat="選挙">選挙</button>
+                    <button class="cat-btn law" data-cat="教育">教育</button>
+                    <button class="cat-btn law" data-cat="消防・防災">消防・防災</button>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="results-header">
+                    <span class="results-count law" id="lawCount">主要法律: <strong>0</strong>件</span>
+                    <a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener" class="ext-link law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        e-Gov法令検索
+                    </a>
+                </div>
+                <div class="results-list" id="lawList">
+                    <!-- Results populated by JavaScript -->
+                </div>
+                <div class="egov-results" id="egovResults" style="display:none;">
+                    <div class="egov-results-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        e-Gov法令検索から追加で見つかった法令:
+                    </div>
+                    <div id="egovList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Section -->
+        <div class="search-section active" id="aiSection">
+            <div class="ai-chat-container">
+                <div class="ai-chat-header">
+                    <div class="ai-chat-header-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                            <circle cx="7.5" cy="14.5" r="1.5"/>
+                            <circle cx="16.5" cy="14.5" r="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="ai-chat-header-text">
+                        <h2>AI条例アシスタント</h2>
+                        <p>三郷市の条例について何でも質問してください</p>
+                    </div>
+                </div>
+
+                <!-- Chat Interface -->
+                <div id="aiChatInterface">
+                    <div class="ai-chat-messages" id="aiChatMessages">
+                        <div class="ai-message assistant">
+                            <div class="ai-message-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                                    <circle cx="7.5" cy="14.5" r="1.5"/>
+                                    <circle cx="16.5" cy="14.5" r="1.5"/>
+                                </svg>
+                            </div>
+                            <div class="ai-message-content">
+                                <p>こんにちは！三郷市の条例についてお答えします。</p>
+                                <p>例えば「議員報酬はいくらですか？」「情報公開の手続きは？」など、何でも聞いてください。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-example-questions">
+                        <div class="ai-example-questions-title">質問例:</div>
+                        <button class="ai-example-btn" onclick="askExample(this)">議員の政務活動費はいくらですか？</button>
+                        <button class="ai-example-btn" onclick="askExample(this)">市の休日はいつですか？</button>
+                        <button class="ai-example-btn" onclick="askExample(this)">情報公開請求の方法は？</button>
+                        <button class="ai-example-btn" onclick="askExample(this)">副市長は何人ですか？</button>
+                    </div>
+
+                    <div class="ai-chat-input-area">
+                        <div class="ai-chat-input-wrapper">
+                            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="条例について質問してください...">
+                            <button class="ai-chat-send-btn" id="aiSendBtn" onclick="sendAiMessage()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                                <span>送信</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Ordinance Full Text -->
+<div class="modal-overlay" id="modalOverlay"></div>
+<div class="modal" id="modal">
+    <div class="modal-header">
+        <div>
+            <div class="modal-title" id="modalTitle">条例名</div>
+            <div class="modal-meta" id="modalMeta"></div>
+        </div>
+        <button class="modal-close" id="modalCloseBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ordinance-content" id="modalContent"></div>
+    </div>
+    <div class="modal-footer">
+        <span class="modal-footer-info" id="modalFooterInfo"></span>
+        <a href="#" target="_blank" rel="noopener" class="modal-footer-link" id="modalExternalLink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            三郷市例規集で見る
+        </a>
+    </div>
+</div>
+
+<!-- Data files -->
+<script src="ordinance-data.js"></script>
+<script src="law-data.js"></script>
+
+<script>
+const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
+
+async function sha256(text) {
+    const data = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Sidebar toggle
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+async function tryLogin() {
+    const pw = document.getElementById('passwordInput').value;
+    const hash = await sha256(pw);
+    if (hash === HASH) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        localStorage.setItem('member_auth', '1');
+        renderOrdinances();
+        renderLaws();
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+    }
+}
+
+document.getElementById('passwordInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') tryLogin();
+});
+
+if (localStorage.getItem('member_auth') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    // Initialize after DOM is ready
+    setTimeout(() => {
+        renderOrdinances();
+        renderLaws();
+    }, 0);
+}
+
+// ===== Tab Navigation =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.search-section').forEach(s => s.classList.remove('active'));
+
+        if (tab === 'ordinance') {
+            document.getElementById('ordinanceSection').classList.add('active');
+        } else if (tab === 'law') {
+            document.getElementById('lawSection').classList.add('active');
+        } else if (tab === 'ai') {
+            document.getElementById('aiSection').classList.add('active');
+        }
+    });
+});
+
+// ===== Ordinance Search =====
+let currentOrdinanceCategory = 'all';
+let currentOrdinanceSearch = '';
+
+function searchOrdinances() {
+    currentOrdinanceSearch = document.getElementById('ordinanceSearchInput').value.toLowerCase();
+    renderOrdinances();
+}
+
+function filterOrdinanceCategory(cat) {
+    currentOrdinanceCategory = cat;
+    document.querySelectorAll('#ordinanceCategories .cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === cat);
+    });
+    renderOrdinances();
+}
+
+function renderOrdinances() {
+    const results = allOrdinanceData.filter(ord => {
+        const matchesCategory = currentOrdinanceCategory === 'all' || ord.category === currentOrdinanceCategory;
+        const fullTextContent = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+        const matchesSearch = currentOrdinanceSearch === '' ||
+            ord.title.toLowerCase().includes(currentOrdinanceSearch) ||
+            ord.keywords.some(kw => kw.toLowerCase().includes(currentOrdinanceSearch)) ||
+            ord.summary.toLowerCase().includes(currentOrdinanceSearch) ||
+            fullTextContent.includes(currentOrdinanceSearch);
+        return matchesCategory && matchesSearch;
+    });
+
+    const listEl = document.getElementById('ordinanceList');
+    const countEl = document.getElementById('ordinanceCount');
+
+    countEl.innerHTML = `検索結果: <strong>${results.length}</strong>件`;
+
+    if (results.length === 0) {
+        listEl.innerHTML = `
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <p>該当する条例が見つかりません</p>
+            </div>`;
+        return;
+    }
+
+    listEl.innerHTML = results.map(ord => `
+        <div class="result-item ${ord.fullText ? 'has-fulltext' : ''}" data-id="${ord.id}" data-type="ordinance">
+            <div class="result-item-header">
+                <div class="result-item-title">${ord.title}</div>
+                <span class="result-item-cat">${ord.category}</span>
+            </div>
+            <div class="result-item-keywords">
+                ${ord.keywords.map(kw => `<span class="keyword">${kw}</span>`).join('')}
+                ${ord.fullText ? '<span class="keyword fulltext">全文閲覧可</span>' : ''}
+            </div>
+            <div class="result-item-content">
+                <p class="result-item-summary">${ord.summary}</p>
+                <div class="result-item-actions">
+                    ${ord.fullText ? `
+                        <button class="action-btn view-fulltext-btn" data-id="${ord.id}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            全文を表示
+                        </button>
+                    ` : ''}
+                    <a href="${ord.url}" target="_blank" rel="noopener" class="action-btn secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        三郷市例規集
+                    </a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== Law Search =====
+let currentLawCategory = 'all';
+let currentLawSearch = '';
+let egovSearchTimeout = null;
+
+function searchLaws() {
+    currentLawSearch = document.getElementById('lawSearchInput').value.toLowerCase();
+    renderLaws();
+
+    // e-Gov API検索
+    if (currentLawSearch.length >= 2) {
+        clearTimeout(egovSearchTimeout);
+        egovSearchTimeout = setTimeout(() => searchFromEgov(currentLawSearch), 500);
+    } else {
+        document.getElementById('egovResults').style.display = 'none';
+    }
+}
+
+function filterLawCategory(cat) {
+    currentLawCategory = cat;
+    document.querySelectorAll('#lawCategories .cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === cat);
+    });
+    renderLaws();
+}
+
+function renderLaws() {
+    const results = majorLawData.filter(law => {
+        const matchesCategory = currentLawCategory === 'all' || law.category === currentLawCategory;
+        const matchesSearch = currentLawSearch === '' ||
+            law.title.toLowerCase().includes(currentLawSearch) ||
+            law.keywords.some(kw => kw.toLowerCase().includes(currentLawSearch)) ||
+            law.summary.toLowerCase().includes(currentLawSearch);
+        return matchesCategory && matchesSearch;
+    });
+
+    const listEl = document.getElementById('lawList');
+    const countEl = document.getElementById('lawCount');
+
+    countEl.innerHTML = `主要法律: <strong>${results.length}</strong>件`;
+
+    if (results.length === 0) {
+        listEl.innerHTML = `
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                </svg>
+                <p>該当する法律が見つかりません</p>
+            </div>`;
+        return;
+    }
+
+    listEl.innerHTML = results.map(law => `
+        <div class="result-item law-item" data-id="${law.id}" data-lawid="${law.lawId}" data-type="law">
+            <div class="result-item-header">
+                <div class="result-item-title">${law.title}</div>
+                <span class="result-item-cat law">${law.category}</span>
+            </div>
+            <div class="result-item-keywords">
+                ${law.keywords.slice(0, 5).map(kw => `<span class="keyword">${kw}</span>`).join('')}
+            </div>
+            <div class="result-item-content">
+                <p class="result-item-summary">${law.summary}</p>
+                <p class="result-item-meta">${law.lawNum}</p>
+                <div class="result-item-actions">
+                    ${law.hasFullText || law.fullText ? `
+                    <button class="action-btn view-law-btn" data-lawid="${law.lawId}" onclick="openLawModal('${law.lawId}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        本文を見る
+                    </button>
+                    ` : `
+                    <button class="action-btn view-law-btn" data-lawid="${law.lawId}" onclick="openLawModal('${law.lawId}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        本文を見る (API取得)
+                    </button>
+                    `}
+                    <a href="${law.egov_url}" target="_blank" rel="noopener" class="action-btn law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        e-Gov
+                    </a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// e-Gov API検索
+async function searchFromEgov(keyword) {
+    const resultsDiv = document.getElementById('egovResults');
+    const listEl = document.getElementById('egovList');
+
+    resultsDiv.style.display = 'block';
+    listEl.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gray);">e-Gov法令検索中...</div>';
+
+    try {
+        const results = await searchLawsFromEgov(keyword);
+        const majorIds = majorLawData.map(l => l.lawId);
+        const filteredResults = results.filter(r => !majorIds.includes(r.lawId));
+
+        if (filteredResults.length === 0) {
+            resultsDiv.style.display = 'none';
+            return;
+        }
+
+        listEl.innerHTML = filteredResults.slice(0, 10).map(law => `
+            <div class="result-item law-item egov-result" style="padding:1rem;border-bottom:1px solid var(--gray-light);">
+                <div class="result-item-header">
+                    <div class="result-item-title">${law.title}</div>
+                    <span class="result-item-cat law" style="font-size:10px;">e-Gov検索結果</span>
+                </div>
+                <div class="result-item-content" style="display:block;margin-top:0.5rem;">
+                    <p class="result-item-meta">${law.lawNum || ''}</p>
+                    <a href="${law.egov_url}" target="_blank" rel="noopener" class="action-btn law" style="margin-top:0.5rem;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        e-Govで見る
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('e-Gov検索エラー:', error);
+        listEl.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gray);">e-Gov検索に失敗しました。直接<a href="https://laws.e-gov.go.jp/" target="_blank">e-Gov法令検索</a>をご利用ください。</div>';
+    }
+}
+
+// ===== Event Listeners =====
+document.getElementById('ordinanceSearchInput').addEventListener('input', searchOrdinances);
+document.getElementById('ordinanceSearchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchOrdinances();
+});
+
+document.querySelectorAll('#ordinanceCategories .cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterOrdinanceCategory(btn.dataset.cat));
+});
+
+document.getElementById('lawSearchInput').addEventListener('input', searchLaws);
+document.getElementById('lawSearchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchLaws();
+});
+
+document.querySelectorAll('#lawCategories .cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterLawCategory(btn.dataset.cat));
+});
+
+// Result item click handlers
+document.getElementById('ordinanceList').addEventListener('click', e => {
+    const fulltextBtn = e.target.closest('.view-fulltext-btn');
+    if (fulltextBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const ordId = parseInt(fulltextBtn.dataset.id);
+        openModal(ordId);
+        return;
+    }
+
+    if (e.target.closest('a.action-btn')) return;
+
+    const item = e.target.closest('.result-item');
+    if (item) {
+        if (e.target.closest('.result-item-header')) {
+            const ordId = parseInt(item.dataset.id);
+            const ord = allOrdinanceData.find(o => o.id === ordId);
+            if (ord && ord.fullText) {
+                openModal(ordId);
+            } else {
+                item.classList.toggle('expanded');
+            }
+        } else {
+            item.classList.toggle('expanded');
+        }
+    }
+});
+
+document.getElementById('lawList').addEventListener('click', e => {
+    if (e.target.closest('a.action-btn')) return;
+    const item = e.target.closest('.result-item');
+    if (item) {
+        item.classList.toggle('expanded');
+    }
+});
+
+// ===== Modal =====
+function openModal(ordId) {
+    const ord = allOrdinanceData.find(o => o.id === ordId);
+    if (!ord) return;
+
+    document.getElementById('modalTitle').textContent = ord.title;
+    document.getElementById('modalMeta').innerHTML = `<span>${ord.category}</span>`;
+
+    if (ord.fullText) {
+        document.getElementById('modalContent').innerHTML = ord.fullText;
+    } else {
+        document.getElementById('modalContent').innerHTML = `
+            <div style="text-align:center;padding:3rem;">
+                <svg style="width:60px;height:60px;color:var(--gray-light);margin-bottom:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                <p style="color:var(--gray);margin-bottom:1rem;">この条例の全文はまだ登録されていません。</p>
+                <a href="${ord.url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--navy);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                    三郷市例規集で見る
+                </a>
+            </div>
+        `;
+    }
+
+    document.getElementById('modalFooterInfo').textContent = '';
+    document.getElementById('modalExternalLink').href = ord.url;
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', closeModal);
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+});
+
+// ===== 法律モーダル =====
+const LAW_CACHE_KEY_PREFIX = 'law_fulltext_';
+const LAW_CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7日間
+
+async function openLawModal(lawId) {
+    const law = majorLawData.find(l => l.lawId === lawId);
+    if (!law) return;
+
+    document.getElementById('modalTitle').textContent = law.title;
+    document.getElementById('modalMeta').innerHTML = `<span>${law.category}</span><span>${law.lawNum}</span>`;
+    document.getElementById('modalExternalLink').href = law.egov_url;
+
+    // fullTextがある場合は即座に表示
+    if (law.fullText) {
+        document.getElementById('modalContent').innerHTML = law.fullText;
+        document.getElementById('modalFooterInfo').textContent = '事前取得済み';
+    } else {
+        // キャッシュをチェック
+        const cached = getLawCache(lawId);
+        if (cached) {
+            document.getElementById('modalContent').innerHTML = cached;
+            document.getElementById('modalFooterInfo').textContent = 'キャッシュから表示';
+        } else {
+            // ローディング表示
+            document.getElementById('modalContent').innerHTML = `
+                <div style="text-align:center;padding:3rem;">
+                    <div style="width:50px;height:50px;border:3px solid var(--gray-light);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem;"></div>
+                    <p style="color:var(--gray);">e-Gov法令APIから取得中...</p>
+                    <p style="color:var(--gray);font-size:0.85rem;margin-top:0.5rem;">大きな法律は数秒かかる場合があります</p>
+                </div>
+                <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+            `;
+
+            // APIから取得
+            try {
+                const content = await getLawContent(lawId);
+                if (content) {
+                    document.getElementById('modalContent').innerHTML = content;
+                    setLawCache(lawId, content);
+                    document.getElementById('modalFooterInfo').textContent = 'e-Gov APIから取得';
+                } else {
+                    document.getElementById('modalContent').innerHTML = `
+                        <div style="text-align:center;padding:3rem;">
+                            <p style="color:#dc2626;margin-bottom:1rem;">法令本文の取得に失敗しました</p>
+                            <a href="${law.egov_url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--law-green);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                                e-Gov法令検索で見る
+                            </a>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('法令取得エラー:', error);
+                document.getElementById('modalContent').innerHTML = `
+                    <div style="text-align:center;padding:3rem;">
+                        <p style="color:#dc2626;margin-bottom:1rem;">エラー: ${escapeHtml(error.message)}</p>
+                        <a href="${law.egov_url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--law-green);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                            e-Gov法令検索で見る
+                        </a>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function getLawCache(lawId) {
+    try {
+        const cached = localStorage.getItem(LAW_CACHE_KEY_PREFIX + lawId);
+        if (!cached) return null;
+        const { content, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp > LAW_CACHE_DURATION) {
+            localStorage.removeItem(LAW_CACHE_KEY_PREFIX + lawId);
+            return null;
+        }
+        return content;
+    } catch (e) {
+        return null;
+    }
+}
+
+function setLawCache(lawId, content) {
+    try {
+        localStorage.setItem(LAW_CACHE_KEY_PREFIX + lawId, JSON.stringify({
+            content,
+            timestamp: Date.now()
+        }));
+    } catch (e) {
+        console.warn('キャッシュ保存に失敗:', e);
+    }
+}
+
+// ===== AI Assistant =====
+// APIエンドポイント（Cloudflare Worker）
+const AI_API_ENDPOINT = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
+
+function initAiAssistant() {
+    // チャットインターフェースを表示（APIキー不要）
+    document.getElementById('aiChatInterface').style.display = 'block';
+}
+
+function askExample(btn) {
+    const question = btn.textContent;
+    document.getElementById('aiChatInput').value = question;
+    sendAiMessage();
+}
+
+async function sendAiMessage() {
+    const input = document.getElementById('aiChatInput');
+    const question = input.value.trim();
+    if (!question) return;
+
+    const messagesEl = document.getElementById('aiChatMessages');
+    const sendBtn = document.getElementById('aiSendBtn');
+
+    // Add user message
+    messagesEl.innerHTML += `
+        <div class="ai-message user">
+            <div class="ai-message-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            </div>
+            <div class="ai-message-content">
+                <p>${escapeHtml(question)}</p>
+            </div>
+        </div>
+    `;
+
+    // Add typing indicator
+    const typingId = 'typing-' + Date.now();
+    messagesEl.innerHTML += `
+        <div class="ai-typing" id="${typingId}">
+            <div class="ai-typing-dots">
+                <span></span><span></span><span></span>
+            </div>
+            考え中...
+        </div>
+    `;
+
+    input.value = '';
+    sendBtn.disabled = true;
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+
+    try {
+        const response = await askGemini(question);
+
+        // Remove typing indicator
+        document.getElementById(typingId)?.remove();
+
+        // Add AI response
+        messagesEl.innerHTML += `
+            <div class="ai-message assistant">
+                <div class="ai-message-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                        <circle cx="7.5" cy="14.5" r="1.5"/>
+                        <circle cx="16.5" cy="14.5" r="1.5"/>
+                    </svg>
+                </div>
+                <div class="ai-message-content">
+                    ${formatAiResponse(response)}
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        document.getElementById(typingId)?.remove();
+        messagesEl.innerHTML += `
+            <div class="ai-message assistant">
+                <div class="ai-message-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+                        <circle cx="7.5" cy="14.5" r="1.5"/>
+                        <circle cx="16.5" cy="14.5" r="1.5"/>
+                    </svg>
+                </div>
+                <div class="ai-message-content">
+                    <p style="color:#dc2626;">エラーが発生しました: ${escapeHtml(error.message)}</p>
+                    <p>しばらくしてからもう一度お試しください。</p>
+                </div>
+            </div>
+        `;
+    }
+
+    sendBtn.disabled = false;
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function askGemini(question) {
+    // Build context from ordinance data
+    const relevantOrdinances = findRelevantOrdinances(question);
+
+    // 条例データをコンテキストとして構築
+    const ordinanceContext = relevantOrdinances.map(o => `
+条例名: ${o.title}
+カテゴリ: ${o.category}
+概要: ${o.summary}
+${o.fullText ? '本文: ' + o.fullText.replace(/<[^>]*>/g, '').substring(0, 2000) : ''}
+---`).join('\n');
+
+    // 関連する国の法律を検索
+    const relevantLaws = findRelevantLaws(question);
+    const lawContext = relevantLaws.map(l => `
+【${l.title}】（${l.lawNum}）
+概要: ${l.summary}
+${l.fullText ? '主要条文: ' + l.fullText.replace(/<[^>]*>/g, '').substring(0, 3000) : ''}
+---`).join('\n');
+
+    // Cloudflare Worker経由でAPIを呼び出し
+    const response = await fetch(AI_API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            question: question,
+            ordinanceContext: ordinanceContext,
+            lawContext: lawContext
+        })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'API呼び出しに失敗しました');
+    }
+
+    const data = await response.json();
+    return data.answer || '回答を生成できませんでした。';
+}
+
+function findRelevantOrdinances(question) {
+    // 類義語・関連語マッピング
+    const synonymMap = {
+        '報酬': ['給与', '給料', '手当', '賃金', '俸給', 'いくら', '金額'],
+        '給与': ['報酬', '給料', '手当', '賃金', '俸給'],
+        '議員': ['議会', '市議', '市議会議員'],
+        '議会': ['議員', '市議会'],
+        '情報公開': ['公開', '開示', '閲覧', '請求'],
+        '個人情報': ['プライバシー', '保護'],
+        '休日': ['休み', '祝日', '閉庁'],
+        '職員': ['公務員', '市役所', '従業員', '定数'],
+        '税': ['税金', '課税', '納税'],
+        '子育て': ['育児', '子ども', '児童', '保育'],
+        '福祉': ['介護', '障害', '高齢者', 'サービス'],
+        '環境': ['ごみ', '廃棄物', '公害', '自然'],
+        '建築': ['建物', '建設', '工事'],
+        '道路': ['通行', '交通', '道'],
+        '水道': ['上水道', '下水道', '水'],
+        '副市長': ['助役', '定数'],
+        '政務活動費': ['政活費', '活動費'],
+        '倫理': ['政治倫理', '行動規範'],
+        '契約': ['入札', '発注', '請負'],
+        '財産': ['資産', '所有', '処分'],
+        '審議会': ['委員会', '審査会', '協議会'],
+        '手数料': ['料金', '費用', '使用料'],
+        '基本条例': ['自治基本', '議会基本'],
+        '市長': ['首長', 'トップ'],
+        '何人': ['定数', '人数', '何名'],
+    };
+
+    // キーワード抽出と拡張
+    let keywords = question.toLowerCase().split(/[\s、。？！\?]+/).filter(w => w.length > 1);
+
+    // 類義語を追加
+    const expandedKeywords = [...keywords];
+    keywords.forEach(kw => {
+        Object.entries(synonymMap).forEach(([key, synonyms]) => {
+            if (kw.includes(key) || key.includes(kw)) {
+                expandedKeywords.push(key, ...synonyms);
+            }
+            if (synonyms.some(s => kw.includes(s) || s.includes(kw))) {
+                expandedKeywords.push(key, ...synonyms);
+            }
+        });
+    });
+
+    // 重複除去
+    const uniqueKeywords = [...new Set(expandedKeywords)];
+
+    // Score each ordinance based on relevance
+    const scored = allOrdinanceData.map(ord => {
+        let score = 0;
+        const titleLower = ord.title.toLowerCase();
+        const summaryLower = ord.summary.toLowerCase();
+        const fullTextLower = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+        const keywordsLower = ord.keywords.map(k => k.toLowerCase());
+        const categoryLower = ord.category.toLowerCase();
+
+        uniqueKeywords.forEach(kw => {
+            // タイトルマッチは高得点
+            if (titleLower.includes(kw)) score += 15;
+            // カテゴリマッチ
+            if (categoryLower.includes(kw)) score += 10;
+            // キーワードマッチ
+            if (keywordsLower.some(k => k.includes(kw) || kw.includes(k))) score += 8;
+            // 概要マッチ
+            if (summaryLower.includes(kw)) score += 5;
+            // 本文マッチ
+            if (fullTextLower.includes(kw)) score += 3;
+        });
+
+        // fullTextがある条例を優先
+        if (ord.fullText) score += 5;
+
+        return { ...ord, score };
+    });
+
+    // Return top 10 most relevant (スコア0でも基本条例は含める)
+    const relevant = scored
+        .filter(o => o.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+
+    // 関連条例が少ない場合、基本条例を追加
+    if (relevant.length < 3) {
+        const basicOrdinances = allOrdinanceData.filter(o =>
+            o.title.includes('自治基本') ||
+            o.title.includes('議会基本') ||
+            o.title.includes('議員報酬')
+        );
+        basicOrdinances.forEach(bo => {
+            if (!relevant.find(r => r.id === bo.id)) {
+                relevant.push({ ...bo, score: 1 });
+            }
+        });
+    }
+
+    return relevant.slice(0, 10);
+}
+
+// 関連する国の法律を検索
+function findRelevantLaws(question) {
+    const q = question.toLowerCase();
+
+    // 法律関連のキーワードマッピング
+    const lawKeywordMap = {
+        '地方自治': ['地方自治法', '地方公務員法'],
+        '自治': ['地方自治法'],
+        '議会': ['地方自治法'],
+        '議員': ['地方自治法', '公職選挙法'],
+        '選挙': ['公職選挙法', '地方自治法'],
+        '公務員': ['地方公務員法'],
+        '職員': ['地方公務員法'],
+        '給与': ['地方公務員法'],
+        '税': ['地方税法'],
+        '固定資産税': ['地方税法'],
+        '住民税': ['地方税法'],
+        '財政': ['地方財政法', '地方交付税法'],
+        '予算': ['地方財政法', '地方自治法'],
+        '福祉': ['社会福祉法', '児童福祉法'],
+        '児童': ['児童福祉法'],
+        '子ども': ['児童福祉法'],
+        '保育': ['児童福祉法'],
+        '介護': ['介護保険法'],
+        '要介護': ['介護保険法'],
+        '国保': ['国民健康保険法'],
+        '国民健康保険': ['国民健康保険法'],
+        '生活保護': ['生活保護法'],
+        '障害': ['障害者基本法'],
+        '都市計画': ['都市計画法'],
+        '用途地域': ['都市計画法'],
+        '開発許可': ['都市計画法'],
+        '建築': ['建築基準法'],
+        '建蔽率': ['建築基準法'],
+        '容積率': ['建築基準法'],
+        '道路': ['道路法'],
+        '環境': ['環境基本法'],
+        '廃棄物': ['廃棄物の処理及び清掃に関する法律'],
+        'ごみ': ['廃棄物の処理及び清掃に関する法律'],
+        '行政手続': ['行政手続法'],
+        '不服審査': ['行政不服審査法'],
+        '情報公開': ['行政機関の保有する情報の公開に関する法律'],
+        '個人情報': ['個人情報の保護に関する法律'],
+        '教育': ['教育基本法', '学校教育法', '地方教育行政の組織及び運営に関する法律'],
+        '学校': ['学校教育法'],
+        '教育委員会': ['地方教育行政の組織及び運営に関する法律'],
+        '消防': ['消防法', '消防組織法'],
+        '火災': ['消防法'],
+        '災害': ['災害対策基本法'],
+        '防災': ['災害対策基本法'],
+        '条例': ['地方自治法'],
+        '規則': ['地方自治法'],
+    };
+
+    // マッチする法律タイトルを収集
+    const matchedTitles = new Set();
+
+    Object.entries(lawKeywordMap).forEach(([keyword, titles]) => {
+        if (q.includes(keyword)) {
+            titles.forEach(t => matchedTitles.add(t));
+        }
+    });
+
+    // majorLawDataからマッチする法律を抽出
+    const relevantLaws = majorLawData.filter(law => {
+        // タイトルでマッチ
+        if (matchedTitles.has(law.title)) return true;
+
+        // キーワードでマッチ
+        if (law.keywords && law.keywords.some(kw => q.includes(kw.toLowerCase()))) return true;
+
+        return false;
+    });
+
+    // fullTextがある法律を優先してソート
+    relevantLaws.sort((a, b) => {
+        if (a.fullText && !b.fullText) return -1;
+        if (!a.fullText && b.fullText) return 1;
+        return 0;
+    });
+
+    return relevantLaws.slice(0, 5); // 最大5件
+}
+
+function formatAiResponse(text) {
+    // Convert markdown-like formatting to HTML
+    let html = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>')
+        .replace(/「(.*?)」/g, '「<span class="ordinance-ref" onclick="searchOrdinanceByName(\'$1\')">$1</span>」');
+
+    return `<p>${html}</p>`;
+}
+
+function searchOrdinanceByName(name) {
+    // Switch to ordinance tab and search
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.tab-btn[data-tab="ordinance"]').classList.add('active');
+    document.querySelectorAll('.search-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('ordinanceSection').classList.add('active');
+
+    document.getElementById('ordinanceSearchInput').value = name;
+    searchOrdinances();
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Initialize AI assistant on load
+document.getElementById('aiChatInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendAiMessage();
+});
+
+initAiAssistant();
+</script>
+
+</body>
+</html>

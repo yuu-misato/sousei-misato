@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予算書AIレビュー | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
+    <style>
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --orange: #f59e0b;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --red: #ef4444;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo { font-size: 1.8rem; font-weight: 900; color: var(--navy); margin-bottom: 0.3rem; }
+        .login-sub { color: var(--gray); font-size: 0.85rem; margin-bottom: 2rem; }
+        .login-input {
+            width: 100%; padding: 0.85rem 1rem; background: var(--gray-lighter);
+            border: 1px solid var(--gray-light); border-radius: 8px;
+            color: var(--text); font-size: 1rem; font-family: inherit;
+            outline: none; margin-bottom: 1rem; transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%; padding: 0.85rem; background: var(--green); color: var(--white);
+            border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            font-family: inherit; cursor: pointer; transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2; color: #dc2626; padding: 0.6rem;
+            border-radius: 8px; font-size: 0.82rem; margin-bottom: 1rem;
+            display: none; border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px; background: var(--navy); position: fixed;
+            top: 0; left: 0; bottom: 0; z-index: 100;
+            display: flex; flex-direction: column; transition: transform 0.3s ease;
+        }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+        .sidebar-logo-icon { width: 40px; height: 40px; background: var(--white); border-radius: 8px; padding: 4px; }
+        .sidebar-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .sidebar-logo-text { font-size: 1.1rem; font-weight: 700; }
+        .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+        .sidebar-nav-section { padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;
+            transition: all 0.2s; border-left: 3px solid transparent;
+        }
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+        .sidebar-nav a.active { background: rgba(255,255,255,0.1); color: var(--white); border-left-color: var(--green); }
+        .sidebar-nav a svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+        .sidebar-external-link {
+            display: flex; align-items: center; gap: 0.4rem;
+            color: rgba(255,255,255,0.6); text-decoration: none;
+            margin-bottom: 0.5rem; transition: color 0.2s;
+        }
+        .sidebar-external-link:hover { color: var(--white); }
+
+        /* ===== Mobile ===== */
+        .mobile-header {
+            display: none; position: fixed; top: 0; left: 0; right: 0;
+            height: 60px; background: var(--navy); z-index: 101;
+            padding: 0 1rem; align-items: center; justify-content: space-between;
+        }
+        .mobile-header-logo { display: flex; align-items: center; gap: 0.5rem; color: var(--white); text-decoration: none; font-weight: 700; }
+        .mobile-header-logo img { width: 32px; height: 32px; background: var(--white); border-radius: 6px; padding: 2px; }
+        .menu-toggle { background: none; border: none; color: var(--white); cursor: pointer; padding: 0.5rem; }
+        .menu-toggle svg { width: 28px; height: 28px; }
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+
+        /* ===== Main Content ===== */
+        .main-wrapper { flex: 1; margin-left: 260px; }
+        .main-container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .page-header h1 { font-size: 1.5rem; color: var(--navy); margin-bottom: 0.25rem; }
+        .page-header p { color: var(--gray); font-size: 0.9rem; }
+
+        /* ===== Tabs ===== */
+        .tabs {
+            display: flex; gap: 0.5rem; margin-bottom: 2rem;
+            border-bottom: 2px solid var(--gray-light); padding-bottom: 0;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.25rem; background: none; border: none;
+            color: var(--gray); font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; border-bottom: 3px solid transparent;
+            margin-bottom: -2px; transition: all 0.2s; white-space: nowrap;
+            font-family: inherit; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .tab-btn:hover { color: var(--navy); }
+        .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+        .tab-btn svg { width: 18px; height: 18px; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ===== Input Section ===== */
+        .input-card {
+            background: var(--white); border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .input-card h2 {
+            font-size: 1.1rem; color: var(--navy); margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .input-card h2 svg { width: 20px; height: 20px; color: var(--green); }
+
+        .form-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin-bottom: 1rem;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.7rem; border: 1px solid var(--gray-light); border-radius: 8px;
+            font-size: 0.95rem; font-family: inherit; transition: border-color 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--green);
+        }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+
+        .budget-input-wrapper {
+            border: 2px dashed var(--gray-light); border-radius: 12px;
+            padding: 2rem; text-align: center; transition: all 0.2s;
+            cursor: pointer; margin-bottom: 1rem;
+        }
+        .budget-input-wrapper:hover { border-color: var(--green); background: rgba(124, 179, 66, 0.05); }
+        .budget-input-wrapper.has-data { border-style: solid; border-color: var(--green); background: rgba(124, 179, 66, 0.05); }
+        .budget-input-wrapper svg { width: 48px; height: 48px; color: var(--gray); margin-bottom: 0.75rem; }
+        .budget-input-wrapper.has-data svg { color: var(--green); }
+        .budget-input-wrapper p { color: var(--gray); font-size: 0.9rem; }
+        .budget-input-wrapper.has-data p { color: var(--green); font-weight: 600; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.9rem;
+            font-weight: 600; font-family: inherit; cursor: pointer;
+            transition: all 0.2s; border: none;
+        }
+        .btn-primary { background: var(--green); color: var(--white); }
+        .btn-primary:hover { background: var(--green-dark); }
+        .btn-primary:disabled { background: var(--gray-light); color: var(--gray); cursor: not-allowed; }
+        .btn-secondary { background: var(--gray-lighter); color: var(--text); }
+        .btn-secondary:hover { background: var(--gray-light); }
+        .btn svg { width: 18px; height: 18px; }
+
+        .btn-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+        /* ===== Quick Stats ===== */
+        .quick-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--white); border-radius: 12px; padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .stat-card.highlight { border-left: 4px solid var(--green); }
+        .stat-card.warning { border-left: 4px solid var(--orange); }
+        .stat-card.danger { border-left: 4px solid var(--red); }
+        .stat-card.info { border-left: 4px solid var(--blue); }
+        .stat-label { font-size: 0.8rem; color: var(--gray); margin-bottom: 0.25rem; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--navy); }
+        .stat-value.positive { color: var(--green); }
+        .stat-value.negative { color: var(--red); }
+        .stat-change { font-size: 0.8rem; margin-top: 0.25rem; display: flex; align-items: center; gap: 0.25rem; }
+        .stat-change.up { color: var(--red); }
+        .stat-change.down { color: var(--green); }
+        .stat-change svg { width: 14px; height: 14px; }
+
+        /* ===== Analysis Result ===== */
+        .result-section {
+            background: var(--white); border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .result-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 1.5rem; background: var(--gray-lighter);
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .result-header h3 { font-size: 1rem; color: var(--navy); display: flex; align-items: center; gap: 0.5rem; }
+        .result-header h3 svg { width: 20px; height: 20px; color: var(--green); }
+        .result-actions { display: flex; gap: 0.5rem; }
+        .result-actions button {
+            padding: 0.4rem 0.75rem; border: 1px solid var(--gray-light);
+            background: var(--white); border-radius: 6px; font-size: 0.8rem;
+            cursor: pointer; display: flex; align-items: center; gap: 0.3rem;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .result-actions button:hover { background: var(--gray-lighter); }
+        .result-actions button svg { width: 14px; height: 14px; }
+
+        .result-body { padding: 1.5rem; }
+        .result-body h4 { font-size: 1rem; color: var(--navy); margin: 1.5rem 0 0.75rem; }
+        .result-body h4:first-child { margin-top: 0; }
+        .result-body p { margin-bottom: 0.75rem; }
+        .result-body ul, .result-body ol { margin: 0.75rem 0 0.75rem 1.5rem; }
+        .result-body li { margin-bottom: 0.4rem; }
+        .result-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        .result-body th, .result-body td { padding: 0.6rem 0.75rem; border: 1px solid var(--gray-light); text-align: left; }
+        .result-body th { background: var(--gray-lighter); font-weight: 600; }
+        .result-body .increase { color: var(--red); }
+        .result-body .decrease { color: var(--green); }
+
+        /* ===== Comparison Table ===== */
+        .comparison-table { overflow-x: auto; }
+        .comparison-table table { min-width: 600px; }
+        .comparison-table th:first-child, .comparison-table td:first-child { position: sticky; left: 0; background: var(--white); z-index: 1; }
+        .comparison-table th:first-child { background: var(--gray-lighter); }
+
+        /* ===== Chart Placeholder ===== */
+        .chart-container {
+            background: var(--gray-lighter); border-radius: 8px;
+            padding: 2rem; text-align: center; margin: 1rem 0;
+        }
+        .chart-container svg { width: 64px; height: 64px; color: var(--gray); margin-bottom: 0.5rem; }
+        .chart-container p { color: var(--gray); font-size: 0.9rem; }
+
+        /* ===== Budget Items ===== */
+        .budget-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.75rem 1rem; border-radius: 8px; background: var(--gray-lighter);
+            margin-bottom: 0.5rem;
+        }
+        .budget-item-name { font-weight: 600; }
+        .budget-item-values { display: flex; gap: 1.5rem; font-size: 0.9rem; }
+        .budget-item-value { text-align: right; }
+        .budget-item-value small { display: block; font-size: 0.75rem; color: var(--gray); }
+
+        /* ===== Loading ===== */
+        .loading {
+            display: none; align-items: center; justify-content: center;
+            gap: 0.75rem; padding: 3rem; color: var(--gray);
+        }
+        .loading.active { display: flex; }
+        .loading-spinner {
+            width: 24px; height: 24px; border: 3px solid var(--gray-light);
+            border-top-color: var(--green); border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== Sample Data Notice ===== */
+        .sample-notice {
+            display: flex; align-items: center; gap: 0.75rem;
+            background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px;
+            padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: #c2410c;
+        }
+        .sample-notice svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center; padding: 3rem; color: var(--gray);
+        }
+        .empty-state svg { width: 64px; height: 64px; margin-bottom: 1rem; opacity: 0.5; }
+        .empty-state h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem; }
+        .empty-state p { font-size: 0.9rem; }
+
+        /* ===== History List ===== */
+        .history-list { display: flex; flex-direction: column; gap: 1rem; }
+        .history-card {
+            background: var(--white); border-radius: 12px; padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer;
+            transition: all 0.2s; border: 2px solid transparent;
+        }
+        .history-card:hover { border-color: var(--green); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .history-card.active { border-color: var(--green); background: rgba(124, 179, 66, 0.05); }
+        .history-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+        .history-title { font-weight: 600; color: var(--navy); font-size: 1rem; }
+        .history-badge {
+            font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;
+            background: var(--gray-lighter); color: var(--gray);
+        }
+        .history-badge.sample { background: #fff7ed; color: #c2410c; }
+        .history-meta { font-size: 0.8rem; color: var(--gray); display: flex; gap: 1rem; flex-wrap: wrap; }
+        .history-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+        .history-actions button {
+            padding: 0.4rem 0.75rem; font-size: 0.8rem; border-radius: 6px;
+            border: 1px solid var(--gray-light); background: var(--white);
+            cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 0.3rem;
+        }
+        .history-actions button:hover { background: var(--gray-lighter); }
+        .history-actions button.delete { color: var(--red); border-color: #fecaca; }
+        .history-actions button.delete:hover { background: #fef2f2; }
+        .history-actions button svg { width: 14px; height: 14px; }
+
+        /* ===== PDF Notice ===== */
+        .pdf-notice {
+            display: flex; align-items: flex-start; gap: 0.75rem;
+            background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+            padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.85rem; color: #1e40af;
+        }
+        .pdf-notice svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 0.1rem; }
+        .pdf-notice a { color: #1e40af; font-weight: 600; }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed; bottom: 2rem; left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--navy); color: white;
+            padding: 0.75rem 1.5rem; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 500;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            opacity: 0; transition: all 0.3s ease; z-index: 1000;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .mobile-header { display: flex; }
+            .main-wrapper { margin-left: 0; }
+            .main-container { padding: 80px 1rem 2rem; }
+        }
+
+        @media (max-width: 375px) {
+            .main-container { padding: 70px 0.75rem 1.5rem; }
+            .page-header { flex-direction: column; }
+            .page-header h1 { font-size: 1.2rem; }
+            .tabs { gap: 0.25rem; }
+            .tab-btn { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
+            .input-card { padding: 1rem; }
+            .input-card h2 { font-size: 1rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .form-group input, .form-group select, .form-group textarea { font-size: 16px; }
+            .quick-stats { grid-template-columns: 1fr 1fr; }
+            .stat-card { padding: 1rem; }
+            .stat-value { font-size: 1.2rem; }
+            .result-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+            .result-actions { width: 100%; }
+            .result-actions button { flex: 1; justify-content: center; }
+            .budget-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .budget-item-values { width: 100%; justify-content: space-between; }
+            .btn-group { flex-direction: column; }
+            .btn-group .btn { width: 100%; }
+            .mobile-header h1 { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">創政MISATO</div>
+            <div class="login-sub">予算書AIレビュー</div>
+            <div class="login-error" id="loginError">パスワードが正しくありません</div>
+            <form onsubmit="return handleLogin(event)">
+                <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力">
+                <button type="submit" class="login-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <div class="mobile-header">
+            <a href="/member/" class="mobile-header-logo">
+                <img src="/member/images/logo.png" alt="創政MISATO">
+                <span>創政MISATO</span>
+            </a>
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+        <div class="app-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <a href="/member/" class="sidebar-logo">
+                        <div class="sidebar-logo-icon">
+                            <img src="/member/images/logo.png" alt="創政MISATO">
+                        </div>
+                        <span class="sidebar-logo-text">創政MISATO</span>
+                    </a>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-section">メニュー</div>
+                    <a href="/member/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                        ホーム
+                    </a>
+                    <a href="/member/budget/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/></svg>
+                        会派予算管理
+                    </a>
+                    <a href="/member/budget-analysis.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        予算書AIレビュー
+                    </a>
+                    <a href="/member/assets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        会派アセット
+                    </a>
+                    <div class="sidebar-nav-section">条例AI</div>
+                    <a href="/member/search.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        条例検索
+                    </a>
+                    <a href="/member/review.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                        条例AIレビュー
+                    </a>
+                    <a href="/member/barrier.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        障壁を調べる
+                    </a>
+                    <div class="sidebar-nav-section">リサーチAI</div>
+                    <a href="/member/research.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                        一般質問リサーチ
+                    </a>
+                    <a href="/member/research-history.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        リサーチ履歴
+                    </a>
+                    <div class="sidebar-nav-section">その他</div>
+                    <a href="/member/guideline.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        ガイドライン
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    © 2026 創政MISATO
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-wrapper">
+                <main class="main-container">
+                    <div class="page-header">
+                        <div>
+                            <h1>予算書AIレビュー</h1>
+                            <p>予算書データを分析し、前年度比較・財政指標・重点項目を可視化します</p>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="input">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            予算データ入力
+                        </button>
+                        <button class="tab-btn" data-tab="overview">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                            概要分析
+                        </button>
+                        <button class="tab-btn" data-tab="comparison">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            前年度比較
+                        </button>
+                        <button class="tab-btn" data-tab="fiscal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            財政指標
+                        </button>
+                        <button class="tab-btn" data-tab="questions">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            質問ポイント
+                        </button>
+                        <button class="tab-btn" data-tab="history">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            分析履歴
+                        </button>
+                    </div>
+
+                    <!-- Input Tab -->
+                    <div class="tab-content active" id="tab-input">
+                        <div class="input-card">
+                            <h2>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                予算データをアップロード
+                            </h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>分析対象年度</label>
+                                    <select id="targetYear">
+                                        <option value="2026">令和8年度（2026）</option>
+                                        <option value="2025">令和7年度（2025）</option>
+                                        <option value="2024">令和6年度（2024）</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>予算種別</label>
+                                    <select id="budgetType">
+                                        <option value="general">一般会計</option>
+                                        <option value="special">特別会計</option>
+                                        <option value="enterprise">企業会計</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="pdf-notice">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <div>
+                                    <strong>PDF予算書の場合:</strong> PDFをそのままアップロードするか、テキストをコピー＆ペーストしてください。<br>
+                                    複雑な表形式の場合は、主要な数値をテキストで入力すると精度が上がります。
+                                </div>
+                            </div>
+
+                            <div class="budget-input-wrapper" id="currentYearDrop" onclick="document.getElementById('currentYearFile').click()">
+                                <input type="file" id="currentYearFile" accept=".csv,.xlsx,.xls,.pdf,.txt" style="display:none" onchange="handleFileUpload(this, 'current')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                <p id="currentYearLabel">予算書をドラッグ＆ドロップ<br>または クリックして選択（CSV/Excel/PDF）</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>または テキストで入力（予算概要・主要項目など）</label>
+                                <textarea id="budgetText" placeholder="例：&#10;令和8年度一般会計予算&#10;歳入総額: 450億円&#10;歳出総額: 448億円&#10;&#10;【歳入内訳】&#10;市税: 180億円（前年比+2.5%）&#10;地方交付税: 85億円（前年比-1.2%）&#10;国庫支出金: 75億円&#10;..."></textarea>
+                            </div>
+
+                            <div class="btn-group">
+                                <button class="btn btn-primary" onclick="analyzeBudget()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                                    AIで分析する
+                                </button>
+                                <button class="btn btn-secondary" onclick="loadSampleAndAnalyze()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    サンプルデータで試す
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overview Tab -->
+                    <div class="tab-content" id="tab-overview">
+                        <div class="sample-notice" id="sampleNotice" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>これはサンプルデータによる分析結果です。実際の予算書をアップロードすると、より正確な分析が可能です。</span>
+                        </div>
+
+                        <div class="quick-stats" id="quickStats">
+                            <!-- Generated by JS -->
+                        </div>
+
+                        <div class="result-section">
+                            <div class="result-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                    予算概要サマリー
+                                </h3>
+                                <div class="result-actions">
+                                    <button onclick="copyResult('overviewSummary')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                        コピー
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="result-body" id="overviewSummary">
+                                <div class="empty-state">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                    <h3>分析結果がありません</h3>
+                                    <p>予算データを入力して「AIで分析する」をクリックしてください</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Tab -->
+                    <div class="tab-content" id="tab-comparison">
+                        <div class="result-section">
+                            <div class="result-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                                    前年度比較分析
+                                </h3>
+                                <div class="result-actions">
+                                    <button onclick="copyResult('comparisonResult')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                        コピー
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="result-body" id="comparisonResult">
+                                <div class="empty-state">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                                    <h3>比較データがありません</h3>
+                                    <p>当年度と前年度の予算データを入力すると、比較分析が表示されます</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fiscal Tab -->
+                    <div class="tab-content" id="tab-fiscal">
+                        <div class="result-section">
+                            <div class="result-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    財政指標分析
+                                </h3>
+                                <div class="result-actions">
+                                    <button onclick="copyResult('fiscalResult')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                        コピー
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="result-body" id="fiscalResult">
+                                <div class="empty-state">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <h3>財政指標データがありません</h3>
+                                    <p>予算データを入力すると、主要な財政指標が計算・表示されます</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Questions Tab -->
+                    <div class="tab-content" id="tab-questions">
+                        <div class="result-section">
+                            <div class="result-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    予算質問のポイント
+                                </h3>
+                                <div class="result-actions">
+                                    <button onclick="copyResult('questionsResult')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                        コピー
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="result-body" id="questionsResult">
+                                <div class="empty-state">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <h3>質問ポイントがありません</h3>
+                                    <p>予算データを分析すると、議会質問で使えるポイントが生成されます</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- History Tab -->
+                    <div class="tab-content" id="tab-history">
+                        <div class="input-card">
+                            <h2>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                分析履歴
+                            </h2>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem;">過去の予算分析結果を確認・再利用できます。</p>
+                            <div class="history-list" id="historyList">
+                                <div class="empty-state">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <h3>履歴がありません</h3>
+                                    <p>予算分析を行うと、結果がここに保存されます</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading -->
+                    <div class="loading" id="loading">
+                        <div class="loading-spinner"></div>
+                        <span>予算データを分析中...</span>
+                    </div>
+
+                    <!-- Toast -->
+                    <div class="toast" id="toast"></div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script>
+        // ===== Supabase Setup =====
+        const SUPABASE_URL = 'https://rfbhmdsonengrgumpacx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmYmhtZHNvbmVuZ3JndW1wYWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzAyOTEsImV4cCI6MjA4NTgwNjI5MX0.Z0rE8CYxHSEyz-A0eXx2r7Zgg87hqkLqrl6KEfG01jk';
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ===== State =====
+        let currentAnalysisId = null;
+        let analysisResults = {
+            overview: null,
+            comparison: null,
+            fiscal: null,
+            questions: null
+        };
+
+        // Auth
+        const CORRECT_PASSWORD = 'misato2024';
+
+        function checkAuth() {
+            if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadHistory(); // 履歴を読み込む
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+            if (password === CORRECT_PASSWORD) {
+                localStorage.setItem('member_auth', '1');
+                localStorage.setItem('memberLoggedIn', 'true');
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+            return false;
+        }
+
+        // Sidebar
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+            document.querySelector('.sidebar-overlay').classList.toggle('open');
+        }
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // File handling
+        let currentYearData = null;
+
+        function handleFileUpload(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const wrapper = document.getElementById('currentYearDrop');
+            const label = document.getElementById('currentYearLabel');
+
+            wrapper.classList.add('has-data');
+            label.textContent = `✓ ${file.name} を選択しました`;
+
+            // Read file content (simplified - would need proper CSV/Excel parsing)
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                currentYearData = e.target.result;
+            };
+            reader.readAsText(file);
+        }
+
+        // Drag and drop
+        const dropEl = document.getElementById('currentYearDrop');
+        dropEl.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropEl.style.borderColor = 'var(--green)';
+            dropEl.style.background = 'rgba(124, 179, 66, 0.1)';
+        });
+        dropEl.addEventListener('dragleave', () => {
+            if (!dropEl.classList.contains('has-data')) {
+                dropEl.style.borderColor = '';
+                dropEl.style.background = '';
+            }
+        });
+        dropEl.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('currentYearFile');
+            input.files = e.dataTransfer.files;
+            handleFileUpload(input, 'current');
+        });
+
+        // Sample data
+        function loadSampleData() {
+            const sampleText = `令和8年度 三郷市一般会計予算（案）
+
+【歳入歳出予算総額】
+歳入総額: 452億3,000万円（前年度比 +2.8%）
+歳出総額: 450億円（前年度比 +2.5%）
+
+【歳入内訳】
+・市税: 182億円（40.2%）前年比 +3.2%
+  - 個人市民税: 78億円
+  - 法人市民税: 22億円
+  - 固定資産税: 72億円
+  - その他: 10億円
+・地方交付税: 83億円（18.4%）前年比 -1.5%
+・国庫支出金: 76億円（16.8%）前年比 +5.2%
+・県支出金: 32億円（7.1%）前年比 +1.8%
+・市債: 35億円（7.7%）前年比 +12.5%
+・その他: 44億3,000万円（9.8%）
+
+【歳出内訳（目的別）】
+・民生費: 198億円（44.0%）前年比 +4.5%
+  - 児童福祉費: 85億円（新規：こども医療費助成拡大 +2億円）
+  - 高齢者福祉費: 62億円
+  - 障害者福祉費: 38億円
+  - 生活保護費: 13億円
+・教育費: 58億円（12.9%）前年比 +8.2%
+  - 学校施設整備: 18億円（新規：小学校エアコン更新 +5億円）
+  - 給食費無償化継続: 6億円
+・土木費: 52億円（11.6%）前年比 +3.8%
+  - 道路橋梁整備: 22億円
+  - 公園整備: 8億円（新規：インクルーシブ公園 +2億円）
+・総務費: 48億円（10.7%）前年比 -2.1%
+・衛生費: 42億円（9.3%）前年比 +1.2%
+・消防費: 22億円（4.9%）前年比 +15.3%
+  - 消防車両更新: 4億円
+  - 消防署改修: 3億円
+・公債費: 25億円（5.6%）前年比 -0.8%
+・その他: 5億円（1.1%）
+
+【財政指標（見込み）】
+・経常収支比率: 92.5%（前年度 93.2%）
+・実質公債費比率: 6.8%（前年度 7.1%）
+・将来負担比率: 45.2%（前年度 48.5%）
+・財政力指数: 0.82（前年度 0.81）
+
+【主要新規事業】
+1. こども医療費助成の対象拡大（高校生まで）: 2億円
+2. 小中学校エアコン更新事業: 5億円
+3. インクルーシブ公園整備: 2億円
+4. 防災行政無線デジタル化: 3億円
+5. 脱炭素推進事業（公共施設LED化等）: 1.5億円
+
+【基金残高見込み】
+・財政調整基金: 45億円（前年度末 48億円、3億円取崩し）
+・減債基金: 12億円
+・その他特定目的基金: 28億円`;
+
+            document.getElementById('budgetText').value = sampleText;
+        }
+
+        // サンプルデータを読み込んで分析
+        function loadSampleAndAnalyze() {
+            loadSampleData();
+            analyzeBudget(true); // isSample = true
+        }
+
+        // Analysis
+        async function analyzeBudget(isSample = false) {
+            const budgetText = document.getElementById('budgetText').value;
+            if (!budgetText && !currentYearData) {
+                alert('予算データを入力またはアップロードしてください');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+
+            // Switch to overview tab
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="overview"]').classList.add('active');
+            document.getElementById('tab-overview').classList.add('active');
+
+            // サンプル通知を表示/非表示
+            document.getElementById('sampleNotice').style.display = isSample ? 'flex' : 'none';
+
+            try {
+                const dataToAnalyze = budgetText || currentYearData;
+
+                // Call Gemini API via existing worker
+                const response = await fetch('https://misato-jorei-ai.yusaku41.workers.dev/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        isBudgetAnalysis: true,
+                        budgetData: dataToAnalyze
+                    })
+                });
+
+                if (!response.ok) throw new Error('API request failed');
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                const result = data.result;
+
+                // Parse sections
+                const sections = result.split(/## \d\./);
+
+                // Quick stats (simplified)
+                renderQuickStats();
+
+                // Overview - 保存用に結果を記録
+                if (sections[1]) {
+                    const overviewContent = sections[1].replace(/^[^#]*/, '').trim();
+                    analysisResults.overview = overviewContent;
+                    document.getElementById('overviewSummary').innerHTML = marked.parse(overviewContent);
+                }
+
+                // Comparison
+                if (sections[2]) {
+                    const comparisonContent = sections[2].replace(/^[^#]*/, '').trim();
+                    analysisResults.comparison = comparisonContent;
+                    document.getElementById('comparisonResult').innerHTML = marked.parse(comparisonContent);
+                }
+
+                // Fiscal
+                if (sections[3]) {
+                    const fiscalContent = sections[3].replace(/^[^#]*/, '').trim();
+                    analysisResults.fiscal = fiscalContent;
+                    document.getElementById('fiscalResult').innerHTML = marked.parse(fiscalContent);
+                }
+
+                // Questions
+                if (sections[4]) {
+                    const questionsContent = sections[4].replace(/^[^#]*/, '').trim();
+                    analysisResults.questions = questionsContent;
+                    document.getElementById('questionsResult').innerHTML = marked.parse(questionsContent);
+                }
+
+                // Supabaseに自動保存
+                await saveAnalysis(isSample);
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+                alert('分析中にエラーが発生しました。しばらく経ってから再度お試しください。');
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
+        function renderQuickStats() {
+            const stats = [
+                { label: '歳入総額', value: '452.3億円', change: '+2.8%', changeType: 'up', type: 'highlight' },
+                { label: '歳出総額', value: '450億円', change: '+2.5%', changeType: 'up', type: 'highlight' },
+                { label: '経常収支比率', value: '92.5%', change: '-0.7pt', changeType: 'down', type: 'info' },
+                { label: '財政調整基金', value: '45億円', change: '-3億円', changeType: 'up', type: 'warning' }
+            ];
+
+            document.getElementById('quickStats').innerHTML = stats.map(s => `
+                <div class="stat-card ${s.type}">
+                    <div class="stat-label">${s.label}</div>
+                    <div class="stat-value">${s.value}</div>
+                    <div class="stat-change ${s.changeType}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="${s.changeType === 'up' ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'}"/>
+                        </svg>
+                        ${s.change}（前年度比）
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function copyResult(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('コピーしました');
+            });
+        }
+
+        // ===== Toast =====
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (type ? ' ' + type : '');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ===== Supabase CRUD =====
+        async function loadHistory() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                renderHistoryList(data || []);
+            } catch (error) {
+                console.error('履歴の読み込みエラー:', error);
+            }
+        }
+
+        function renderHistoryList(items) {
+            const container = document.getElementById('historyList');
+
+            if (!items || items.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <h3>履歴がありません</h3>
+                        <p>予算分析を行うと、結果がここに保存されます</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const budgetTypeLabels = {
+                'general': '一般会計',
+                'special': '特別会計',
+                'enterprise': '企業会計'
+            };
+
+            container.innerHTML = items.map(item => `
+                <div class="history-card" data-id="${item.id}">
+                    <div class="history-header">
+                        <span class="history-title">${item.title || `令和${item.fiscal_year - 2018}年度（${item.fiscal_year}）予算分析`}</span>
+                        ${item.is_sample ? '<span class="history-badge sample">サンプル</span>' : `<span class="history-badge">${budgetTypeLabels[item.budget_type] || item.budget_type}</span>`}
+                    </div>
+                    <div class="history-meta">
+                        <span>年度: ${item.fiscal_year}</span>
+                        <span>作成: ${new Date(item.created_at).toLocaleDateString('ja-JP')}</span>
+                    </div>
+                    <div class="history-actions">
+                        <button onclick="loadAnalysisById(${item.id})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            表示
+                        </button>
+                        <button onclick="compareWithYear(${item.id}, ${item.fiscal_year})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            年度比較
+                        </button>
+                        <button class="delete" onclick="deleteAnalysis(${item.id})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            削除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function saveAnalysis(isSample = false) {
+            const fiscalYear = parseInt(document.getElementById('targetYear').value);
+            const budgetType = document.getElementById('budgetType').value;
+            const inputData = document.getElementById('budgetText').value;
+
+            const analysisData = {
+                fiscal_year: fiscalYear,
+                budget_type: budgetType,
+                title: null,
+                input_data: inputData,
+                overview_summary: analysisResults.overview,
+                comparison_result: analysisResults.comparison,
+                fiscal_result: analysisResults.fiscal,
+                questions_result: analysisResults.questions,
+                quick_stats: null,
+                is_sample: isSample
+            };
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .insert([analysisData])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                currentAnalysisId = data.id;
+                showToast('分析結果を保存しました', 'success');
+                loadHistory();
+            } catch (error) {
+                console.error('保存エラー:', error);
+                showToast('保存に失敗しました', 'error');
+            }
+        }
+
+        async function loadAnalysisById(id) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error) throw error;
+
+                currentAnalysisId = data.id;
+
+                // フォームに値を設定
+                document.getElementById('targetYear').value = data.fiscal_year;
+                document.getElementById('budgetType').value = data.budget_type;
+                document.getElementById('budgetText').value = data.input_data || '';
+
+                // サンプル通知
+                if (data.is_sample) {
+                    document.getElementById('sampleNotice').style.display = 'flex';
+                } else {
+                    document.getElementById('sampleNotice').style.display = 'none';
+                }
+
+                // 分析結果を表示
+                if (data.overview_summary) {
+                    document.getElementById('overviewSummary').innerHTML = marked.parse(data.overview_summary);
+                    analysisResults.overview = data.overview_summary;
+                }
+                if (data.comparison_result) {
+                    document.getElementById('comparisonResult').innerHTML = marked.parse(data.comparison_result);
+                    analysisResults.comparison = data.comparison_result;
+                }
+                if (data.fiscal_result) {
+                    document.getElementById('fiscalResult').innerHTML = marked.parse(data.fiscal_result);
+                    analysisResults.fiscal = data.fiscal_result;
+                }
+                if (data.questions_result) {
+                    document.getElementById('questionsResult').innerHTML = marked.parse(data.questions_result);
+                    analysisResults.questions = data.questions_result;
+                }
+
+                // Quick Stats を表示
+                renderQuickStats();
+
+                // 概要タブに切り替え
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector('[data-tab="overview"]').classList.add('active');
+                document.getElementById('tab-overview').classList.add('active');
+
+                showToast('分析結果を読み込みました');
+            } catch (error) {
+                console.error('読み込みエラー:', error);
+                showToast('読み込みに失敗しました', 'error');
+            }
+        }
+
+        async function deleteAnalysis(id) {
+            if (!confirm('この分析結果を削除しますか？')) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('budget_analyses')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                if (currentAnalysisId === id) {
+                    currentAnalysisId = null;
+                }
+
+                showToast('削除しました', 'success');
+                loadHistory();
+            } catch (error) {
+                console.error('削除エラー:', error);
+                showToast('削除に失敗しました', 'error');
+            }
+        }
+
+        // ===== 年度間比較機能 =====
+        async function compareWithYear(currentId, currentFiscalYear) {
+            try {
+                // 他の年度の分析を取得
+                const { data: allAnalyses, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('id, fiscal_year, title, is_sample')
+                    .neq('id', currentId)
+                    .order('fiscal_year', { ascending: false });
+
+                if (error) throw error;
+
+                if (!allAnalyses || allAnalyses.length === 0) {
+                    alert('比較できる他の年度のデータがありません。\n先に他の年度の予算分析を登録してください。');
+                    return;
+                }
+
+                // 年度選択ダイアログを表示
+                const yearOptions = allAnalyses.map(a =>
+                    `${a.fiscal_year}年度${a.is_sample ? '（サンプル）' : ''}`
+                ).join('\n');
+
+                const selectedYear = prompt(
+                    `比較する年度を入力してください:\n\n登録済みの年度:\n${yearOptions}`,
+                    allAnalyses[0].fiscal_year
+                );
+
+                if (!selectedYear) return;
+
+                const compareAnalysis = allAnalyses.find(a => a.fiscal_year === parseInt(selectedYear));
+                if (!compareAnalysis) {
+                    alert('指定された年度のデータが見つかりません');
+                    return;
+                }
+
+                // 両方の分析データを取得して比較
+                await performYearComparison(currentId, compareAnalysis.id);
+
+            } catch (error) {
+                console.error('年度比較エラー:', error);
+                showToast('比較処理に失敗しました', 'error');
+            }
+        }
+
+        async function performYearComparison(id1, id2) {
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+
+            try {
+                // 両年度のデータを取得
+                const { data: analyses, error } = await supabaseClient
+                    .from('budget_analyses')
+                    .select('*')
+                    .in('id', [id1, id2]);
+
+                if (error) throw error;
+
+                const [analysis1, analysis2] = analyses.sort((a, b) => b.fiscal_year - a.fiscal_year);
+
+                // Gemini APIで比較分析
+                const response = await fetch('https://misato-jorei-ai.yusaku41.workers.dev/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        isBudgetComparison: true,
+                        budget1: {
+                            fiscal_year: analysis1.fiscal_year,
+                            input_data: analysis1.input_data
+                        },
+                        budget2: {
+                            fiscal_year: analysis2.fiscal_year,
+                            input_data: analysis2.input_data
+                        }
+                    })
+                });
+
+                if (!response.ok) throw new Error('API request failed');
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                const result = data.result;
+
+                // 比較結果を表示
+                document.getElementById('comparisonResult').innerHTML = `
+                    <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <strong>📊 年度間比較:</strong> ${analysis1.fiscal_year}年度 vs ${analysis2.fiscal_year}年度
+                    </div>
+                    ${marked.parse(result)}
+                `;
+
+                // 比較タブに切り替え
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector('[data-tab="comparison"]').classList.add('active');
+                document.getElementById('tab-comparison').classList.add('active');
+
+                showToast('年度間比較が完了しました', 'success');
+
+            } catch (error) {
+                console.error('比較分析エラー:', error);
+                showToast('比較分析に失敗しました', 'error');
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
+        // Init
+        checkAuth();
+    </script>
+</body>
+</html>

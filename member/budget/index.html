@@ -1,0 +1,4321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会派予算管理 | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
+    <style>
+        /* 認証済みの場合はログイン画面を即座に非表示 */
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --teal: #0d9488;
+            --orange: #f59e0b;
+            --orange-light: #fbbf24;
+            --purple: #8b5cf6;
+            --bg: #fafbfc;
+            --bg-warm: #f8f9fa;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --text-light: #6b7280;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--navy);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .sidebar-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-left-color: var(--green);
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile Menu Toggle ===== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--navy);
+            z-index: 101;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .mobile-header-logo img {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* ===== Main Content ===== */
+        .main-wrapper {
+            flex: 1;
+            margin-left: 260px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ===== Account Switcher ===== */
+        .account-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .account-btn {
+            padding: 0.75rem 2rem;
+            border: 2px solid var(--gray-light);
+            background: var(--white);
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .account-btn:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+        .account-btn.active.seimu {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+        .account-btn.active.tsumitate {
+            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+            border-color: var(--orange);
+            color: var(--white);
+        }
+        .account-btn.active.personal {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-color: #6366f1;
+            color: var(--white);
+        }
+        .account-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== Tab Navigation ===== */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--white);
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .tab-btn:hover {
+            background: var(--gray-lighter);
+        }
+        .tab-btn.active {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .tab-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ===== Dashboard Stats ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .stat-card.total {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+        }
+        .stat-card.total.tsumitate {
+            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+        }
+        .stat-card.used {
+            background: linear-gradient(135deg, var(--teal) 0%, #14b8a6 100%);
+            color: var(--white);
+        }
+        .stat-card.remaining {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            color: var(--white);
+        }
+        .stat-card.deposit {
+            background: linear-gradient(135deg, var(--purple) 0%, #a78bfa 100%);
+            color: var(--white);
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 0.25rem;
+        }
+        .stat-sub {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* ===== Progress Bar ===== */
+        .progress-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .progress-title {
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .progress-percent {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--teal);
+        }
+        .progress-bar {
+            height: 20px;
+            background: var(--gray-lighter);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal), var(--green));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .progress-fill.warning {
+            background: linear-gradient(90deg, var(--orange), #f97316);
+        }
+        .progress-fill.danger {
+            background: linear-gradient(90deg, var(--danger), #ef4444);
+        }
+
+        /* ===== Charts ===== */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .chart-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .chart-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .chart-container {
+            position: relative;
+            height: 280px;
+        }
+
+        /* ===== Form ===== */
+        .form-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .form-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--green);
+        }
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .btn {
+            padding: 0.85rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--green);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: var(--green-dark);
+        }
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--text);
+        }
+        .btn-secondary:hover {
+            background: var(--gray);
+            color: var(--white);
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* ===== Receipt Upload ===== */
+        .receipt-upload-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px dashed #0ea5e9;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .receipt-upload-section:hover {
+            border-color: var(--navy);
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        }
+        .receipt-upload-section.dragover {
+            border-color: var(--green);
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+        }
+        .receipt-upload-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .receipt-upload-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke: #0ea5e9;
+        }
+        .receipt-upload-text {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .receipt-upload-sub {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .receipt-upload-input {
+            display: none;
+        }
+        .receipt-preview {
+            display: none;
+            margin-top: 1rem;
+        }
+        .receipt-preview.show {
+            display: block;
+        }
+        .receipt-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .ai-analyzing {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .ai-analyzing.show {
+            display: block;
+        }
+        .ai-analyzing-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-light);
+            border-top-color: var(--navy);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== Account Type Toggle ===== */
+        .account-toggle {
+            display: flex;
+            background: var(--gray-lighter);
+            border-radius: 8px;
+            padding: 4px;
+        }
+        .account-toggle-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .account-toggle-btn.active {
+            background: var(--white);
+            color: var(--navy);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .account-toggle-btn.active.seimu {
+            color: var(--navy);
+        }
+        .account-toggle-btn.active.tsumitate {
+            color: var(--orange);
+        }
+
+        /* ===== Table ===== */
+        .table-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .table-title {
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .table-filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: var(--white);
+            color: var(--text);
+        }
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 0.85rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .data-table th {
+            background: var(--gray-lighter);
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        .data-table td {
+            font-size: 0.95rem;
+        }
+        .data-table .amount {
+            text-align: right;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+        .data-table .actions {
+            white-space: nowrap;
+        }
+        .data-table .receipt-cell {
+            text-align: center;
+        }
+        .data-table .receipt-thumb {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .data-table .receipt-thumb:hover {
+            transform: scale(1.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .data-table .actions button {
+            padding: 0.4rem 0.6rem;
+            margin-right: 0.25rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: var(--gray-lighter);
+            color: var(--gray);
+            transition: all 0.2s;
+        }
+        .data-table .actions button:hover {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .data-table .actions button.delete:hover {
+            background: var(--danger);
+        }
+        .data-table .actions button.edit:hover {
+            background: #6366f1;
+        }
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--gray-light);
+        }
+        .table-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .table-total span {
+            color: var(--teal);
+            font-family: 'Courier New', monospace;
+        }
+        .no-data {
+            text-align: center;
+            color: var(--gray);
+            padding: 3rem;
+        }
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: var(--gray-lighter);
+            color: var(--text);
+        }
+        .category-badge.research { background: #dbeafe; color: #1d4ed8; }
+        .category-badge.training { background: #dcfce7; color: #16a34a; }
+        .category-badge.pr { background: #fef3c7; color: #d97706; }
+        .category-badge.materials { background: #f3e8ff; color: #9333ea; }
+        .category-badge.other { background: #e5e7eb; color: #4b5563; }
+
+        .account-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .account-badge.seimu {
+            background: #dbeafe;
+            color: var(--navy);
+        }
+        .account-badge.tsumitate {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        /* ===== Settings ===== */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        .settings-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .settings-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .settings-title svg {
+            width: 20px;
+            height: 20px;
+        }
+        .budget-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .budget-input-row label {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+        .budget-input-row input {
+            width: 140px;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-family: inherit;
+            text-align: right;
+        }
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            margin: 1rem;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--navy);
+            color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 300;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.success {
+            background: var(--green);
+        }
+        .toast.error {
+            background: var(--danger);
+        }
+
+        /* ===== Deposit Section ===== */
+        .deposit-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .deposit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .deposit-title {
+            font-weight: 700;
+            color: #92400e;
+            font-size: 1.1rem;
+        }
+        .deposit-month-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .deposit-month-nav button {
+            background: rgba(255,255,255,0.7);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .deposit-month-nav button:hover {
+            background: var(--white);
+        }
+        .deposit-month-nav button svg {
+            width: 16px;
+            height: 16px;
+            color: #92400e;
+        }
+        .deposit-month-label {
+            font-weight: 700;
+            color: #92400e;
+            min-width: 100px;
+            text-align: center;
+        }
+        .deposit-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        .deposit-member-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .deposit-member-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .deposit-member-card.paid {
+            border-color: var(--green);
+            background: #f0fdf4;
+        }
+        .deposit-member-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .deposit-member-check.checked {
+            background: var(--green);
+            border-color: var(--green);
+        }
+        .deposit-member-check svg {
+            width: 14px;
+            height: 14px;
+            color: white;
+        }
+        .deposit-member-info {
+            flex: 1;
+        }
+        .deposit-member-name {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 0.9rem;
+            display: block;
+        }
+        .deposit-member-amount {
+            font-size: 0.75rem;
+            color: var(--green-dark);
+            display: block;
+            margin-top: 0.15rem;
+        }
+        .deposit-member-hint {
+            font-size: 0.7rem;
+            color: var(--gray);
+            display: block;
+            margin-top: 0.15rem;
+        }
+        .deposit-member-status {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .deposit-member-card.paid .deposit-member-status {
+            color: var(--green-dark);
+        }
+        .deposit-amount-badge {
+            background: var(--gray-lighter);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        .deposit-member-card.paid .deposit-amount-badge {
+            background: #dcfce7;
+            color: var(--green-dark);
+        }
+        .deposit-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(146,64,14,0.2);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .deposit-summary-text {
+            color: #92400e;
+            font-size: 0.9rem;
+        }
+        .deposit-summary-text strong {
+            font-size: 1.1rem;
+        }
+        .deposit-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .deposit-history-toggle {
+            background: rgba(255,255,255,0.7);
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #92400e;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+        .deposit-history-toggle:hover {
+            background: var(--white);
+        }
+        .deposit-add-btn {
+            background: #92400e;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .deposit-add-btn:hover {
+            background: #78350f;
+        }
+        .deposit-add-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+        .deposit-history-panel {
+            display: none;
+            margin-top: 1rem;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .deposit-history-panel.open {
+            display: block;
+        }
+
+        /* ===== Deposit Modal ===== */
+        .deposit-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .deposit-modal-overlay.open {
+            display: flex;
+        }
+        .deposit-modal {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .deposit-modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .deposit-modal-title svg {
+            width: 20px;
+            height: 20px;
+            color: #f59e0b;
+        }
+        .deposit-modal .form-group {
+            margin-bottom: 1rem;
+        }
+        .deposit-modal .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 0.3rem;
+        }
+        .deposit-modal .form-input,
+        .deposit-modal .form-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .deposit-modal .form-input:focus,
+        .deposit-modal .form-select:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+        }
+        .deposit-modal-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .deposit-modal-buttons .btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .deposit-modal-buttons .btn-cancel {
+            background: var(--gray-lighter);
+            border: none;
+            color: var(--gray);
+        }
+        .deposit-modal-buttons .btn-submit {
+            background: #f59e0b;
+            border: none;
+            color: white;
+        }
+        .deposit-modal-buttons .btn-submit:hover {
+            background: #d97706;
+        }
+        .quick-amount-btns {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quick-amount-btn {
+            flex: 1;
+            padding: 0.4rem;
+            background: var(--gray-lighter);
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+        .quick-amount-btn:hover {
+            background: #fef3c7;
+        }
+
+        /* ===== Quick Deposit Mini Modal ===== */
+        .quick-deposit-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .quick-deposit-overlay.open {
+            display: flex;
+        }
+        .quick-deposit-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            width: 90%;
+            max-width: 320px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .quick-deposit-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .quick-deposit-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .quick-deposit-row label {
+            flex: 0 0 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+        }
+        .quick-deposit-row input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .quick-deposit-row input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        .quick-deposit-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .quick-deposit-buttons button {
+            flex: 1;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+        }
+        .quick-deposit-buttons .btn-cancel {
+            background: var(--gray-lighter);
+            color: var(--gray);
+        }
+        .quick-deposit-buttons .btn-submit {
+            background: var(--green);
+            color: white;
+        }
+
+        /* ===== Personal Budget ===== */
+        .personal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .personal-header .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #6366f1;
+            margin: 0 0 1rem 0;
+        }
+        .member-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .member-tab {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid #e5e7eb;
+            background: var(--white);
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .member-tab:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+        .member-tab.active {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-color: #6366f1;
+            color: var(--white);
+        }
+        .member-select {
+            display: none;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: #1f2937;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 3rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+        }
+        .footer-brand {}
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        .footer-logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .footer-tagline {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+        .footer-nav-group {}
+        .footer-nav-title {
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        .footer-nav-group a {
+            display: block;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.3rem 0;
+            transition: color 0.2s;
+        }
+        .footer-nav-group a:hover {
+            color: var(--white);
+        }
+        .footer-copy {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.8rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem 1rem;
+            }
+            .header-logo-text {
+                display: none;
+            }
+            .header-nav {
+                gap: 0.5rem;
+            }
+            .header-nav a {
+                padding: 0.4rem 0.7rem;
+                font-size: 0.8rem;
+            }
+            .main-container {
+                padding: 90px 1rem 2rem;
+            }
+            .page-title h1 {
+                font-size: 1.5rem;
+            }
+            .account-switcher {
+                flex-direction: column;
+                align-items: center;
+            }
+            .account-btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat-value {
+                font-size: 1.3rem;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-container {
+                height: 250px;
+            }
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            .data-table th, .data-table td {
+                padding: 0.6rem 0.5rem;
+                font-size: 0.85rem;
+            }
+            .footer-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-logo {
+                justify-content: center;
+            }
+        }
+
+        /* iPhone SE & Small Mobile (375px and below) */
+        @media (max-width: 375px) {
+            .login-card {
+                padding: 2rem 1.25rem;
+                margin: 0.5rem;
+            }
+            .login-logo {
+                font-size: 1.4rem;
+            }
+            .login-input {
+                padding: 0.75rem;
+                font-size: 16px;
+            }
+            .login-btn {
+                min-height: 44px;
+            }
+            .main-container {
+                padding: 70px 0.5rem 1rem;
+            }
+            .page-title h1 {
+                font-size: 1.2rem;
+            }
+            .page-subtitle {
+                font-size: 0.75rem;
+            }
+            .account-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+                min-height: 44px;
+            }
+            .tab-btn {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.75rem;
+                min-height: 44px;
+            }
+            .tab-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .stat-card {
+                padding: 0.75rem;
+            }
+            .stat-value {
+                font-size: 1.1rem;
+            }
+            .stat-label, .stat-sub {
+                font-size: 0.7rem;
+            }
+            .deposit-section {
+                padding: 1rem;
+            }
+            .deposit-title {
+                font-size: 0.95rem;
+            }
+            .deposit-month-label {
+                font-size: 0.85rem;
+                min-width: 80px;
+            }
+            .deposit-month-nav button {
+                width: 28px;
+                height: 28px;
+                min-width: 44px;
+                min-height: 44px;
+            }
+            .deposit-checklist {
+                grid-template-columns: 1fr;
+            }
+            .deposit-member-card {
+                padding: 0.6rem 0.75rem;
+                min-height: 44px;
+            }
+            .deposit-actions {
+                flex-wrap: wrap;
+            }
+            .deposit-add-btn, .deposit-history-toggle {
+                min-height: 36px;
+                font-size: 0.75rem;
+            }
+            .form-card {
+                padding: 1rem;
+            }
+            .form-title {
+                font-size: 1rem;
+            }
+            .form-input, .form-select, .form-textarea {
+                padding: 0.6rem;
+                font-size: 16px;
+            }
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+                min-height: 44px;
+            }
+            .data-table th, .data-table td {
+                padding: 0.4rem 0.3rem;
+                font-size: 0.75rem;
+            }
+            .data-table .actions button {
+                padding: 0.5rem;
+                min-width: 32px;
+                min-height: 32px;
+            }
+            .chart-container {
+                height: 200px;
+            }
+            .settings-card {
+                padding: 1rem;
+            }
+            .settings-title {
+                font-size: 0.9rem;
+            }
+            .quick-deposit-modal {
+                width: 95%;
+                max-width: none;
+                padding: 1rem;
+            }
+            .deposit-modal {
+                width: 95%;
+                max-width: none;
+                padding: 1rem;
+            }
+            .sidebar-nav a {
+                padding: 0.85rem 1.25rem;
+                min-height: 44px;
+            }
+            .mobile-header {
+                height: 56px;
+            }
+            .mobile-header-logo span {
+                font-size: 0.9rem;
+            }
+            .menu-toggle {
+                min-width: 44px;
+                min-height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">会派予算管理</div>
+            <div class="login-sub">創政MISATO 会員専用システム</div>
+            <div class="login-error" id="loginError">パスワードが正しくありません</div>
+            <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力">
+            <button class="login-btn" onclick="tryLogin()">ログイン</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <div class="app-layout">
+            <!-- Mobile Header -->
+            <header class="mobile-header">
+                <a href="/member/" class="mobile-header-logo">
+                    <img src="../images/logo.png" alt="">
+                    <span>創政MISATO</span>
+                </a>
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Sidebar Overlay -->
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <a href="/member/" class="sidebar-logo">
+                        <div class="sidebar-logo-icon">
+                            <img src="../images/logo.png" alt="">
+                        </div>
+                        <span class="sidebar-logo-text">創政MISATO</span>
+                    </a>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-section">メニュー</div>
+                    <a href="/member/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        ホーム
+                    </a>
+                    <a href="/member/budget/index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                        </svg>
+                        会派予算管理
+                    </a>
+                    <a href="/member/budget-analysis.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        予算書AIレビュー
+                    </a>
+                    <a href="/member/assets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        会派アセット
+                    </a>
+                    <div class="sidebar-nav-section">条例AI</div>
+                    <a href="/member/search.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        条例検索
+                    </a>
+                    <a href="/member/review.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                        条例AIレビュー
+                    </a>
+                    <a href="/member/barrier.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        障壁を調べる
+                    </a>
+                    <div class="sidebar-nav-section">リサーチAI</div>
+                    <a href="/member/research.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        一般質問リサーチ
+                    </a>
+                    <a href="/member/research-history.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        リサーチ履歴
+                    </a>
+                    <div class="sidebar-nav-section">その他</div>
+                    <a href="/member/guideline.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        ガイドライン
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    © 2026 創政MISATO
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-wrapper">
+                <main class="main-container">
+            <div class="page-title">
+                <h1>会派予算管理</h1>
+                <p id="fiscalYearDisplay">令和7年度（2025年度）</p>
+            </div>
+
+            <!-- Account Switcher -->
+            <div class="account-switcher">
+                <button class="account-btn active seimu" onclick="switchAccount('seimu')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                    政務活動費
+                </button>
+                <button class="account-btn tsumitate" onclick="switchAccount('tsumitate')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+                        <path d="M12 18V6"/>
+                    </svg>
+                    会派積立金
+                </button>
+                <button class="account-btn personal" onclick="switchAccount('personal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    個人政活費
+                </button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    概要
+                </button>
+                <button class="tab-btn" onclick="switchTab('input')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    経費入力
+                </button>
+                <button class="tab-btn" onclick="switchTab('list')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"/>
+                        <line x1="8" y1="12" x2="21" y2="12"/>
+                        <line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/>
+                        <line x1="3" y1="12" x2="3.01" y2="12"/>
+                        <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                    経費一覧
+                </button>
+                <button class="tab-btn" onclick="switchTab('settings')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    設定
+                </button>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="tab-dashboard" class="tab-content active">
+                <!-- Stats for Seimu -->
+                <div id="seimuStats">
+                    <div class="stats-grid">
+                        <div class="stat-card total">
+                            <div class="stat-label">政務活動費 年間予算</div>
+                            <div class="stat-value" id="seimuTotal">¥0</div>
+                            <div class="stat-sub">総額</div>
+                        </div>
+                        <div class="stat-card used">
+                            <div class="stat-label">使用済み</div>
+                            <div class="stat-value" id="seimuUsed">¥0</div>
+                            <div class="stat-sub" id="seimuUsedPercent">0%</div>
+                        </div>
+                        <div class="stat-card remaining">
+                            <div class="stat-label">残り予算</div>
+                            <div class="stat-value" id="seimuRemaining">¥0</div>
+                            <div class="stat-sub" id="seimuRemainingPercent">100%</div>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-title">政務活動費 消化率</span>
+                            <span class="progress-percent" id="seimuProgressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="seimuProgressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats for Tsumitate -->
+                <div id="tsumitateStats" style="display:none;">
+                    <div class="stats-grid">
+                        <div class="stat-card total tsumitate">
+                            <div class="stat-label">会派積立金 累計</div>
+                            <div class="stat-value" id="tsumitateTotal">¥0</div>
+                            <div class="stat-sub">積立総額</div>
+                        </div>
+                        <div class="stat-card deposit">
+                            <div class="stat-label">今年度積立</div>
+                            <div class="stat-value" id="tsumitateDeposit">¥0</div>
+                            <div class="stat-sub" id="tsumitateDepositCount">0回</div>
+                        </div>
+                        <div class="stat-card used">
+                            <div class="stat-label">使用済み</div>
+                            <div class="stat-value" id="tsumitateUsed">¥0</div>
+                            <div class="stat-sub">今年度</div>
+                        </div>
+                        <div class="stat-card remaining">
+                            <div class="stat-label">残高</div>
+                            <div class="stat-value" id="tsumitateRemaining">¥0</div>
+                            <div class="stat-sub">現在</div>
+                        </div>
+                    </div>
+                    <!-- Monthly Deposit Checklist -->
+                    <div class="deposit-section">
+                        <div class="deposit-header">
+                            <span class="deposit-title">月次積立金</span>
+                            <div class="deposit-month-nav">
+                                <button type="button" onclick="changeDepositMonth(-1, event)" title="前月">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                                </button>
+                                <span class="deposit-month-label" id="depositMonthLabel">2026年2月</span>
+                                <button type="button" onclick="changeDepositMonth(1, event)" title="翌月">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="deposit-checklist" id="depositChecklist">
+                            <!-- Rendered by JS -->
+                        </div>
+                        <div class="deposit-summary">
+                            <span class="deposit-summary-text">
+                                <strong id="depositPaidCount">0/4人</strong> 入金済み・計 <strong id="depositMonthTotal">¥0</strong>
+                            </span>
+                            <div class="deposit-actions">
+                                <button class="deposit-history-toggle" onclick="toggleDepositHistory()">
+                                    履歴
+                                </button>
+                                <button class="deposit-add-btn" onclick="openDepositModal()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    入金を追加
+                                </button>
+                            </div>
+                        </div>
+                        <div class="deposit-history-panel" id="depositHistoryPanel">
+                            <div id="depositHistoryContent"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-title">カテゴリ別内訳</div>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">月別推移</div>
+                        <div class="chart-container">
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Tab -->
+            <div id="tab-input" class="tab-content">
+                <div class="form-card">
+                    <div class="form-title">経費を追加</div>
+
+                    <!-- Receipt Upload -->
+                    <div class="receipt-upload-section" id="receiptUpload" onclick="document.getElementById('receiptInput').click()">
+                        <input type="file" class="receipt-upload-input" id="receiptInput" accept="image/*" onchange="handleReceiptUpload(event)">
+                        <div class="receipt-upload-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                        </div>
+                        <div class="receipt-upload-text">領収書の写真をアップロード</div>
+                        <div class="receipt-upload-sub">AIが自動で日付・金額・摘要を読み取ります</div>
+                        <div class="receipt-preview" id="receiptPreview">
+                            <img id="receiptImage" src="" alt="領収書">
+                        </div>
+                        <div class="ai-analyzing" id="aiAnalyzing">
+                            <span class="ai-analyzing-spinner"></span>
+                            AIが領収書を解析中...
+                        </div>
+                    </div>
+
+                    <form id="expenseForm" onsubmit="submitExpense(event)">
+                        <input type="hidden" id="editExpenseId">
+
+                        <!-- Account Toggle -->
+                        <div class="form-group">
+                            <label class="form-label">会計区分 *</label>
+                            <div class="account-toggle">
+                                <button type="button" class="account-toggle-btn active seimu" onclick="setFormAccount('seimu')">政務活動費</button>
+                                <button type="button" class="account-toggle-btn tsumitate" onclick="setFormAccount('tsumitate')">会派積立金</button>
+                            </div>
+                            <input type="hidden" id="expenseAccount" value="seimu">
+                        </div>
+
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label class="form-label">日付 *</label>
+                                <input type="date" class="form-input" id="expenseDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">カテゴリ *</label>
+                                <select class="form-select" id="expenseCategory" required>
+                                    <option value="">選択してください</option>
+                                    <!-- 政務活動費カテゴリ（デフォルト） -->
+                                    <option value="training">研究研修費</option>
+                                    <option value="research">調査旅費</option>
+                                    <option value="document">資料作成費</option>
+                                    <option value="materials">資料購入費</option>
+                                    <option value="pr">広報費</option>
+                                    <option value="hearing">広聴費</option>
+                                    <option value="office">事務費</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">金額 *</label>
+                                <input type="number" class="form-input" id="expenseAmount" placeholder="例: 5000" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">摘要 *</label>
+                            <input type="text" class="form-input" id="expenseDescription" placeholder="例: 書籍購入" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">備考</label>
+                            <textarea class="form-textarea" id="expenseNote" placeholder="詳細メモ（任意）"></textarea>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">クリア</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">保存する</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- List Tab -->
+            <div id="tab-list" class="tab-content">
+                <div class="table-card">
+                    <div class="table-header">
+                        <div class="table-title">経費一覧</div>
+                        <div class="table-filters">
+                            <select class="filter-select" id="filterAccount" onchange="renderExpenseTable()">
+                                <option value="">全会計</option>
+                                <option value="seimu">政務活動費</option>
+                                <option value="tsumitate">会派積立金</option>
+                            </select>
+                            <select class="filter-select" id="filterCategory" onchange="renderExpenseTable()">
+                                <option value="">全カテゴリ</option>
+                                <option value="research">調査研究費</option>
+                                <option value="training">研修費</option>
+                                <option value="pr">広報費</option>
+                                <option value="materials">資料購入費</option>
+                                <option value="other">その他</option>
+                            </select>
+                            <select class="filter-select" id="filterMonth" onchange="renderExpenseTable()">
+                                <option value="">全期間</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>日付</th>
+                                    <th>会計</th>
+                                    <th>カテゴリ</th>
+                                    <th>摘要</th>
+                                    <th>金額</th>
+                                    <th>領収書</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expenseTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <div class="table-total">
+                            合計: <span id="filteredTotal">¥0</span>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="exportCSV()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:4px;">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            CSV出力
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="tab-settings" class="tab-content">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            基本設定
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">年度</label>
+                            <select class="form-select" id="settingYear" onchange="updateFiscalYear()">
+                                <option value="2024">令和6年度（2024年度）</option>
+                                <option value="2025" selected>令和7年度（2025年度）</option>
+                                <option value="2026">令和8年度（2026年度）</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">政務活動費 年間予算（円）</label>
+                            <input type="number" class="form-input" id="settingSeimuBudget" placeholder="例: 1200000" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">積立金 初期残高（円）</label>
+                            <input type="number" class="form-input" id="settingTsumitateInitial" placeholder="例: 0" min="0">
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="saveBudgetSettings()" style="margin-top:0.5rem;">保存</button>
+                    </div>
+
+                    <div class="settings-card" style="border-left:4px solid #6366f1;">
+                        <div class="settings-title" style="color:#6366f1;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            個人政務活動費 予算設定
+                        </div>
+                        <p style="font-size:0.85rem;color:var(--gray);margin-bottom:1rem;">
+                            各メンバーの年間予算を設定できます（月額34,000円×12ヶ月=408,000円が基準）
+                        </p>
+                        <div class="personal-budget-settings">
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">佐藤裕之</label>
+                                <input type="number" class="form-input" id="personalBudget_佐藤裕之" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">高橋誠一</label>
+                                <input type="number" class="form-input" id="personalBudget_高橋誠一" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">日髙千穂</label>
+                                <input type="number" class="form-input" id="personalBudget_日髙千穂" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                            <div class="form-group" style="display:flex;gap:1rem;align-items:center;margin-bottom:0.5rem;">
+                                <label style="width:100px;font-weight:500;">鈴木優作</label>
+                                <input type="number" class="form-input" id="personalBudget_鈴木優作" placeholder="408000" min="0" style="flex:1;">
+                                <span style="color:var(--gray);font-size:0.85rem;">円</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="savePersonalBudgetSettings()" style="margin-top:0.5rem;background:linear-gradient(135deg, #6366f1, #8b5cf6);">個人予算を保存</button>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            使い方
+                        </div>
+                        <ul style="font-size:0.9rem;color:var(--gray);padding-left:1.2rem;">
+                            <li><strong>政務活動費</strong>：議員の政務活動に使える公費</li>
+                            <li><strong>会派積立金</strong>：メンバーが毎月積み立てる自己資金</li>
+                            <li>政務活動費として計上できない経費は積立金から支出</li>
+                            <li>領収書を撮影するとAIが自動で項目を読み取ります</li>
+                        </ul>
+                    </div>
+
+                    <div class="settings-card">
+                        <div class="settings-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+                                <circle cx="7" cy="17" r="2"/>
+                                <circle cx="17" cy="17" r="2"/>
+                            </svg>
+                            車両・交通費ルール
+                        </div>
+                        <div style="font-size:0.9rem;color:var(--gray);">
+                            <p style="margin-bottom:0.8rem;font-weight:600;color:var(--text);">基本方針</p>
+                            <p style="margin-bottom:1rem;">運転者の負担（ガソリン代・労力）を考慮し、会派積立金または個人負担で精算する。</p>
+
+                            <p style="margin-bottom:0.5rem;font-weight:600;color:var(--text);">近距離（三郷市内など）</p>
+                            <ul style="padding-left:1.2rem;margin-bottom:1rem;">
+                                <li>1人あたり <strong>1,000円</strong> を運転者に支払う（または積立金から）</li>
+                            </ul>
+
+                            <p style="margin-bottom:0.5rem;font-weight:600;color:var(--text);">長距離（羽田空港、高速利用を伴う視察など）</p>
+                            <ul style="padding-left:1.2rem;">
+                                <li><strong>実費精算</strong>：高速代、駐車場代は実費を積立金から支払う</li>
+                                <li><strong>運転・ガソリン代</strong>：1人あたり <strong>2,000円</strong> 程度を運転者に支払う</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Personal Budget Tab -->
+            <div id="tab-personal" class="tab-content">
+                <div class="personal-header">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px;">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        個人政務活動費
+                    </h2>
+                    <div class="member-tabs">
+                        <button class="member-tab active" onclick="switchPersonalMemberTab('佐藤裕之')">佐藤裕之</button>
+                        <button class="member-tab" onclick="switchPersonalMemberTab('高橋誠一')">高橋誠一</button>
+                        <button class="member-tab" onclick="switchPersonalMemberTab('日髙千穂')">日髙千穂</button>
+                        <button class="member-tab" onclick="switchPersonalMemberTab('鈴木優作')">鈴木優作</button>
+                    </div>
+                    <!-- Hidden select for form compatibility -->
+                    <select id="personalMember" style="display:none;">
+                        <option value="佐藤裕之">佐藤裕之</option>
+                        <option value="高橋誠一">高橋誠一</option>
+                        <option value="日髙千穂">日髙千穂</option>
+                        <option value="鈴木優作">鈴木優作</option>
+                    </select>
+                </div>
+
+                <!-- Personal Stats -->
+                <div class="stats-grid" style="margin-bottom:1.5rem;">
+                    <div class="stat-card total" style="background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                        <div class="stat-label">年間予算</div>
+                        <div class="stat-value" id="personalTotal">¥408,000</div>
+                        <div class="stat-sub">令和7年度</div>
+                    </div>
+                    <div class="stat-card used">
+                        <div class="stat-label">使用済み</div>
+                        <div class="stat-value" id="personalUsed">¥0</div>
+                        <div class="stat-sub" id="personalUsedPercent">0%</div>
+                    </div>
+                    <div class="stat-card remaining">
+                        <div class="stat-label">残り予算</div>
+                        <div class="stat-value" id="personalRemaining">¥408,000</div>
+                        <div class="stat-sub" id="personalRemainingPercent">100%</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" style="margin-bottom:2rem;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="personalProgressFill" style="width:0%;background:linear-gradient(90deg, #6366f1, #8b5cf6);"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>使用率</span>
+                        <span id="personalProgressPercent">0%</span>
+                    </div>
+                </div>
+
+                <!-- Personal Expense Input -->
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                        経費を追加
+                    </div>
+                    <form id="personalExpenseForm" onsubmit="submitPersonalExpense(event)">
+                        <input type="hidden" id="editPersonalExpenseId" value="">
+                        <div class="form-row">
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">日付</label>
+                                <input type="date" class="form-input" id="personalExpenseDate" required>
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">カテゴリ</label>
+                                <select class="form-select" id="personalExpenseCategory" required>
+                                    <option value="training">研究研修費</option>
+                                    <option value="research">調査旅費</option>
+                                    <option value="document">資料作成費</option>
+                                    <option value="materials">資料購入費</option>
+                                    <option value="pr">広報費</option>
+                                    <option value="hearing">広聴費</option>
+                                    <option value="office">事務費</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">金額</label>
+                                <input type="number" class="form-input" id="personalExpenseAmount" placeholder="例: 5000" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" style="flex:2;">
+                                <label class="form-label">摘要</label>
+                                <input type="text" class="form-input" id="personalExpenseDescription" placeholder="例: 書籍購入" required>
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label class="form-label">備考</label>
+                                <input type="text" class="form-input" id="personalExpenseNote" placeholder="任意">
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:0.5rem;">
+                            <button type="submit" id="personalSubmitBtn" class="btn btn-primary" style="background:linear-gradient(135deg, #6366f1, #8b5cf6);">保存する</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetPersonalExpenseForm()">キャンセル</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Personal Expense Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+                            <line x1="8" y1="6" x2="21" y2="6"/>
+                            <line x1="8" y1="12" x2="21" y2="12"/>
+                            <line x1="8" y1="18" x2="21" y2="18"/>
+                            <line x1="3" y1="6" x2="3.01" y2="6"/>
+                            <line x1="3" y1="12" x2="3.01" y2="12"/>
+                            <line x1="3" y1="18" x2="3.01" y2="18"/>
+                        </svg>
+                        経費一覧
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>日付</th>
+                                    <th>カテゴリ</th>
+                                    <th>摘要</th>
+                                    <th>金額</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="personalExpenseTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <span>合計: <strong id="personalFilteredTotal">¥0</strong></span>
+                        <button class="btn btn-secondary btn-sm" onclick="exportPersonalCSV()">CSV出力</button>
+                    </div>
+                </div>
+            </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">経費を編集</div>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form onsubmit="updateExpenseModal(event)">
+                <input type="hidden" id="modalExpenseId">
+                <div class="form-group">
+                    <label class="form-label">会計区分</label>
+                    <select class="form-select" id="modalAccount" required>
+                        <option value="seimu">政務活動費</option>
+                        <option value="tsumitate">会派積立金</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">日付</label>
+                    <input type="date" class="form-input" id="modalDate" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">カテゴリ</label>
+                    <select class="form-select" id="modalCategory" required>
+                        <option value="research">調査研究費</option>
+                        <option value="training">研修費</option>
+                        <option value="pr">広報費</option>
+                        <option value="materials">資料購入費</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">金額</label>
+                    <input type="number" class="form-input" id="modalAmount" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">摘要</label>
+                    <input type="text" class="form-input" id="modalDescription" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">備考</label>
+                    <textarea class="form-textarea" id="modalNote"></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeEditModal()">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">更新する</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Quick Deposit Mini Modal (for member card click) -->
+    <div class="quick-deposit-overlay" id="quickDepositModal">
+        <div class="quick-deposit-modal">
+            <div class="quick-deposit-title" id="quickDepositTitle">入金を登録</div>
+            <div class="quick-deposit-row">
+                <label>日付</label>
+                <input type="date" id="quickDepositDate">
+            </div>
+            <div class="quick-deposit-row">
+                <label>金額</label>
+                <input type="number" id="quickDepositAmount" value="10000">
+            </div>
+            <div class="quick-deposit-buttons">
+                <button class="btn-cancel" onclick="closeQuickDepositModal()">キャンセル</button>
+                <button class="btn-submit" onclick="submitQuickDeposit()">入金</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div class="deposit-modal-overlay" id="depositModal">
+        <div class="deposit-modal">
+            <div class="deposit-modal-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                積立金を入金
+            </div>
+            <div class="form-group">
+                <label class="form-label">入金者</label>
+                <select class="form-select" id="modalDepositor">
+                    <option value="">選択してください</option>
+                    <option value="佐藤裕之">佐藤裕之</option>
+                    <option value="高橋誠一">高橋誠一</option>
+                    <option value="日髙千穂">日髙千穂</option>
+                    <option value="鈴木優作">鈴木優作</option>
+                    <option value="その他">その他（手入力）</option>
+                </select>
+            </div>
+            <div class="form-group" id="customDepositorGroup" style="display:none;">
+                <label class="form-label">入金者名（手入力）</label>
+                <input type="text" class="form-input" id="modalCustomDepositor" placeholder="例: 会長追加分">
+            </div>
+            <div class="form-group">
+                <label class="form-label">日付</label>
+                <input type="date" class="form-input" id="modalDepositDate">
+            </div>
+            <div class="form-group">
+                <label class="form-label">金額</label>
+                <input type="number" class="form-input" id="modalDepositAmount" placeholder="10000">
+                <div class="quick-amount-btns">
+                    <button type="button" class="quick-amount-btn" onclick="setModalAmount(10000)">¥10,000</button>
+                    <button type="button" class="quick-amount-btn" onclick="setModalAmount(20000)">¥20,000</button>
+                    <button type="button" class="quick-amount-btn" onclick="setModalAmount(5000)">¥5,000</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">メモ（任意）</label>
+                <input type="text" class="form-input" id="modalDepositNote" placeholder="例: 2月分、追加入金など">
+            </div>
+            <div class="deposit-modal-buttons">
+                <button class="btn btn-cancel" onclick="closeDepositModal()">キャンセル</button>
+                <button class="btn btn-submit" onclick="submitDepositModal()">入金を登録</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+        // ===== Supabase Setup =====
+        const SUPABASE_URL = 'https://rfbhmdsonengrgumpacx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmYmhtZHNvbmVuZ3JndW1wYWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzAyOTEsImV4cCI6MjA4NTgwNjI5MX0.Z0rE8CYxHSEyz-A0eXx2r7Zgg87hqkLqrl6KEfG01jk';
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ===== Constants =====
+        const GEMINI_API_URL = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
+
+        // 政務活動費カテゴリ（使途指針に準拠）
+        const SEIMU_CATEGORIES = [
+            { id: 'training', name: '研究研修費' },
+            { id: 'research', name: '調査旅費' },
+            { id: 'document', name: '資料作成費' },
+            { id: 'materials', name: '資料購入費' },
+            { id: 'pr', name: '広報費' },
+            { id: 'hearing', name: '広聴費' },
+            { id: 'office', name: '事務費' }
+        ];
+
+        // 積立金カテゴリ（一般勘定科目）
+        const TSUMITATE_CATEGORIES = [
+            { id: 'food', name: '飲食費' },
+            { id: 'transport', name: '交通費' },
+            { id: 'accommodation', name: '宿泊費' },
+            { id: 'supplies', name: '消耗品費' },
+            { id: 'communication', name: '通信費' },
+            { id: 'misc', name: '雑費' }
+        ];
+
+        // 全カテゴリ（後方互換性のため）
+        const ALL_CATEGORIES = [...SEIMU_CATEGORIES, ...TSUMITATE_CATEGORIES];
+
+        const CATEGORY_COLORS = {
+            // 政務活動費
+            training: '#3b82f6',
+            research: '#22c55e',
+            document: '#14b8a6',
+            materials: '#a855f7',
+            pr: '#f59e0b',
+            hearing: '#ec4899',
+            office: '#6366f1',
+            // 積立金
+            food: '#ef4444',
+            transport: '#f97316',
+            accommodation: '#8b5cf6',
+            supplies: '#06b6d4',
+            communication: '#84cc16',
+            misc: '#6b7280',
+            // 旧カテゴリ（後方互換性）
+            other: '#6b7280'
+        };
+
+        // ===== State =====
+        let budgetConfig = {
+            fiscalYear: 2025,
+            seimuBudget: 1200000,
+            tsumitateInitial: 0
+        };
+
+        let expenses = [];
+        let deposits = [];
+        let currentAccount = 'seimu';
+        let categoryChart = null;
+        let monthlyChart = null;
+        let currentReceiptImageData = null; // Store current receipt image for upload
+
+        // Personal budget state
+        let personalBudgetConfig = {};
+        let personalExpenses = [];
+        let currentPersonalMember = '佐藤裕之';
+
+        // 積立金チェックリスト用
+        const FACTION_MEMBERS = ['佐藤裕之', '高橋誠一', '日髙千穂', '鈴木優作'];
+        const DEFAULT_DEPOSIT_AMOUNT = 10000;
+        let currentDepositMonth = new Date().toISOString().slice(0, 7); // YYYY-MM形式
+
+        // ===== Authentication =====
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        async function tryLogin() {
+            const password = document.getElementById('passwordInput').value;
+            const hash = await hashPassword(password);
+            const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
+
+            if (hash === HASH) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                localStorage.setItem('member_auth', '1');
+                initApp();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') tryLogin();
+        });
+
+        // ===== Initialization =====
+        async function initApp() {
+            await loadData();
+            await loadPersonalData();
+            renderDashboard();
+            renderExpenseTable();
+            renderSettings();
+            setDefaultDate();
+            populateMonthFilter();
+            setupDragDrop();
+            setPersonalDefaultDate();
+            renderPersonalDashboard();
+            renderPersonalExpenseTable();
+
+            // 保存された状態を復元
+            restoreSavedState();
+        }
+
+        function restoreSavedState() {
+            // アカウント状態を復元
+            const savedAccount = localStorage.getItem('budget_current_account');
+            if (savedAccount && ['seimu', 'tsumitate', 'personal'].includes(savedAccount)) {
+                switchAccount(savedAccount);
+            }
+
+            // タブ状態を復元（個人以外の場合のみ）
+            const savedTab = localStorage.getItem('budget_current_tab');
+            if (savedTab && savedAccount !== 'personal') {
+                switchTab(savedTab);
+            }
+        }
+
+        async function loadData() {
+            try {
+                // Load budget config
+                const { data: configData, error: configError } = await supabaseClient
+                    .from('budget_config')
+                    .select('*')
+                    .order('id', { ascending: false })
+                    .limit(1)
+                    .single();
+
+                if (configData && !configError) {
+                    budgetConfig = {
+                        fiscalYear: configData.fiscal_year,
+                        seimuBudget: configData.seimu_budget,
+                        tsumitateInitial: configData.tsumitate_budget
+                    };
+                }
+
+                // Load expenses
+                const { data: expensesData, error: expensesError } = await supabaseClient
+                    .from('expenses')
+                    .select('*')
+                    .order('date', { ascending: false });
+
+                if (expensesData && !expensesError) {
+                    expenses = expensesData.map(e => ({
+                        id: e.id,
+                        date: e.date,
+                        category: e.category,
+                        amount: e.amount,
+                        description: e.description || '',
+                        note: e.note || '',
+                        account: e.account_type || 'seimu',
+                        receiptImageUrl: e.receipt_image_url || null,
+                        createdAt: e.created_at
+                    }));
+                }
+
+                // Load deposits
+                const { data: depositsData, error: depositsError } = await supabaseClient
+                    .from('deposits')
+                    .select('*')
+                    .order('date', { ascending: false });
+
+                if (depositsData && !depositsError) {
+                    deposits = depositsData.map(d => ({
+                        id: d.id,
+                        date: d.date,
+                        depositor: d.depositor || '',
+                        amount: d.amount,
+                        note: d.note || '',
+                        createdAt: d.created_at
+                    }));
+                }
+
+                updateFiscalYearDisplay();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showToast('データの読み込みに失敗しました', 'error');
+            }
+        }
+
+        async function saveConfig() {
+            try {
+                const { error } = await supabaseClient
+                    .from('budget_config')
+                    .upsert({
+                        id: 1,
+                        fiscal_year: budgetConfig.fiscalYear,
+                        seimu_budget: budgetConfig.seimuBudget,
+                        tsumitate_budget: budgetConfig.tsumitateInitial,
+                        updated_at: new Date().toISOString()
+                    });
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Error saving config:', error);
+                showToast('設定の保存に失敗しました', 'error');
+            }
+        }
+
+        async function saveExpense(expense) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('expenses')
+                    .insert({
+                        date: expense.date,
+                        category: expense.category,
+                        amount: expense.amount,
+                        description: expense.description,
+                        note: expense.note,
+                        account_type: expense.account
+                    })
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                return data;
+            } catch (error) {
+                console.error('Error saving expense:', error);
+                showToast('経費の保存に失敗しました', 'error');
+                return null;
+            }
+        }
+
+        async function updateExpense(expense) {
+            try {
+                const { error } = await supabaseClient
+                    .from('expenses')
+                    .update({
+                        date: expense.date,
+                        category: expense.category,
+                        amount: expense.amount,
+                        description: expense.description,
+                        note: expense.note,
+                        account_type: expense.account
+                    })
+                    .eq('id', expense.id);
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Error updating expense:', error);
+                showToast('経費の更新に失敗しました', 'error');
+            }
+        }
+
+        async function deleteExpenseFromDB(id) {
+            try {
+                const { error } = await supabaseClient
+                    .from('expenses')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Error deleting expense:', error);
+                showToast('経費の削除に失敗しました', 'error');
+            }
+        }
+
+        async function saveDeposit(deposit) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('deposits')
+                    .insert({
+                        date: deposit.date,
+                        depositor: deposit.depositor,
+                        amount: deposit.amount,
+                        note: deposit.note
+                    })
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                return data;
+            } catch (error) {
+                console.error('Error saving deposit:', error);
+                showToast('積立金の保存に失敗しました', 'error');
+                return null;
+            }
+        }
+
+        async function deleteDeposit(id) {
+            try {
+                const { error } = await supabaseClient
+                    .from('deposits')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+                return true;
+            } catch (error) {
+                console.error('Error deleting deposit:', error);
+                showToast('積立金の削除に失敗しました', 'error');
+                return false;
+            }
+        }
+
+        // Legacy functions for compatibility
+        function saveExpenses() {
+            // Now handled by individual save functions
+        }
+
+        function saveDeposits() {
+            // Now handled by individual save functions
+        }
+
+        // ===== Account Switching =====
+        function switchAccount(account) {
+            currentAccount = account;
+            localStorage.setItem('budget_current_account', account);
+
+            document.querySelectorAll('.account-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick')?.includes(`'${account}'`)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Show/hide tab navigation based on account
+            const tabNav = document.querySelector('.tab-nav');
+            const personalTab = document.getElementById('tab-personal');
+
+            if (account === 'personal') {
+                // 個人政活費の場合：タブナビを非表示にし、個人タブのみ表示
+                tabNav.style.display = 'none';
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                personalTab.classList.add('active');
+                loadPersonalData();
+            } else {
+                // 政務活動費・積立金の場合：通常のタブ表示
+                tabNav.style.display = 'flex';
+                document.getElementById('seimuStats').style.display = account === 'seimu' ? 'block' : 'none';
+                document.getElementById('tsumitateStats').style.display = account === 'tsumitate' ? 'block' : 'none';
+
+                // Update form account toggle
+                setFormAccount(account);
+
+                // Update filter
+                document.getElementById('filterAccount').value = account;
+
+                // 個人タブが表示されていたら概要タブに戻す
+                if (personalTab.classList.contains('active')) {
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    document.getElementById('tab-dashboard').classList.add('active');
+                    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    document.querySelector('.tab-btn').classList.add('active');
+                }
+
+                renderDashboard();
+                renderExpenseTable();
+            }
+        }
+
+        function setFormAccount(account) {
+            document.getElementById('expenseAccount').value = account;
+            document.querySelectorAll('.account-toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.account-toggle-btn.${account}`).classList.add('active');
+            // カテゴリ選択肢を更新
+            updateCategoryOptions(account);
+        }
+
+        function updateCategoryOptions(accountType) {
+            const select = document.getElementById('expenseCategory');
+            const categories = accountType === 'seimu' ? SEIMU_CATEGORIES : TSUMITATE_CATEGORIES;
+
+            select.innerHTML = '<option value="">選択してください</option>' +
+                categories.map(cat => `<option value="${cat.id}">${cat.name}</option>`).join('');
+        }
+
+        // ===== Tab Switching =====
+        function switchTab(tabId) {
+            localStorage.setItem('budget_current_tab', tabId);
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Find and activate the correct tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.getAttribute('onclick')?.includes(`'${tabId}'`)) {
+                    btn.classList.add('active');
+                }
+            });
+            document.getElementById('tab-' + tabId).classList.add('active');
+
+            if (tabId === 'dashboard') {
+                renderDashboard();
+            }
+        }
+
+        // ===== Dashboard =====
+        function renderDashboard() {
+            // Seimu stats
+            const seimuExpenses = expenses.filter(e => e.account === 'seimu');
+            const seimuUsed = seimuExpenses.reduce((sum, e) => sum + e.amount, 0);
+            const seimuRemaining = budgetConfig.seimuBudget - seimuUsed;
+            const seimuPercent = budgetConfig.seimuBudget > 0 ? (seimuUsed / budgetConfig.seimuBudget * 100) : 0;
+
+            document.getElementById('seimuTotal').textContent = formatCurrency(budgetConfig.seimuBudget);
+            document.getElementById('seimuUsed').textContent = formatCurrency(seimuUsed);
+            document.getElementById('seimuUsedPercent').textContent = seimuPercent.toFixed(1) + '%';
+            document.getElementById('seimuRemaining').textContent = formatCurrency(seimuRemaining);
+            document.getElementById('seimuRemainingPercent').textContent = (100 - seimuPercent).toFixed(1) + '%';
+            document.getElementById('seimuProgressPercent').textContent = seimuPercent.toFixed(1) + '%';
+
+            const seimuFill = document.getElementById('seimuProgressFill');
+            seimuFill.style.width = Math.min(seimuPercent, 100) + '%';
+            seimuFill.className = 'progress-fill' + (seimuPercent > 90 ? ' danger' : seimuPercent > 70 ? ' warning' : '');
+
+            // Tsumitate stats
+            const tsumitateDeposits = deposits.reduce((sum, d) => sum + d.amount, 0);
+            const tsumitateExpenses = expenses.filter(e => e.account === 'tsumitate');
+            const tsumitateUsed = tsumitateExpenses.reduce((sum, e) => sum + e.amount, 0);
+            const tsumitateTotal = budgetConfig.tsumitateInitial + tsumitateDeposits;
+            const tsumitateRemaining = tsumitateTotal - tsumitateUsed;
+
+            document.getElementById('tsumitateTotal').textContent = formatCurrency(tsumitateTotal);
+            document.getElementById('tsumitateDeposit').textContent = formatCurrency(tsumitateDeposits);
+            document.getElementById('tsumitateDepositCount').textContent = deposits.length + '回';
+            document.getElementById('tsumitateUsed').textContent = formatCurrency(tsumitateUsed);
+            document.getElementById('tsumitateRemaining').textContent = formatCurrency(tsumitateRemaining);
+
+            // 積立金チェックリストをレンダリング
+            renderDepositChecklist();
+            renderCategoryChart();
+            renderMonthlyChart();
+        }
+
+        // 積立月を変更
+        function changeDepositMonth(delta, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const [year, month] = currentDepositMonth.split('-').map(Number);
+            const newDate = new Date(year, month - 1 + delta, 1);
+            currentDepositMonth = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, '0')}`;
+            renderDepositChecklist();
+        }
+
+        // 積立金チェックリストをレンダリング
+        function renderDepositChecklist() {
+            const [year, month] = currentDepositMonth.split('-').map(Number);
+            document.getElementById('depositMonthLabel').textContent = `${year}年${month}月`;
+
+            const checklist = document.getElementById('depositChecklist');
+
+            // 選択された月の入金状況を取得
+            const monthDeposits = deposits.filter(d => d.date && d.date.startsWith(currentDepositMonth));
+            const paidMembers = new Set(monthDeposits.map(d => d.depositor));
+
+            checklist.innerHTML = FACTION_MEMBERS.map(member => {
+                const isPaid = paidMembers.has(member);
+                const memberDeposit = monthDeposits.find(d => d.depositor === member);
+                const tooltip = isPaid ? 'クリックで取消' : 'クリックで入金登録';
+                return `
+                    <div class="deposit-member-card ${isPaid ? 'paid' : ''}"
+                         onclick="toggleMemberDeposit('${member}', ${isPaid})"
+                         title="${tooltip}">
+                        <div class="deposit-member-check ${isPaid ? 'checked' : ''}">
+                            ${isPaid ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+                        </div>
+                        <div class="deposit-member-info">
+                            <span class="deposit-member-name">${escapeHtml(member)}</span>
+                            ${isPaid ? `<span class="deposit-member-amount">${formatCurrency(memberDeposit.amount)}</span>` : '<span class="deposit-member-hint">未入金</span>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // サマリーを更新
+            const paidCount = paidMembers.size;
+            const totalMembers = FACTION_MEMBERS.length;
+            const monthTotal = monthDeposits.reduce((sum, d) => sum + d.amount, 0);
+
+            document.getElementById('depositPaidCount').textContent = `${paidCount}/${totalMembers}人`;
+            document.getElementById('depositMonthTotal').textContent = formatCurrency(monthTotal);
+        }
+
+        // メンバーの入金状態を切り替え
+        let quickDepositMember = '';
+
+        function toggleMemberDeposit(member, isPaid) {
+            if (isPaid) {
+                // 入金済み → 取り消し確認
+                cancelMemberDeposit(member);
+            } else {
+                // 未入金 → ミニモーダルを開く
+                openQuickDepositModal(member);
+            }
+        }
+
+        async function cancelMemberDeposit(member) {
+            if (!confirm(`${member}さんの入金を取り消しますか？`)) return;
+
+            const monthDeposits = deposits.filter(d =>
+                d.date && d.date.startsWith(currentDepositMonth) && d.depositor === member
+            );
+
+            for (const deposit of monthDeposits) {
+                await deleteDeposit(deposit.id);
+                const idx = deposits.findIndex(d => String(d.id) === String(deposit.id));
+                if (idx !== -1) deposits.splice(idx, 1);
+            }
+
+            showToast('入金を取り消しました', 'success');
+            renderDepositChecklist();
+            renderDashboard();
+        }
+
+        function openQuickDepositModal(member) {
+            quickDepositMember = member;
+            document.getElementById('quickDepositTitle').textContent = `${member}さんの入金`;
+            // 今日の日付をデフォルトに
+            document.getElementById('quickDepositDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('quickDepositAmount').value = DEFAULT_DEPOSIT_AMOUNT;
+            document.getElementById('quickDepositModal').classList.add('open');
+        }
+
+        function closeQuickDepositModal() {
+            document.getElementById('quickDepositModal').classList.remove('open');
+            quickDepositMember = '';
+        }
+
+        async function submitQuickDeposit() {
+            const date = document.getElementById('quickDepositDate').value;
+            const amount = parseInt(document.getElementById('quickDepositAmount').value);
+            const [year, month] = currentDepositMonth.split('-').map(Number);
+            const member = quickDepositMember; // 先に保存
+
+            if (!date || !amount || amount <= 0) {
+                showToast('日付と金額を入力してください', 'error');
+                return;
+            }
+
+            if (!member) {
+                showToast('入金者が指定されていません', 'error');
+                return;
+            }
+
+            const deposit = {
+                date: date,
+                depositor: member,
+                amount: amount,
+                note: `${month}月分`
+            };
+
+            console.log('Saving deposit:', deposit); // デバッグ用
+
+            const saved = await saveDeposit(deposit);
+            console.log('Save result:', saved); // デバッグ用
+
+            if (saved) {
+                deposits.unshift({
+                    id: saved.id,
+                    date: saved.date,
+                    depositor: saved.depositor || '',
+                    amount: saved.amount,
+                    note: saved.note || '',
+                    createdAt: saved.created_at
+                });
+                closeQuickDepositModal();
+                renderDepositChecklist();
+                renderDashboard();
+                showToast(`${member}さんの入金を登録しました`, 'success');
+            }
+        }
+
+        // ミニモーダル外クリックで閉じる
+        document.addEventListener('click', (e) => {
+            const quickModal = document.getElementById('quickDepositModal');
+            if (e.target === quickModal) {
+                closeQuickDepositModal();
+            }
+        });
+
+        // 入金履歴パネルを表示/非表示
+        function toggleDepositHistory() {
+            const panel = document.getElementById('depositHistoryPanel');
+            const isOpen = panel.classList.contains('open');
+            panel.classList.toggle('open');
+
+            if (!isOpen) {
+                renderDepositHistoryTable();
+            }
+        }
+
+        // 入金履歴テーブルをレンダリング
+        function renderDepositHistoryTable() {
+            const container = document.getElementById('depositHistoryContent');
+            if (deposits.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray);font-size:0.85rem;text-align:center;padding:1rem;">入金履歴はありません</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:var(--gray-lighter);">
+                            <th style="padding:0.4rem;text-align:left;">日付</th>
+                            <th style="padding:0.4rem;text-align:left;">入金者</th>
+                            <th style="padding:0.4rem;text-align:right;">金額</th>
+                            <th style="padding:0.4rem;text-align:left;">メモ</th>
+                            <th style="padding:0.4rem;text-align:center;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${deposits.map(d => `
+                            <tr style="border-bottom:1px solid var(--gray-light);">
+                                <td style="padding:0.4rem;">${formatDate(d.date)}</td>
+                                <td style="padding:0.4rem;">${escapeHtml(d.depositor || '-')}</td>
+                                <td style="padding:0.4rem;text-align:right;">${formatCurrency(d.amount)}</td>
+                                <td style="padding:0.4rem;color:var(--gray);">${escapeHtml(d.note || '')}</td>
+                                <td style="padding:0.4rem;text-align:center;">
+                                    <button onclick="deleteDepositById('${d.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;padding:0.25rem;" title="削除">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // 入金を削除（IDで指定）
+        async function deleteDepositById(id) {
+            if (!confirm('この入金を削除しますか？')) return;
+
+            const success = await deleteDeposit(id);
+            if (success) {
+                // 文字列・数値どちらでも比較できるように == を使用
+                const idx = deposits.findIndex(d => String(d.id) === String(id));
+                if (idx !== -1) deposits.splice(idx, 1);
+
+                renderDepositChecklist();
+                renderDepositHistoryTable();
+                renderDashboard();
+                showToast('入金を削除しました', 'success');
+            }
+        }
+
+        // ===== Deposit Modal =====
+        function openDepositModal() {
+            const modal = document.getElementById('depositModal');
+            // 現在の月をデフォルトにセット
+            document.getElementById('modalDepositDate').value = `${currentDepositMonth}-01`;
+            document.getElementById('modalDepositAmount').value = DEFAULT_DEPOSIT_AMOUNT;
+            document.getElementById('modalDepositor').value = '';
+            document.getElementById('modalCustomDepositor').value = '';
+            document.getElementById('modalDepositNote').value = '';
+            document.getElementById('customDepositorGroup').style.display = 'none';
+            modal.classList.add('open');
+        }
+
+        function closeDepositModal() {
+            document.getElementById('depositModal').classList.remove('open');
+        }
+
+        function setModalAmount(amount) {
+            document.getElementById('modalDepositAmount').value = amount;
+        }
+
+        // 入金者セレクト変更時
+        document.addEventListener('DOMContentLoaded', () => {
+            const depositorSelect = document.getElementById('modalDepositor');
+            if (depositorSelect) {
+                depositorSelect.addEventListener('change', function() {
+                    const customGroup = document.getElementById('customDepositorGroup');
+                    if (this.value === 'その他') {
+                        customGroup.style.display = 'block';
+                    } else {
+                        customGroup.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        async function submitDepositModal() {
+            let depositor = document.getElementById('modalDepositor').value;
+            const date = document.getElementById('modalDepositDate').value;
+            const amount = parseInt(document.getElementById('modalDepositAmount').value);
+            const note = document.getElementById('modalDepositNote').value;
+
+            // その他の場合はカスタム入力を使用
+            if (depositor === 'その他') {
+                depositor = document.getElementById('modalCustomDepositor').value.trim();
+                if (!depositor) {
+                    showToast('入金者名を入力してください', 'error');
+                    return;
+                }
+            }
+
+            if (!depositor || !date || !amount || amount <= 0) {
+                showToast('入金者、日付、金額を入力してください', 'error');
+                return;
+            }
+
+            const deposit = { date, depositor, amount, note };
+            const saved = await saveDeposit(deposit);
+
+            if (saved) {
+                deposits.unshift({
+                    id: saved.id,
+                    date: saved.date,
+                    depositor: saved.depositor || '',
+                    amount: saved.amount,
+                    note: saved.note || '',
+                    createdAt: saved.created_at
+                });
+
+                closeDepositModal();
+                renderDepositChecklist();
+                renderDashboard();
+                showToast(`${depositor}さんの入金を登録しました`, 'success');
+            }
+        }
+
+        // モーダル外クリックで閉じる
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('depositModal');
+            if (e.target === modal) {
+                closeDepositModal();
+            }
+        });
+
+        function renderCategoryChart() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            const filteredExpenses = currentAccount ? expenses.filter(e => e.account === currentAccount) : expenses;
+
+            // 現在のアカウントに応じてカテゴリを選択
+            const categories = currentAccount === 'seimu' ? SEIMU_CATEGORIES : TSUMITATE_CATEGORIES;
+
+            const categoryTotals = {};
+            categories.forEach(cat => {
+                categoryTotals[cat.id] = 0;
+            });
+
+            filteredExpenses.forEach(exp => {
+                if (categoryTotals[exp.category] !== undefined) {
+                    categoryTotals[exp.category] += exp.amount;
+                } else {
+                    // 旧カテゴリの場合は雑費/その他に振り分け
+                    if (currentAccount === 'seimu') {
+                        categoryTotals['office'] = (categoryTotals['office'] || 0) + exp.amount;
+                    } else {
+                        categoryTotals['misc'] = (categoryTotals['misc'] || 0) + exp.amount;
+                    }
+                }
+            });
+
+            const labels = categories.map(cat => cat.name);
+            const data = categories.map(cat => categoryTotals[cat.id]);
+            const colors = categories.map(cat => CATEGORY_COLORS[cat.id] || '#6b7280');
+
+            if (categoryChart) {
+                categoryChart.destroy();
+            }
+
+            categoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    family: "'Noto Sans JP', sans-serif"
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderMonthlyChart() {
+            const ctx = document.getElementById('monthlyChart').getContext('2d');
+            const filteredExpenses = currentAccount ? expenses.filter(e => e.account === currentAccount) : expenses;
+
+            const monthlyTotals = {};
+            const year = budgetConfig.fiscalYear;
+
+            for (let m = 4; m <= 12; m++) {
+                monthlyTotals[`${year}-${String(m).padStart(2, '0')}`] = 0;
+            }
+            for (let m = 1; m <= 3; m++) {
+                monthlyTotals[`${year + 1}-${String(m).padStart(2, '0')}`] = 0;
+            }
+
+            filteredExpenses.forEach(exp => {
+                const month = exp.date.substring(0, 7);
+                if (monthlyTotals[month] !== undefined) {
+                    monthlyTotals[month] += exp.amount;
+                }
+            });
+
+            const labels = Object.keys(monthlyTotals).map(m => {
+                const [y, mo] = m.split('-');
+                return `${parseInt(mo)}月`;
+            });
+            const data = Object.values(monthlyTotals);
+
+            if (monthlyChart) {
+                monthlyChart.destroy();
+            }
+
+            monthlyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '支出額',
+                        data: data,
+                        backgroundColor: currentAccount === 'tsumitate' ? '#f59e0b' : '#0d9488',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => '¥' + value.toLocaleString()
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ===== Receipt Upload & AI =====
+        function setupDragDrop() {
+            const dropZone = document.getElementById('receiptUpload');
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            }, false);
+        }
+
+        function handleReceiptUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        async function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showToast('画像ファイルを選択してください', 'error');
+                return;
+            }
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                currentReceiptImageData = e.target.result; // Store for later upload
+                document.getElementById('receiptImage').src = e.target.result;
+                document.getElementById('receiptPreview').classList.add('show');
+                document.getElementById('aiAnalyzing').classList.add('show');
+
+                // Send to AI for analysis
+                await analyzeReceipt(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Upload receipt image to Supabase Storage
+        async function uploadReceiptImage(expenseId) {
+            if (!currentReceiptImageData) return null;
+
+            try {
+                // Convert base64 to blob
+                const base64Data = currentReceiptImageData.split(',')[1];
+                const mimeType = currentReceiptImageData.match(/data:([^;]+);/)[1];
+                const byteCharacters = atob(base64Data);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: mimeType });
+
+                // Generate unique filename
+                const ext = mimeType.split('/')[1] || 'jpg';
+                const fileName = `${expenseId}.${ext}`;
+
+                // Upload to Supabase Storage
+                const { data, error } = await supabaseClient
+                    .storage
+                    .from('receipts')
+                    .upload(fileName, blob, {
+                        contentType: mimeType,
+                        upsert: true
+                    });
+
+                if (error) throw error;
+
+                // Get public URL
+                const { data: urlData } = supabaseClient
+                    .storage
+                    .from('receipts')
+                    .getPublicUrl(fileName);
+
+                return urlData.publicUrl;
+            } catch (error) {
+                console.error('Error uploading receipt image:', error);
+                return null;
+            }
+        }
+
+        async function analyzeReceipt(imageData) {
+            try {
+                showToast('画像を認識中...', 'info');
+
+                const response = await fetch(GEMINI_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        question: '領収書画像を解析',
+                        receiptImage: imageData,
+                        isReceiptAnalysis: true
+                    })
+                });
+
+                const result = await response.json();
+
+                // Check for error response from API
+                if (result.error) {
+                    // エラーメッセージをより分かりやすく表示
+                    let errorMessage = result.error;
+                    if (result.error.includes('レシート/領収書ではない')) {
+                        errorMessage = 'この画像はレシート/領収書として認識できませんでした。別の画像をお試しください。';
+                    }
+                    showToast(errorMessage, 'error');
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('AI解析に失敗しました');
+                }
+
+                if (result.receiptData) {
+                    // 認識成功のログ
+                    if (result.recognition) {
+                        console.log('Receipt recognized with confidence:', result.recognition.confidence);
+                    }
+
+                    let filledFields = [];
+                    let missingFields = [];
+
+                    // Fill form with AI results, tracking what was filled
+                    if (result.receiptData.date) {
+                        document.getElementById('expenseDate').value = result.receiptData.date;
+                        filledFields.push('日付');
+                    } else {
+                        missingFields.push('日付');
+                    }
+
+                    if (result.receiptData.amount && result.receiptData.amount > 0) {
+                        document.getElementById('expenseAmount').value = result.receiptData.amount;
+                        filledFields.push('金額');
+                    } else {
+                        missingFields.push('金額');
+                    }
+
+                    if (result.receiptData.description) {
+                        document.getElementById('expenseDescription').value = result.receiptData.description;
+                        filledFields.push('摘要');
+                    }
+
+                    if (result.receiptData.category) {
+                        document.getElementById('expenseCategory').value = result.receiptData.category;
+                        filledFields.push('カテゴリ');
+                    }
+
+                    if (result.receiptData.note) {
+                        document.getElementById('expenseNote').value = result.receiptData.note;
+                    }
+
+                    // Suggest account type
+                    if (result.receiptData.suggestedAccount) {
+                        setFormAccount(result.receiptData.suggestedAccount);
+                    }
+
+                    // Show appropriate message with confidence
+                    const confidenceText = result.recognition?.confidence >= 0.9 ? '' : '（認識精度が低い可能性があります）';
+                    if (missingFields.length > 0) {
+                        showToast(`読み取り完了${confidenceText}。${missingFields.join('、')}は手動入力してください`, 'warning');
+                    } else {
+                        showToast(`領収書を読み取りました${confidenceText}。内容を確認してください`, 'success');
+                    }
+                } else {
+                    showToast('領収書の読み取りに失敗しました。画像が鮮明であることを確認してください', 'error');
+                }
+            } catch (error) {
+                console.error('Receipt analysis error:', error);
+                showToast('AI解析エラー: ' + error.message, 'error');
+            } finally {
+                document.getElementById('aiAnalyzing').classList.remove('show');
+            }
+        }
+
+        // ===== Expense Form =====
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('expenseDate').value = today;
+        }
+
+        function resetForm() {
+            document.getElementById('expenseForm').reset();
+            document.getElementById('editExpenseId').value = '';
+            document.getElementById('submitBtn').textContent = '保存する';
+            document.getElementById('receiptPreview').classList.remove('show');
+            document.getElementById('receiptInput').value = '';
+            setDefaultDate();
+            setFormAccount(currentAccount);
+        }
+
+        async function submitExpense(event) {
+            event.preventDefault();
+
+            const editId = document.getElementById('editExpenseId').value;
+            const expense = {
+                id: editId || null,
+                account: document.getElementById('expenseAccount').value,
+                date: document.getElementById('expenseDate').value,
+                category: document.getElementById('expenseCategory').value,
+                amount: parseInt(document.getElementById('expenseAmount').value),
+                description: document.getElementById('expenseDescription').value,
+                note: document.getElementById('expenseNote').value
+            };
+
+            if (editId) {
+                await updateExpense(expense);
+                const index = expenses.findIndex(e => e.id === editId);
+                if (index !== -1) {
+                    expenses[index] = { ...expenses[index], ...expense };
+                }
+                showToast('経費を更新しました', 'success');
+            } else {
+                const saved = await saveExpense(expense);
+                if (saved) {
+                    // Upload receipt image if exists
+                    let receiptImageUrl = null;
+                    if (currentReceiptImageData) {
+                        receiptImageUrl = await uploadReceiptImage(saved.id);
+                        if (receiptImageUrl) {
+                            // Update expense with image URL
+                            await supabaseClient
+                                .from('expenses')
+                                .update({ receipt_image_url: receiptImageUrl })
+                                .eq('id', saved.id);
+                        }
+                    }
+
+                    expenses.unshift({
+                        id: saved.id,
+                        date: saved.date,
+                        category: saved.category,
+                        amount: saved.amount,
+                        description: saved.description || '',
+                        note: saved.note || '',
+                        account: saved.account_type || 'seimu',
+                        receiptImageUrl: receiptImageUrl,
+                        createdAt: saved.created_at
+                    });
+                    showToast('経費を追加しました', 'success');
+                }
+            }
+
+            currentReceiptImageData = null; // Clear after saving
+            resetForm();
+            renderExpenseTable();
+            renderDashboard();
+        }
+
+        // ===== Expense Table =====
+        function populateMonthFilter() {
+            const select = document.getElementById('filterMonth');
+            const year = budgetConfig.fiscalYear;
+
+            let html = '<option value="">全期間</option>';
+            for (let m = 4; m <= 12; m++) {
+                html += `<option value="${year}-${String(m).padStart(2, '0')}">${m}月</option>`;
+            }
+            for (let m = 1; m <= 3; m++) {
+                html += `<option value="${year + 1}-${String(m).padStart(2, '0')}">${m}月</option>`;
+            }
+            select.innerHTML = html;
+        }
+
+        function renderExpenseTable() {
+            const filterAccount = document.getElementById('filterAccount').value;
+            const filterCategory = document.getElementById('filterCategory').value;
+            const filterMonth = document.getElementById('filterMonth').value;
+
+            let filtered = expenses.filter(exp => {
+                if (filterAccount && exp.account !== filterAccount) return false;
+                if (filterCategory && exp.category !== filterCategory) return false;
+                if (filterMonth && !exp.date.startsWith(filterMonth)) return false;
+                return true;
+            });
+
+            filtered.sort((a, b) => b.date.localeCompare(a.date));
+
+            const tbody = document.getElementById('expenseTableBody');
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="no-data">経費データがありません</td>
+                    </tr>
+                `;
+            } else {
+                tbody.innerHTML = filtered.map(exp => `
+                    <tr>
+                        <td>${formatDate(exp.date)}</td>
+                        <td><span class="account-badge ${exp.account}">${exp.account === 'seimu' ? '政活費' : '積立金'}</span></td>
+                        <td><span class="category-badge ${exp.category}">${getCategoryName(exp.category)}</span></td>
+                        <td>${escapeHtml(exp.description)}${exp.note ? `<br><small style="color:var(--gray)">${escapeHtml(exp.note)}</small>` : ''}</td>
+                        <td class="amount">${formatCurrency(exp.amount)}</td>
+                        <td class="receipt-cell">
+                            ${exp.receiptImageUrl ? `<a href="${exp.receiptImageUrl}" target="_blank" title="領収書を表示"><img src="${exp.receiptImageUrl}" class="receipt-thumb" alt="領収書"></a>` : '<span style="color:var(--gray);font-size:0.75rem;">-</span>'}
+                        </td>
+                        <td class="actions">
+                            <button onclick="openEditModal('${exp.id}')" title="編集">✏️</button>
+                            <button class="delete" onclick="deleteExpense('${exp.id}')" title="削除">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            const total = filtered.reduce((sum, exp) => sum + exp.amount, 0);
+            document.getElementById('filteredTotal').textContent = formatCurrency(total);
+        }
+
+        async function deleteExpense(id) {
+            if (!confirm('この経費を削除しますか？')) return;
+
+            await deleteExpenseFromDB(id);
+            expenses = expenses.filter(exp => exp.id !== id);
+            renderExpenseTable();
+            renderDashboard();
+            showToast('経費を削除しました');
+        }
+
+        // ===== Edit Modal =====
+        function openEditModal(id) {
+            const expense = expenses.find(exp => exp.id === id);
+            if (!expense) return;
+
+            document.getElementById('modalExpenseId').value = expense.id;
+            document.getElementById('modalAccount').value = expense.account || 'seimu';
+            document.getElementById('modalDate').value = expense.date;
+            document.getElementById('modalCategory').value = expense.category;
+            document.getElementById('modalAmount').value = expense.amount;
+            document.getElementById('modalDescription').value = expense.description;
+            document.getElementById('modalNote').value = expense.note || '';
+
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        async function updateExpenseModal(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('modalExpenseId').value;
+            const index = expenses.findIndex(exp => exp.id === id);
+            if (index === -1) return;
+
+            const updatedExpense = {
+                id: id,
+                account: document.getElementById('modalAccount').value,
+                date: document.getElementById('modalDate').value,
+                category: document.getElementById('modalCategory').value,
+                amount: parseInt(document.getElementById('modalAmount').value),
+                description: document.getElementById('modalDescription').value,
+                note: document.getElementById('modalNote').value
+            };
+
+            await updateExpense(updatedExpense);
+
+            expenses[index] = {
+                ...expenses[index],
+                ...updatedExpense
+            };
+
+            closeEditModal();
+            renderExpenseTable();
+            renderDashboard();
+            showToast('経費を更新しました', 'success');
+        }
+
+        // ===== Settings =====
+        function renderSettings() {
+            document.getElementById('settingYear').value = budgetConfig.fiscalYear;
+            document.getElementById('settingSeimuBudget').value = budgetConfig.seimuBudget;
+            document.getElementById('settingTsumitateInitial').value = budgetConfig.tsumitateInitial || 0;
+
+            // Render personal budget settings
+            const members = ['佐藤裕之', '高橋誠一', '日髙千穂', '鈴木優作'];
+            members.forEach(member => {
+                const input = document.getElementById(`personalBudget_${member}`);
+                if (input) {
+                    input.value = personalBudgetConfig[member] || 408000;
+                }
+            });
+        }
+
+        async function updateFiscalYear() {
+            const year = parseInt(document.getElementById('settingYear').value);
+            budgetConfig.fiscalYear = year;
+            await saveConfig();
+            updateFiscalYearDisplay();
+            populateMonthFilter();
+            renderDashboard();
+        }
+
+        function updateFiscalYearDisplay() {
+            const year = budgetConfig.fiscalYear;
+            const reiwa = year - 2018;
+            document.getElementById('fiscalYearDisplay').textContent = `令和${reiwa}年度（${year}年度）`;
+        }
+
+        async function saveBudgetSettings() {
+            budgetConfig.seimuBudget = parseInt(document.getElementById('settingSeimuBudget').value) || 0;
+            budgetConfig.tsumitateInitial = parseInt(document.getElementById('settingTsumitateInitial').value) || 0;
+            await saveConfig();
+            renderDashboard();
+            showToast('設定を保存しました', 'success');
+        }
+
+        async function savePersonalBudgetSettings() {
+            const members = ['佐藤裕之', '高橋誠一', '日髙千穂', '鈴木優作'];
+
+            try {
+                for (const member of members) {
+                    const input = document.getElementById(`personalBudget_${member}`);
+                    const budget = parseInt(input.value) || 408000;
+
+                    // Update local state
+                    personalBudgetConfig[member] = budget;
+
+                    // Upsert to Supabase
+                    const { error } = await supabaseClient
+                        .from('personal_budget_config')
+                        .upsert({
+                            member_name: member,
+                            fiscal_year: budgetConfig.fiscalYear,
+                            budget: budget,
+                            updated_at: new Date().toISOString()
+                        }, {
+                            onConflict: 'member_name,fiscal_year'
+                        });
+
+                    if (error) {
+                        // If upsert fails, try update then insert
+                        const { data: existing } = await supabaseClient
+                            .from('personal_budget_config')
+                            .select('id')
+                            .eq('member_name', member)
+                            .eq('fiscal_year', budgetConfig.fiscalYear)
+                            .single();
+
+                        if (existing) {
+                            await supabaseClient
+                                .from('personal_budget_config')
+                                .update({ budget: budget, updated_at: new Date().toISOString() })
+                                .eq('id', existing.id);
+                        } else {
+                            await supabaseClient
+                                .from('personal_budget_config')
+                                .insert({
+                                    member_name: member,
+                                    fiscal_year: budgetConfig.fiscalYear,
+                                    budget: budget
+                                });
+                        }
+                    }
+                }
+
+                renderPersonalDashboard();
+                showToast('個人予算を保存しました', 'success');
+            } catch (error) {
+                console.error('Error saving personal budget:', error);
+                showToast('個人予算の保存に失敗しました', 'error');
+            }
+        }
+
+        // ===== Data Export/Import =====
+        function exportCSV() {
+            if (expenses.length === 0) {
+                showToast('出力するデータがありません', 'error');
+                return;
+            }
+
+            const headers = ['日付', '会計区分', 'カテゴリ', '摘要', '金額', '備考'];
+            const rows = expenses.map(exp => [
+                exp.date,
+                exp.account === 'seimu' ? '政務活動費' : '会派積立金',
+                getCategoryName(exp.category),
+                exp.description,
+                exp.amount,
+                exp.note || ''
+            ]);
+
+            let csv = '\uFEFF';
+            csv += headers.join(',') + '\n';
+            rows.forEach(row => {
+                csv += row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+
+            downloadFile(csv, `経費一覧_${budgetConfig.fiscalYear}.csv`, 'text/csv;charset=utf-8');
+            showToast('CSVファイルを出力しました', 'success');
+        }
+
+        function exportData() {
+            const data = {
+                version: 2,
+                exportDate: new Date().toISOString(),
+                budgetConfig: budgetConfig,
+                expenses: expenses,
+                deposits: deposits
+            };
+
+            downloadFile(JSON.stringify(data, null, 2), `予算データ_${budgetConfig.fiscalYear}.json`, 'application/json');
+            showToast('データを出力しました', 'success');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+
+                    if (!data.budgetConfig || !data.expenses) {
+                        throw new Error('無効なデータ形式です');
+                    }
+
+                    if (!confirm('現在のデータを上書きしますか？')) return;
+
+                    budgetConfig = data.budgetConfig;
+                    expenses = data.expenses;
+                    deposits = data.deposits || [];
+                    saveConfig();
+                    saveExpenses();
+                    saveDeposits();
+
+                    renderDashboard();
+                    renderExpenseTable();
+                    renderSettings();
+                    populateMonthFilter();
+
+                    showToast('データを取り込みました', 'success');
+                } catch (err) {
+                    showToast('データの取り込みに失敗しました: ' + err.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function confirmClearData() {
+            if (!confirm('すべてのデータを削除しますか？この操作は取り消せません。')) return;
+            if (!confirm('本当に削除しますか？')) return;
+
+            budgetConfig = {
+                fiscalYear: 2025,
+                seimuBudget: 1200000,
+                tsumitateInitial: 0
+            };
+            expenses = [];
+            deposits = [];
+
+            saveConfig();
+            saveExpenses();
+            saveDeposits();
+
+            renderDashboard();
+            renderExpenseTable();
+            renderSettings();
+
+            showToast('データを削除しました');
+        }
+
+        // ===== Utilities =====
+        function formatCurrency(amount) {
+            return '¥' + amount.toLocaleString();
+        }
+
+        function formatDate(dateStr) {
+            const [y, m, d] = dateStr.split('-');
+            return `${parseInt(m)}/${parseInt(d)}`;
+        }
+
+        function getCategoryName(categoryId) {
+            const cat = ALL_CATEGORIES.find(c => c.id === categoryId);
+            return cat ? cat.name : categoryId;
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (type ? ' ' + type : '');
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ===== Personal Budget Functions =====
+        async function loadPersonalData() {
+            try {
+                // Load personal budget config
+                const { data: configData, error: configError } = await supabaseClient
+                    .from('personal_budget_config')
+                    .select('*')
+                    .eq('fiscal_year', budgetConfig.fiscalYear);
+
+                if (configData && !configError) {
+                    configData.forEach(c => {
+                        personalBudgetConfig[c.member_name] = c.budget;
+                    });
+                }
+
+                // Load personal expenses
+                const { data: expensesData, error: expensesError } = await supabaseClient
+                    .from('personal_expenses')
+                    .select('*')
+                    .order('date', { ascending: false });
+
+                if (expensesData && !expensesError) {
+                    personalExpenses = expensesData.map(e => ({
+                        id: e.id,
+                        memberName: e.member_name,
+                        date: e.date,
+                        category: e.category,
+                        amount: e.amount,
+                        description: e.description || '',
+                        note: e.note || '',
+                        receiptImageUrl: e.receipt_image_url || null,
+                        createdAt: e.created_at
+                    }));
+                }
+            } catch (error) {
+                console.error('Error loading personal data:', error);
+            }
+        }
+
+        function switchPersonalMember() {
+            currentPersonalMember = document.getElementById('personalMember').value;
+            renderPersonalDashboard();
+            renderPersonalExpenseTable();
+        }
+
+        function switchPersonalMemberTab(memberName) {
+            currentPersonalMember = memberName;
+            document.getElementById('personalMember').value = memberName;
+
+            // Update tab styles
+            document.querySelectorAll('.member-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent === memberName) {
+                    tab.classList.add('active');
+                }
+            });
+
+            renderPersonalDashboard();
+            renderPersonalExpenseTable();
+        }
+
+        function setPersonalDefaultDate() {
+            document.getElementById('personalExpenseDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function renderPersonalDashboard() {
+            const budget = personalBudgetConfig[currentPersonalMember] || 408000;
+            const memberExpenses = personalExpenses.filter(e => e.memberName === currentPersonalMember);
+            const used = memberExpenses.reduce((sum, e) => sum + e.amount, 0);
+            const remaining = budget - used;
+            const percent = budget > 0 ? (used / budget * 100) : 0;
+
+            document.getElementById('personalTotal').textContent = formatCurrency(budget);
+            document.getElementById('personalUsed').textContent = formatCurrency(used);
+            document.getElementById('personalUsedPercent').textContent = percent.toFixed(1) + '%';
+            document.getElementById('personalRemaining').textContent = formatCurrency(remaining);
+            document.getElementById('personalRemainingPercent').textContent = (100 - percent).toFixed(1) + '%';
+            document.getElementById('personalProgressPercent').textContent = percent.toFixed(1) + '%';
+
+            const progressFill = document.getElementById('personalProgressFill');
+            progressFill.style.width = Math.min(percent, 100) + '%';
+            if (percent > 90) {
+                progressFill.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+            } else if (percent > 70) {
+                progressFill.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
+            } else {
+                progressFill.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6)';
+            }
+        }
+
+        function renderPersonalExpenseTable() {
+            const memberExpenses = personalExpenses.filter(e => e.memberName === currentPersonalMember);
+            const tbody = document.getElementById('personalExpenseTableBody');
+
+            if (memberExpenses.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="no-data">経費データがありません</td>
+                    </tr>
+                `;
+            } else {
+                tbody.innerHTML = memberExpenses.map(exp => `
+                    <tr>
+                        <td>${formatDate(exp.date)}</td>
+                        <td><span class="category-badge ${exp.category}">${getCategoryName(exp.category)}</span></td>
+                        <td>${escapeHtml(exp.description)}${exp.note ? `<br><small style="color:var(--gray)">${escapeHtml(exp.note)}</small>` : ''}</td>
+                        <td class="amount">${formatCurrency(exp.amount)}</td>
+                        <td class="actions">
+                            <button class="edit" onclick="editPersonalExpense('${exp.id}')" title="編集">✏️</button>
+                            <button class="delete" onclick="deletePersonalExpense('${exp.id}')" title="削除">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            const total = memberExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+            document.getElementById('personalFilteredTotal').textContent = formatCurrency(total);
+        }
+
+        async function submitPersonalExpense(event) {
+            event.preventDefault();
+
+            const editId = document.getElementById('editPersonalExpenseId').value;
+            const expense = {
+                memberName: currentPersonalMember,
+                date: document.getElementById('personalExpenseDate').value,
+                category: document.getElementById('personalExpenseCategory').value,
+                amount: parseInt(document.getElementById('personalExpenseAmount').value),
+                description: document.getElementById('personalExpenseDescription').value,
+                note: document.getElementById('personalExpenseNote').value
+            };
+
+            try {
+                if (editId) {
+                    // 更新モード
+                    const { error } = await supabaseClient
+                        .from('personal_expenses')
+                        .update({
+                            date: expense.date,
+                            category: expense.category,
+                            amount: expense.amount,
+                            description: expense.description,
+                            note: expense.note
+                        })
+                        .eq('id', editId);
+
+                    if (error) throw error;
+
+                    // ローカルデータを更新
+                    const idx = personalExpenses.findIndex(e => e.id === editId);
+                    if (idx !== -1) {
+                        personalExpenses[idx] = { ...personalExpenses[idx], ...expense };
+                    }
+
+                    showToast('経費を更新しました', 'success');
+                } else {
+                    // 新規追加モード
+                    const { data, error } = await supabaseClient
+                        .from('personal_expenses')
+                        .insert({
+                            member_name: expense.memberName,
+                            date: expense.date,
+                            category: expense.category,
+                            amount: expense.amount,
+                            description: expense.description,
+                            note: expense.note
+                        })
+                        .select()
+                        .single();
+
+                    if (error) throw error;
+
+                    personalExpenses.unshift({
+                        id: data.id,
+                        memberName: data.member_name,
+                        date: data.date,
+                        category: data.category,
+                        amount: data.amount,
+                        description: data.description || '',
+                        note: data.note || '',
+                        createdAt: data.created_at
+                    });
+
+                    showToast('経費を追加しました', 'success');
+                }
+
+                resetPersonalExpenseForm();
+                renderPersonalDashboard();
+                renderPersonalExpenseTable();
+            } catch (error) {
+                console.error('Error saving personal expense:', error);
+                showToast('経費の保存に失敗しました', 'error');
+            }
+        }
+
+        function editPersonalExpense(id) {
+            const expense = personalExpenses.find(e => e.id === id);
+            if (!expense) return;
+
+            document.getElementById('editPersonalExpenseId').value = id;
+            document.getElementById('personalExpenseDate').value = expense.date;
+            document.getElementById('personalExpenseCategory').value = expense.category;
+            document.getElementById('personalExpenseAmount').value = expense.amount;
+            document.getElementById('personalExpenseDescription').value = expense.description;
+            document.getElementById('personalExpenseNote').value = expense.note || '';
+
+            document.getElementById('personalSubmitBtn').textContent = '更新する';
+
+            // フォームにスクロール
+            document.getElementById('personalExpenseForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetPersonalExpenseForm() {
+            document.getElementById('personalExpenseForm').reset();
+            document.getElementById('editPersonalExpenseId').value = '';
+            document.getElementById('personalSubmitBtn').textContent = '保存する';
+            setPersonalDefaultDate();
+        }
+
+        async function deletePersonalExpense(id) {
+            if (!confirm('この経費を削除しますか？')) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('personal_expenses')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                personalExpenses = personalExpenses.filter(e => e.id !== id);
+                renderPersonalDashboard();
+                renderPersonalExpenseTable();
+                showToast('経費を削除しました');
+            } catch (error) {
+                console.error('Error deleting personal expense:', error);
+                showToast('経費の削除に失敗しました', 'error');
+            }
+        }
+
+        function exportPersonalCSV() {
+            const memberExpenses = personalExpenses.filter(e => e.memberName === currentPersonalMember);
+            if (memberExpenses.length === 0) {
+                showToast('出力するデータがありません', 'error');
+                return;
+            }
+
+            const headers = ['日付', 'カテゴリ', '摘要', '金額', '備考'];
+            const rows = memberExpenses.map(exp => [
+                exp.date,
+                getCategoryName(exp.category),
+                exp.description,
+                exp.amount,
+                exp.note || ''
+            ]);
+
+            let csv = '\uFEFF';
+            csv += headers.join(',') + '\n';
+            rows.forEach(row => {
+                csv += row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+
+            downloadFile(csv, `個人政務活動費_${currentPersonalMember}_${budgetConfig.fiscalYear}.csv`, 'text/csv;charset=utf-8');
+            showToast('CSVファイルを出力しました', 'success');
+        }
+
+        // ===== Auto Login Check =====
+        if (localStorage.getItem('member_auth') === '1') {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            initApp();
+        }
+    </script>
+</body>
+</html>

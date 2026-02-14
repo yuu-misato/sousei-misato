@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リサーチ履歴 | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
+    <style>
+        /* 認証済みの場合はログイン画面を即座に非表示 */
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo { font-size: 1.8rem; font-weight: 900; color: var(--navy); margin-bottom: 0.3rem; }
+        .login-sub { color: var(--gray); font-size: 0.85rem; margin-bottom: 2rem; }
+        .login-input {
+            width: 100%; padding: 0.85rem 1rem; background: var(--gray-lighter);
+            border: 1px solid var(--gray-light); border-radius: 8px;
+            color: var(--text); font-size: 1rem; font-family: inherit;
+            outline: none; margin-bottom: 1rem; transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%; padding: 0.85rem; background: var(--green); color: var(--white);
+            border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+            font-family: inherit; cursor: pointer; transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2; color: #dc2626; padding: 0.6rem;
+            border-radius: 8px; font-size: 0.82rem; margin-bottom: 1rem;
+            display: none; border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px; background: var(--navy); position: fixed;
+            top: 0; left: 0; bottom: 0; z-index: 100;
+            display: flex; flex-direction: column; transition: transform 0.3s ease;
+        }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
+        .sidebar-logo-icon { width: 40px; height: 40px; background: var(--white); border-radius: 8px; padding: 4px; }
+        .sidebar-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .sidebar-logo-text { font-size: 1.1rem; font-weight: 700; }
+        .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 700;
+            color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;
+            transition: all 0.2s; border-left: 3px solid transparent;
+        }
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+        .sidebar-nav a.active { background: rgba(255,255,255,0.1); color: var(--white); border-left-color: var(--green); }
+        .sidebar-nav a svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .sidebar-footer {
+            padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem; color: rgba(255,255,255,0.4);
+        }
+        .sidebar-external-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+        .sidebar-external-link:hover {
+            color: var(--white);
+        }
+
+        /* ===== Mobile ===== */
+        .mobile-header {
+            display: none; position: fixed; top: 0; left: 0; right: 0;
+            height: 60px; background: var(--navy); z-index: 101;
+            padding: 0 1rem; align-items: center; justify-content: space-between;
+        }
+        .mobile-header-logo { display: flex; align-items: center; gap: 0.5rem; color: var(--white); text-decoration: none; font-weight: 700; }
+        .mobile-header-logo img { width: 32px; height: 32px; background: var(--white); border-radius: 6px; padding: 2px; }
+        .menu-toggle { background: none; border: none; color: var(--white); cursor: pointer; padding: 0.5rem; }
+        .menu-toggle svg { width: 28px; height: 28px; }
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+
+        /* ===== Main ===== */
+        .main-wrapper { flex: 1; margin-left: 260px; }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .mobile-header { display: flex; }
+            .main-wrapper { margin-left: 0; }
+            .main-container { padding: 80px 1rem 2rem; }
+        }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .page-header h1 {
+            font-size: 1.5rem;
+            color: var(--navy);
+        }
+        .page-header p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn svg { width: 18px; height: 18px; }
+        .btn-primary {
+            background: var(--green);
+            color: var(--white);
+            border: none;
+        }
+        .btn-primary:hover { background: var(--green-dark); }
+        .btn-outline {
+            background: transparent;
+            color: var(--gray);
+            border: 1px solid var(--gray-light);
+        }
+        .btn-outline:hover {
+            background: var(--gray-lighter);
+            border-color: var(--gray);
+        }
+        .btn-danger {
+            background: #dc2626;
+            color: var(--white);
+            border: none;
+        }
+        .btn-danger:hover { background: #b91c1c; }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gray-lighter);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .empty-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--gray);
+        }
+        .empty-state h3 {
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .empty-state p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== History List ===== */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .history-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .history-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .history-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--gray-lighter);
+            gap: 1rem;
+        }
+        .history-keyword {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .history-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .history-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .history-meta svg {
+            width: 14px;
+            height: 14px;
+        }
+        .history-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+        .history-actions button {
+            background: transparent;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.2s;
+        }
+        .history-actions button:hover {
+            background: var(--gray-lighter);
+            color: var(--navy);
+        }
+        .history-actions button.delete:hover {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+        .history-actions button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .history-card-body {
+            padding: 1rem 1.25rem;
+        }
+        .history-summary {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.7;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .history-card-footer {
+            padding: 0.75rem 1.25rem;
+            background: var(--gray-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .history-sources {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .source-badge {
+            background: var(--white);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--gray);
+        }
+        .score-badge {
+            background: var(--green);
+            color: var(--white);
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .score-badge.low { background: #f59e0b; }
+        .score-badge.medium { background: #3b82f6; }
+        .score-badge.high { background: var(--green); }
+
+        /* ===== Stats ===== */
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .stat-num {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--navy);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* ===== Filter ===== */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--green);
+        }
+        .sort-select {
+            padding: 0.6rem 2rem 0.6rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background: var(--white);
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+        }
+
+        /* ===== Confirm Modal ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open {
+            display: flex;
+        }
+        .modal-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: #fef2f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-icon svg {
+            width: 30px;
+            height: 30px;
+            color: #dc2626;
+        }
+        .modal-card h3 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .modal-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        /* ===== iPhone SE / Small Mobile (375px) ===== */
+        @media (max-width: 375px) {
+            .main-container {
+                padding: 70px 0.75rem 1.5rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                flex: 1;
+                min-width: calc(50% - 0.375rem);
+                justify-content: center;
+                padding: 0.55rem 0.75rem;
+                font-size: 0.8rem;
+            }
+
+            .btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            /* Filter section */
+            .filter-section {
+                padding: 1rem;
+            }
+
+            .filter-group label {
+                font-size: 0.8rem;
+            }
+
+            .filter-group input,
+            .filter-group select {
+                font-size: 16px; /* Prevent iOS zoom */
+                padding: 0.6rem;
+            }
+
+            /* History cards */
+            .history-card {
+                padding: 1rem;
+            }
+
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .history-title {
+                font-size: 0.95rem;
+            }
+
+            .history-meta {
+                font-size: 0.75rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .history-preview {
+                font-size: 0.82rem;
+                -webkit-line-clamp: 3;
+            }
+
+            .history-actions {
+                gap: 0.5rem;
+            }
+
+            .history-actions button {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.78rem;
+            }
+
+            /* Delete modal */
+            .modal-card {
+                margin: 0.75rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .modal-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .modal-card p {
+                font-size: 0.85rem;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .modal-actions .btn {
+                width: 100%;
+            }
+
+            /* Mobile header */
+            .mobile-header h1 {
+                font-size: 1rem;
+            }
+
+            /* Empty state */
+            .empty-state {
+                padding: 2rem 1rem;
+            }
+
+            .empty-state svg {
+                width: 48px;
+                height: 48px;
+            }
+
+            .empty-state h3 {
+                font-size: 1rem;
+            }
+
+            .empty-state p {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">創政MISATO</div>
+            <div class="login-sub">会員専用ページ</div>
+            <div class="login-error" id="loginError">パスワードが正しくありません</div>
+            <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力">
+            <button class="login-btn" onclick="attemptLogin()">ログイン</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <div class="mobile-header">
+            <a href="/member/" class="mobile-header-logo">
+                <img src="/member/images/logo.png" alt="創政MISATO">
+                <span>創政MISATO</span>
+            </a>
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+        <div class="app-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <a href="/member/" class="sidebar-logo">
+                        <div class="sidebar-logo-icon">
+                            <img src="/member/images/logo.png" alt="創政MISATO">
+                        </div>
+                        <span class="sidebar-logo-text">創政MISATO</span>
+                    </a>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-section">メニュー</div>
+                    <a href="/member/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        ダッシュボード
+                    </a>
+                    <a href="/member/budget/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                        </svg>
+                        会派予算管理
+                    </a>
+                    <a href="/member/budget-analysis.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        予算書AIレビュー
+                    </a>
+                    <a href="/member/assets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        会派アセット
+                    </a>
+                    <div class="sidebar-nav-section">条例AI</div>
+                    <a href="/member/search.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        条例を検索
+                    </a>
+                    <a href="/member/review.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                        条例をレビュー
+                    </a>
+                    <a href="/member/barrier.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        障壁を調べる
+                    </a>
+                    <div class="sidebar-nav-section">リサーチAI</div>
+                    <a href="/member/research.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        一般質問リサーチ
+                    </a>
+                    <a href="/member/research-history.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        リサーチ履歴
+                    </a>
+                    <div class="sidebar-nav-section">その他</div>
+                    <a href="/member/guideline.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        ガイドライン
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <a href="https://souseimisato.com" target="_blank" class="sidebar-external-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+                            <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        souseimisato.com
+                    </a>
+                    <div>&copy; 2026 創政MISATO</div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-wrapper">
+                <main class="main-container">
+                    <div class="page-header">
+                        <div>
+                            <h1>リサーチ履歴</h1>
+                            <p>過去の検索結果を確認・再利用できます</p>
+                        </div>
+                        <div class="header-actions">
+                            <a href="/member/research.html" class="btn btn-primary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                新規検索
+                            </a>
+                            <button class="btn btn-outline" onclick="clearAllHistory()" id="clearAllBtn" style="display:none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                                全て削除
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-bar" id="statsBar" style="display:none;">
+                        <div class="stat-item">
+                            <span class="stat-num" id="totalCount">0</span>
+                            <span class="stat-label">件の履歴</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num" id="avgScore">-</span>
+                            <span class="stat-label">平均スコア</span>
+                        </div>
+                    </div>
+
+                    <!-- Filter -->
+                    <div class="filter-bar" id="filterBar" style="display:none;">
+                        <input type="text" class="search-input" id="searchInput" placeholder="キーワードで絞り込み...">
+                        <select class="sort-select" id="sortSelect">
+                            <option value="newest">新しい順</option>
+                            <option value="oldest">古い順</option>
+                            <option value="score-high">スコア高い順</option>
+                            <option value="score-low">スコア低い順</option>
+                        </select>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3>履歴がありません</h3>
+                        <p>一般質問リサーチで検索すると、ここに履歴が表示されます</p>
+                        <a href="/member/research.html" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            リサーチを始める
+                        </a>
+                    </div>
+
+                    <!-- History List -->
+                    <div class="history-list" id="historyList"></div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-card">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+            </div>
+            <h3 id="modalTitle">履歴を削除しますか？</h3>
+            <p id="modalMessage">この操作は取り消せません。</p>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">キャンセル</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">削除する</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== Auth =====
+        const CORRECT_PASSWORD = 'sousei2026';
+
+        function attemptLogin() {
+            const input = document.getElementById('passwordInput').value;
+            if (input === CORRECT_PASSWORD) {
+                sessionStorage.setItem('memberAuth', 'true');
+                showMain();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function showMain() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            loadHistory();
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') attemptLogin();
+        });
+
+        if (sessionStorage.getItem('memberAuth') === 'true') {
+            showMain();
+        }
+
+        // ===== Sidebar =====
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+            document.querySelector('.sidebar-overlay').classList.toggle('open');
+        }
+
+        // ===== History =====
+        let historyData = [];
+        let deleteTarget = null;
+        let deleteAll = false;
+
+        function loadHistory() {
+            const stored = localStorage.getItem('researchHistory');
+            historyData = stored ? JSON.parse(stored) : [];
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            const emptyState = document.getElementById('emptyState');
+            const statsBar = document.getElementById('statsBar');
+            const filterBar = document.getElementById('filterBar');
+            const clearAllBtn = document.getElementById('clearAllBtn');
+
+            // Filter
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            let filtered = historyData.filter(h =>
+                h.keyword.toLowerCase().includes(searchTerm) ||
+                (h.summary && h.summary.toLowerCase().includes(searchTerm))
+            );
+
+            // Sort
+            const sortBy = document.getElementById('sortSelect').value;
+            filtered.sort((a, b) => {
+                switch (sortBy) {
+                    case 'oldest':
+                        return new Date(a.timestamp) - new Date(b.timestamp);
+                    case 'score-high':
+                        return (b.score || 0) - (a.score || 0);
+                    case 'score-low':
+                        return (a.score || 0) - (b.score || 0);
+                    default: // newest
+                        return new Date(b.timestamp) - new Date(a.timestamp);
+                }
+            });
+
+            if (historyData.length === 0) {
+                emptyState.style.display = 'block';
+                container.innerHTML = '';
+                statsBar.style.display = 'none';
+                filterBar.style.display = 'none';
+                clearAllBtn.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            statsBar.style.display = 'flex';
+            filterBar.style.display = 'flex';
+            clearAllBtn.style.display = 'inline-flex';
+
+            // Stats
+            document.getElementById('totalCount').textContent = historyData.length;
+            const scores = historyData.filter(h => h.score).map(h => h.score);
+            document.getElementById('avgScore').textContent = scores.length
+                ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+                : '-';
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="padding:2rem;">
+                        <p>「${searchTerm}」に一致する履歴が見つかりません</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map((h, idx) => {
+                const date = new Date(h.timestamp);
+                const dateStr = `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${String(date.getMinutes()).padStart(2,'0')}`;
+
+                const sourceCount = h.sources ? Object.keys(h.sources).filter(k => h.sources[k] && h.sources[k].length > 0).length : 0;
+
+                let scoreBadge = '';
+                if (h.score) {
+                    const scoreClass = h.score >= 70 ? 'high' : h.score >= 40 ? 'medium' : 'low';
+                    scoreBadge = `<span class="score-badge ${scoreClass}">${h.score}点</span>`;
+                }
+
+                const summaryText = h.summary || '要約なし';
+
+                return `
+                    <div class="history-card" data-idx="${idx}">
+                        <div class="history-card-header">
+                            <div>
+                                <div class="history-keyword">${escapeHtml(h.keyword)}</div>
+                                <div class="history-meta">
+                                    <span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        ${dateStr}
+                                    </span>
+                                    <span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                        </svg>
+                                        ${sourceCount}件のソース
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="history-actions">
+                                <button onclick="viewHistory(${historyData.indexOf(h)})" title="詳細を見る">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                                <button onclick="reSearch('${escapeHtml(h.keyword)}')" title="再検索">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                </button>
+                                <button class="delete" onclick="confirmDelete(${historyData.indexOf(h)})" title="削除">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="history-card-body">
+                            <p class="history-summary">${escapeHtml(summaryText)}</p>
+                        </div>
+                        <div class="history-card-footer">
+                            <div class="history-sources">
+                                ${getSourceBadges(h.sources)}
+                            </div>
+                            ${scoreBadge}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getSourceBadges(sources) {
+            if (!sources) return '';
+            const labels = {
+                kokkai: '国会',
+                saitama: '埼玉県議会',
+                misato: '三郷市議会',
+                ministry: '省庁',
+                news: 'ニュース',
+                laws: '法令',
+                official: '公式サイト',
+                nearby: '近隣市',
+                reiki: '例規集',
+                localVoices: '地域の声'
+            };
+            return Object.keys(sources)
+                .filter(k => sources[k] && sources[k].length > 0)
+                .slice(0, 5)
+                .map(k => `<span class="source-badge">${labels[k] || k}</span>`)
+                .join('');
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function viewHistory(idx) {
+            const h = historyData[idx];
+            if (!h) return;
+            // Store selected history and redirect
+            sessionStorage.setItem('viewHistoryData', JSON.stringify(h));
+            window.location.href = '/member/research.html?view=history';
+        }
+
+        function reSearch(keyword) {
+            window.location.href = `/member/research.html?q=${encodeURIComponent(keyword)}`;
+        }
+
+        function confirmDelete(idx) {
+            deleteTarget = idx;
+            deleteAll = false;
+            document.getElementById('modalTitle').textContent = '履歴を削除しますか？';
+            document.getElementById('modalMessage').textContent = `「${historyData[idx].keyword}」の検索履歴を削除します。`;
+            document.getElementById('deleteModal').classList.add('open');
+        }
+
+        function clearAllHistory() {
+            deleteTarget = null;
+            deleteAll = true;
+            document.getElementById('modalTitle').textContent = '全ての履歴を削除しますか？';
+            document.getElementById('modalMessage').textContent = `${historyData.length}件の履歴が全て削除されます。この操作は取り消せません。`;
+            document.getElementById('deleteModal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').classList.remove('open');
+            deleteTarget = null;
+            deleteAll = false;
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            if (deleteAll) {
+                historyData = [];
+            } else if (deleteTarget !== null) {
+                historyData.splice(deleteTarget, 1);
+            }
+            localStorage.setItem('researchHistory', JSON.stringify(historyData));
+            closeModal();
+            renderHistory();
+        });
+
+        // Filter events
+        document.getElementById('searchInput').addEventListener('input', renderHistory);
+        document.getElementById('sortSelect').addEventListener('change', renderHistory);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条例の障壁を調べる | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
+    <style>
+        /* 認証済みの場合はログイン画面を即座に非表示 */
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --orange: #f59e0b;
+            --purple: #8b5cf6;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --red: #ef4444;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #mainContent { display: none; }
+
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--navy);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .sidebar-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-left-color: var(--green);
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile Menu Toggle ===== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--navy);
+            z-index: 101;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .mobile-header-logo img {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* ===== Main Content ===== */
+        .main-wrapper {
+            flex: 1;
+            margin-left: 260px;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .page-title h1 svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--red);
+        }
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Search Card ===== */
+        .search-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--gray-light);
+        }
+
+        .search-card label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .search-input-large {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .search-input-large:focus {
+            border-color: var(--purple);
+        }
+
+        .search-input-large::placeholder {
+            color: #9ca3af;
+        }
+
+        .example-queries {
+            margin-bottom: 1rem;
+        }
+
+        .example-queries p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .example-btn {
+            display: inline-block;
+            padding: 0.4rem 0.75rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--text);
+            cursor: pointer;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .example-btn:hover {
+            background: var(--purple);
+            color: var(--white);
+            border-color: var(--purple);
+        }
+
+        .search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: var(--purple);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-btn:hover:not(:disabled) {
+            background: #7c3aed;
+        }
+
+        .search-btn:disabled {
+            background: var(--gray-light);
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .search-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== Loading ===== */
+        .loading-section {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading-section.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--gray-light);
+            border-top-color: var(--purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Results ===== */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .results-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .results-count {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .result-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--gray);
+        }
+
+        .result-item.high {
+            border-left-color: var(--red);
+        }
+
+        .result-item.medium {
+            border-left-color: var(--orange);
+        }
+
+        .result-item.low {
+            border-left-color: var(--green);
+        }
+
+        .result-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .result-item-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .result-item-badge.high {
+            background: #fef2f2;
+            color: var(--red);
+        }
+
+        .result-item-badge.medium {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .result-item-badge.low {
+            background: #f0fdf4;
+            color: var(--green-dark);
+        }
+
+        .result-item-article {
+            font-size: 0.85rem;
+            color: var(--purple);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item-barrier {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background: #fef2f2;
+            border-radius: 6px;
+        }
+
+        .result-item-requirement {
+            font-size: 0.85rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item-requirement strong {
+            color: var(--navy);
+        }
+
+        .result-item-suggestion {
+            font-size: 0.85rem;
+            color: var(--gray);
+            background: var(--gray-lighter);
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .result-item-suggestion strong {
+            color: var(--green-dark);
+        }
+
+        /* ===== Amendment Proposal (条例改正案) ===== */
+        .amendment-proposal {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border: 2px solid var(--purple);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .amendment-proposal::before {
+            content: '💡 条例改正で実現可能に';
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            background: var(--purple);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .amendment-header {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 0.75rem;
+            padding-top: 0.5rem;
+        }
+
+        .amendment-detail {
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--purple);
+            background: rgba(255,255,255,0.7);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .amendment-detail-label {
+            font-weight: 700;
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.2rem;
+            font-size: 0.8rem;
+        }
+
+        .amendment-wording {
+            background: white;
+            border: 1px dashed var(--purple);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            color: var(--navy);
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .amendment-effect {
+            background: #dcfce7;
+            border-left: 3px solid var(--green);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: var(--green-dark);
+        }
+
+        .amendment-consideration {
+            background: #fef9c3;
+            border-left: 3px solid #eab308;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.8rem;
+            color: #854d0e;
+            margin-top: 0.5rem;
+        }
+
+        .result-item-actions {
+            margin-top: 0.75rem;
+        }
+
+        /* ===== Subsidy Section (補助金) ===== */
+        .subsidy-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .subsidy-section.active {
+            display: block;
+        }
+
+        .subsidy-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #10b981;
+        }
+
+        .subsidy-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #047857;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subsidy-header h2 svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .subsidy-count {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .subsidy-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #10b981;
+            position: relative;
+        }
+
+        .subsidy-item.national {
+            border-left-color: #3b82f6;
+        }
+
+        .subsidy-item.prefecture {
+            border-left-color: #8b5cf6;
+        }
+
+        .subsidy-item.city {
+            border-left-color: #10b981;
+        }
+
+        .subsidy-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subsidy-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .subsidy-item-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .subsidy-item-badge.national {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .subsidy-item-badge.prefecture {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .subsidy-item-badge.city {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .subsidy-item-ministry {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .subsidy-item-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #047857;
+            background: #ecfdf5;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .subsidy-item-purpose {
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background: var(--gray-lighter);
+            border-radius: 6px;
+        }
+
+        .subsidy-item-relevance {
+            font-size: 0.85rem;
+            color: var(--text);
+            background: #fef3c7;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border-left: 3px solid #f59e0b;
+            margin-bottom: 0.5rem;
+        }
+
+        .subsidy-item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        .subsidy-item-meta span {
+            background: var(--gray-lighter);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .subsidy-item-note {
+            font-size: 0.8rem;
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 0.4rem 0.6rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .subsidy-item-confidence {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        .subsidy-item-confidence.high {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .subsidy-item-confidence.medium {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .subsidy-item-confidence.low {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .subsidy-item-actions {
+            margin-top: 0.75rem;
+        }
+
+        .subsidy-item-actions a {
+            font-size: 0.8rem;
+            color: #047857;
+            text-decoration: none;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid #10b981;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .subsidy-item-actions a:hover {
+            background: #10b981;
+            color: var(--white);
+        }
+
+        .subsidy-disclaimer {
+            background: #f3f4f6;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* ===== Original Text (条文表示) ===== */
+        .original-text-box {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .original-text-box::before {
+            content: '📜 現行条文';
+            display: block;
+            font-weight: 700;
+            color: #b45309;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .original-text-content {
+            color: #78350f;
+            font-family: 'Noto Sans JP', serif;
+        }
+
+        /* ===== New Ordinance Section (新規条例提案) ===== */
+        .new-ordinance-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .new-ordinance-section.active {
+            display: block;
+        }
+
+        .new-ordinance-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f59e0b;
+        }
+
+        .new-ordinance-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .new-ordinance-item {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .new-ordinance-item::before {
+            content: '✨ 新規条例の提案';
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            background: #f59e0b;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .new-ordinance-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #b45309;
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .new-ordinance-purpose {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .new-ordinance-provisions {
+            background: white;
+            border: 1px dashed #f59e0b;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            font-family: 'Noto Sans JP', serif;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .new-ordinance-effect {
+            background: #dcfce7;
+            border-left: 3px solid var(--green);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: var(--green-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .new-ordinance-reference {
+            font-size: 0.8rem;
+            color: var(--gray);
+            background: var(--gray-lighter);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        .result-item-actions a {
+            font-size: 0.8rem;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .result-item-actions a:hover {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+
+        .result-item-actions a svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            stroke: var(--green);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state small {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        @media (max-width: 600px) {
+            .example-btn {
+                font-size: 0.75rem;
+                padding: 0.35rem 0.6rem;
+            }
+        }
+
+        /* ===== iPhone SE / Small Mobile (375px) ===== */
+        @media (max-width: 375px) {
+            .main-container {
+                padding: 70px 0.75rem 1.5rem;
+            }
+
+            /* Hero section */
+            .barrier-hero {
+                padding: 2rem 1rem;
+                border-radius: 12px;
+                margin-bottom: 1.5rem;
+            }
+
+            .barrier-hero h1 {
+                font-size: 1.2rem;
+            }
+
+            .barrier-hero p {
+                font-size: 0.85rem;
+            }
+
+            /* Input section */
+            .input-section {
+                padding: 1rem;
+            }
+
+            .input-section label {
+                font-size: 0.85rem;
+            }
+
+            .input-section textarea {
+                font-size: 16px; /* Prevent iOS zoom */
+                min-height: 100px;
+            }
+
+            .example-btns {
+                gap: 0.4rem;
+                flex-wrap: wrap;
+            }
+
+            .example-btn {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.5rem;
+            }
+
+            .analyze-btn {
+                font-size: 0.9rem;
+                padding: 0.75rem;
+            }
+
+            /* Result section */
+            .result-section {
+                padding: 1rem;
+            }
+
+            .result-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .result-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .result-actions {
+                width: 100%;
+            }
+
+            .result-actions button {
+                flex: 1;
+                justify-content: center;
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+
+            /* Analysis result */
+            .analysis-result {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .analysis-result h3 {
+                font-size: 1rem;
+            }
+
+            .analysis-result h4 {
+                font-size: 0.95rem;
+            }
+
+            /* Category tabs if present */
+            .category-tabs {
+                gap: 0.25rem;
+            }
+
+            .category-tab {
+                padding: 0.5rem 0.7rem;
+                font-size: 0.75rem;
+            }
+
+            /* Mobile header */
+            .mobile-header h1 {
+                font-size: 1rem;
+            }
+
+            /* Empty state */
+            .empty-state {
+                padding: 2rem 1rem;
+            }
+
+            .empty-state svg {
+                width: 48px;
+                height: 48px;
+            }
+
+            .empty-state h3 {
+                font-size: 1rem;
+            }
+
+            .empty-state p,
+            .empty-state small {
+                font-size: 0.82rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">創政MISATO</div>
+            <div class="login-sub">条例の障壁を調べる</div>
+            <div id="loginError" class="login-error">パスワードが正しくありません</div>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力" required>
+                <button type="submit" class="login-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <div class="app-layout">
+            <!-- Mobile Header -->
+            <header class="mobile-header">
+                <a href="/member/" class="mobile-header-logo">
+                    <img src="/member/images/logo.png" alt="">
+                    <span>創政MISATO</span>
+                </a>
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Sidebar Overlay -->
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <a href="/member/" class="sidebar-logo">
+                        <div class="sidebar-logo-icon">
+                            <img src="/member/images/logo.png" alt="">
+                        </div>
+                        <span class="sidebar-logo-text">創政MISATO</span>
+                    </a>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-section">メニュー</div>
+                    <a href="/member/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        ホーム
+                    </a>
+                    <a href="/member/budget/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                        </svg>
+                        会派予算管理
+                    </a>
+                    <a href="/member/budget-analysis.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        予算書AIレビュー
+                    </a>
+                    <a href="/member/assets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        会派アセット
+                    </a>
+                    <div class="sidebar-nav-section">条例AI</div>
+                    <a href="/member/search.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        条例検索
+                    </a>
+                    <a href="/member/review.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                        条例AIレビュー
+                    </a>
+                    <a href="/member/barrier.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        障壁を調べる
+                    </a>
+                    <div class="sidebar-nav-section">リサーチAI</div>
+                    <a href="/member/research.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        一般質問リサーチ
+                    </a>
+                    <a href="/member/research-history.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        リサーチ履歴
+                    </a>
+                    <div class="sidebar-nav-section">その他</div>
+                    <a href="/member/guideline.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        ガイドライン
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    © 2026 創政MISATO
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-wrapper">
+                <main class="main-container">
+            <div class="page-title">
+                <h1>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    条例の障壁を調べる
+                </h1>
+                <p>やりたいことを入力すると、妨げとなる条例と<strong>改正すれば実現可能になる方法</strong>をAIが提案します</p>
+            </div>
+
+            <div class="search-card">
+                <label for="goalInput">何をやりたいですか？</label>
+                <input
+                    type="text"
+                    class="search-input-large"
+                    id="goalInput"
+                    placeholder="例：公園でフリーマーケットを開きたい"
+                >
+
+                <div class="example-queries">
+                    <p>入力例：</p>
+                    <button class="example-btn" onclick="setExample(this)">公園でキッチンカーを出したい</button>
+                    <button class="example-btn" onclick="setExample(this)">空き家をシェアオフィスにしたい</button>
+                    <button class="example-btn" onclick="setExample(this)">道路で募金活動をしたい</button>
+                    <button class="example-btn" onclick="setExample(this)">イベントで花火を打ち上げたい</button>
+                </div>
+
+                <button class="search-btn" id="searchBtn" onclick="searchBarriers()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    障壁を調べる
+                </button>
+            </div>
+
+            <div class="loading-section" id="loadingSection">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">条例を分析しています...</div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <div class="results-header">
+                    <h2>🚫 障壁となる条例</h2>
+                    <span class="results-count" id="resultsCount">0件の障壁</span>
+                </div>
+                <div id="resultsList">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+
+            <div class="new-ordinance-section" id="newOrdinanceSection">
+                <div class="new-ordinance-header">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        新規条例の提案
+                    </h2>
+                </div>
+                <div id="newOrdinanceList">
+                    <!-- New ordinance proposals will be populated here -->
+                </div>
+            </div>
+
+            <div class="subsidy-section" id="subsidySection">
+                <div class="subsidy-header">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        活用可能な補助金・助成金
+                    </h2>
+                    <span class="subsidy-count" id="subsidyCount">0件</span>
+                </div>
+                <div id="subsidyList">
+                    <!-- Subsidies will be populated here -->
+                </div>
+                <div class="subsidy-disclaimer">
+                    ※ AIによる参考情報です。最新の募集状況・詳細要件は各省庁・自治体の公式サイトでご確認ください。
+                </div>
+            </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load ordinance data -->
+    <script src="/member/ordinance-data.js"></script>
+
+    <script>
+        const CORRECT_PASSWORD = 'sousei2026';
+        const AI_API_ENDPOINT = 'https://misato-jorei-ai.yusaku-suzuki.workers.dev';
+
+        // Auth
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('member_auth') === '1';
+            if (isLoggedIn) {
+                showMain();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+
+            if (password === CORRECT_PASSWORD) {
+                localStorage.setItem('member_auth', '1');
+                showMain();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function showMain() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        // Sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        // Example queries
+        function setExample(btn) {
+            document.getElementById('goalInput').value = btn.textContent;
+        }
+
+        // Search - 2段階処理 + 補助金検索
+        async function searchBarriers() {
+            const goal = document.getElementById('goalInput').value.trim();
+            if (!goal) {
+                alert('やりたいことを入力してください');
+                return;
+            }
+
+            const searchBtn = document.getElementById('searchBtn');
+            const loadingSection = document.getElementById('loadingSection');
+            const loadingText = document.querySelector('.loading-text');
+            const resultsSection = document.getElementById('resultsSection');
+            const subsidySection = document.getElementById('subsidySection');
+
+            const newOrdinanceSection = document.getElementById('newOrdinanceSection');
+
+            searchBtn.disabled = true;
+            loadingSection.classList.add('active');
+            resultsSection.classList.remove('active');
+            subsidySection.classList.remove('active');
+            newOrdinanceSection.classList.remove('active');
+
+            try {
+                // Step 1: AIにキーワードを抽出させる
+                loadingText.textContent = 'キーワードを分析中...';
+                const aiKeywords = await extractKeywordsFromAI(goal);
+                console.log('AI抽出キーワード:', aiKeywords);
+
+                // Step 2: AIキーワード + フォールバックで条例を検索
+                loadingText.textContent = '関連条例を検索中...';
+                const relevantOrdinances = findRelevantOrdinancesByKeywords(goal, aiKeywords);
+                console.log('関連条例:', relevantOrdinances.length, '件');
+
+                // Step 3: 障壁分析と補助金検索を並列実行
+                loadingText.textContent = '障壁・改正案・新規条例・補助金を分析中...';
+
+                // 障壁分析のPromise（条例がある場合のみ）
+                const barrierPromise = relevantOrdinances.length > 0
+                    ? fetch(AI_API_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            isBarrierSearch: true,
+                            userGoal: goal,
+                            ordinances: relevantOrdinances.map(o => ({
+                                id: o.id,
+                                title: o.title,
+                                category: o.category,
+                                text: o.fullText ? o.fullText.replace(/<[^>]*>/g, '').substring(0, 3000) : o.summary
+                            }))
+                        })
+                    }).then(r => r.json())
+                    : Promise.resolve({ barriers: [], newOrdinanceProposals: [] });
+
+                // 補助金検索のPromise
+                const subsidyPromise = fetch(AI_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        isSubsidySearch: true,
+                        userGoal: goal
+                    })
+                }).then(r => r.json()).catch(e => {
+                    console.error('Subsidy search error:', e);
+                    return { subsidies: [] };
+                });
+
+                // 並列実行
+                const [barrierData, subsidyData] = await Promise.all([barrierPromise, subsidyPromise]);
+
+                // 結果表示
+                displayResults(barrierData.barriers || []);
+                displayNewOrdinances(barrierData.newOrdinanceProposals || []);
+                displaySubsidies(subsidyData.subsidies || []);
+
+            } catch (error) {
+                console.error('Search error:', error);
+                displayResults([]);
+                displayNewOrdinances([]);
+                displaySubsidies([]);
+            }
+
+            searchBtn.disabled = false;
+            loadingSection.classList.remove('active');
+        }
+
+        // Step 1: AIからキーワードを抽出
+        async function extractKeywordsFromAI(userGoal) {
+            try {
+                const response = await fetch(AI_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        isKeywordExtraction: true,
+                        userGoal: userGoal
+                    })
+                });
+
+                if (!response.ok) {
+                    console.warn('キーワード抽出API失敗、フォールバックを使用');
+                    return [];
+                }
+
+                const data = await response.json();
+                return data.keywords || [];
+            } catch (error) {
+                console.warn('キーワード抽出エラー、フォールバックを使用:', error);
+                return [];
+            }
+        }
+
+        // Step 2: キーワードで条例を検索（改善版）
+        function findRelevantOrdinancesByKeywords(query, aiKeywords) {
+            const q = query.toLowerCase();
+
+            // 規制系キーワード（重み付け強化）
+            const regulatoryKeywords = [
+                '許可', '申請', '届出', '禁止', '制限', '基準', '規制',
+                '条件', '義務', '要件', '承認', '認可', '免許', '登録'
+            ];
+
+            // フォールバック用シノニムマップ（大幅拡張）
+            const activityMap = {
+                '公園': ['公園', '緑地', '広場', 'イベント', '催物'],
+                'キッチンカー': ['露店', '営業', '屋台', '販売', '食品', '衛生'],
+                'フリーマーケット': ['露店', '販売', 'イベント', '催物', '公園'],
+                'イベント': ['催物', '行事', '集会', '公園', '広場', '道路'],
+                '空き家': ['建築', '用途', '住宅', '建物', '改築'],
+                'シェアオフィス': ['建築', '用途', '事務所', '建物', '消防'],
+                '道路': ['道路', '占用', '使用', '通行'],
+                '募金': ['道路', '寄付', '慈善', '占用'],
+                '花火': ['火災', '消防', '危険物', '騒音', '公園'],
+                'ドローン': ['航空', '飛行', '公園', '施設', '安全'],
+                '看板': ['屋外広告', '広告物', '景観', '道路'],
+                '建物': ['建築', '建物', '用途', '消防', '防火'],
+                '飲食': ['食品', '衛生', '営業', '許可'],
+                '騒音': ['騒音', '公害', '環境', '生活'],
+                // 追加
+                '交通': ['交通', '道路', '車両', '自動車', '通行', '運行', '安全'],
+                'バス': ['バス', '交通', '運行', '旅客', '運送', '公共交通', '道路'],
+                '自動運転': ['自動運転', '自動車', '交通', '道路', '車両', '安全', '運行'],
+                '車': ['車両', '自動車', '駐車', '交通', '道路'],
+                '工事': ['工事', '道路', '占用', '建設', '施工'],
+                '集会': ['集会', 'デモ', '行進', '道路', '広場'],
+                '広告': ['広告', '屋外広告', '看板', '景観'],
+                '廃棄物': ['廃棄物', 'ごみ', '清掃', '環境'],
+                '福祉': ['福祉', '介護', '障害', '高齢者'],
+                '保育': ['保育', '児童', '子ども', '幼稚園'],
+                'ペット': ['動物', 'ペット', '犬', '猫', '衛生', '愛護'],
+                '農地': ['農地', '農業', '土地', '開発', '転用'],
+                'ソーラー': ['太陽光', 'エネルギー', '建築', '景観', '土地'],
+            };
+
+            // キーワードを収集（AIキーワード優先、フォールバック併用）
+            let searchTerms = new Set();
+
+            // AIから抽出したキーワードを追加
+            aiKeywords.forEach(kw => searchTerms.add(kw.toLowerCase()));
+
+            // フォールバック: activityMapからシノニムを追加
+            Object.entries(activityMap).forEach(([key, synonyms]) => {
+                if (q.includes(key)) {
+                    synonyms.forEach(s => searchTerms.add(s.toLowerCase()));
+                }
+            });
+
+            // 元のクエリも追加（分割して）
+            q.split(/[をにでがはのと]/).forEach(part => {
+                if (part.length >= 2) searchTerms.add(part);
+            });
+
+            console.log('検索キーワード:', Array.from(searchTerms));
+
+            // 除外すべきカテゴリ（検索語に関連がない場合）
+            const unrelatedCategories = {
+                '水道': ['水道', '下水道', '給水', '上水'],
+            };
+
+            // スコアリング（改善版）
+            const scored = allOrdinanceData
+                .filter(o => o.fullText)
+                .map(ord => {
+                    let score = 0;
+                    const title = ord.title.toLowerCase();
+                    const keywords = ord.keywords.map(k => k.toLowerCase());
+                    const summary = ord.summary.toLowerCase();
+                    const fullText = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+
+                    // 検索語とのマッチ
+                    searchTerms.forEach(term => {
+                        if (title.includes(term)) score += 20;  // タイトル重視
+                        if (keywords.some(k => k.includes(term))) score += 12;
+                        if (summary.includes(term)) score += 6;
+                        if (fullText.includes(term)) score += 4;
+                    });
+
+                    // 規制キーワードのボーナス（強化）
+                    let regulatoryCount = 0;
+                    regulatoryKeywords.forEach(rk => {
+                        if (fullText.includes(rk)) {
+                            score += 5;  // 2→5に増加
+                            regulatoryCount++;
+                        }
+                    });
+                    if (regulatoryCount >= 3) score += 15;  // 複数ボーナス
+
+                    return { ...ord, score };
+                })
+                .filter(o => o.score >= 15)  // 最低スコア閾値
+                .sort((a, b) => b.score - a.score);
+
+            // 無関係カテゴリの除外
+            const hasWaterKeywords = Array.from(searchTerms).some(t =>
+                ['水道', '下水', '給水', '上水', '排水'].includes(t)
+            );
+
+            const filtered = scored.filter(ord => {
+                // 水道系条例で、水道関連キーワードがなければ除外
+                const isWaterRelated = unrelatedCategories['水道'].some(w =>
+                    ord.title.includes(w)
+                );
+                if (isWaterRelated && !hasWaterKeywords) {
+                    return false;
+                }
+                return true;
+            });
+
+            return filtered.slice(0, 15);  // Top 15に絞る
+        }
+
+        // Display results
+        function displayResults(barriers) {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsList = document.getElementById('resultsList');
+            const resultsCount = document.getElementById('resultsCount');
+
+            resultsSection.classList.add('active');
+            resultsCount.textContent = `${barriers.length}件の障壁`;
+
+            if (barriers.length === 0) {
+                resultsList.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>障壁となる条例は見つかりませんでした</p>
+                        <small>ただし、実際の活動には他の法令や許可が必要な場合があります。詳しくは担当課にご確認ください。</small>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by priority
+            const priorityOrder = { high: 0, medium: 1, low: 2 };
+            barriers.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+            resultsList.innerHTML = barriers.map(result => {
+                const ordinance = allOrdinanceData.find(o => o.id === result.ordinanceId);
+                const priorityLabels = {
+                    high: '要対応',
+                    medium: '確認推奨',
+                    low: '参考'
+                };
+
+                // 条例改正提案のHTML
+                const amendmentHTML = result.amendmentProposal ? `
+                    <div class="amendment-proposal">
+                        <div class="amendment-header">この条例を改正すれば実現可能</div>
+
+                        <div class="amendment-detail">
+                            <span class="amendment-detail-label">📌 現行条文の問題点</span>
+                            ${result.amendmentProposal.currentIssue}
+                        </div>
+
+                        <div class="amendment-detail">
+                            <span class="amendment-detail-label">📝 改正案の要旨</span>
+                            ${result.amendmentProposal.proposedChange}
+                        </div>
+
+                        ${result.amendmentProposal.specificWording ? `
+                            <div class="amendment-wording">
+                                <span class="amendment-detail-label">✏️ 具体的な改正文言</span>
+                                「${result.amendmentProposal.specificWording}」
+                            </div>
+                        ` : ''}
+
+                        ${result.amendmentProposal.expectedEffect ? `
+                            <div class="amendment-effect">
+                                <span class="amendment-detail-label">✅ 改正による効果</span>
+                                ${result.amendmentProposal.expectedEffect}
+                            </div>
+                        ` : ''}
+
+                        ${result.amendmentProposal.considerations ? `
+                            <div class="amendment-consideration">
+                                <span class="amendment-detail-label">⚠️ 留意点</span>
+                                ${result.amendmentProposal.considerations}
+                            </div>
+                        ` : ''}
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="result-item ${result.priority}">
+                        <div class="result-item-header">
+                            <div class="result-item-title">${result.title || (ordinance ? ordinance.title : '条例')}</div>
+                            <span class="result-item-badge ${result.priority}">${priorityLabels[result.priority] || '確認'}</span>
+                        </div>
+                        ${result.relevantArticle ? `
+                            <div class="result-item-article">${result.relevantArticle}</div>
+                        ` : ''}
+                        ${result.originalText ? `
+                            <div class="original-text-box">
+                                <div class="original-text-content">${result.originalText}</div>
+                            </div>
+                        ` : ''}
+                        <div class="result-item-barrier">
+                            <strong>🚫 障壁:</strong> ${result.barrier}
+                        </div>
+                        ${result.requirement ? `
+                            <div class="result-item-requirement">
+                                <strong>📋 必要な手続き:</strong> ${result.requirement}
+                            </div>
+                        ` : ''}
+                        ${result.suggestion ? `
+                            <div class="result-item-suggestion">
+                                <strong>💼 現行制度での対応策:</strong> ${result.suggestion}
+                            </div>
+                        ` : ''}
+                        ${amendmentHTML}
+                        ${ordinance ? `
+                            <div class="result-item-actions">
+                                <a href="${ordinance.url}" target="_blank" rel="noopener">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                        <polyline points="15 3 21 3 21 9"/>
+                                        <line x1="10" y1="14" x2="21" y2="3"/>
+                                    </svg>
+                                    三郷市例規集で確認
+                                </a>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Display new ordinance proposals
+        function displayNewOrdinances(proposals) {
+            const section = document.getElementById('newOrdinanceSection');
+            const list = document.getElementById('newOrdinanceList');
+
+            if (!proposals || proposals.length === 0) {
+                section.classList.remove('active');
+                return;
+            }
+
+            section.classList.add('active');
+            list.innerHTML = proposals.map(proposal => `
+                <div class="new-ordinance-item">
+                    <div class="new-ordinance-title">📋 ${proposal.title}</div>
+                    <div class="new-ordinance-purpose">
+                        <strong>制定の目的:</strong> ${proposal.purpose}
+                    </div>
+                    ${proposal.keyProvisions ? `
+                        <div class="new-ordinance-provisions">${proposal.keyProvisions}</div>
+                    ` : ''}
+                    ${proposal.expectedEffect ? `
+                        <div class="new-ordinance-effect">
+                            <strong>期待される効果:</strong> ${proposal.expectedEffect}
+                        </div>
+                    ` : ''}
+                    ${proposal.reference ? `
+                        <div class="new-ordinance-reference">
+                            📚 参考: ${proposal.reference}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Display subsidies
+        function displaySubsidies(subsidies) {
+            const subsidySection = document.getElementById('subsidySection');
+            const subsidyList = document.getElementById('subsidyList');
+            const subsidyCount = document.getElementById('subsidyCount');
+
+            subsidySection.classList.add('active');
+            subsidyCount.textContent = `${subsidies.length}件`;
+
+            if (subsidies.length === 0) {
+                subsidyList.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>活用可能な補助金は見つかりませんでした</p>
+                        <small>新規事業や革新的な取り組みには、独自の予算確保が必要になる場合があります。</small>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by confidence (high first) then by level (national > prefecture > city)
+            const levelOrder = { national: 0, prefecture: 1, city: 2 };
+            const confidenceOrder = { high: 0, medium: 1, low: 2 };
+            subsidies.sort((a, b) => {
+                if (confidenceOrder[a.confidence] !== confidenceOrder[b.confidence]) {
+                    return confidenceOrder[a.confidence] - confidenceOrder[b.confidence];
+                }
+                return levelOrder[a.level] - levelOrder[b.level];
+            });
+
+            const levelLabels = {
+                national: '国',
+                prefecture: '県',
+                city: '市'
+            };
+
+            const confidenceLabels = {
+                high: '確度高',
+                medium: '要確認',
+                low: '参考'
+            };
+
+            subsidyList.innerHTML = subsidies.map(subsidy => `
+                <div class="subsidy-item ${subsidy.level}">
+                    <span class="subsidy-item-confidence ${subsidy.confidence}">${confidenceLabels[subsidy.confidence] || '参考'}</span>
+                    <div class="subsidy-item-header">
+                        <div class="subsidy-item-title">${subsidy.name}</div>
+                        <span class="subsidy-item-badge ${subsidy.level}">${levelLabels[subsidy.level] || ''}の補助金</span>
+                    </div>
+                    <div class="subsidy-item-ministry">📍 ${subsidy.ministry}</div>
+                    ${subsidy.maxAmount ? `
+                        <div class="subsidy-item-amount">💰 ${subsidy.maxAmount}</div>
+                    ` : ''}
+                    <div class="subsidy-item-purpose">
+                        <strong>目的:</strong> ${subsidy.purpose}
+                    </div>
+                    <div class="subsidy-item-relevance">
+                        <strong>活用方法:</strong> ${subsidy.relevance}
+                    </div>
+                    <div class="subsidy-item-meta">
+                        ${subsidy.targetAudience ? `<span>👥 ${subsidy.targetAudience}</span>` : ''}
+                        ${subsidy.applicationPeriod ? `<span>📅 ${subsidy.applicationPeriod}</span>` : ''}
+                    </div>
+                    ${subsidy.note ? `
+                        <div class="subsidy-item-note">⚠️ ${subsidy.note}</div>
+                    ` : ''}
+                    ${subsidy.url ? `
+                        <div class="subsidy-item-actions">
+                            <a href="${subsidy.url}" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" y1="14" x2="21" y2="3"/>
+                                </svg>
+                                詳細を確認
+                            </a>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Enter key handler
+        document.getElementById('goalInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchBarriers();
+        });
+
+        // Initialize
+        checkAuth();
+    </script>
+</body>
+</html>

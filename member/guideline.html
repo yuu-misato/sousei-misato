@@ -1,0 +1,3997 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンバーガイドライン | 創政MISATO</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        // 認証済みなら即座にhtmlにクラスを付与（フラッシュ防止）
+        if (localStorage.getItem('member_auth') === '1' || localStorage.getItem('memberLoggedIn') === 'true') {
+            document.documentElement.classList.add('auth-ready');
+        }
+    </script>
+    <style>
+        /* 認証済みの場合はログイン画面を即座に非表示 */
+        html.auth-ready #loginScreen { display: none !important; }
+        html.auth-ready #mainContent { display: block !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #2c4a6e;
+            --navy-light: #3d5a80;
+            --green: #7cb342;
+            --green-light: #a5d66a;
+            --green-dark: #5a8f2a;
+            --bg: #fafbfc;
+            --bg-warm: #f8f9fa;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --gray-lighter: #f3f4f6;
+            --text: #374151;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== Login ===== */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c4a6e 0%, #3d5a80 50%, #5a8f2a 100%);
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            margin: 1rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+        .login-sub {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .login-input:focus { border-color: var(--green); }
+        .login-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--green-dark); }
+        .login-error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+
+        /* ===== Layout ===== */
+        #guideContent { display: none; }
+
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--navy);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .sidebar-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar-logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav-section {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-left-color: var(--green);
+        }
+
+        .sidebar-nav a svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== Mobile Menu Toggle ===== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--navy);
+            z-index: 101;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .mobile-header-logo img {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* ===== Main Content ===== */
+        .main-wrapper {
+            flex: 1;
+            margin-left: 260px;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .main-container {
+                padding: 80px 1rem 2rem;
+            }
+        }
+
+        /* ===== Page Title ===== */
+        .page-title {
+            margin-bottom: 2rem;
+        }
+        .page-title h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .page-title p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Hero ===== */
+        .guide-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .guide-hero h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+        .guide-hero p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .guide-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1.2rem;
+        }
+        .guide-nav a {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.2s;
+        }
+        .guide-nav a:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+
+        /* ===== Body ===== */
+        .guide-body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+        .section-num {
+            background: var(--navy);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .section h2 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        /* ===== Cards ===== */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.3rem 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--gray-light);
+        }
+        .card.important {
+            background: var(--white);
+            border-color: #fcd34d;
+        }
+        .card.rule {
+            background: var(--white);
+        }
+        .card.warn {
+            background: var(--white);
+            border-color: #fca5a5;
+        }
+        .card.tip {
+            background: var(--white);
+            border-color: #86efac;
+        }
+
+        .card h3 {
+            font-size: 0.95rem;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card h3::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1.1em;
+            background: var(--navy);
+            border-radius: 2px;
+        }
+        .card.important h3::before { background: #f59e0b; }
+        .card.warn h3::before { background: #ef4444; }
+        .card.tip h3::before { background: var(--green); }
+
+        .card p, .card li {
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.85;
+        }
+        .card ul, .card ol {
+            padding-left: 1.2rem;
+            margin-top: 0.3rem;
+        }
+        .card li { margin-bottom: 0.3rem; }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.12rem 0.45rem;
+            border-radius: 4px;
+            margin-right: 0.3rem;
+            vertical-align: middle;
+        }
+        .badge-must { background: #dc2626; color: #fff; }
+        .badge-recommend { background: var(--navy); color: #fff; }
+        .badge-note { background: #d97706; color: #fff; }
+        .badge-warn { background: #ef4444; color: #fff; }
+
+        /* ===== Timeline ===== */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-light);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.2rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+        .timeline-item strong {
+            color: var(--navy);
+            font-size: 0.85rem;
+        }
+        .timeline-item p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+
+        /* ===== Table ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0;
+            font-size: 0.82rem;
+        }
+        th {
+            background: var(--gray-lighter);
+            color: var(--navy);
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--gray-light);
+        }
+        td {
+            padding: 0.55rem 0.8rem;
+            border-bottom: 1px solid var(--gray-lighter);
+            color: var(--text);
+        }
+        tr:hover td { background: rgba(124,179,66,0.05); }
+
+        /* ===== FAQ ===== */
+        .faq-item { margin-bottom: 0.8rem; }
+        .faq-q {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 0.88rem;
+            margin-bottom: 0.3rem;
+        }
+        .faq-a {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            padding-left: 1rem;
+            border-left: 2px solid var(--green);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-light);
+            color: var(--text-light);
+            padding: 3rem 2rem 2rem;
+        }
+        .footer-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        .footer-brand { display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer-logo { display: flex; align-items: center; gap: 0.75rem; }
+        .footer-logo img { width: 36px; height: 36px; object-fit: contain; }
+        .footer-logo-text { font-size: 1rem; font-weight: 700; color: var(--text); }
+        .footer-tagline { font-size: 0.8125rem; color: var(--text-light); line-height: 1.6; }
+        .footer-nav-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-nav-title {
+            font-size: 0.7rem; font-weight: 600; color: var(--text-light);
+            letter-spacing: 0.1em; margin-bottom: 0.25rem;
+        }
+        .footer-nav-group a {
+            color: var(--text); text-decoration: none; font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+        .footer-nav-group a:hover { color: #0d9488; }
+        .footer-copy {
+            text-align: center; font-size: 0.75rem; color: var(--text-light);
+            padding-top: 1.5rem; border-top: 1px solid var(--gray-light);
+        }
+
+        /* ===== Comment Section ===== */
+        .comment-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--gray-light);
+        }
+        .comment-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            color: var(--gray);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .comment-toggle:hover {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+        }
+        .comment-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+        .comment-toggle.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+        .comment-area {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--gray-light);
+        }
+        .comment-area.open {
+            display: block;
+        }
+        .giscus {
+            margin-top: 0.5rem;
+        }
+        .giscus-frame {
+            min-height: 200px;
+        }
+
+        /* ===== Search Link Card ===== */
+        .search-link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--white) 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid var(--gray-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .search-link-card:hover {
+            border-color: var(--navy);
+            box-shadow: 0 8px 30px rgba(44, 74, 110, 0.15);
+            transform: translateY(-2px);
+        }
+        .search-link-content {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        .search-link-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .search-link-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .search-link-icon.ordinance {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+        }
+        .search-link-icon.law {
+            background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%);
+        }
+        .search-link-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--white);
+        }
+        .search-link-text h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        .search-link-text p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        .search-link-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .search-link-card:hover .search-link-arrow {
+            background: var(--navy);
+        }
+        .search-link-arrow svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+            transition: stroke 0.3s ease;
+        }
+        .search-link-card:hover .search-link-arrow svg {
+            stroke: var(--white);
+        }
+
+        @media (max-width: 640px) {
+            .search-link-card {
+                padding: 1.25rem;
+            }
+            .search-link-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .search-link-text h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* ===== Ordinance Search ===== */
+        .ordinance-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--gray-light);
+        }
+        .ordinance-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .ordinance-header-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ordinance-header-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+        }
+        .ordinance-header-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.2rem;
+        }
+        .ordinance-header-text p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .ordinance-search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .ordinance-search-input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 3rem;
+            background: var(--gray-lighter);
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .ordinance-search-input:focus {
+            border-color: var(--green);
+            background: var(--white);
+        }
+        .ordinance-search-input::placeholder {
+            color: var(--gray);
+        }
+        .ordinance-search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+        .ordinance-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .ordinance-cat-btn {
+            padding: 0.4rem 0.9rem;
+            background: var(--gray-lighter);
+            border: 1px solid var(--gray-light);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ordinance-cat-btn:hover {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+        .ordinance-cat-btn.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+        .ordinance-results {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .ordinance-results.open {
+            max-height: 2000px;
+        }
+        .ordinance-results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 0.75rem;
+        }
+        .ordinance-results-count {
+            font-size: 0.82rem;
+            color: var(--gray);
+        }
+        .ordinance-results-count strong {
+            color: var(--navy);
+        }
+        .ordinance-ext-link {
+            font-size: 0.75rem;
+            color: var(--green-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .ordinance-ext-link:hover {
+            text-decoration: underline;
+        }
+        .ordinance-ext-link svg {
+            width: 14px;
+            height: 14px;
+        }
+        .ordinance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .ordinance-item {
+            background: var(--bg);
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            padding: 0.9rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ordinance-item:hover {
+            background: var(--white);
+            border-color: var(--green);
+            box-shadow: 0 2px 8px rgba(124,179,66,0.15);
+        }
+        .ordinance-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+        .ordinance-item-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--navy);
+            flex: 1;
+        }
+        .ordinance-item-cat {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            background: var(--gray-lighter);
+            border-radius: 4px;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+        .ordinance-item-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+        }
+        .ordinance-keyword {
+            font-size: 0.68rem;
+            padding: 0.1rem 0.4rem;
+            background: rgba(124,179,66,0.1);
+            color: var(--green-dark);
+            border-radius: 3px;
+        }
+        .ordinance-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .ordinance-item.expanded .ordinance-item-content {
+            max-height: 2000px;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px dashed var(--gray-light);
+        }
+        .ordinance-item-summary {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+        .ordinance-item-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: var(--green-dark);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            background: rgba(124,179,66,0.1);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .ordinance-item-link:hover {
+            background: rgba(124,179,66,0.2);
+        }
+        .ordinance-item-link svg {
+            width: 14px;
+            height: 14px;
+        }
+        .ordinance-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        .ordinance-empty svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--gray-light);
+            margin-bottom: 0.75rem;
+        }
+
+        /* ===== Ordinance Modal ===== */
+        .ordinance-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .ordinance-modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .ordinance-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: min(900px, 95vw);
+            max-height: 90vh;
+            background: var(--white);
+            border-radius: 16px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        .ordinance-modal-overlay.open + .ordinance-modal,
+        .ordinance-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .ordinance-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.5rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--gray-light);
+            flex-shrink: 0;
+        }
+        .ordinance-modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.5;
+        }
+        .ordinance-modal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .ordinance-modal-meta span {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--gray-lighter);
+            border-radius: 4px;
+            color: var(--gray);
+        }
+        .ordinance-modal-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-lighter);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        .ordinance-modal-close:hover {
+            background: var(--gray-light);
+        }
+        .ordinance-modal-close svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gray);
+        }
+        .ordinance-modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        .ordinance-modal-toc {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .ordinance-modal-toc-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+        .ordinance-modal-toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .ordinance-modal-toc li a {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .ordinance-modal-toc li a:hover {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+        }
+        .ordinance-content {
+            font-size: 0.88rem;
+            line-height: 2;
+            color: var(--text);
+        }
+        .ordinance-content .jorei-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--navy);
+        }
+        .ordinance-content .jorei-toc {
+            background: var(--gray-lighter);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+        .ordinance-content .jorei-preamble {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-left: 4px solid var(--green);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 2rem;
+            font-style: italic;
+            line-height: 1.9;
+        }
+        .ordinance-content .jorei-section {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 1.5rem 0 1rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--green);
+        }
+        .ordinance-content .jorei-article {
+            margin: 1.2rem 0;
+            padding: 0.8rem 1rem;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--gray-light);
+        }
+        .ordinance-content .jorei-article .article-title {
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .ordinance-content .jorei-supplementary {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--gray-light);
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .ordinance-content .jorei-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--navy);
+        }
+        .ordinance-content .jorei-enactment {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .ordinance-content .jorei-chapter {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 2rem 0 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .ordinance-content .jorei-article-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .ordinance-content .jorei-article-body {
+            padding-left: 1rem;
+        }
+        .ordinance-content .jorei-paragraph {
+            margin: 0.5rem 0;
+            text-indent: 1em;
+        }
+        .ordinance-content .jorei-item {
+            margin: 0.3rem 0 0.3rem 1.5rem;
+        }
+        .ordinance-content .jorei-subitem {
+            margin: 0.2rem 0 0.2rem 2.5rem;
+            font-size: 0.85rem;
+        }
+        .ordinance-content .jorei-supplementary-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .ordinance-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            background: var(--bg);
+            border-radius: 0 0 16px 16px;
+        }
+        .ordinance-modal-footer-info {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .ordinance-modal-footer-link {
+            font-size: 0.78rem;
+            color: var(--green-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .ordinance-modal-footer-link:hover {
+            text-decoration: underline;
+        }
+        .ordinance-modal-footer-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .guide-hero { padding: 2rem 1rem 1.5rem; }
+            .guide-hero h1 { font-size: 1.2rem; }
+            .guide-body { padding: 1.2rem 1rem 3rem; }
+            .card { padding: 1rem 1.1rem; }
+            .header { padding: 0.8rem 1rem; }
+            .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        /* ===== iPhone SE / Small Mobile (375px) ===== */
+        @media (max-width: 375px) {
+            .main-container {
+                padding: 70px 0.75rem 1.5rem;
+            }
+
+            /* Guide hero */
+            .guide-hero {
+                padding: 1.5rem 0.75rem 1.25rem;
+                border-radius: 12px;
+            }
+
+            .guide-hero h1 {
+                font-size: 1.1rem;
+            }
+
+            .guide-hero p {
+                font-size: 0.8rem;
+            }
+
+            /* Guide body */
+            .guide-body {
+                padding: 1rem 0.75rem 2.5rem;
+            }
+
+            /* Cards */
+            .card {
+                padding: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .card h2 {
+                font-size: 1rem;
+            }
+
+            .card h3 {
+                font-size: 0.95rem;
+            }
+
+            .card p,
+            .card li {
+                font-size: 0.82rem;
+            }
+
+            .card ul,
+            .card ol {
+                padding-left: 1.25rem;
+            }
+
+            /* Tables */
+            .card table {
+                font-size: 0.75rem;
+            }
+
+            .card th,
+            .card td {
+                padding: 0.4rem 0.5rem;
+            }
+
+            /* Header */
+            .header {
+                padding: 0.6rem 0.75rem;
+            }
+
+            .header h1 {
+                font-size: 1rem;
+            }
+
+            /* Footer */
+            .footer-inner {
+                gap: 1.5rem;
+            }
+
+            .footer-column h4 {
+                font-size: 0.85rem;
+            }
+
+            .footer-column a,
+            .footer-column p {
+                font-size: 0.8rem;
+            }
+
+            /* Mobile header */
+            .mobile-header h1 {
+                font-size: 1rem;
+            }
+
+            /* Category tabs if present */
+            .category-tabs {
+                gap: 0.25rem;
+            }
+
+            .category-tab {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            /* Ordinance modal */
+            .ordinance-modal-content {
+                margin: 0.5rem;
+                max-height: 95vh;
+            }
+
+            .ordinance-modal-header {
+                padding: 0.75rem 1rem;
+            }
+
+            .ordinance-modal-header h2 {
+                font-size: 1rem;
+            }
+
+            .ordinance-modal-body {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .ordinance-modal-footer {
+                padding: 0.75rem 1rem;
+            }
+
+            .ordinance-modal-footer-link {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== Login Screen ===== -->
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-logo">創政MISATO</div>
+        <p class="login-sub">メンバー専用ガイドライン</p>
+        <div class="login-error" id="loginError">パスワードが正しくありません</div>
+        <input type="password" class="login-input" id="passwordInput" placeholder="パスワードを入力" autofocus>
+        <button class="login-btn" onclick="tryLogin()">ログイン</button>
+    </div>
+</div>
+
+<!-- ===== Guide Content ===== -->
+<div id="guideContent">
+    <div class="app-layout">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <a href="/member/" class="mobile-header-logo">
+                <img src="/member/images/logo.png" alt="">
+                <span>創政MISATO</span>
+            </a>
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="/member/" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <img src="/member/images/logo.png" alt="">
+                    </div>
+                    <span class="sidebar-logo-text">創政MISATO</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">メニュー</div>
+                <a href="/member/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    ホーム
+                </a>
+                <a href="/member/budget/index.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
+                    </svg>
+                    会派予算管理
+                </a>
+                <a href="/member/budget-analysis.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    予算書AIレビュー
+                </a>
+                <a href="/member/assets.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                    会派アセット
+                </a>
+                <div class="sidebar-nav-section">条例AI</div>
+                <a href="/member/search.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    条例検索
+                </a>
+                <a href="/member/review.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                    条例AIレビュー
+                </a>
+                <a href="/member/barrier.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    障壁を調べる
+                </a>
+                <div class="sidebar-nav-section">リサーチAI</div>
+                <a href="/member/research.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
+                    一般質問リサーチ
+                </a>
+                <a href="/member/research-history.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    リサーチ履歴
+                </a>
+                <div class="sidebar-nav-section">その他</div>
+                <a href="/member/guideline.html" class="active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                    ガイドライン
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                © 2026 創政MISATO
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <main class="main-container">
+                <div class="guide-hero">
+                    <h1>メンバーガイドライン</h1>
+                    <p>会派メンバーが知っておくべきルール・所作・考え方</p>
+                    <nav class="guide-nav">
+                        <a href="#sec1">理念</a>
+                        <a href="#sec2">会派ルール</a>
+                        <a href="#sec3">議場の所作</a>
+                        <a href="#sec4">一般質問</a>
+                        <a href="#sec5">情報管理</a>
+                        <a href="#sec6">連絡</a>
+                        <a href="#sec7">視察</a>
+                        <a href="#sec8">FAQ</a>
+                    </nav>
+                </div>
+
+                <div class="guide-body">
+
+        <!-- Quick Link to Search Page -->
+        <a href="search.html" class="search-link-card">
+            <div class="search-link-content">
+                <div class="search-link-icons">
+                    <div class="search-link-icon ordinance">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="search-link-icon law">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="search-link-text">
+                    <h3>条例・法律検索</h3>
+                    <p>三郷市の条例と国の法律を検索できます</p>
+                </div>
+            </div>
+            <div class="search-link-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </div>
+        </a>
+
+        <!-- Section 1 -->
+        <div class="section" id="sec1">
+            <div class="section-header">
+                <span class="section-num">1</span>
+                <h2>創政MISATOの理念と方針</h2>
+            </div>
+
+            <div class="card important">
+                <h3>基本理念</h3>
+                <p>「<strong>市民とともに創る、新しい政治のかたち</strong>」</p>
+                <p>私たちは既存の枠にとらわれず、新しい発想と行動力で三郷市の未来を創造します。</p>
+            </div>
+
+            <div class="card rule">
+                <h3>行動原則</h3>
+                <ol>
+                    <li><strong>現場主義</strong> — 机上の議論だけでなく、現場に足を運び、市民の声を直接聞く</li>
+                    <li><strong>データに基づく政策提言</strong> — 感覚ではなく数字・根拠に基づいて発言する</li>
+                    <li><strong>超党派の連携</strong> — 党派を超えて良い政策は協力する。市民のためが最優先</li>
+                    <li><strong>透明性の確保</strong> — 活動内容・判断根拠を市民にオープンにする</li>
+                    <li><strong>若い力の活用</strong> — 新しいテクノロジーや手法を積極的に取り入れる</li>
+                </ol>
+            </div>
+
+            <div class="card tip">
+                <h3>会派として大切にしていること</h3>
+                <ul>
+                    <li>メンバー同士の意見が違っても、議論を通じて最善を見つける姿勢</li>
+                    <li>一人ひとりの個性と専門性を尊重する</li>
+                    <li>失敗を恐れず、チャレンジし続ける</li>
+                    <li>市民に説明できない判断はしない</li>
+                </ul>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-1">
+                    <div class="giscus" data-term="1-理念と方針"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="section" id="sec2">
+            <div class="section-header">
+                <span class="section-num">2</span>
+                <h2>会派のルール</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>会派会議</h3>
+                <ul>
+                    <li><span class="badge badge-must">必須</span> 定例会開会前の会派会議には必ず出席する</li>
+                    <li><span class="badge badge-must">必須</span> やむを得ず欠席する場合は、前日までに会派代表に連絡する</li>
+                    <li><span class="badge badge-recommend">推奨</span> 会議前に議案資料に目を通しておく</li>
+                    <li>会派会議での決定事項は全メンバーで共有し、外部には合意なく発信しない</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>議案への対応</h3>
+                <ul>
+                    <li>議案への賛否は、会派会議で議論した上で方針を決める</li>
+                    <li>全員一致が原則。ただし、議員個人の信条に関わる場合は自由投票を認める</li>
+                    <li>自由投票の場合は、事前に会派内で共有し、対外的にも「会派として自由投票」と説明する</li>
+                    <li><span class="badge badge-warn">注意</span> 本会議での突然の造反は会派の信頼を損なう。必ず事前に相談すること</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>委員会活動</h3>
+                <ul>
+                    <li>所属委員会での質疑は事前に会派で情報共有する</li>
+                    <li>委員会視察の報告は全メンバーに共有する</li>
+                    <li>他会派との調整が必要な場合は、会派代表を通じて行う</li>
+                </ul>
+            </div>
+
+            <div class="card important">
+                <h3>表決のルール</h3>
+                <table>
+                    <tr><th>場面</th><th>原則</th><th>例外</th></tr>
+                    <tr><td>予算案</td><td>会派統一</td><td>なし</td></tr>
+                    <tr><td>条例案</td><td>会派統一</td><td>信条に関わる場合は自由投票</td></tr>
+                    <tr><td>請願・陳情</td><td>会派統一</td><td>議論の上、自由投票可</td></tr>
+                    <tr><td>人事案</td><td>会派統一</td><td>なし</td></tr>
+                    <tr><td>意見書</td><td>会派で協議</td><td>自由投票可</td></tr>
+                </table>
+            </div>
+
+            <div class="card important">
+                <h3>車両・交通費のルール</h3>
+                <p style="margin-bottom: 1rem; color: var(--gray);">会派メンバーで移動する際の公平性を保つため、以下のルールで運用します。</p>
+
+                <h4 style="font-size: 1rem; margin: 1rem 0 0.5rem; color: var(--navy);">基本方針</h4>
+                <p style="margin-bottom: 1rem;">運転者の負担（ガソリン代・労力）を考慮し、<strong>会派積立金または個人負担</strong>で精算する。</p>
+
+                <table>
+                    <tr><th>区分</th><th>内容</th><th>精算方法</th></tr>
+                    <tr>
+                        <td><strong>近距離</strong><br><small>（三郷市内など）</small></td>
+                        <td>運転・ガソリン代</td>
+                        <td>1人あたり <strong>1,000円</strong> を運転者に支払う<br>（または積立金から）</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><strong>長距離</strong><br><small>（羽田空港、高速利用など）</small></td>
+                        <td>高速代・駐車場代</td>
+                        <td><strong>実費</strong>を積立金から支払う</td>
+                    </tr>
+                    <tr>
+                        <td>運転・ガソリン代</td>
+                        <td>1人あたり <strong>2,000円</strong> 程度を運転者に支払う</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-2">
+                    <div class="giscus" data-term="2-会派のルール"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="section" id="sec3">
+            <div class="section-header">
+                <span class="section-num">3</span>
+                <h2>議場での所作・マナー</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>本会議場でのルール</h3>
+                <ul>
+                    <li><span class="badge badge-must">必須</span> 服装はスーツ着用（クールビズ期間は議長の指示に従う）</li>
+                    <li><span class="badge badge-must">必須</span> 開会10分前には着席する</li>
+                    <li>議場内ではスマートフォンをマナーモードに設定</li>
+                    <li>議長の発言中は私語を慎む</li>
+                    <li>採決時は明確に起立・着席で意思表示する（中途半端な姿勢はNG）</li>
+                    <li>他の議員の質問中に野次を飛ばさない</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>発言のマナー</h3>
+                <ul>
+                    <li>質問・発言は必ず議長の許可を得てから行う</li>
+                    <li>「○番、△△△△です」と名乗ってから発言する</li>
+                    <li>感情的にならず、冷静かつ論理的に発言する</li>
+                    <li>行政職員への質問は「○○部長にお伺いします」と答弁者を明示する</li>
+                    <li>答弁が不十分な場合は再質問で掘り下げる（感情的な追及は避ける）</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>好印象を与えるポイント</h3>
+                <ul>
+                    <li>他の議員の質問にも関心を持ち、うなずくなど反応を示す</li>
+                    <li>傍聴者がいることを常に意識する</li>
+                    <li>休憩時間に他会派の議員とも積極的にコミュニケーションをとる</li>
+                    <li>議場の入退場時は議長席に一礼する</li>
+                </ul>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-3">
+                    <div class="giscus" data-term="3-議場での所作・マナー"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="section" id="sec4">
+            <div class="section-header">
+                <span class="section-num">4</span>
+                <h2>一般質問の手順</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>一般質問の流れ</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>3週間前〜</strong>
+                        <p>テーマの検討開始。会派会議で方向性を相談。一般質問リサーチでリサーチ開始。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>2週間前</strong>
+                        <p>通告書の下書き作成。質問項目を整理。会派内でレビュー。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>通告締切日</strong>
+                        <p>議会事務局に通告書を提出。提出順が質問順になるため、早めの提出が有利。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>1週間前</strong>
+                        <p>担当課とのヒアリング（任意）。質問の趣旨を事前に伝えることで、充実した答弁を引き出しやすくなる。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>3日前〜前日</strong>
+                        <p>質問原稿の最終確認。時間配分のリハーサル。答弁予測と再質問の準備。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>当日</strong>
+                        <p>持ち時間60分（答弁含む）。導入→国県の動向→質問→要望の流れ。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card important">
+                <h3>質問のコツ</h3>
+                <ul>
+                    <li><strong>具体的な数字を入れる</strong> — 「多い」ではなく「○○件、前年比○%増」</li>
+                    <li><strong>他市の事例を引用する</strong> — 「○○市では□□年から実施し、△△の成果」</li>
+                    <li><strong>法的根拠を示す</strong> — 「○○法第○条に基づき」</li>
+                    <li><strong>質問は短く、明確に</strong> — 「そこでお伺いします。○○について市の見解をお聞かせください。」</li>
+                    <li><strong>「検討する」で終わらせない</strong> — 再質問で「いつまでに」「どのような形で」を確認する</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>質問事項（通告書）の書き方</h3>
+                <p><span class="badge badge-recommend">戦略</span> 通告書に書く「お題目（大項目）」は、<strong>あえて抽象的・大雑把に書く</strong></p>
+                <ul>
+                    <li>具体的に書きすぎると、本番で「これについては通告にないので答えられません」と封じられる</li>
+                    <li>議論の幅が狭まり、再質問で展開できなくなる</li>
+                    <li>大項目は広めに設定し、詳細は本番で質問するのがコツ</li>
+                </ul>
+            </div>
+
+            <div class="card warn">
+                <h3>やってはいけないこと</h3>
+                <ul>
+                    <li>通告外の内容を質問する（議長から制止される）</li>
+                    <li>個人を攻撃する質問（品位を欠くと判断される）</li>
+                    <li>持ち時間を超過する（時計を常に確認）</li>
+                    <li>資料を見せるだけで質問しない（議事録に残らない）</li>
+                    <li>答弁内容を事前にSNSなどで漏らす</li>
+                </ul>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-4">
+                    <div class="giscus" data-term="4-一般質問の手順"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="section" id="sec5">
+            <div class="section-header">
+                <span class="section-num">5</span>
+                <h2>情報管理・SNSルール</h2>
+            </div>
+
+            <div class="card warn">
+                <h3>機密情報の取り扱い</h3>
+                <ul>
+                    <li><span class="badge badge-must">厳守</span> 議員懇談会・全員協議会の非公開情報は外部に漏らさない</li>
+                    <li><span class="badge badge-must">厳守</span> 人事に関する情報は公表まで一切外部に出さない</li>
+                    <li><span class="badge badge-must">厳守</span> 会派会議の議論内容（途中経過）は会派外に出さない</li>
+                    <li>行政から事前に提供された資料は、公表時期を確認してから使用する</li>
+                </ul>
+            </div>
+
+            <div class="card rule">
+                <h3>SNS発信ルール</h3>
+                <ul>
+                    <li>個人のSNSでの発信は自由。ただし「会派の見解」と「個人の見解」を明確に区別する</li>
+                    <li>会派としての公式見解は、会派で合意の上で発信する</li>
+                    <li>他の議員・行政職員への個人攻撃は行わない</li>
+                    <li>議場内の撮影は議会のルールに従う</li>
+                    <li><span class="badge badge-recommend">推奨</span> 活動報告は積極的に発信する（透明性の確保）</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>効果的な発信のコツ</h3>
+                <ul>
+                    <li>質問のポイントを簡潔にまとめてSNSで速報する</li>
+                    <li>答弁の要点を「○○について→市は○○と回答」の形で報告する</li>
+                    <li>視察レポートは写真付きで発信すると反響が大きい</li>
+                    <li>市民からのコメントには丁寧に対応する</li>
+                </ul>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-5">
+                    <div class="giscus" data-term="5-情報管理・SNSルール"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="section" id="sec6">
+            <div class="section-header">
+                <span class="section-num">6</span>
+                <h2>会派内コミュニケーション</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>連絡手段</h3>
+                <table>
+                    <tr><th>用途</th><th>ツール</th><th>レスポンス目安</th></tr>
+                    <tr><td>日常連絡・共有</td><td>LINEグループ</td><td>当日中</td></tr>
+                    <tr><td>緊急連絡</td><td>電話</td><td>即時</td></tr>
+                    <tr><td>資料共有</td><td>LINEグループ / メール</td><td>確認次第</td></tr>
+                    <tr><td>議案・政策の議論</td><td>会派会議（対面）</td><td>-</td></tr>
+                </table>
+            </div>
+
+            <div class="card important">
+                <h3>定例ミーティング</h3>
+                <p style="font-size:0.85rem; margin-bottom:0.5rem;">基本は<strong>毎週水曜日</strong>に定例会議を実施します。</p>
+                <ul>
+                    <li><span class="badge badge-must">必須</span> 定例会開会前：議案検討会議</li>
+                    <li><span class="badge badge-recommend">原則出席</span> 月1回：定例会派会議</li>
+                    <li>必要に応じて：臨時会派会議</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>心がけ</h3>
+                <ul>
+                    <li>「報連相」を徹底する。特に問題が起きそうな時ほど早めに共有</li>
+                    <li>他のメンバーの活動に関心を持ち、互いにサポートする</li>
+                    <li>意見が対立しても、人格攻撃はしない。「意見」と「人」を分ける</li>
+                    <li>決まったことには全員で責任を持つ</li>
+                </ul>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="6">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-6">
+                    <div class="giscus" data-term="6-会派内コミュニケーション"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="section" id="sec7">
+            <div class="section-header">
+                <span class="section-num">7</span>
+                <h2>行政視察・研修</h2>
+            </div>
+
+            <div class="card rule">
+                <h3>視察参加のルール</h3>
+                <ul>
+                    <li>会派視察は年1〜2回を目安に企画する</li>
+                    <li>視察先は政策課題に直結する先進自治体を選定する</li>
+                    <li>視察前に事前調査を行い、質問事項を準備する</li>
+                    <li><span class="badge badge-must">必須</span> 視察後1週間以内に報告書を作成し、会派で共有する</li>
+                    <li>視察で得た知見は一般質問や政策提言に必ず反映させる</li>
+                </ul>
+            </div>
+
+            <div class="card tip">
+                <h3>視察報告書のテンプレート</h3>
+                <ol>
+                    <li><strong>視察先</strong>：自治体名・担当部署・日時</li>
+                    <li><strong>目的</strong>：何を学ぶために行ったか</li>
+                    <li><strong>概要</strong>：視察先の取り組み内容（事実ベース）</li>
+                    <li><strong>成果・効果</strong>：数字を含む成果データ</li>
+                    <li><strong>三郷市への示唆</strong>：三郷市で導入する場合の課題と提案</li>
+                    <li><strong>今後のアクション</strong>：具体的な次のステップ</li>
+                </ol>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="7">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-7">
+                    <div class="giscus" data-term="7-行政視察・研修"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8 -->
+        <div class="section" id="sec8">
+            <div class="section-header">
+                <span class="section-num">8</span>
+                <h2>新人議員向けFAQ</h2>
+            </div>
+
+            <div class="card">
+                <div class="faq-item">
+                    <div class="faq-q">Q. 一般質問のテーマはどうやって決めればいい？</div>
+                    <div class="faq-a">市民からの相談、地域の課題、国の動向、日頃の問題意識から選びましょう。一般質問リサーチで事前リサーチすると、テーマの深さと幅が見えてきます。会派会議で相談するのも有効です。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 他会派の議員とはどう接すればいい？</div>
+                    <div class="faq-a">政策で意見が違っても、人間関係は大切にしましょう。休憩時間の雑談や、委員会での協力など、日常のコミュニケーションが円滑な議会運営につながります。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 行政職員とはどう関わるべき？</div>
+                    <div class="faq-a">行政職員は「敵」ではなく「パートナー」です。丁寧なコミュニケーションを心がけ、データや情報提供をお願いする際も敬意を持って接しましょう。良い関係が良い答弁を引き出します。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 市民から要望・苦情を受けたらどうする？</div>
+                    <div class="faq-a">まず傾聴する。内容をメモし、会派で共有。対応可能なものは担当課につなぐ。議会で取り上げるべき課題は一般質問のテーマに。対応状況は市民に必ずフィードバックしましょう。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 議案の賛否で迷ったら？</div>
+                    <div class="faq-a">一人で悩まず、会派で議論しましょう。判断の軸は「市民にとって良い結果になるか」。データに基づく判断を心がけ、感情や人間関係で賛否を決めないこと。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Q. 「検討します」という答弁をもらったら？</div>
+                    <div class="faq-a">議事録に残っているので、次の定例会でフォローアップ質問をしましょう。「前回○月の質問で検討するとのことでしたが、進捗をお聞かせください」が効果的です。一般質問リサーチの整合性チェック機能が役立ちます。</div>
+                </div>
+            </div>
+
+            <div class="comment-section">
+                <button class="comment-toggle" data-section="8">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    このセクションについて意見・コメント
+                </button>
+                <div class="comment-area" id="comments-8">
+                    <div class="giscus" data-term="8-新人議員向けFAQ"></div>
+                </div>
+            </div>
+                </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<!-- Ordinance Modal -->
+<div class="ordinance-modal-overlay" id="ordinanceModalOverlay"></div>
+<div class="ordinance-modal" id="ordinanceModal">
+    <div class="ordinance-modal-header">
+        <div>
+            <div class="ordinance-modal-title" id="modalTitle">条例名</div>
+            <div class="ordinance-modal-meta" id="modalMeta"></div>
+        </div>
+        <button class="ordinance-modal-close" id="modalCloseBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+    <div class="ordinance-modal-body">
+        <div class="ordinance-modal-toc" id="modalToc">
+            <div class="ordinance-modal-toc-title">目次</div>
+            <ul id="modalTocList"></ul>
+        </div>
+        <div class="ordinance-content" id="modalContent"></div>
+    </div>
+    <div class="ordinance-modal-footer">
+        <span class="ordinance-modal-footer-info" id="modalFooterInfo"></span>
+        <a href="#" target="_blank" rel="noopener" class="ordinance-modal-footer-link" id="modalExternalLink">
+            三郷市例規集で確認
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<!-- 条例データを外部ファイルから読み込み -->
+<script src="ordinance-data.js"></script>
+
+<script>
+const HASH = 'abd4404fff7d3165f63f43321f571867d4dc635047b4f398282d4d42908c3f6b';
+
+async function sha256(text) {
+    const data = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Sidebar toggle
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+async function tryLogin() {
+    const pw = document.getElementById('passwordInput').value;
+    const hash = await sha256(pw);
+    if (hash === HASH) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('guideContent').style.display = 'block';
+        localStorage.setItem('member_auth', '1');
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+    }
+}
+
+document.getElementById('passwordInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') tryLogin();
+});
+
+if (localStorage.getItem('member_auth') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('guideContent').style.display = 'block';
+}
+
+// Menu
+const menuOpenBtn = document.getElementById('menuOpenBtn');
+const menuCloseBtn = document.getElementById('menuCloseBtn');
+const menuOverlay = document.getElementById('menuOverlay');
+const menuPanel = document.getElementById('menuPanel');
+
+function openMenu() {
+    menuOverlay.classList.add('open');
+    menuPanel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+    menuOverlay.classList.remove('open');
+    menuPanel.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+menuOpenBtn.addEventListener('click', openMenu);
+menuCloseBtn.addEventListener('click', closeMenu);
+menuOverlay.addEventListener('click', closeMenu);
+menuPanel.querySelectorAll('.menu-nav a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+});
+
+// Ordinance data is now loaded from external file: ordinance-data.js
+// Legacy data below is kept for reference but not used
+const _legacyOrdinanceData = [
+    // 子育て・福祉
+    {
+        id: 1,
+        title: '三郷市子ども医療費支給に関する条例',
+        category: '子育て・福祉',
+        keywords: ['子育て', '医療費', '子ども', '福祉', '助成'],
+        summary: '子どもの医療費を助成し、子育て家庭の経済的負担を軽減することを目的とした条例。',
+        enactment: '平成5年3月26日 条例第6号',
+        lastAmended: '令和4年12月16日 条例第29号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000609.html',
+        toc: ['目的', '定義', '支給対象', '医療費の範囲', '支給の制限', '届出', '受給資格の喪失届', '届出義務', '受給資格証', '支給の方法', '不正利得の返還', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市子ども医療費支給に関する条例</div>
+            <div class="jorei-enactment">平成5年3月26日 条例第6号<br>最終改正：令和4年12月16日 条例第29号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、子どもに係る医療費の一部を支給することにより、子どもの保健の向上と福祉の増進を図ることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「子ども」とは、市内に住所を有する者であって、出生の日から18歳に達する日以後の最初の3月31日までの間にある者をいう。</div>
+                    <div class="jorei-paragraph">2　この条例において「保護者」とは、子どもの親権を行う者、未成年後見人その他の者で、子どもを現に監護する者をいう。</div>
+                    <div class="jorei-paragraph">3　この条例において「医療保険各法」とは、次に掲げる法律をいう。</div>
+                    <div class="jorei-item">（1）健康保険法（大正11年法律第70号）</div>
+                    <div class="jorei-item">（2）船員保険法（昭和14年法律第73号）</div>
+                    <div class="jorei-item">（3）国民健康保険法（昭和33年法律第192号）</div>
+                    <div class="jorei-item">（4）国家公務員共済組合法（昭和33年法律第128号）</div>
+                    <div class="jorei-item">（5）地方公務員等共済組合法（昭和37年法律第152号）</div>
+                    <div class="jorei-item">（6）私立学校教職員共済法（昭和28年法律第245号）</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（支給対象）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　医療費の支給を受けることができる者（以下「支給対象者」という。）は、子どもを監護し、かつ、子どもと生計を同じくしている保護者とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（医療費の範囲）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　この条例において「医療費」とは、医療保険各法の規定による被保険者若しくは被扶養者又は組合員若しくはその被扶養者の資格を有する子どもが、医療機関等において、疾病又は負傷につき診療を受けた場合に、医療保険各法の規定により当該子ども又は保護者が負担すべき額とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（支給の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　次の各号のいずれかに該当するときは、医療費は、支給しない。</div>
+                    <div class="jorei-item">（1）子どもが生活保護法（昭和25年法律第144号）の規定による保護を受けているとき。</div>
+                    <div class="jorei-item">（2）子どもが児童福祉法（昭和22年法律第164号）の規定による小規模住居型児童養育事業を行う者又は里親に委託されているとき。</div>
+                    <div class="jorei-item">（3）子どもが児童福祉法に規定する乳児院、児童養護施設、障害児入所施設、児童心理治療施設又は児童自立支援施設に入所しているとき。</div>
+                    <div class="jorei-item">（4）子どもに係る医療費について、他の法令等の規定により国又は地方公共団体の負担による医療に関する給付が行われたとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（届出）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　支給対象者は、規則で定めるところにより、あらかじめ市長に届け出なければならない。届出事項に変更があったときも、同様とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（受給資格の喪失届）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　支給対象者は、受給資格を喪失したときは、速やかに市長に届け出なければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（届出義務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　支給対象者は、市長から届出事項について報告を求められたときは、速やかに届け出なければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（受給資格証）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市長は、第6条の届出をした支給対象者に対し、子ども医療費受給資格証（以下「受給資格証」という。）を交付するものとする。</div>
+                    <div class="jorei-paragraph">2　支給対象者は、医療機関等に受診する際に、受給資格証を提示しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art10">
+                <div class="jorei-article-title">（支給の方法）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第10条　医療費の支給は、規則で定めるところにより行う。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art11">
+                <div class="jorei-article-title">（不正利得の返還）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第11条　市長は、偽りその他不正の手段により医療費の支給を受けた者があるときは、その者から当該支給を受けた額の全部又は一部を返還させることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art12">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第12条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成5年4月1日から施行する。</div>
+                <div class="jorei-paragraph">（以下、改正附則省略）</div>
+            </div>
+        `
+    },
+    {
+        id: 2,
+        title: '三郷市環境基本条例',
+        category: '環境・安全',
+        keywords: ['環境', 'エコ', '公害', '保全', '自然', '持続可能'],
+        summary: '環境の保全に関する基本理念を定め、市・事業者・市民の責務を明確にし、施策の基本事項を定める。',
+        enactment: '平成11年3月30日 条例第1号',
+        lastAmended: '令和2年3月25日 条例第5号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000554.html',
+        toc: ['目的', '定義', '基本理念', '市の責務', '事業者の責務', '市民の責務', '施策の基本方針', '環境基本計画', '年次報告'],
+        fullText: `
+            <div class="jorei-title">三郷市環境基本条例</div>
+            <div class="jorei-enactment">平成11年3月30日 条例第1号<br>最終改正：令和2年3月25日 条例第5号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、環境の保全について、基本理念を定め、並びに市、事業者及び市民の責務を明らかにするとともに、環境の保全に関する施策の基本となる事項を定めることにより、環境の保全に関する施策を総合的かつ計画的に推進し、もって現在及び将来の市民の健康で文化的な生活の確保に寄与することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「環境への負荷」とは、人の活動により環境に加えられる影響であって、環境の保全上の支障の原因となるおそれのあるものをいう。</div>
+                    <div class="jorei-paragraph">2　この条例において「地球環境保全」とは、人の活動による地球全体の温暖化又はオゾン層の破壊の進行、海洋の汚染、野生生物の種の減少その他の地球の全体又はその広範な部分の環境に影響を及ぼす事態に係る環境の保全であって、人類の福祉に貢献するとともに市民の健康で文化的な生活の確保に寄与するものをいう。</div>
+                    <div class="jorei-paragraph">3　この条例において「公害」とは、環境の保全上の支障のうち、事業活動その他の人の活動に伴って生ずる相当範囲にわたる大気の汚染、水質の汚濁、土壌の汚染、騒音、振動、地盤の沈下及び悪臭によって、人の健康又は生活環境に係る被害が生ずることをいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　環境の保全は、市民が健康で文化的な生活を営むうえで必要な良好な環境を確保し、これを将来の世代に継承していくことを目的として行われなければならない。</div>
+                    <div class="jorei-paragraph">2　環境の保全は、環境への負荷の少ない持続的発展が可能な社会が構築されることを目的として、すべての者の公平な役割分担の下に、自主的かつ積極的に行われなければならない。</div>
+                    <div class="jorei-paragraph">3　地球環境保全は、地域の環境が地球全体の環境と深くかかわっていることにかんがみ、すべての者が自らの問題として認識し、それぞれの事業活動及び日常生活において積極的に推進されなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、前条に定める基本理念（以下「基本理念」という。）にのっとり、環境の保全に関する基本的かつ総合的な施策を策定し、及び実施する責務を有する。</div>
+                    <div class="jorei-paragraph">2　市は、自らの事務及び事業に関し、率先して環境への負荷の低減に努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（事業者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　事業者は、基本理念にのっとり、その事業活動を行うに当たっては、これに伴って生ずる公害を防止し、又は自然環境を適正に保全するために必要な措置を講ずる責務を有する。</div>
+                    <div class="jorei-paragraph">2　事業者は、基本理念にのっとり、環境の保全上の支障を防止するため、物の製造、加工又は販売その他の事業活動を行うに当たって、その事業活動に係る製品その他の物が廃棄物となった場合にその適正な処理が図られることとなるように必要な措置を講ずる責務を有する。</div>
+                    <div class="jorei-paragraph">3　事業者は、基本理念にのっとり、環境の保全上の支障を防止するため、物の製造、加工又は販売その他の事業活動を行うに当たって、その事業活動に係る製品その他の物が使用され又は廃棄されることによる環境への負荷の低減に資するように努めるとともに、その事業活動において、再生資源その他の環境への負荷の低減に資する原材料、役務等を利用するように努めなければならない。</div>
+                    <div class="jorei-paragraph">4　前3項に定めるもののほか、事業者は、基本理念にのっとり、その事業活動に関し、これに伴う環境への負荷の低減その他環境の保全に自ら努めるとともに、市が実施する環境の保全に関する施策に協力する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市民は、基本理念にのっとり、環境の保全上の支障を防止するため、その日常生活に伴う環境への負荷の低減に努めなければならない。</div>
+                    <div class="jorei-paragraph">2　前項に定めるもののほか、市民は、基本理念にのっとり、環境の保全に自ら努めるとともに、市が実施する環境の保全に関する施策に協力する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　環境の保全に関する基本的施策</div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（施策の基本方針）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市は、基本理念にのっとり、次に掲げる事項を基本として環境の保全に関する施策を策定し、及び実施するものとする。</div>
+                    <div class="jorei-item">（1）人の健康が保護され、及び生活環境が保全されるよう、大気、水、土壌等の環境の自然的構成要素が良好な状態に保持されること。</div>
+                    <div class="jorei-item">（2）生態系の多様性の確保、野生生物の種の保存その他の生物の多様性の確保が図られるとともに、森林、農地、水辺地等における多様な自然環境が地域の自然的社会的条件に応じて体系的に保全されること。</div>
+                    <div class="jorei-item">（3）人と自然との豊かな触れ合いが保たれること。</div>
+                    <div class="jorei-item">（4）資源の循環的な利用、エネルギーの有効利用及び廃棄物の減量が促進されること。</div>
+                    <div class="jorei-item">（5）市、事業者及び市民の環境の保全に関する意識の高揚が図られること。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（環境基本計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市長は、環境の保全に関する施策を総合的かつ計画的に推進するため、環境の保全に関する基本的な計画（以下「環境基本計画」という。）を定めなければならない。</div>
+                    <div class="jorei-paragraph">2　環境基本計画は、次に掲げる事項について定めるものとする。</div>
+                    <div class="jorei-item">（1）環境の保全に関する総合的かつ長期的な施策の大綱</div>
+                    <div class="jorei-item">（2）前号に掲げるもののほか、環境の保全に関する施策を総合的かつ計画的に推進するために必要な事項</div>
+                    <div class="jorei-paragraph">3　市長は、環境基本計画を定めるに当たっては、あらかじめ市民の意見を反映することができるように必要な措置を講ずるものとする。</div>
+                    <div class="jorei-paragraph">4　市長は、環境基本計画を定めたときは、これを公表しなければならない。</div>
+                    <div class="jorei-paragraph">5　前2項の規定は、環境基本計画の変更について準用する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（年次報告）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市長は、毎年、環境の状況並びに環境の保全に関して講じた施策及び講じようとする施策に関する報告書を作成し、これを公表するものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成11年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 3,
+        title: '三郷市防災会議条例',
+        category: '環境・安全',
+        keywords: ['防災', '災害', '避難', '地震', '安全', '防災計画', '地域防災'],
+        summary: '市の防災会議の組織と運営について定め、地域防災計画の策定・実施に関する基本事項を規定する。',
+        enactment: '昭和38年6月25日 条例第9号',
+        lastAmended: '令和3年3月26日 条例第2号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000194.html',
+        toc: ['所掌事務', '会長', '委員', '専門委員', '議事', '庶務', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市防災会議条例</div>
+            <div class="jorei-enactment">昭和38年6月25日 条例第9号<br>最終改正：令和3年3月26日 条例第2号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（所掌事務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　三郷市防災会議（以下「防災会議」という。）は、災害対策基本法（昭和36年法律第223号）第16条第6項の規定に基づき、三郷市地域防災計画を作成し、及びその実施を推進する。</div>
+                    <div class="jorei-paragraph">2　防災会議は、前項に規定する事務のほか、市長の諮問に応じて市の地域に係る防災に関する重要事項を審議する。</div>
+                    <div class="jorei-paragraph">3　防災会議は、前項の重要事項に関し、市長に意見を述べることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（会長）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　防災会議に会長を置き、市長をもって充てる。</div>
+                    <div class="jorei-paragraph">2　会長は、会務を総理する。</div>
+                    <div class="jorei-paragraph">3　会長に事故があるときは、あらかじめ会長の指名する委員がその職務を代理する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（委員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　防災会議の委員の定数は、40人以内とし、次に掲げる者をもって充てる。</div>
+                    <div class="jorei-item">（1）指定地方行政機関の職員のうちから市長が任命する者</div>
+                    <div class="jorei-item">（2）埼玉県の知事の部内の職員のうちから市長が任命する者</div>
+                    <div class="jorei-item">（3）埼玉県警察の警察官のうちから市長が任命する者</div>
+                    <div class="jorei-item">（4）市長がその部内の職員のうちから指名する者</div>
+                    <div class="jorei-item">（5）教育長</div>
+                    <div class="jorei-item">（6）消防長及び消防団長</div>
+                    <div class="jorei-item">（7）指定公共機関又は指定地方公共機関の職員のうちから市長が任命する者</div>
+                    <div class="jorei-item">（8）自主防災組織を構成する者又は学識経験のある者のうちから市長が任命する者</div>
+                    <div class="jorei-paragraph">2　前項第1号、第2号、第3号、第7号及び第8号の委員の任期は、2年とする。ただし、補欠の委員の任期は、その前任者の残任期間とする。</div>
+                    <div class="jorei-paragraph">3　前項の委員は、再任されることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（専門委員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　防災会議に専門の事項を調査させるため、専門委員を置くことができる。</div>
+                    <div class="jorei-paragraph">2　専門委員は、関係地方行政機関の職員、埼玉県の職員、市の職員、関係指定公共機関の職員、関係指定地方公共機関の職員及び学識経験のある者のうちから市長が任命する。</div>
+                    <div class="jorei-paragraph">3　専門委員は、当該専門の事項に関する調査が終了したときは、解任されるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（議事）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　防災会議は、委員の2分の1以上が出席しなければ、会議を開くことができない。</div>
+                    <div class="jorei-paragraph">2　防災会議の議事は、出席した委員の過半数をもって決し、可否同数のときは、会長の決するところによる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（庶務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　防災会議の庶務は、危機管理防災課において処理する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　この条例に定めるもののほか、防災会議の運営に関し必要な事項は、会長が防災会議に諮って定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 4,
+        title: '三郷市情報公開条例',
+        category: '行政・財務',
+        keywords: ['情報公開', '透明性', '公文書', '開示', '行政', '請求'],
+        summary: '市の保有する情報の公開に関する基本事項を規定し、市民の知る権利を保障し、行政の透明性を確保する。',
+        enactment: '平成12年3月24日 条例第6号',
+        lastAmended: '令和4年3月25日 条例第10号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000067.html',
+        toc: ['目的', '定義', '実施機関の責務', '開示請求権', '開示請求の手続', '公文書の開示義務', '部分開示', '公文書の存否に関する情報', '開示請求に対する決定等'],
+        fullText: `
+            <div class="jorei-title">三郷市情報公開条例</div>
+            <div class="jorei-enactment">平成12年3月24日 条例第6号<br>最終改正：令和4年3月25日 条例第10号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、市民の知る権利を尊重し、公文書の開示を請求する権利を明らかにするとともに、情報公開の総合的な推進に関し必要な事項を定めることにより、市政に関する市民の理解と信頼を深め、市民参加による公正で開かれた市政の推進に資することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</div>
+                    <div class="jorei-item">（1）実施機関　市長、教育委員会、選挙管理委員会、監査委員、農業委員会、固定資産評価審査委員会及び議会をいう。</div>
+                    <div class="jorei-item">（2）公文書　実施機関の職員が職務上作成し、又は取得した文書、図画、写真、フィルム及び電磁的記録（電子的方式、磁気的方式その他人の知覚によっては認識することができない方式で作られた記録をいう。以下同じ。）であって、当該実施機関の職員が組織的に用いるものとして、当該実施機関が保有しているものをいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（実施機関の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　実施機関は、この条例の解釈及び運用に当たっては、市民の知る権利を尊重するとともに、個人に関する情報がみだりに公にされることのないよう最大限の配慮をしなければならない。</div>
+                    <div class="jorei-paragraph">2　実施機関は、情報公開の総合的な推進を図るため、公文書の適正な管理、情報の公表及び提供の充実に努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　公文書の開示</div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（開示請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　何人も、この条例の定めるところにより、実施機関に対し、公文書の開示を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（開示請求の手続）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　公文書の開示を請求しようとする者は、次に掲げる事項を記載した請求書（以下「開示請求書」という。）を実施機関に提出しなければならない。</div>
+                    <div class="jorei-item">（1）氏名又は名称及び住所又は事務所若しくは事業所の所在地並びに法人その他の団体にあっては代表者の氏名</div>
+                    <div class="jorei-item">（2）開示を請求しようとする公文書を特定するために必要な事項</div>
+                    <div class="jorei-paragraph">2　実施機関は、開示請求書に形式上の不備があると認めるときは、開示請求をした者（以下「開示請求者」という。）に対し、相当の期間を定めて、その補正を求めることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（公文書の開示義務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　実施機関は、開示請求があったときは、開示請求に係る公文書に次の各号に掲げる情報（以下「非開示情報」という。）のいずれかが記録されている場合を除き、開示請求者に対し、当該公文書を開示しなければならない。</div>
+                    <div class="jorei-item">（1）法令又は条例の規定により公にすることができないとされている情報</div>
+                    <div class="jorei-item">（2）個人に関する情報（事業を営む個人の当該事業に関する情報を除く。）であって、当該情報に含まれる氏名、生年月日その他の記述等により特定の個人を識別することができるもの（他の情報と照合することにより、特定の個人を識別することができることとなるものを含む。）又は特定の個人を識別することはできないが、公にすることにより、なお個人の権利利益を害するおそれがあるもの</div>
+                    <div class="jorei-item">（3）法人その他の団体（国、独立行政法人等、地方公共団体及び地方独立行政法人を除く。以下「法人等」という。）に関する情報又は事業を営む個人の当該事業に関する情報であって、公にすることにより、当該法人等又は当該個人の競争上の地位その他正当な利益を害するおそれがあるもの</div>
+                    <div class="jorei-item">（4）公にすることにより、犯罪の予防、鎮圧又は捜査、公訴の維持、刑の執行その他の公共の安全と秩序の維持に支障を及ぼすおそれがあると実施機関が認めることにつき相当の理由がある情報</div>
+                    <div class="jorei-item">（5）市の機関、国、独立行政法人等、他の地方公共団体又は地方独立行政法人の内部又は相互間における審議、検討又は協議に関する情報であって、公にすることにより、率直な意見の交換若しくは意思決定の中立性が不当に損なわれるおそれ、不当に市民の間に混乱を生じさせるおそれ又は特定の者に不当に利益を与え若しくは不利益を及ぼすおそれがあるもの</div>
+                    <div class="jorei-item">（6）市の機関又は国、独立行政法人等、他の地方公共団体若しくは地方独立行政法人が行う事務又は事業に関する情報であって、公にすることにより、当該事務又は事業の適正な遂行に支障を及ぼすおそれがあるもの</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（部分開示）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　実施機関は、開示請求に係る公文書の一部に非開示情報が記録されている場合において、非開示情報が記録されている部分を容易に区分して除くことができるときは、開示請求者に対し、当該部分を除いた部分につき開示しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成12年10月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 5,
+        title: '三郷市いじめ防止対策推進条例',
+        category: '教育・文化',
+        keywords: ['いじめ', '学校', '教育', '防止', '児童', '生徒', '対策'],
+        summary: 'いじめの防止、早期発見、対処に関する基本理念と施策を定め、学校・保護者・市民の責務を明確にする。',
+        enactment: '平成26年3月26日 条例第4号',
+        lastAmended: '令和2年3月25日 条例第8号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001023.html',
+        toc: ['目的', '定義', '基本理念', '市の責務', '学校の責務', '保護者の責務', '市民の責務', 'いじめ防止基本方針', 'いじめ防止対策委員会'],
+        fullText: `
+            <div class="jorei-title">三郷市いじめ防止対策推進条例</div>
+            <div class="jorei-enactment">平成26年3月26日 条例第4号<br>最終改正：令和2年3月25日 条例第8号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、いじめ防止対策推進法（平成25年法律第71号。以下「法」という。）の趣旨にのっとり、いじめの防止等のための対策に関し、基本理念を定め、市、学校、保護者及び市民の責務を明らかにするとともに、いじめの防止等のための対策に関する基本的な事項を定めることにより、児童等の尊厳を保持するため、市、学校、家庭、地域住民その他の関係者の連携の下、いじめの問題の克服に向けた取組を推進し、もって児童等が安心して生活し、学ぶことができる環境をつくることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</div>
+                    <div class="jorei-item">（1）いじめ　法第2条第1項に規定するいじめをいう。</div>
+                    <div class="jorei-item">（2）学校　法第2条第2項に規定する学校（三郷市立の小学校及び中学校に限る。）をいう。</div>
+                    <div class="jorei-item">（3）児童等　法第2条第3項に規定する児童等をいう。</div>
+                    <div class="jorei-item">（4）保護者　法第2条第4項に規定する保護者をいう。</div>
+                    <div class="jorei-item">（5）いじめの防止等　法第1条に規定するいじめの防止、いじめの早期発見及びいじめへの対処をいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　いじめの防止等のための対策は、全ての児童等がいじめを行わず、いじめを認識しながらこれを放置することがないよう、いじめが児童等の心身に及ぼす影響その他のいじめの問題に関する児童等の理解を深めることを旨として行われなければならない。</div>
+                    <div class="jorei-paragraph">2　いじめの防止等のための対策は、いじめを受けた児童等の生命及び心身を保護することが特に重要であることを認識しつつ、市、学校、家庭、地域住民その他の関係者の連携の下、いじめの問題を克服することを目指して行われなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、基本理念にのっとり、いじめの防止等のための対策を総合的に策定し、及び実施する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（学校の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　学校は、基本理念にのっとり、当該学校に在籍する児童等の保護者、地域住民その他の関係者との連携を図りつつ、学校全体でいじめの防止及び早期発見に取り組むとともに、当該学校に在籍する児童等がいじめを受けていると思われるときは、適切かつ迅速にこれに対処する責務を有する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（保護者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　保護者は、その保護する児童等がいじめを行うことのないよう、当該児童等に対し、規範意識を養うための指導その他必要な指導を行うよう努めるものとする。</div>
+                    <div class="jorei-paragraph">2　保護者は、その保護する児童等がいじめを受けた場合には、適切に当該児童等をいじめから保護するものとする。</div>
+                    <div class="jorei-paragraph">3　保護者は、市及び学校が講ずるいじめの防止等のための対策に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市民は、いじめが児童等の心身に及ぼす影響その他のいじめの問題に関する理解を深めるとともに、児童等が安心して生活し、学ぶことができる環境をつくるため、市及び学校が実施するいじめの防止等のための対策に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（いじめ防止基本方針）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市は、法第12条の規定に基づき、いじめの防止等のための対策を総合的かつ効果的に推進するための基本的な方針（以下「いじめ防止基本方針」という。）を定めるものとする。</div>
+                    <div class="jorei-paragraph">2　いじめ防止基本方針は、次に掲げる事項について定めるものとする。</div>
+                    <div class="jorei-item">（1）いじめの防止等のための対策の基本的な方向に関する事項</div>
+                    <div class="jorei-item">（2）いじめの防止等のための対策の内容に関する事項</div>
+                    <div class="jorei-item">（3）前2号に掲げるもののほか、いじめの防止等のための対策に関する重要事項</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（いじめ防止対策委員会）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　法第14条第3項の規定に基づき、いじめの防止等に関係する機関及び団体の連携を図るため、三郷市いじめ防止対策委員会（以下「対策委員会」という。）を置く。</div>
+                    <div class="jorei-paragraph">2　対策委員会は、次に掲げる事務を行う。</div>
+                    <div class="jorei-item">（1）いじめ防止基本方針に関すること。</div>
+                    <div class="jorei-item">（2）いじめの防止等のための対策の推進に関すること。</div>
+                    <div class="jorei-item">（3）いじめの防止等に関係する機関及び団体との連携に関すること。</div>
+                    <div class="jorei-item">（4）前3号に掲げるもののほか、いじめの防止等に関し必要なこと。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成26年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 6,
+        title: '三郷市廃棄物の処理及び清掃に関する条例',
+        category: '環境・安全',
+        keywords: ['ごみ', '廃棄物', '清掃', 'リサイクル', '環境', '分別', '収集'],
+        summary: '一般廃棄物の処理、ごみの分別収集、手数料等について規定し、循環型社会の形成に向けた基本事項を定める。',
+        enactment: '昭和47年10月1日 条例第17号',
+        lastAmended: '令和5年3月24日 条例第8号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000381.html',
+        toc: ['目的', '定義', '市の責務', '市民の責務', '事業者の責務', '一般廃棄物処理計画', '分別収集', '手数料', '減量・再利用の推進'],
+        fullText: `
+            <div class="jorei-title">三郷市廃棄物の処理及び清掃に関する条例</div>
+            <div class="jorei-enactment">昭和47年10月1日 条例第17号<br>最終改正：令和5年3月24日 条例第8号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、廃棄物の処理及び清掃に関する法律（昭和45年法律第137号。以下「法」という。）に基づき、廃棄物の排出を抑制し、及び廃棄物の適正な分別、保管、収集、運搬、再生、処分等の処理をし、並びに生活環境を清潔にすることにより、生活環境の保全及び公衆衛生の向上を図ることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市は、その区域内における一般廃棄物の減量に関し市民及び事業者の自主的な活動の促進を図り、及び一般廃棄物の適正な処理に必要な措置を講ずるよう努めるとともに、一般廃棄物の処理に関する事業の実施に当たっては、職員の資質の向上、施設の整備及び作業方法の改善を図る等その能率的な運営に努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市民は、廃棄物の排出を抑制し、再生品の使用等により廃棄物の再生利用を図り、廃棄物を分別して排出し、その生じた廃棄物をなるべく自ら処分すること等により、廃棄物の減量に努めなければならない。</div>
+                    <div class="jorei-paragraph">2　市民は、廃棄物の減量及び適正な処理に関する市の施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（事業者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　事業者は、その事業活動に伴って生じた廃棄物を自らの責任において適正に処理しなければならない。</div>
+                    <div class="jorei-paragraph">2　事業者は、その事業活動に伴って生じた廃棄物の再生利用等を行うことにより、その減量に努めなければならない。</div>
+                    <div class="jorei-paragraph">3　事業者は、物の製造、加工、販売等に際して、その製品、容器等が廃棄物となった場合における処理の困難性についてあらかじめ自ら評価し、適正な処理が困難にならないような製品、容器等の開発を行うこと、その製品、容器等に係る廃棄物の適正な処理の方法についての情報を提供すること等により、その製品、容器等が廃棄物となった場合においてその適正な処理が困難になることのないようにしなければならない。</div>
+                    <div class="jorei-paragraph">4　事業者は、廃棄物の減量及び適正な処理の確保等に関する市の施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　一般廃棄物の処理</div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（一般廃棄物処理計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市長は、法第6条第1項の規定により、一般廃棄物処理計画を定めなければならない。</div>
+                    <div class="jorei-paragraph">2　市長は、前項の一般廃棄物処理計画を定め、又は変更したときは、これを告示しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（分別収集）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市民は、一般廃棄物を排出するときは、市長が定める分別の区分に従って排出しなければならない。</div>
+                    <div class="jorei-paragraph">2　市長は、一般廃棄物処理計画に従い、一般廃棄物を分別して収集するものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（手数料）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市長は、一般廃棄物の処理に関し、別表に定める手数料を徴収する。</div>
+                    <div class="jorei-paragraph">2　前項の手数料は、市長が定める指定袋の代金に含めて徴収することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch3">第3章　減量及び再利用の推進</div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（減量・再利用の推進）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市は、一般廃棄物の減量を推進するため、市民及び事業者に対し、必要な指導及び助言を行うことができる。</div>
+                    <div class="jorei-paragraph">2　市は、再生資源の回収を促進するため、集団回収活動その他の市民の自主的な活���を支援するものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    }
+];
+
+// Legacy additional ordinances (not used - data loaded from ordinance-data.js)
+const _legacyOrdinanceDataAdditional = [
+    {
+        id: 7,
+        title: '三郷市保育の実施に関する条例',
+        category: '子育て・福祉',
+        keywords: ['保育', '子育て', '保育所', '待機児童', '入所', '認可'],
+        summary: '保育所の設置・運営、入所基準、保育料等について規定。待機児童対策や保育サービスの質の確保に関する基本事項を定める。',
+        enactment: '平成27年3月25日 条例第25号',
+        lastAmended: '令和4年12月16日 条例第30号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000490.html',
+        toc: ['趣旨', '保育の実施基準', '保育の実施の申込み', '保育料', '保育料の減免', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市保育の実施に関する条例</div>
+            <div class="jorei-enactment">平成27年3月25日 条例第25号<br>最終改正：令和4年12月16日 条例第30号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、児童福祉法（昭和22年法律第164号。以下「法」という。）第24条第1項の規定に基づく保育の実施に関し、必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（保育の実施基準）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　市長は、児童の保護者のいずれもが次の各号のいずれかに該当することにより、当該児童を保育することができないと認める場合において、保育の実施を行うものとする。</div>
+                    <div class="jorei-item">（1）1月において、48時間以上労働することを常態とすること。</div>
+                    <div class="jorei-item">（2）妊娠中であるか又は出産後間がないこと。</div>
+                    <div class="jorei-item">（3）疾病にかかり、若しくは負傷し、又は精神若しくは身体に障がいを有していること。</div>
+                    <div class="jorei-item">（4）同居の親族（長期間入院等をしている親族を含む。）を常時介護又は看護していること。</div>
+                    <div class="jorei-item">（5）震災、風水害、火災その他の災害の復旧に当たっていること。</div>
+                    <div class="jorei-item">（6）求職活動（起業の準備を含む。）を継続的に行っていること。</div>
+                    <div class="jorei-item">（7）学校教育法（昭和22年法律第26号）に規定する学校、職業能力開発促進法（昭和44年法律第64号）に規定する公共職業能力開発施設その他これらに準ずる教育施設に在学していること。</div>
+                    <div class="jorei-item">（8）児童虐待の防止等に関する法律（平成12年法律第82号）第2条に規定する児童虐待を行っている又は再び行われるおそれがあると認められること。</div>
+                    <div class="jorei-item">（9）配偶者からの暴力の防止及び被害者の保護等に関する法律（平成13年法律第31号）第1条に規定する配偶者からの暴力により保育を行うことが困難であると認められること。</div>
+                    <div class="jorei-item">（10）育児休業をする場合であって、当該保護者の当該育児休業に係る子ども以外の子どもが特定教育・保育施設又は特定地域型保育事業を利用しており、当該育児休業の間に当該特定教育・保育施設等を引き続き利用することが必要であると認められること。</div>
+                    <div class="jorei-item">（11）前各号に類する状態にあること。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（保育の実施の申込み）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　保育の実施を希望する保護者は、規則で定めるところにより、市長に申し込まなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（保育料）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市長は、子ども・子育て支援法（平成24年法律第65号）第27条第3項第2号、第28条第2項各号、第29条第3項第2号又は第30条第2項各号に掲げる額を限度として、保育の実施に係る児童の保護者から保育料を徴収する。</div>
+                    <div class="jorei-paragraph">2　前項の保育料の額は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（保育料の減免）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市長は、災害その他特別の事情があると認めるときは、保育料を減額し、又は免除することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、子ども・子育て支援法の施行の日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 8,
+        title: '三郷市放課後児童健全育成事業の設備及び運営に関する基準を定める条例',
+        category: '子育て・福祉',
+        keywords: ['放課後', '学童', '児童クラブ', '子育て', '育成', '放課後児童'],
+        summary: '放課後児童クラブ（学童保育）の設備基準、職員配置、運営基準等を定める。子どもの安全な居場所確保に関する規定。',
+        enactment: '平成26年9月26日 条例第19号',
+        lastAmended: '令和2年3月25日 条例第7号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00001043.html',
+        toc: ['趣旨', '定義', '一般原則', '設備の基準', '職員', '児童の集団の規模', '開所時間及び開所日', '保護者との連絡', '関係機関との連携'],
+        fullText: `
+            <div class="jorei-title">三郷市放課後児童健全育成事業の設備及び運営に関する基準を定める条例</div>
+            <div class="jorei-enactment">平成26年9月26日 条例第19号<br>最終改正：令和2年3月25日 条例第7号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、児童福祉法（昭和22年法律第164号。以下「法」という。）第34条の8の2第1項の規定に基づき、放課後児童健全育成事業の設備及び運営に関する基準を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「放課後児童健全育成事業」とは、法第6条の3第2項に規定する放課後児童健全育成事業をいう。</div>
+                    <div class="jorei-paragraph">2　この条例において「放課後児童支援員」とは、放課後児童健全育成事業において児童の遊びを指導する者をいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（一般原則）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　放課後児童健全育成事業における支援は、小学校に就学している児童であって、その保護者が労働等により昼間家庭にいないものにつき、家庭、地域等との連携の下、発達段階に応じた主体的な遊びや生活が可能となるよう、当該児童の自主性、社会性及び創造性の向上、基本的な生活習慣の確立等を図り、もって当該児童の健全な育成を図ることを目的として行われなければならない。</div>
+                    <div class="jorei-paragraph">2　放課後児童健全育成事業者は、利用者の人権に十分配慮するとともに、一人一人の人格を尊重して、その運営を行わなければならない。</div>
+                    <div class="jorei-paragraph">3　放課後児童健全育成事業者は、地域社会との交流及び連携を図り、児童の保護者及び地域社会に対し、当該放課後児童健全育成事業者が行う放課後児童健全育成事業の運営の内容を適切に説明するよう努めなければならない。</div>
+                    <div class="jorei-paragraph">4　放課後児童健全育成事業者は、その運営の内容について、自ら評価を行い、その結果を公表するよう努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（設備の基準）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　放課後児童健全育成事業所には、遊び及び生活の場としての機能並びに静養するための機能を備えた区画（以下「専用区画」という。）を設けるほか、支援の提供に必要な設備及び備品等を備えなければならない。</div>
+                    <div class="jorei-paragraph">2　専用区画の面積は、児童1人につきおおむね1.65平方メートル以上でなければならない。</div>
+                    <div class="jorei-paragraph">3　専用区画並びに第1項に規定する設備及び備品等は、放課後児童健全育成事業所を開所している時間帯を通じて専ら当該放課後児童健全育成事業の用に供するものでなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（職員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　放課後児童健全育成事業者は、放課後児童健全育成事業所ごとに、放課後児童支援員を置かなければならない。</div>
+                    <div class="jorei-paragraph">2　放課後児童支援員の数は、支援の単位ごとに2人以上とする。ただし、その1人を除き、補助員をもってこれに代えることができる。</div>
+                    <div class="jorei-paragraph">3　放課後児童支援員は、次の各号のいずれかに該当する者であって、都道府県知事又は指定都市若しくは中核市の長が行う研修を修了したものでなければならない。</div>
+                    <div class="jorei-item">（1）保育士の資格を有する者</div>
+                    <div class="jorei-item">（2）社会福祉士の資格を有する者</div>
+                    <div class="jorei-item">（3）学校教育法の規定による高等学校若しくは中等教育学校を卒業した者、同法第90条第2項の規定により大学への入学を認められた者等であって、2年以上児童福祉事業に従事したもの</div>
+                    <div class="jorei-item">（4）教育職員免許法（昭和24年法律第147号）に規定する免許状を有する者</div>
+                    <div class="jorei-item">（5）学校教育法の規定により、大学において、社会福祉学、心理学、教育学、社会学、芸術学若しくは体育学を専修する学科又はこれらに相当する課程を修めて卒業した者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（児童の集団の規模）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　放課後児童健全育成事業における支援の単位は、放課後児童健全育成事業を利用する児童の集団の規模とし、おおむね40人以下とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（開所時間及び開所日）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　放課後児童健全育成事業者は、放課後児童健全育成事業所を開所する時間について、次の各号に掲げる区分に応じ、当該各号に定める時間以上を原則として、その地方における児童の保護者の労働時間、小学校の授業の終了の時刻その他の状況等を考慮して、当該事業所ごとに定める。</div>
+                    <div class="jorei-item">（1）小学校の授業の休業日　1日につき8時間</div>
+                    <div class="jorei-item">（2）小学校の授業の休業日以外の日　1日につき3時間</div>
+                    <div class="jorei-paragraph">2　放課後児童健全育成事業者は、放課後児童健全育成事業所を開所する日数について、1年につき250日以上を原則として、その地方における児童の保護者の就労日数、小学校の授業の休業日その他の状況等を考慮して、当該事業所ごとに定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（保護者との連絡）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　放課後児童健全育成事業者は、常に児童の保護者と密接な連絡をとり、当該児童の健康及び行動を説明するとともに、支援の内容等につき、その保護者の理解及び協力を得るよう努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（関係機関との連携）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　放課後児童健全育成事業者は、市町村、児童福祉施設、利用者の通学する小学校等関係機関と密接に連携して児童の支援に当たらなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、子ども・子育て支援法の施行の日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 9,
+        title: '三郷市介護保険条例',
+        category: '子育て・福祉',
+        keywords: ['介護', '高齢者', '福祉', '保険', '介護保険', '要介護'],
+        summary: '介護保険事業の運営に関する基本事項を規定。保険料、サービス内容、事業計画等について定める。',
+        enactment: '平成12年3月24日 条例第9号',
+        lastAmended: '令和6年3月22日 条例第8号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000576.html',
+        toc: ['趣旨', '介護認定審査会', '保険料率', '賦課期日', '保険料の徴収方法', '保険料の減免', '保険料の徴収猶予', '延滞金', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市介護保険条例</div>
+            <div class="jorei-enactment">平成12年3月24日 条例第9号<br>最終改正：令和6年3月22日 条例第8号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、介護保険法（平成9年法律第123号。以下「法」という。）の施行に関し、必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（介護認定審査会）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　法第14条に規定する介護認定審査会（以下「認定審査会」という。）の委員の定数は、45人以内とする。</div>
+                    <div class="jorei-paragraph">2　認定審査会の委員の任期は、3年とする。ただし、補欠の委員の任期は、前任者の残任期間とする。</div>
+                    <div class="jorei-paragraph">3　認定審査会の委員は、再任されることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（保険料率）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　法第129条第1項に規定する保険料率は、次の各号に掲げる第1号被保険者の区分に応じ、当該各号に定める額とする。</div>
+                    <div class="jorei-item">（1）生活保護法の規定による生活扶助を受けている者又は老齢福祉年金の受給者であって、世帯全員が市民税非課税の者　年額26,540円</div>
+                    <div class="jorei-item">（2）世帯全員が市民税非課税の者であって、前年の合計所得金額と課税年金収入額の合計額が80万円以下の者　年額39,810円</div>
+                    <div class="jorei-item">（3）世帯全員が市民税非課税の者であって、前年の合計所得金額と課税年金収入額の合計額が80万円を超え120万円以下の者　年額53,080円</div>
+                    <div class="jorei-item">（4）世帯全員が市民税非課税の者であって、前年の合計所得金額と課税年金収入額の合計額が120万円を超える者　年額66,340円</div>
+                    <div class="jorei-item">（5）本人が市民税非課税で世帯に市民税課税者がいる者であって、前年の合計所得金額と課税年金収入額の合計額が80万円以下の者　年額79,610円</div>
+                    <div class="jorei-item">（6）本人が市民税非課税で世帯に市民税課税者がいる者であって、前年の合計所得金額と課税年金収入額の合計額が80万円を超える者　年額92,880円</div>
+                    <div class="jorei-item">（7）本人が市民税課税の者であって、前年の合計所得金額が120万円未満の者　年額106,140円</div>
+                    <div class="jorei-item">（8）本人が市民税課税の者であって、前年の合計所得金額が120万円以上210万円未満の者　年額119,420円</div>
+                    <div class="jorei-item">（9）本人が市民税課税の者であって、前年の合計所得金額が210万円以上320万円未満の者　年額132,680円</div>
+                    <div class="jorei-item">（10）本人が市民税課税の者であって、前年の合計所得金額が320万円以上420万円未満の者　年額152,570円</div>
+                    <div class="jorei-item">（11）本人が市民税課税の者であって、前年の合計所得金額が420万円以上520万円未満の者　年額165,830円</div>
+                    <div class="jorei-item">（12）本人が市民税課税の者であって、前年の合計所得金額が520万円以上620万円未満の者　年額179,100円</div>
+                    <div class="jorei-item">（13）本人が市民税課税の者であって、前年の合計所得金額が620万円以上の者　年額192,360円</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（賦課期日）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　保険料の賦課期日は、当該年度の初日とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（保険料の徴収方法）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　保険料の徴収については、法第131条及び第135条に定めるところによる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（保険料の減免）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市長は、次の各号のいずれかに該当する者に対し、保険料を減額し、又は免除することができる。</div>
+                    <div class="jorei-item">（1）震災、風水害、火災その他これらに類する災害により、住宅、家財又はその他の財産について著しい損害を受けた者</div>
+                    <div class="jorei-item">（2）主たる生計維持者が死亡したこと又はその者が心身に重大な障がいを受け、若しくは長期間入院したことにより、その者の収入が著しく減少した者</div>
+                    <div class="jorei-item">（3）主たる生計維持者の収入が、事業又は業務の休廃止、事業における著しい損失、失業等により著しく減少した者</div>
+                    <div class="jorei-item">（4）主たる生計維持者の収入が、干ばつ、冷害、凍霜害等による農作物の不作、不漁その他これらに類する理由により著しく減少した者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（保険料の徴収猶予）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市長は、前条各号のいずれかに該当することにより、保険料を一時に納付することができないと認める場合においては、その者の申請により、1年以内の期間を限り、保険料の徴収を猶予することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（延滞金）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　保険料の納期限後にその保険料を納付する者は、当該保険料額に、その納期限の翌日から納付の日までの期間の日数に応じ、年14.6パーセント（当該納期限の翌日から1月を経過する日までの期間については、年7.3パーセント）の割合を乗じて計算した金額に相当する延滞金を加算して納付しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成12年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 10,
+        title: '三郷市都市計画法に基づく開発行為等の許可の基準に関する条例',
+        category: 'まちづくり・開発',
+        keywords: ['開発', '都市計画', 'まちづくり', '建築', '許可', '宅地'],
+        summary: '開発行為の許可基準を定める条例。一定規模以上の開発に対する審査基準、技術基準等を規定。',
+        enactment: '平成18年3月29日 条例第12号',
+        lastAmended: '令和4年3月25日 条例第7号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000821.html',
+        toc: ['趣旨', '定義', '法第34条第11号の条例で定める土地の区域', '法第34条第12号の条例で定める開発行為', '予定建築物等の用途制限', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市都市計画法に基づく開発行為等の許可の基準に関する条例</div>
+            <div class="jorei-enactment">平成18年3月29日 条例第12号<br>最終改正：令和4年3月25日 条例第7号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、都市計画法（昭和43年法律第100号。以下「法」という。）第34条第11号及び第12号並びに法第41条第2項ただし書の規定に基づき、市街化調整区域における開発行為等の許可の基準に関し、必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（法第34条第11号の条例で定める土地の区域）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　法第34条第11号に規定する条例で指定する土地の区域は、市街化調整区域のうち、次に掲げる土地の区域以外の土地の区域で市長が告示で指定するものとする。</div>
+                    <div class="jorei-item">（1）災害危険区域</div>
+                    <div class="jorei-item">（2）地すべり防止区域</div>
+                    <div class="jorei-item">（3）急傾斜地崩壊危険区域</div>
+                    <div class="jorei-item">（4）土砂災害特別警戒区域</div>
+                    <div class="jorei-item">（5）浸水被害防止区域</div>
+                    <div class="jorei-item">（6）前各号に掲げるもののほか、溢水、湛水、津波、高潮等による災害の発生のおそれのある土地の区域</div>
+                    <div class="jorei-item">（7）優良な集団農地その他長期にわたり農用地として保存すべき土地の区域</div>
+                    <div class="jorei-item">（8）優れた自然の風景を維持し、都市の環境を保持し、水源を涵養し、土砂の流出を防備する等のため保全すべき土地の区域</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（法第34条第12号の条例で定める開発行為）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　法第34条第12号に規定する条例で定める開発行為は、市街化調整区域に関する都市計画が決定された日（以下「線引きの日」という。）前から引き続き生活の本拠を有する者（線引きの日以後に相続又は婚姻により当該生活の本拠を承継した者を含む。）が、自己の居住の用に供する建築物の建築を目的として行う開発行為とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（予定建築物等の用途制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　法第34条第11号の規定により許可する開発行為に係る予定建築物の用途は、自己の居住の用に供する一戸建ての住宅とする。</div>
+                    <div class="jorei-paragraph">2　法第34条第12号の規定により許可する開発行為に係る予定建築物の用途は、自己の居住の用に供する専用住宅とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成18年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 11,
+        title: '三郷市景観条例',
+        category: 'まちづくり・開発',
+        keywords: ['景観', 'まちづくり', '建築', 'デザイン', '街並み', '届出'],
+        summary: '良好な景観の形成に関する基本的事項を定める。届出対象行為、景観計画区域、景観形成基準等を規定。',
+        enactment: '平成22年12月17日 条例第27号',
+        lastAmended: '令和3年3月26日 条例第5号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000903.html',
+        toc: ['目的', '定義', '基本理念', '市の責務', '市民の責務', '事業者の責務', '景観計画', '届出対象行為', '届出', '勧告等'],
+        fullText: `
+            <div class="jorei-title">三郷市景観条例</div>
+            <div class="jorei-enactment">平成22年12月17日 条例第27号<br>最終改正：令和3年3月26日 条例第5号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、景観法（平成16年法律第110号。以下「法」という。）の規定に基づき、良好な景観の形成に関し必要な事項を定めることにより、市民が誇りと愛着を持つことができる魅力ある都市景観を形成し、もって潤いのある豊かな生活環境の創造及び個性的で活力ある地域社会の実現に寄与することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　良好な景観の形成は、市民、事業者及び市の協働により、地域の自然、歴史、文化等と人々の生活との調和を図りながら行われなければならない。</div>
+                    <div class="jorei-paragraph">2　良好な景観の形成は、現在及び将来の市民の共有財産として、適切に保全し、及び次世代に継承されるよう行われなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、前条に規定する基本理念（以下「基本理念」という。）にのっとり、良好な景観の形成に関する総合的な施策を策定し、及びこれを実施する責務を有する。</div>
+                    <div class="jorei-paragraph">2　市は、自ら行う行為について、良好な景観の形成に先導的役割を果たすように努めなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（市民の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市民は、基本理念にのっとり、自らが良好な景観の形成の担い手であることを認識し、良好な景観の形成に積極的に寄与するよう努めなければならない。</div>
+                    <div class="jorei-paragraph">2　市民は、市が実施する良好な景観の形成に関する施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（事業者の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　事業者は、基本理念にのっとり、土地の利用及び事業活動に関し、良好な景観の形成に自ら努めるとともに、市が実施する良好な景観の形成に関する施策に協力しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　景観計画</div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（景観計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市は、法第8条第1項の規定に基づき、景観計画を定めるものとする。</div>
+                    <div class="jorei-paragraph">2　市長は、景観計画を定めようとするときは、あらかじめ三郷市都市計画審議会の意見を聴かなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch3">第3章　届出等</div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（届出対象行為）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　法第16条第1項の条例で定める行為は、次に掲げるものとする。</div>
+                    <div class="jorei-item">（1）建築物の新築、増築、改築若しくは移転、外観を変更することとなる修繕若しくは模様替又は色彩の変更</div>
+                    <div class="jorei-item">（2）工作物の新設、増築、改築若しくは移転、外観を変更することとなる修繕若しくは模様替又は色彩の変更</div>
+                    <div class="jorei-item">（3）都市計画法第4条第12項に規定する開発行為</div>
+                    <div class="jorei-item">（4）土地の開墾、土石の採取、鉱物の掘採その他の土地の形質の変更</div>
+                    <div class="jorei-item">（5）屋外における土石、廃棄物、再生資源その他の物件の堆積</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（届出）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　法第16条第1項又は第2項の規定による届出は、当該届出に係る行為の着手の30日前までにしなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art10">
+                <div class="jorei-article-title">（勧告等）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第10条　市長は、法第16条第3項の規定による勧告をした場合において、当該勧告を受けた者がこれに従わなかったときは、その旨及び当該勧告の内容を公表することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成23年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 12,
+        title: '三郷市営住宅条例',
+        category: 'まちづくり・開発',
+        keywords: ['住宅', '公営住宅', '居住', '家賃', '入居', '市営'],
+        summary: '市営住宅の設置、管理、入居資格、家賃等について規定。低所得者向け住宅の供給に関する基本事項を定める。',
+        enactment: '平成9年9月25日 条例第21号',
+        lastAmended: '令和5年3月24日 条例第7号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000433.html',
+        toc: ['趣旨', '定義', '設置', '入居者の資格', '入居者の選考', '家賃', '敷金', '入居者の費用負担義務', '明渡し請求', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市営住宅条例</div>
+            <div class="jorei-enactment">平成9年9月25日 条例第21号<br>最終改正：令和5年3月24日 条例第7号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、公営住宅法（昭和26年法律第193号。以下「法」という。）及び公営住宅法施行令（昭和26年政令第240号。以下「令」という。）に基づき、市営住宅及び共同施設（以下「市営住宅等」という。）の設置及び管理について必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法及び令の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（設置）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市営住宅等の名称、位置及び戸数は、別表のとおりとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（入居者の資格）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市営住宅に入居することができる者は、次の各号に掲げる条件を備える者でなければならない。</div>
+                    <div class="jorei-item">（1）現に同居し、又は同居しようとする親族（婚姻の届出をしないが事実上婚姻関係と同様の事情にある者その他婚姻の予約者を含む。）があること。</div>
+                    <div class="jorei-item">（2）その者の収入が令第6条第1項に規定する金額を超えないこと。</div>
+                    <div class="jorei-item">（3）現に住宅に困窮していることが明らかな者であること。</div>
+                    <div class="jorei-item">（4）市内に住所又は勤務場所を有する者であること。</div>
+                    <div class="jorei-item">（5）市税を滞納していないこと。</div>
+                    <div class="jorei-item">（6）入居者又は同居者が暴力団員による不当な行為の防止等に関する法律（平成3年法律第77号）第2条第6号に規定する暴力団員でないこと。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（入居者の選考）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市長は、入居の申込みをした者の数が入居させるべき市営住宅の戸数を超える場合においては、住宅に困窮する実情を調査の上、法第25条第1項の規定に基づき、公正な方法で選考して、当該市営住宅の入居者を決定しなければならない。</div>
+                    <div class="jorei-paragraph">2　前項の場合において、市長は、入居者を抽選その他公正な方法により選考することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（家賃）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　毎月の家賃は、毎年度、入居者からの収入の申告に基づき、令第2条の規定により算出した額とする。</div>
+                    <div class="jorei-paragraph">2　家賃は、毎月末日までに、その月分を納付しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（敷金）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市長は、入居者から入居時の家賃の3月分に相当する金額の範囲内において敷金を徴収することができる。</div>
+                    <div class="jorei-paragraph">2　敷金は、入居者が市営住宅を明け渡したときに、これを還付する。ただし、未納の家賃又は損害賠償金があるときは、敷金のうちからこれを控除した額を還付する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（入居者の費用負担義務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　入居者は、次に掲げる費用を負担しなければならない。</div>
+                    <div class="jorei-item">（1）電気、ガス及び上下水道の使用料</div>
+                    <div class="jorei-item">（2）汚物及びじん芥の処理に要する費用</div>
+                    <div class="jorei-item">（3）共同施設の使用に要する費用</div>
+                    <div class="jorei-item">（4）前3号に掲げるもののほか、入居者が負担することが適当と認められる費用</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（明渡し請求）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　市長は、入居者が次の各号のいずれかに該当する場合においては、当該入居者に対し、市営住宅の明渡しを請求することができる。</div>
+                    <div class="jorei-item">（1）不正の行為によって入居したとき。</div>
+                    <div class="jorei-item">（2）家賃を3月以上滞納したとき。</div>
+                    <div class="jorei-item">（3）市営住宅又は共同施設を故意に損傷したとき。</div>
+                    <div class="jorei-item">（4）正当な事由によらないで15日以上市営住宅を使用しないとき。</div>
+                    <div class="jorei-item">（5）入居者又は同居者が暴力団員であることが判明したとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art10">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第10条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成10年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 13,
+        title: '三郷市火災予防条例',
+        category: '環境・安全',
+        keywords: ['火災', '消防', '安全', '予防', '防火', '危険物'],
+        summary: '火災予防に関する規制を定める条例。危険物の取扱い、消防設備の設置基準、届出義務等を規定。',
+        enactment: '昭和48年4月1日 条例第17号',
+        lastAmended: '令和5年3月24日 条例第10号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000192.html',
+        toc: ['趣旨', '届出を要する設備等', '指定数量未満の危険物', '喫煙等', '火災予防上必要な業務', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市火災予防条例</div>
+            <div class="jorei-enactment">昭和48年4月1日 条例第17号<br>最終改正：令和5年3月24日 条例第10号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（趣旨）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、消防法（昭和23年法律第186号。以下「法」という。）第9条、第9条の2及び第22条第4項の規定に基づくたき火又は喫煙の制限その他火災の予防について必要な事項を定めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（届出を要する設備等）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　次の各号に掲げる設備又は器具を設置しようとする者は、あらかじめその旨を消防長に届け出なければならない。</div>
+                    <div class="jorei-item">（1）火を使用する設備で規則で定めるもの</div>
+                    <div class="jorei-item">（2）電気を使用する設備で規則で定めるもの</div>
+                    <div class="jorei-item">（3）火を使用する器具で規則で定めるもの</div>
+                    <div class="jorei-item">（4）電気を使用する器具で規則で定めるもの</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（指定数量未満の危険物）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　指定数量未満の危険物の貯蔵及び取扱いの技術上の基準は、規則で定める。</div>
+                    <div class="jorei-paragraph">2　指定数量の5分の1以上指定数量未満の危険物を貯蔵し、又は取り扱おうとする者は、あらかじめその旨を消防長に届け出なければならない。届け出た事項を変更しようとするときも、同様とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（喫煙等）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　喫煙、裸火の使用又は危険物品の持込みを禁止する場所においては、何人も、喫煙し、裸火を使用し、又は当該危険物品を持ち込んではならない。</div>
+                    <div class="jorei-paragraph">2　前項の場所の管理者は、当該場所の出入口及び見やすい場所に、喫煙、裸火の使用又は危険物品の持込みを禁止する旨の標識を設けなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（火災予防上必要な業務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　多数の者が出入りし、勤務し、又は居住する防火対象物の管理者は、当該防火対象物において火災予防上必要な業務を行う者を定め、次に掲げる業務を行わせなければならない。</div>
+                    <div class="jorei-item">（1）火気の使用に関する監督</div>
+                    <div class="jorei-item">（2）火災の早期発見及び通報連絡</div>
+                    <div class="jorei-item">（3）初期消火及び避難誘導</div>
+                    <div class="jorei-item">（4）消防用設備等の点検及び整備</div>
+                    <div class="jorei-item">（5）その他火災予防上必要な業務</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 14,
+        title: '三郷市水防条例',
+        category: '環境・安全',
+        keywords: ['水害', '洪水', '防災', '治水', '浸水', '水防'],
+        summary: '水害から市民の生命・財産を守るための対策を規定。水防組織、警戒活動、避難体制等について定める。',
+        enactment: '昭和47年4月1日 条例第21号',
+        lastAmended: '平成24年3月27日 条例第12号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000893.html',
+        toc: ['目的', '水防組織', '水防団', '水防団員', '出動', '費用弁償', '損害補償', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市水防条例</div>
+            <div class="jorei-enactment">昭和47年4月1日 条例第21号<br>最終改正：平成24年3月27日 条例第12号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、水防法（昭和24年法律第193号。以下「法」という。）の規定に基づき、三郷市の水防に関し必要な事項を定めることを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（水防組織）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　市は、水防のため、水防本部を設置する。</div>
+                    <div class="jorei-paragraph">2　水防本部は、市長を本部長とし、消防長、消防署長、消防団長その他市長が指名する職員をもって組織する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（水防団）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市の区域における水防の責めに任ずるため、消防団をもって水防団とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（水防団員）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　水防団員は、消防団員をもって充てる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（出動）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市長は、洪水、津波又は高潮の危険があると認めるときは、水防団を出動させ、水防活動に従事させるものとする。</div>
+                    <div class="jorei-paragraph">2　市長は、必要があると認めるときは、市の職員を水防活動に従事させることができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（費用弁償）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　水防に従事した者に対する費用弁償については、別に定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（損害補償）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　法第24条の規定により水防に従事した者又はその者の相続人等に対する損害補償については、非常勤消防団員等に係る損害補償の基準を定める政令（昭和31年政令第335号）の規定を準用する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 15,
+        title: '三郷市個人情報保護条例',
+        category: '行政・財務',
+        keywords: ['個人情報', '���ライバシー', '保護', '行政', '情報', '開示'],
+        summary: '個人情報の適正な取扱いに関する基本事項を規定。収集制限、利用・提供制限、開示・訂正請求等を定める。',
+        enactment: '平成16年6月25日 条例第22号',
+        lastAmended: '令和5年3月24日 条例第6号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000070.html',
+        toc: ['目的', '定義', '実施機関の責務', '収集の制限', '利用及び提供の制限', '開示請求権', '訂正請求権', '利用停止請求権', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市個人情報保護条例</div>
+            <div class="jorei-enactment">平成16年6月25日 条例第22号<br>最終改正：令和5年3月24日 条例第6号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、個人情報の保護に関する法律（平成15年法律第57号。以下「法」という。）第5条の規定に基づき、法の施行に関し必要な事項を定めるとともに、市が保有する個人情報の適正な取扱いを確保するために必要な事項を定めることにより、市政の適正かつ円滑な運営を図りつつ、個人の権利利益を保護することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例における用語の意義は、法の例による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（実施機関の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　実施機関は、個人情報を取り扱うに当たっては、その利用目的を明確にし、当該利用目的の達成に必要な範囲を超えて取り扱ってはならない。</div>
+                    <div class="jorei-paragraph">2　実施機関は、個人情報の漏えい、滅失又は毀損の防止その他の個人情報の適切な管理のために必要な措置を講じなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（収集の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　実施機関は、個人情報を収集するときは、あらかじめ利用目的を明示した上で、本人から収集しなければならない。ただし、次の各号のいずれかに該当するときは、この限りでない。</div>
+                    <div class="jorei-item">（1）本人の同意があるとき。</div>
+                    <div class="jorei-item">（2）法令等に定めがあるとき。</div>
+                    <div class="jorei-item">（3）出版、報道等により公にされているとき。</div>
+                    <div class="jorei-item">（4）人の生命、身体又は財産の保護のため、緊急かつやむを得ないと認められるとき。</div>
+                    <div class="jorei-item">（5）所在不明等の理由により、本人から収集することができないとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（利用及び提供の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　実施機関は、利用目的以外の目的のために保有個人情報を自ら利用し、又は提供してはならない。ただし、次の各号のいずれかに該当するときは、この限りでない。</div>
+                    <div class="jorei-item">（1）本人の同意があるとき、又は本人に提供するとき。</div>
+                    <div class="jorei-item">（2）法令等に定めがあるとき。</div>
+                    <div class="jorei-item">（3）人の生命、身体又は財産の保護のため、緊急かつやむを得ないと認められるとき。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（開示請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　何人も、法及びこの条例の定めるところにより、実施機関に対し、当該実施機関の保有する自己を本人とする保有個人情報の開示を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（訂正請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　何人も、法及びこの条例の定めるところにより、実施機関に対し、開示を受けた保有個人情報の内容が事実でないと思料するときは、当該保有個人情報の訂正を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（利用停止請求権）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　何人も、法及びこの条例の定めるところにより、実施機関に対し、開示を受けた保有個人情報について、その収集、利用又は提供が法令等に違反していると思料するときは、当該保有個人情報の利用の停止、消去又は提供の停止を請求することができる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、平成17年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 16,
+        title: '三郷市税条例',
+        category: '行政・財務',
+        keywords: ['税', '市税', '財務', '課税', '税金', '市民税', '固定資産税'],
+        summary: '市税の賦課・徴収に関する基本事項を規定。市民税、固定資産税、軽自動車税等の税率・納期等を定める。',
+        enactment: '昭和39年4月1日 条例第25号',
+        lastAmended: '令和6年3月22日 条例第5号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000136.html',
+        toc: ['課税の根拠', '市税の種類', '市民税', '固定資産税', '軽自動車税', '納期', '減免', '延滞金', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市税条例</div>
+            <div class="jorei-enactment">昭和39年4月1日 条例第25号<br>最終改正：令和6年3月22日 条例第5号</div>
+
+            <div class="jorei-chapter" id="ch1">第1章　総則</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（課税の根拠）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　市税の税目、課税客体、課税標準、税率その他賦課徴収については、法令その他別に定めがあるもののほか、この条例の定めるところによる。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（市税の種類）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　市税の税目は、次のとおりとする。</div>
+                    <div class="jorei-item">（1）市民税</div>
+                    <div class="jorei-item">（2）固定資産税</div>
+                    <div class="jorei-item">（3）軽自動車税</div>
+                    <div class="jorei-item">（4）市たばこ税</div>
+                    <div class="jorei-item">（5）都市計画税</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch2">第2章　市民税</div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（市民税）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　市民税は、均等割及び所得割とする。</div>
+                    <div class="jorei-paragraph">2　均等割の税率は、年額3,000円とする。</div>
+                    <div class="jorei-paragraph">3　所得割の税率は、100分の6とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch3">第3章　固定資産税</div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（固定資産税）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　固定資産税の標準税率は、100分の1.4とする。</div>
+                    <div class="jorei-paragraph">2　固定資産税の免税点は、土地にあっては30万円、家屋にあっては20万円、償却資産にあっては150万円とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch4">第4章　軽自動車税</div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（軽自動車税）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　軽自動車税は、環境性能割及び種別割とする。</div>
+                    <div class="jorei-paragraph">2　種別割の税率は、地方税法（昭和25年法律第226号）第463条の15に定める標準税率による。</div>
+                </div>
+            </div>
+
+            <div class="jorei-chapter" id="ch5">第5章　納期</div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（納期）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　市税の納期は、次のとおりとする。</div>
+                    <div class="jorei-item">（1）市民税（普通徴収）　第1期 6月1日から同月30日まで、第2期 8月1日から同月31日まで、第3期 10月1日から同月31日まで、第4期 翌年1月1日から同月31日まで</div>
+                    <div class="jorei-item">（2）固定資産税　第1期 5月1日から同月31日まで、第2期 7月1日から同月31日まで、第3期 9月1日から同月30日まで、第4期 12月1日から同月25日まで</div>
+                    <div class="jorei-item">（3）軽自動車税（種別割）　5月1日から同月31日まで</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（減免）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市長は、次の各号のいずれかに該当する者に対し、市税を減免することができる。</div>
+                    <div class="jorei-item">（1）生活保護法の規定による生活扶助を受けている者</div>
+                    <div class="jorei-item">（2）災害により被害を受けた者</div>
+                    <div class="jorei-item">（3）その他特別の事情がある者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（延滞金）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市税の納期限後にその税金を納付する者は、当該税額に、その納期限の翌日から納付の日までの期間の日数に応じ、年14.6パーセント（当該納期限の翌日から1月を経過する日までの期間については、年7.3パーセント）の割合を乗じて計算した金額に相当する延滞金を加算して納付しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 17,
+        title: '三郷市立図書館条例',
+        category: '教育・文化',
+        keywords: ['図書館', '文化', '教育', '読書', '施設', '貸出'],
+        summary: '市立図書館の設置・管理に関する条例。開館時間、利用規則、資料の貸出等について規定。',
+        enactment: '昭和53年12月22日 条例第34号',
+        lastAmended: '令和4年3月25日 条例第5号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000697.html',
+        toc: ['設置', '名称及び位置', '事業', '利用者の範囲', '開館時間及び休館日', '利用の制限', '損害の賠償', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市立図書館条例</div>
+            <div class="jorei-enactment">昭和53年12月22日 条例第34号<br>最終改正：令和4年3月25日 条例第5号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（設置）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　図書館法（昭和25年法律第118号）第10条の規定に基づき、市民の教養、調査研究及びレクリエーション等に資するため、三郷市立図書館（以下「図書館」という。）を設置する。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（名称及び位置）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　図書館の名称及び位置は、次のとおりとする。</div>
+                    <div class="jorei-item">（1）三郷市立図書館　三郷市戸ケ崎2丁目626番地</div>
+                    <div class="jorei-item">（2）三郷市立北部図書館　三郷市鷹野5丁目417番地</div>
+                    <div class="jorei-item">（3）三郷市立早稲田図書館　三郷市早稲田3丁目17番地8</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（事業）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　図書館は、次の事業を行う。</div>
+                    <div class="jorei-item">（1）図書、記録、視聴覚教育の資料その他必要な資料（以下「図書館資料」という。）を収集し、整理し、及び保存すること。</div>
+                    <div class="jorei-item">（2）図書館資料の個人への貸出し及び団体への貸出しを行うこと。</div>
+                    <div class="jorei-item">（3）図書館資料の利用についての相談に応ずること。</div>
+                    <div class="jorei-item">（4）読書会、研究会、鑑賞会、資料展示会等を主催し、及びこれらの開催を奨励すること。</div>
+                    <div class="jorei-item">（5）他の図書館等と連絡協力し、図書館資料の相互貸借を行うこと。</div>
+                    <div class="jorei-item">（6）前各号に掲げるもののほか、図書館の設置の目的を達成するために必要な事業を行うこと。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（利用者の範囲）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　図書館を利用することができる者は、次の各号のいずれかに該当する者とする。</div>
+                    <div class="jorei-item">（1）市内に住所を有する者</div>
+                    <div class="jorei-item">（2）市内に通勤し、又は通学する者</div>
+                    <div class="jorei-item">（3）前2号に掲げる者のほか、教育委員会が適当と認める者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（開館時間及び休館日）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　図書館の開館時間及び休館日は、教育委員会規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（利用の制限）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　教育委員会は、次の各号のいずれかに該当する者に対して、図書館の利用を制限し、又は禁止することができる。</div>
+                    <div class="jorei-item">（1）公の秩序又は善良の風俗を乱すおそれがあると認められる者</div>
+                    <div class="jorei-item">（2）図書館の施設、設備又は図書館資料を損傷するおそれがあると認められる者</div>
+                    <div class="jorei-item">（3）図書館の管理上支障があると認められる者</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（損害の賠償）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　図書館の施設、設備又は図書館資料を汚損し、損傷し、又は亡失した者は、教育委員会の認定した額を賠償しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　この条例の施行に関し必要な事項は、教育委員会規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、昭和54年4月1日から施行する。</div>
+            </div>
+        `
+    },
+    {
+        id: 18,
+        title: '三郷市スポーツ推進条例',
+        category: '教育・文化',
+        keywords: ['スポーツ', '健康', '運動', '体育', '推進', '生涯スポーツ'],
+        summary: 'スポーツの推進に関する基本理念、市の責務、施策の基本事項を定める。生涯スポーツの振興を図る。',
+        enactment: '平成24年6月27日 条例第17号',
+        lastAmended: '令和2年3月25日 条例第6号',
+        url: 'https://www1.g-reiki.net/misato/reiki_honbun/e325RG00000948.html',
+        toc: ['目的', '定義', '基本理念', '市の責務', '市民の役割', 'スポーツ団体の役割', '基本的施策', 'スポーツ推進計画', '委任'],
+        fullText: `
+            <div class="jorei-title">三郷市スポーツ推進条例</div>
+            <div class="jorei-enactment">平成24年6月27日 条例第17号<br>最終改正：令和2年3月25日 条例第6号</div>
+
+            <div class="jorei-article" id="art1">
+                <div class="jorei-article-title">（目的）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第1条　この条例は、スポーツ基本法（平成23年法律第78号）の理念にのっとり、スポーツの推進に関する基本理念を定め、市の責務並びに市民及びスポーツ団体の役割を明らかにするとともに、スポーツの推進に関する施策の基本となる事項を定めることにより、市民の心身の健全な発達及び明るく豊かな市民生活の形成に寄与することを目的とする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art2">
+                <div class="jorei-article-title">（定義）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第2条　この条例において「スポーツ」とは、心身の健全な発達、健康及び体力の保持増進、精神的な充足感の獲得、自律心その他の精神の涵養等のために個人又は集団で行われる運動競技その他の身体活動（身体教育及びレクリエーションとしての身体活動を含む。）であって、市民が自主的かつ自律的に行うものをいう。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art3">
+                <div class="jorei-article-title">（基本理念）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第3条　スポーツは、市民が生涯にわたり心身ともに健康で文化的な生活を営む基盤となるものであるという認識の下に、その推進が図られなければならない。</div>
+                    <div class="jorei-paragraph">2　スポーツは、市民が自主的かつ自律的にその適性及び健康状態に応じて行うことができるよう、多様な機会が確保されなければならない。</div>
+                    <div class="jorei-paragraph">3　スポーツは、市民相互の交流を促進し、地域における一体感及び活力の醸成に寄与するものとして、その推進が図られなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art4">
+                <div class="jorei-article-title">（市の責務）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第4条　市は、前条の基本理念にのっとり、スポーツに関する施策を総合的かつ計画的に策定し、及び実施する責務を有する。</div>
+                    <div class="jorei-paragraph">2　市は、スポーツに関する施策の策定及び実施に当たっては、市民の意見を反映させるために必要な措置を講ずるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art5">
+                <div class="jorei-article-title">（市民の役割）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第5条　市民は、生涯にわたりスポーツに親しむとともに、スポーツを通じて健康の保持増進及び体力の向上に努めるものとする。</div>
+                    <div class="jorei-paragraph">2　市民は、市及びスポーツ団体が行うスポーツの推進に関する取組に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art6">
+                <div class="jorei-article-title">（スポーツ団体の役割）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第6条　スポーツ団体は、スポーツの普及及び振興に努めるとともに、市のスポーツに関する施策の実施に協力するよう努めるものとする。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art7">
+                <div class="jorei-article-title">（基本的施策）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第7条　市は、次に掲げる施策を推進するものとする。</div>
+                    <div class="jorei-item">（1）地域におけるスポーツの振興のための事業の実施、スポーツ施設の整備その他の必要な施策</div>
+                    <div class="jorei-item">（2）市民が身近にスポーツに親しめる機会の充実その他の必要な施策</div>
+                    <div class="jorei-item">（3）学校体育及び運動部活動の充実その他の必要な施策</div>
+                    <div class="jorei-item">（4）スポーツの指導者その他スポーツを推進する人材の養成及び活用に必要な施策</div>
+                    <div class="jorei-item">（5）スポーツ団体への支援その他の必要な施策</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art8">
+                <div class="jorei-article-title">（スポーツ推進計画）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第8条　市は、スポーツ基本法第10条第1項の規定に基づき、スポーツの推進に関する計画（以下「スポーツ推進計画」という。）を定めるものとする。</div>
+                    <div class="jorei-paragraph">2　市は、スポーツ推進計画を定め、又はこれを変更したときは、遅滞なく、これを公表しなければならない。</div>
+                </div>
+            </div>
+
+            <div class="jorei-article" id="art9">
+                <div class="jorei-article-title">（委任）</div>
+                <div class="jorei-article-body">
+                    <div class="jorei-paragraph">第9条　この条例の施行に関し必要な事項は、教育委員会規則で定める。</div>
+                </div>
+            </div>
+
+            <div class="jorei-supplementary">
+                <div class="jorei-supplementary-title">附則</div>
+                <div class="jorei-paragraph">この条例は、公布の日から施行する。</div>
+            </div>
+        `
+    }
+];
+
+// allOrdinanceData is now loaded from ordinance-data.js
+
+let currentCategory = 'all';
+let currentSearchTerm = '';
+
+function searchOrdinances() {
+    const searchTerm = document.getElementById('ordinanceSearchInput').value.toLowerCase();
+    currentSearchTerm = searchTerm;
+    renderOrdinances();
+}
+
+function filterByCategory(category) {
+    currentCategory = category;
+    document.querySelectorAll('.ordinance-cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === category);
+    });
+    renderOrdinances();
+}
+
+function renderOrdinances() {
+    const results = allOrdinanceData.filter(ord => {
+        const matchesCategory = currentCategory === 'all' || ord.category === currentCategory;
+        // fullText（本文）も検索対象に追加
+        const fullTextContent = ord.fullText ? ord.fullText.replace(/<[^>]*>/g, '').toLowerCase() : '';
+        const matchesSearch = currentSearchTerm === '' ||
+            ord.title.toLowerCase().includes(currentSearchTerm) ||
+            ord.keywords.some(kw => kw.toLowerCase().includes(currentSearchTerm)) ||
+            ord.summary.toLowerCase().includes(currentSearchTerm) ||
+            fullTextContent.includes(currentSearchTerm);
+        return matchesCategory && matchesSearch;
+    });
+
+    const listEl = document.getElementById('ordinanceList');
+    const countEl = document.getElementById('ordinanceCount');
+    const resultsEl = document.getElementById('ordinanceResults');
+
+    countEl.innerHTML = `検索結果: <strong>${results.length}</strong>件`;
+
+    if (results.length === 0) {
+        listEl.innerHTML = `
+            <div class="ordinance-empty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <p>該当する条例が見つかりません</p>
+            </div>
+        `;
+    } else {
+        listEl.innerHTML = results.map(ord => {
+            return `
+            <div class="ordinance-item has-fulltext" data-id="${ord.id}">
+                <div class="ordinance-item-header">
+                    <div class="ordinance-item-title">${ord.title}</div>
+                    <span class="ordinance-item-cat">${ord.category}</span>
+                </div>
+                <div class="ordinance-item-keywords">
+                    ${ord.keywords.map(kw => `<span class="ordinance-keyword">${kw}</span>`).join('')}
+                    <span class="ordinance-keyword" style="background:rgba(44,74,110,0.1);color:var(--navy);">全文閲覧可</span>
+                </div>
+                <div class="ordinance-item-content">
+                    <p class="ordinance-item-summary">${ord.summary}</p>
+                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                        <button class="ordinance-item-link view-fulltext-btn" data-id="${ord.id}" style="border:none;cursor:pointer;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            全文を表示
+                        </button>
+                        <a href="${ord.url}" target="_blank" rel="noopener" class="ordinance-item-link" style="background:var(--gray-lighter);color:var(--gray);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                            三郷市例規集で開く
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `}).join('');
+    }
+
+    // Show results if there's a search or category filter
+    if (currentSearchTerm || currentCategory !== 'all') {
+        resultsEl.classList.add('open');
+    }
+}
+
+// Modal functions - 条例全文を表示
+function openOrdinanceModal(ordId) {
+    const ord = allOrdinanceData.find(o => o.id === ordId);
+    if (!ord) return;
+
+    document.getElementById('modalTitle').textContent = ord.title;
+    document.getElementById('modalMeta').innerHTML = `
+        <span>${ord.category}</span>
+    `;
+
+    // 目次は非表示
+    document.getElementById('modalToc').style.display = 'none';
+
+    // fullTextがあれば表示、なければ外部リンク案内
+    if (ord.fullText) {
+        document.getElementById('modalContent').innerHTML = ord.fullText;
+    } else {
+        document.getElementById('modalContent').innerHTML = `
+            <div style="text-align:center;padding:3rem;">
+                <svg style="width:60px;height:60px;color:var(--gray-light);margin-bottom:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                <p style="color:var(--gray);margin-bottom:1rem;">この条例の全文はまだ登録されていません。</p>
+                <a href="${ord.url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;background:var(--navy);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                    三郷市例規集で見る
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+            </div>
+        `;
+    }
+
+    document.getElementById('modalFooterInfo').textContent = '';
+    document.getElementById('modalExternalLink').href = ord.url;
+
+    document.getElementById('ordinanceModalOverlay').classList.add('open');
+    document.getElementById('ordinanceModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeOrdinanceModal() {
+    document.getElementById('ordinanceModalOverlay').classList.remove('open');
+    document.getElementById('ordinanceModal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// Event listeners for ordinance search
+document.getElementById('ordinanceSearchInput').addEventListener('input', searchOrdinances);
+document.getElementById('ordinanceSearchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchOrdinances();
+});
+
+document.querySelectorAll('.ordinance-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterByCategory(btn.dataset.cat));
+});
+
+// Toggle ordinance item expansion and open modal
+document.getElementById('ordinanceList').addEventListener('click', e => {
+    // Handle fulltext button click
+    const fulltextBtn = e.target.closest('.view-fulltext-btn');
+    if (fulltextBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const ordId = parseInt(fulltextBtn.dataset.id);
+        openOrdinanceModal(ordId);
+        return;
+    }
+
+    // Handle external link click
+    if (e.target.closest('a.ordinance-item-link')) {
+        return; // Let it navigate normally
+    }
+
+    // Toggle expansion or open modal on title click
+    const item = e.target.closest('.ordinance-item');
+    if (item) {
+        const ordId = parseInt(item.dataset.id);
+        // タイトルをクリックしたら全文表示
+        if (e.target.closest('.ordinance-item-header')) {
+            openOrdinanceModal(ordId);
+        } else {
+            item.classList.toggle('expanded');
+        }
+    }
+});
+
+// Modal close handlers
+document.getElementById('modalCloseBtn').addEventListener('click', closeOrdinanceModal);
+document.getElementById('ordinanceModalOverlay').addEventListener('click', closeOrdinanceModal);
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeOrdinanceModal();
+});
+
+// Comment toggle and Giscus loading
+document.querySelectorAll('.comment-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const section = btn.dataset.section;
+        const commentArea = document.getElementById(`comments-${section}`);
+        const isOpen = commentArea.classList.toggle('open');
+        btn.classList.toggle('active', isOpen);
+
+        // Load Giscus only once when opened
+        const giscusDiv = commentArea.querySelector('.giscus');
+        if (isOpen && !giscusDiv.querySelector('iframe')) {
+            const term = giscusDiv.dataset.term;
+            const script = document.createElement('script');
+            script.src = 'https://giscus.app/client.js';
+            script.setAttribute('data-repo', 'yuu-misato/sousei-misato');
+            script.setAttribute('data-repo-id', 'R_kgDORCL3KA');
+            script.setAttribute('data-category', 'Ideas');
+            script.setAttribute('data-category-id', 'DIC_kwDORCL3KM4C13h4');
+            script.setAttribute('data-mapping', 'specific');
+            script.setAttribute('data-term', term);
+            script.setAttribute('data-strict', '0');
+            script.setAttribute('data-reactions-enabled', '1');
+            script.setAttribute('data-emit-metadata', '0');
+            script.setAttribute('data-input-position', 'top');
+            script.setAttribute('data-theme', 'light');
+            script.setAttribute('data-lang', 'ja');
+            script.setAttribute('data-loading', 'lazy');
+            script.crossOrigin = 'anonymous';
+            script.async = true;
+            giscusDiv.appendChild(script);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

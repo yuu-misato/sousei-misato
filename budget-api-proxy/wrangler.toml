@@ -1,0 +1,7 @@
+name = "misato-api-proxy"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+account_id = "59e1d24d91d1e5c0f0ec7f6a7c0296a6"
+
+[vars]
+ALLOWED_ORIGINS = "https://souseimisato.com,https://www.souseimisato.com,https://member.souseimisato.com,http://localhost:8000"

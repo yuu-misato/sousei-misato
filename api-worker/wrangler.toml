@@ -1,0 +1,6 @@
+name = "misato-jorei-ai"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://souseimisato.com,https://www.souseimisato.com,http://localhost:8000"

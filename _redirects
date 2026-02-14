@@ -1,0 +1,4 @@
+# Redirects for member.souseimisato.com subdomain
+# Rewrite requests to /member/ directory
+
+https://member.souseimisato.com/*  https://member.souseimisato.com/member/:splat  200
